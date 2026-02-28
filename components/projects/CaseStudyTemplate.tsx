@@ -48,6 +48,11 @@ export default function CaseStudyTemplate({ project }: { project: Project }) {
                         transition={{ duration: motionConfig.medium, ease: motionConfig.ease }}
                         className="mt-10"
                     >
+                        {project.technicalMeta?.systemType && (
+                            <p className="text-xs uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-4">
+                                {project.technicalMeta.systemType}
+                            </p>
+                        )}
                         <SectionHeading as="h1">{project.title}</SectionHeading>
                         <p className="mt-4 text-base md:text-lg text-neutral-600 dark:text-neutral-400">
                             {project.shortDescription}
@@ -55,6 +60,13 @@ export default function CaseStudyTemplate({ project }: { project: Project }) {
                         <p className="mt-4 text-xs text-neutral-500">
                             {project.techStack.join(" · ")}
                         </p>
+                        {project.engineeringFocus && (
+                            <div className="mt-6 pt-6 border-t border-neutral-200/60 dark:border-neutral-800/60">
+                                <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                                    <span className="font-semibold text-neutral-900 dark:text-neutral-100">Engineering Focus:</span> {project.engineeringFocus}
+                                </p>
+                            </div>
+                        )}
                     </motion.div>
 
                     {project.technicalMeta && (

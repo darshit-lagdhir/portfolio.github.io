@@ -10,6 +10,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     return (
         <TiltCard className="rounded-lg border border-neutral-200/70 dark:border-neutral-800/70 bg-white dark:bg-neutral-900/50 p-6 transition-colors duration-200 hover:border-neutral-400 dark:hover:border-neutral-600 flex flex-col justify-between h-full">
             <div>
+                {project.technicalMeta?.systemType && (
+                    <p className="text-[10px] uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-2">
+                        {project.technicalMeta.systemType}
+                    </p>
+                )}
                 <h3 className="text-lg font-medium leading-snug">{project.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400 max-w-lg">
                     {project.shortDescription}
@@ -17,6 +22,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                 <p className="mt-4 text-xs text-neutral-500 dark:text-neutral-500">
                     {project.techStack.join(" · ")}
                 </p>
+                {project.engineeringFocus && (
+                    <p className="mt-5 pt-5 border-t border-neutral-100 dark:border-neutral-800/60 text-xs text-neutral-500 dark:text-neutral-400">
+                        <span className="font-medium text-neutral-700 dark:text-neutral-300">Focus:</span> {project.engineeringFocus}
+                    </p>
+                )}
             </div>
             <div className="mt-6">
                 <Link

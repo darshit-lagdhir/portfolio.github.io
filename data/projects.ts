@@ -88,6 +88,12 @@ export const projects: Project[] = [
             "Record management engine handling structured student data through CRUD operations. Uses binary file storage with fixed record sizes and an in-memory ID-to-offset index for retrieval. Designed as a standalone data layer.",
         problem:
             "Needed structured record management without a database. Required creation, retrieval, update, deletion with referential consistency, duplicate detection, and corrupted file recovery.",
+        constraints: [
+            "No relational database usage permitted.",
+            "C++ binary file operations only.",
+            "Performance must handle O(1) retrieval despite lack of external indexing.",
+        ],
+        engineeringFocus: "Data persistence and memory indexing",
         technicalMeta: {
             systemType: "Data Management Engine",
             architectureStyle: "Three-Tier OOP",
@@ -123,10 +129,12 @@ export const projects: Project[] = [
             "Display formatting separated from data logic for interface portability.",
         ],
         tradeoffs: [
-            "Binary format makes manual inspection and debugging harder.",
-            "In-memory index scales linearly — suitable for thousands, not millions.",
-            "No concurrent access. File locking needed for multi-user.",
-            "Schema changes require migration logic due to fixed binary layout.",
+            "Binary format limits manual inspection.",
+            "Linear scaling for in-memory mapping — not suited for millions of rows.",
+        ],
+        limitations: [
+            "Single process access only; no file locking mechanism.",
+            "Schema mutations require manual migration routines.",
         ],
         performance:
             "O(1) retrieval by ID through offset calculation. In-memory index eliminates file scans. RAII patterns for memory management. Buffered streams with explicit flush for write safety.",
@@ -150,6 +158,12 @@ export const projects: Project[] = [
             "Inventory management system handling product tracking, stock updates, and role-based operations. Applies Repository, Service Layer, and Factory patterns. Serialized file storage designed for database migration through interface contracts.",
         problem:
             "Required atomic stock updates with audit capability. Multiple product categories with role-based access. Structured reporting without external frameworks.",
+        constraints: [
+            "Pure Java SE without Spring or Hibernate.",
+            "Object serialization for persistence instead of SQL.",
+            "Strict structural adherence to OOP design patterns.",
+        ],
+        engineeringFocus: "Domain modeling and layered architecture patterns",
         technicalMeta: {
             systemType: "Backend Management System",
             architectureStyle: "Layered OOP with Design Patterns",
@@ -186,10 +200,12 @@ export const projects: Project[] = [
             "Composition over inheritance for flexibility as product types evolve.",
         ],
         tradeoffs: [
-            "Full dataset loads into memory at startup. Acceptable at current scale.",
-            "In-memory rollback only — crash during write can leave inconsistent state.",
-            "Synchronous report generation blocks execution on large datasets.",
-            "Threshold alerts batch-checked on operation, no real-time notification.",
+            "Full dataset loads into memory at startup. Scalability depends on heap size.",
+            "Synchronous execution blocks interface during heavy reporting.",
+        ],
+        limitations: [
+            "No distributed concurrent access support.",
+            "In-memory rollback state does not survive crash during write cycle.",
         ],
         performance:
             "HashMap for ID lookups, ArrayList for sequential reporting. Lazy loading on report generation. Explicit nullification of large temporary collections after use.",
