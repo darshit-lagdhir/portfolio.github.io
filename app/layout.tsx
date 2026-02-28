@@ -1,10 +1,7 @@
 import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import AmbientGradient from "@/components/ui/AmbientGradient";
 import CustomCursor from "@/components/ui/CustomCursor";
-import SmoothScroll from "@/components/ui/SmoothScroll";
+import BrutalistNavbar from "@/components/brutalist/BrutalistNavbar";
 
 export const metadata = {
   title: "Darshit Lagdhir — Digital Architect",
@@ -24,19 +21,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="selection:bg-indigo-500 selection:text-white" suppressHydrationWarning>
-      <body className="bg-[#fafafa] text-neutral-900 dark:bg-[#050505] dark:text-neutral-50 transition-colors duration-[1500ms] antialiased overflow-x-hidden" suppressHydrationWarning>
+    <html lang="en" className="selection:bg-neutral-800 selection:text-white" suppressHydrationWarning>
+      <body className="bg-[#050505] text-neutral-50 transition-colors duration-[1500ms] antialiased overflow-x-hidden snap-y snap-mandatory scroll-smooth" suppressHydrationWarning>
         <ThemeProvider>
-          <SmoothScroll>
-            {/* Layered Saturation Environment */}
-            <AmbientGradient />
-            <CustomCursor />
-            <Navbar />
-
-            <main className="relative z-10">{children}</main>
-
-            <Footer />
-          </SmoothScroll>
+          <BrutalistNavbar />
+          <CustomCursor />
+          <main className="relative z-10">{children}</main>
         </ThemeProvider>
       </body>
     </html>

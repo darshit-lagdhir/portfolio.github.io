@@ -1,21 +1,17 @@
-import HeroSection from "@/components/sections/HeroSection";
-import PhilosophySection from "@/components/sections/PhilosophySection";
-import MoveXScene from "@/components/sections/MoveXScene";
-import UIDAIAdvisoryScene from "@/components/sections/UIDAIAdvisoryScene";
-import PFCVScene from "@/components/sections/PFCVScene";
-import CurrentFocusSection from "@/components/sections/CurrentFocusSection";
-import FootprintSection from "@/components/sections/FootprintSection";
+import BrutalistHero from "@/components/brutalist/BrutalistHero";
+import BrutalistAbout from "@/components/brutalist/BrutalistAbout";
+import BrutalistProjectsPreview from "@/components/brutalist/BrutalistProjectsPreview";
+import BrutalistFocus from "@/components/brutalist/BrutalistFocus";
+import BrutalistContact from "@/components/brutalist/BrutalistContact";
 
 export default function Home() {
   return (
-    <>
-      <HeroSection />
-      <PhilosophySection />
-      <MoveXScene />
-      <UIDAIAdvisoryScene />
-      <PFCVScene />
-      <CurrentFocusSection />
-      <FootprintSection />
-    </>
+    <div className="w-full bg-[#050505] text-neutral-50">
+      <BrutalistHero />
+      <BrutalistAbout />
+      <BrutalistProjectsPreview />
+      <BrutalistFocus />
+      <BrutalistContact />
+    </div>
   );
 }

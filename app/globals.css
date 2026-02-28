@@ -1,15 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@300;400;700&family=Outfit:wght@200;400;600;900&family=Syne:wght@400;700;800&family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 @import "./fonts.css";
 
 @theme {
-  /* Premium Typeface Architecture */
-  --font-sans: "Neue Metana Next", "Inter", system-ui, sans-serif;
-  --font-display: "Dirtyline 36Daysoftype 2022", "Inter", sans-serif;
-  --font-ui: "Aalto Display Font", sans-serif;
-  --font-wide: "HK Grotesk Wide", sans-serif;
-  --font-funky: "Galgo Condensed", sans-serif;
-  --font-mono: "OffBit - Free Font", monospace;
+  /* Brutalist Typography Architecture */
+  --font-sans: "Space Grotesk", system-ui, sans-serif;
+  --font-display: "Aalto Display Font", "Space Grotesk", sans-serif;
+  --font-wide: "HK Grotesk Wide", "Space Grotesk", sans-serif;
 
   /* Architectural Color Palette */
   --color-background: #fafafa;
@@ -24,16 +21,13 @@
 }
 
 :root {
-  --font-sans: "Neue Metana Next", "Inter", sans-serif;
-  --font-display: "Dirtyline 36Daysoftype 2022", sans-serif;
+  --font-sans: "Space Grotesk", sans-serif;
+  --font-display: "Aalto Display Font", sans-serif;
 
-  /* Strict Project Mapping Variables with High-End Fallbacks */
-  --font-title: "Aalto Display Font", "Galgo Condensed", "Anton", sans-serif;
-  --font-micro: "OffBit - Free Font", "VT323", monospace;
-  --font-caption: "HK Grotesk Wide", "Syne", sans-serif;
-  --font-accent: "Neue Metana Next", "Outfit", sans-serif;
-  --font-light: "Black Sansa Thin", "Space Grotesk", sans-serif;
-  --font-ui: "Mamen Chisa", "Space Grotesk", sans-serif;
+  /* Strict Project Mapping Variables */
+  --font-title: "Aalto Display Font", "Space Grotesk", sans-serif;
+  --font-heading: "HK Grotesk Wide", "Space Grotesk", sans-serif;
+  --font-body: "Space Grotesk", sans-serif;
 
   --accent: #4f46e5;
 }
@@ -252,23 +246,11 @@ body {
     font-family: var(--font-title);
   }
 
-  .font-micro {
-    font-family: var(--font-micro);
+  .font-heading {
+    font-family: var(--font-heading);
   }
 
-  .font-caption {
-    font-family: var(--font-caption);
-  }
-
-  .font-accent {
-    font-family: var(--font-accent);
-  }
-
-  .font-light {
-    font-family: var(--font-light);
-  }
-
-  .font-ui {
-    font-family: var(--font-ui);
+  .font-body {
+    font-family: var(--font-body);
   }
 }
