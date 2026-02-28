@@ -12,8 +12,29 @@ export const projects: Project[] = [
             "A command-line management system designed to simulate real-world courier operations through structured role separation. The system handles multiple user roles — admin, staff, and customer — each with isolated command sets and permission boundaries. Built entirely in C without external frameworks, forcing deliberate architectural decisions at every layer.",
         problem:
             "The system required structured role separation without relying on external authentication frameworks or database engines. All state had to persist across sessions using file-based storage, and the command interface needed to handle complex multi-step workflows without ambiguity. The core challenge was maintaining clean separation between user roles, business logic, and data persistence within the constraints of procedural C programming.",
-        architecture:
-            "The system is organized into three distinct layers. The Input Layer handles command parsing, argument validation, and role-based routing — ensuring each user type only accesses permitted operations. The Logic Layer contains isolated modules for each domain: order management, user administration, delivery tracking, and reporting. Each module operates independently with well-defined interfaces. The Data Layer manages file-based persistence using structured flat files with consistent serialization formats, handling read/write operations through a centralized I/O abstraction that prevents direct file access from business logic.",
+        technicalMeta: {
+            systemType: "CLI Application",
+            architectureStyle: "Layered Modular",
+            storageType: "Structured Flat Files",
+            authType: "Role-Based Command Routing",
+        },
+        architectureLayers: [
+            {
+                name: "Input & Command Routing",
+                description:
+                    "Handles command parsing, argument validation, and role-based routing — ensuring each user type only accesses permitted operations through a centralized dispatcher.",
+            },
+            {
+                name: "Business Logic Modules",
+                description:
+                    "Isolated modules for each domain: order management, user administration, delivery tracking, and reporting. Each module operates independently with well-defined function interfaces.",
+            },
+            {
+                name: "Data Access & Persistence",
+                description:
+                    "Centralized I/O abstraction managing file-based persistence using structured flat files with consistent serialization formats. Business logic never touches files directly.",
+            },
+        ],
         decisions: [
             "Chose procedural C over C++ to enforce discipline in memory management and manual state handling rather than relying on OOP abstractions.",
             "Implemented a centralized command router instead of scattered conditional blocks, making the control flow predictable and extensible.",
@@ -47,8 +68,28 @@ export const projects: Project[] = [
             "A record management engine built in C++ that handles structured student data through clean CRUD operations. The system emphasizes data integrity, consistent formatting, and efficient retrieval patterns. Designed as a standalone engine that could serve as the data layer for a larger academic management system.",
         problem:
             "Managing structured records with multiple interdependent fields required careful schema design even without a formal database. The system needed to support creation, retrieval, update, and deletion of records while maintaining referential consistency and handling edge cases like duplicate entries, partial updates, and corrupted file recovery.",
-        architecture:
-            "The engine separates into three layers. The Interface Layer provides a menu-driven command system with input validation and formatted output display. The Service Layer contains the core business logic — record creation with validation, search algorithms, update conflict detection, and deletion with integrity checks. The Persistence Layer manages serialization to binary files using structured record objects, with a basic indexing mechanism that maps record IDs to file offsets for faster retrieval.",
+        technicalMeta: {
+            systemType: "Data Management Engine",
+            architectureStyle: "Three-Tier OOP",
+            storageType: "Binary File with In-Memory Index",
+        },
+        architectureLayers: [
+            {
+                name: "Interface Layer",
+                description:
+                    "Menu-driven command system with input validation and formatted output display. Separates user interaction from core logic entirely.",
+            },
+            {
+                name: "Service Layer",
+                description:
+                    "Core business logic — record creation with validation, search algorithms, update conflict detection, and deletion with integrity checks.",
+            },
+            {
+                name: "Persistence Layer",
+                description:
+                    "Serialization to binary files using structured record objects, with a basic indexing mechanism that maps record IDs to file offsets for faster retrieval.",
+            },
+        ],
         decisions: [
             "Used C++ classes to encapsulate record structures, providing type safety and method-based access control over raw struct manipulation.",
             "Implemented binary file storage instead of text to maintain fixed record sizes, enabling direct offset calculation for random access.",
@@ -81,9 +122,30 @@ export const projects: Project[] = [
         overview:
             "An inventory management system built in Java that handles product tracking, stock updates, and role-based operations through a cleanly layered OOP architecture. The system demonstrates practical application of design patterns including Repository, Service Layer, and Factory patterns within a real operational context.",
         problem:
-            "Inventory systems require precise state management — every stock update must be atomic and auditable. The system needed to handle multiple product categories, support role-based access for different operational levels, and generate structured reports without relying on external reporting frameworks. Maintaining consistency between in-memory state and persisted data was the central challenge.",
-        architecture:
-            "The system follows a three-tier architecture. The Presentation Layer handles user interaction through a structured CLI with role-based menu routing. The Business Layer implements inventory operations — stock additions, removals, transfers, and threshold alerts — through service classes with transaction-like semantics. The Data Layer uses the Repository pattern to abstract storage operations, currently backed by serialized file storage but designed for seamless database migration.",
+            "Inventory systems require precise state management — every stock update must be atomic and auditable. The system needed to handle multiple product categories, support role-based access for different operational levels, and generate structured reports without relying on external reporting frameworks.",
+        technicalMeta: {
+            systemType: "Backend Management System",
+            architectureStyle: "Layered OOP with Design Patterns",
+            storageType: "Serialized File Storage",
+            authType: "Role-Based Access Control",
+        },
+        architectureLayers: [
+            {
+                name: "Presentation Layer",
+                description:
+                    "Structured CLI with role-based menu routing. Each role sees only permitted operations, enforced at the interface level before reaching business logic.",
+            },
+            {
+                name: "Business Layer",
+                description:
+                    "Inventory operations — stock additions, removals, transfers, and threshold alerts — through service classes with transaction-like semantics and rollback capability.",
+            },
+            {
+                name: "Data Layer",
+                description:
+                    "Repository pattern abstracting storage operations, currently backed by serialized file storage but designed for seamless database migration through interface contracts.",
+            },
+        ],
         decisions: [
             "Applied the Repository pattern to decouple business logic from storage implementation, making future database integration a configuration change rather than a rewrite.",
             "Used Factory pattern for product creation to handle multiple product categories with shared interfaces but distinct validation rules.",
@@ -97,7 +159,7 @@ export const projects: Project[] = [
             "No real-time notification system for threshold alerts — currently batch-checked on operation execution.",
         ],
         performance:
-            "Collections are chosen based on access patterns — HashMap for ID-based lookups, ArrayList for sequential reporting. Lazy loading is applied to report generation to avoid computing unused summaries. Object pooling is considered but not implemented at current scale. Memory footprint is managed through explicit nullification of large temporary collections after use.",
+            "Collections are chosen based on access patterns — HashMap for ID-based lookups, ArrayList for sequential reporting. Lazy loading is applied to report generation to avoid computing unused summaries. Memory footprint is managed through explicit nullification of large temporary collections after use.",
         future: [
             "Integrate with a relational database using JDBC for persistent, queryable storage.",
             "Add a web-based dashboard using Spring Boot for remote access.",
