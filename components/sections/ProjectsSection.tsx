@@ -18,7 +18,7 @@ export default function ProjectsSection() {
         <section id="projects" className="py-28">
             <div className="mx-auto max-w-6xl px-6">
                 <motion.div {...sectionReveal}>
-                    <SectionHeading number="03">Selected Systems</SectionHeading>
+                    <SectionHeading number="03" systemLabel="SYS-03">Selected Systems</SectionHeading>
                 </motion.div>
 
                 {/* Flagship */}

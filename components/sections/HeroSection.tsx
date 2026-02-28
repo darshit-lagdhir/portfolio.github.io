@@ -93,24 +93,13 @@ export default function HeroSection() {
 
                         <motion.div
                             variants={fadeUp}
-                            className="mt-8 flex gap-5 text-xs text-neutral-400 dark:text-neutral-500"
+                            className="mt-4 flex gap-5 text-[10px] sm:text-xs text-neutral-400 dark:text-neutral-500"
                         >
-                            <a
-                                href={identity.github}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="hover:text-neutral-700 dark:hover:text-neutral-300 transition-colors"
-                            >
-                                GitHub
-                            </a>
-                            <a
-                                href={identity.linkedin}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="hover:text-neutral-700 dark:hover:text-neutral-300 transition-colors"
-                            >
-                                LinkedIn
-                            </a>
+                            <span>PDF Format</span>
+                            <span>·</span>
+                            <span>Updated 2026</span>
+                            <span>·</span>
+                            <span>ATS-Optimized</span>
                         </motion.div>
 
                         <motion.p

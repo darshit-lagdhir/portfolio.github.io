@@ -66,6 +66,31 @@ export const projects: Project[] = [
             "Lacks row-level locking mechanism.",
             "No transaction rollback for partial write failures.",
         ],
+        detailedDecisions: [
+            {
+                decision: "File-based persistence over SQL database",
+                why: "Prioritized zero-dependency environment setup and direct file I/O manipulation to focus purely on foundational logic.",
+                alternative: "SQLite / PostgreSQL",
+                rejectedReason: "Added unnecessary overhead for a core structural learning project."
+            },
+            {
+                decision: "Custom command parser over external library",
+                why: "Required granular control over input validation strings and tokenization without relying on abstracted toolkits.",
+                alternative: "argparse or similar parsing utilities",
+                rejectedReason: "Abstracts away the very state-machine logic the project aimed to solidify."
+            },
+            {
+                decision: "Strict memory cleanup on all exit paths",
+                why: "Ensured zero leak tolerance in a lower-level environment, forcing structured garbage collection awareness.",
+                alternative: "Deferred exit cleanup relying on OS",
+                rejectedReason: "Creates bad habits for long-running daemon services."
+            }
+        ],
+        ifRebuildingToday: [
+            "Introduce an abstract persistence interface to allow swapping between file-system and SQL storage easily.",
+            "Build automated unit tests for the command parsing logic, isolating it entirely from the IO execution layer.",
+            "Implement a structured logging daemon instead of inline console outputs."
+        ],
         performance:
             "Manual memory management with explicit cleanup on every exit path. Buffered I/O for file operations. Hash-based command lookup for O(1) resolution. Linear scan for record search — identified as first scaling target.",
         future: [

@@ -33,7 +33,7 @@ export default function FootprintSection() {
     return (
         <SectionWrapper id="footprint" surface>
             <motion.div {...sectionReveal}>
-                <SectionHeading number="04">Engineering Footprint</SectionHeading>
+                <SectionHeading number="04" systemLabel="SYS-04">Engineering Footprint</SectionHeading>
             </motion.div>
 
             <div className="mt-14 max-w-3xl">
@@ -113,6 +113,12 @@ export default function FootprintSection() {
                     >
                         View full profile on GitHub →
                     </a>
+                </motion.div>
+                {/* Closing Signal */}
+                <motion.div {...sectionReveal} className="mt-28 py-8 border-t border-neutral-200/50 dark:border-neutral-800/50">
+                    <p className="text-xl md:text-2xl font-medium text-neutral-900 dark:text-neutral-100 italic tracking-tight">
+                        Engineered with structure. Built with discipline.
+                    </p>
                 </motion.div>
             </div>
         </SectionWrapper>

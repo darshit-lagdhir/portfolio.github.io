@@ -24,16 +24,21 @@ export default function SystemMapSection() {
 
     return (
         <SectionWrapper id="system-map">
-            <div className="flex items-center justify-between">
-                <p className="text-xs uppercase tracking-widest text-neutral-400 dark:text-neutral-500">
-                    Engineering Layer Overview
-                </p>
-                <button
-                    onClick={() => setVisible((v) => !v)}
-                    className="text-xs font-mono text-neutral-400 dark:text-neutral-500 border border-neutral-200 dark:border-neutral-800 px-3 py-1.5 rounded-lg hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors"
-                >
-                    {visible ? "Hide" : "System View"}
-                </button>
+            <div className="flex items-start justify-between">
+                <div className="flex flex-col gap-3">
+                    <p className="text-xs uppercase tracking-widest text-neutral-400 dark:text-neutral-500">
+                        Layers structured · Systems connected
+                    </p>
+                    <button
+                        onClick={() => setVisible((v) => !v)}
+                        className="text-xs font-mono text-neutral-400 dark:text-neutral-500 border border-neutral-200 dark:border-neutral-800 px-3 py-1.5 rounded-lg hover:text-neutral-700 dark:hover:text-neutral-300 hover:border-neutral-400 dark:hover:border-neutral-600 transition-colors inline-block w-fit"
+                    >
+                        {visible ? "Hide" : "System View"}
+                    </button>
+                </div>
+                <span className="text-[10px] font-mono text-neutral-300 dark:text-neutral-700 border border-neutral-200/50 dark:border-neutral-800/50 px-2 py-0.5 rounded tracking-widest hidden sm:inline-block">
+                    [ SYS–02-X ]
+                </span>
             </div>
 
             <AnimatePresence>

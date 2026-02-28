@@ -74,9 +74,9 @@ export default function SkillsSection() {
     return (
         <SectionWrapper id="skills" surface>
             <motion.div {...sectionReveal}>
-                <SectionHeading number="02">Engineering Layers</SectionHeading>
+                <SectionHeading number="02" systemLabel="SYS-02">Engineering Layers</SectionHeading>
                 <p className="mt-3 text-xs tracking-widest uppercase text-neutral-400 dark:text-neutral-500">
-                    Stacked by architecture, not trend
+                    Principles shape structure. Stacked by architecture, not trend.
                 </p>
             </motion.div>
 

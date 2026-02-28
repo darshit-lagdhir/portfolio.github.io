@@ -66,7 +66,7 @@ export default function PhilosophySection() {
     return (
         <SectionWrapper id="philosophy">
             <motion.div {...sectionReveal}>
-                <SectionHeading number="01">Engineering Philosophy</SectionHeading>
+                <SectionHeading number="01" systemLabel="SYS-01">Engineering Philosophy</SectionHeading>
             </motion.div>
 
             <motion.div
@@ -116,6 +116,32 @@ export default function PhilosophySection() {
             >
                 Good systems are intentional, not accidental.
             </motion.p>
+
+            <motion.div
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="mt-20 pt-8 border-t border-neutral-100 dark:border-neutral-900"
+            >
+                <h4 className="text-xs uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-4">
+                    Currently Focused On
+                </h4>
+                <ul className="space-y-2 text-sm text-neutral-600 dark:text-neutral-400">
+                    <li className="flex gap-3">
+                        <span className="text-neutral-300 dark:text-neutral-700 font-mono text-xs mt-0.5">_</span>
+                        Strengthening backend architecture and system design patterns
+                    </li>
+                    <li className="flex gap-3">
+                        <span className="text-neutral-300 dark:text-neutral-700 font-mono text-xs mt-0.5">_</span>
+                        Exploring cloud-native deployment patterns
+                    </li>
+                    <li className="flex gap-3">
+                        <span className="text-neutral-300 dark:text-neutral-700 font-mono text-xs mt-0.5">_</span>
+                        Studying infrastructure automation and CI/CD structuring
+                    </li>
+                </ul>
+            </motion.div>
         </SectionWrapper>
     );
 }

@@ -8,6 +8,7 @@ import ArchitectureDiagram from "@/components/ui/ArchitectureDiagram";
 import { motion } from "framer-motion";
 import { motionConfig, sectionReveal } from "@/lib/motion";
 import { Project } from "@/types/project";
+import { identity } from "@/data/identity";
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
     return (
@@ -187,6 +188,30 @@ export default function CaseStudyTemplate({ project }: { project: Project }) {
                         </>
                     )}
 
+                    {project.detailedDecisions && project.detailedDecisions.length > 0 && (
+                        <>
+                            <Section title="Design Decisions & Alternatives Considered">
+                                <div className="space-y-6">
+                                    {project.detailedDecisions.map((d, i) => (
+                                        <div key={i} className="border-l-2 border-neutral-200 dark:border-neutral-800 pl-5 py-1">
+                                            <h4 className="font-semibold text-neutral-900 dark:text-neutral-100">{d.decision}</h4>
+                                            <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 leading-[1.7]">
+                                                {d.why}
+                                            </p>
+                                            <div className="mt-4 bg-neutral-50 dark:bg-neutral-900/40 border border-neutral-200/50 dark:border-neutral-800/50 rounded-md p-4 text-xs">
+                                                <p className="font-mono text-neutral-500 mb-1">Alternative Considered:</p>
+                                                <p className="text-neutral-700 dark:text-neutral-300 mb-3">{d.alternative}</p>
+                                                <p className="font-mono text-neutral-500 mb-1">Why Rejected:</p>
+                                                <p className="text-neutral-700 dark:text-neutral-300">{d.rejectedReason}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </Section>
+                            <Divider />
+                        </>
+                    )}
+
                     {project.tradeoffs && project.tradeoffs.length > 0 && (
                         <>
                             <Section title="Tradeoffs">
@@ -230,6 +255,27 @@ export default function CaseStudyTemplate({ project }: { project: Project }) {
                         </>
                     )}
 
+                    {project.ifRebuildingToday && project.ifRebuildingToday.length > 0 && (
+                        <>
+                            <Section title="If I Rebuilt This Today">
+                                <div className="space-y-4">
+                                    <p className="text-sm text-neutral-600 dark:text-neutral-400">
+                                        Reflecting on constraints and growth, these are the immediate architectural shifts I would introduce:
+                                    </p>
+                                    <ul className="space-y-3">
+                                        {project.ifRebuildingToday.map((item, i) => (
+                                            <li key={i} className="flex gap-3">
+                                                <span className="mt-1 text-neutral-400 dark:text-neutral-600 text-xs font-mono shrink-0">→</span>
+                                                <span className="text-neutral-600 dark:text-neutral-400">{item}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </Section>
+                            <Divider />
+                        </>
+                    )}
+
                     {project.future && project.future.length > 0 && (
                         <Section title="Future Improvements">
                             <ul className="space-y-3">
@@ -243,27 +289,48 @@ export default function CaseStudyTemplate({ project }: { project: Project }) {
                         </Section>
                     )}
 
-                    {project.githubUrl && (
+                    {(project.githubUrl || identity.resume) && (
                         <div className="mt-24 pt-8 border-t border-neutral-200 dark:border-neutral-800">
                             <p className="text-sm italic text-neutral-500 dark:text-neutral-500 mb-8 max-w-xl leading-relaxed">
                                 Code prioritizes clarity and structural separation over compactness. Modular organization is enforced throughout.
                             </p>
-                            <p className="text-xs uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-3">
-                                Source Repository
-                            </p>
-                            <a
-                                href={project.githubUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-flex items-center gap-2 group"
-                            >
-                                <span className="text-sm font-medium font-mono text-neutral-900 border-b border-neutral-400 dark:text-neutral-100 dark:border-neutral-600 group-hover:border-neutral-900 dark:group-hover:border-neutral-200 transition-colors">
-                                    {project.githubRepoName}
-                                </span>
-                                <span className="text-neutral-400 dark:text-neutral-500 group-hover:translate-x-1 group-hover:text-neutral-900 dark:group-hover:text-neutral-100 transition-all">
-                                    →
-                                </span>
-                            </a>
+
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-10">
+                                {project.githubUrl && (
+                                    <div>
+                                        <p className="text-xs uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-3">
+                                            Source Repository
+                                        </p>
+                                        <a
+                                            href={project.githubUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="inline-flex items-center gap-2 group"
+                                        >
+                                            <span className="text-sm font-medium font-mono text-neutral-900 border-b border-neutral-400 dark:text-neutral-100 dark:border-neutral-600 group-hover:border-neutral-900 dark:group-hover:border-neutral-200 transition-colors">
+                                                {project.githubRepoName}
+                                            </span>
+                                            <span className="text-neutral-400 dark:text-neutral-500 group-hover:translate-x-1 group-hover:text-neutral-900 dark:group-hover:text-neutral-100 transition-all">
+                                                →
+                                            </span>
+                                        </a>
+                                    </div>
+                                )}
+
+                                {identity.resume && (
+                                    <div>
+                                        <p className="text-xs uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-3">
+                                            Professional Profile
+                                        </p>
+                                        <a
+                                            href={identity.resume}
+                                            className="inline-block px-5 py-2 rounded-lg border border-neutral-300 dark:border-neutral-700/50 text-sm font-medium transition-colors hover:bg-neutral-100 dark:hover:bg-neutral-800"
+                                        >
+                                            View Resume
+                                        </a>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     )}
                 </div>

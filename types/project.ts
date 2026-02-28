@@ -25,8 +25,15 @@ export interface Project {
     architectureLayers?: ArchitectureLayer[];
     architecture?: string;
     decisions?: string[];
+    detailedDecisions?: {
+        decision: string;
+        why: string;
+        alternative: string;
+        rejectedReason: string;
+    }[];
     tradeoffs?: string[];
     limitations?: string[];
+    ifRebuildingToday?: string[];
     performance?: string;
     future?: string[];
     githubRepoName?: string;
