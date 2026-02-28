@@ -18,6 +18,13 @@ export const projects: Project[] = [
             storageType: "Structured Flat Files",
             authType: "Role-Based Command Routing",
         },
+        diagramLayers: [
+            { label: "User Input / CLI" },
+            { label: "Command Router" },
+            { label: "Business Logic Modules" },
+            { label: "Data Access Layer" },
+            { label: "File-Based Storage" },
+        ],
         architectureLayers: [
             {
                 name: "Input & Command Routing",
@@ -73,6 +80,12 @@ export const projects: Project[] = [
             architectureStyle: "Three-Tier OOP",
             storageType: "Binary File with In-Memory Index",
         },
+        diagramLayers: [
+            { label: "Menu Interface" },
+            { label: "Service Layer" },
+            { label: "In-Memory Index" },
+            { label: "Binary File Storage" },
+        ],
         architectureLayers: [
             {
                 name: "Interface Layer",
@@ -129,6 +142,12 @@ export const projects: Project[] = [
             storageType: "Serialized File Storage",
             authType: "Role-Based Access Control",
         },
+        diagramLayers: [
+            { label: "Role-Based CLI" },
+            { label: "Service Layer" },
+            { label: "Repository Pattern" },
+            { label: "Serialized Storage" },
+        ],
         architectureLayers: [
             {
                 name: "Presentation Layer",

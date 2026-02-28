@@ -19,6 +19,7 @@ export interface Project {
     overview?: string;
     problem?: string;
     technicalMeta?: TechnicalMeta;
+    diagramLayers?: { label: string }[];
     architectureLayers?: ArchitectureLayer[];
     architecture?: string;
     decisions?: string[];

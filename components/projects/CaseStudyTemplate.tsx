@@ -4,6 +4,7 @@ import Link from "next/link";
 import Container from "@/components/layout/Container";
 import SectionHeading from "@/components/ui/SectionHeading";
 import ContentBlock from "@/components/ui/ContentBlock";
+import ArchitectureDiagram from "@/components/ui/ArchitectureDiagram";
 import { motion } from "framer-motion";
 import { motionConfig, sectionReveal } from "@/lib/motion";
 import { Project } from "@/types/project";
@@ -105,6 +106,12 @@ export default function CaseStudyTemplate({ project }: { project: Project }) {
                     {project.architectureLayers && project.architectureLayers.length > 0 && (
                         <>
                             <Section title="System Architecture">
+                                {project.diagramLayers && (
+                                    <ArchitectureDiagram
+                                        layers={project.diagramLayers}
+                                        caption="High-level system architecture overview"
+                                    />
+                                )}
                                 <div className="mt-2 space-y-4">
                                     {project.architectureLayers.map((layer) => (
                                         <div
