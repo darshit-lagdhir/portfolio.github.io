@@ -4,26 +4,13 @@ import TiltCard from "@/components/ui/TiltCard";
 
 interface ProjectCardProps {
     project: Project;
-    flagship?: boolean;
 }
 
-export default function ProjectCard({ project, flagship }: ProjectCardProps) {
+export default function ProjectCard({ project }: ProjectCardProps) {
     return (
-        <TiltCard
-            className={`rounded-lg border bg-white dark:bg-neutral-900/50 p-6 transition-colors duration-200 flex flex-col justify-between h-full ${flagship
-                    ? "border-neutral-300 dark:border-neutral-700 hover:border-neutral-500 dark:hover:border-neutral-500"
-                    : "border-neutral-200/70 dark:border-neutral-800/70 hover:border-neutral-400 dark:hover:border-neutral-600"
-                }`}
-        >
+        <TiltCard className="rounded-lg border border-neutral-200/70 dark:border-neutral-800/70 bg-white dark:bg-neutral-900/50 p-6 transition-colors duration-200 hover:border-neutral-400 dark:hover:border-neutral-600 flex flex-col justify-between h-full">
             <div>
-                {flagship && (
-                    <span className="text-[11px] uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mb-3 block">
-                        Flagship System
-                    </span>
-                )}
-                <h3 className={`font-medium leading-snug ${flagship ? "text-xl" : "text-lg"}`}>
-                    {project.title}
-                </h3>
+                <h3 className="text-lg font-medium leading-snug">{project.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400 max-w-lg">
                     {project.shortDescription}
                 </p>
