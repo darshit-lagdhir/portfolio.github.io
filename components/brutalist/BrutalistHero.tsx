@@ -6,7 +6,7 @@ export default function BrutalistHero() {
     const ease = [0.16, 1, 0.3, 1] as const;
 
     return (
-        <section className="min-h-screen w-full flex flex-col justify-center items-start bg-[#050505] overflow-hidden snap-start relative px-8 md:px-12 xl:px-32">
+        <section className="min-h-screen w-full flex flex-col justify-center items-start bg-[#050505] overflow-hidden snap-start relative px-8 md:px-12 xl:px-32 py-60">
             <div className="w-full max-w-screen-2xl mx-auto z-10 relative">
 
                 {/* Micro Label - Prompt 91 */}
@@ -58,11 +58,11 @@ export default function BrutalistHero() {
                     transition={{ delay: 0.8, duration: 1, ease: ease }}
                     className="mt-12 md:mt-16 flex flex-wrap items-center gap-12"
                 >
-                    <a href="#projects" className="font-heading text-step-0 uppercase tracking-micro text-white hover:text-neutral-500 transition-colors">
+                    <a href="#projects" className="font-heading text-step-0 uppercase tracking-micro text-white link-precision transition-colors duration-200">
                         View System
                     </a>
                     <div className="w-12 h-px bg-neutral-900" />
-                    <a href="https://github.com/darshit-lagdhir" target="_blank" className="font-heading text-step-0 uppercase tracking-micro text-neutral-600 hover:text-white transition-colors">
+                    <a href="https://github.com/darshit-lagdhir" target="_blank" className="font-heading text-step-0 uppercase tracking-micro text-neutral-600 hover:text-white link-precision transition-colors duration-200">
                         Source Control
                     </a>
                 </motion.div>

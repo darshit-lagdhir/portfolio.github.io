@@ -34,35 +34,35 @@ export default function BrutalistProjectsPreview() {
                 {projects.map((project, i) => (
                     <div
                         key={i}
-                        className="w-full h-full flex-shrink-0 flex flex-col justify-center items-center py-20 px-8 relative"
+                        className="w-full h-full flex-shrink-0 flex flex-col justify-center items-center py-20 px-8 relative border border-neutral-900 bg-layered overflow-hidden transition-all duration-300 group hover:border-neutral-700"
                     >
                         <motion.div
-                            initial={{ opacity: 0, y: 15 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
                             transition={{ duration: 1, ease: ease }}
                             viewport={{ once: true }}
-                            className="w-full h-full max-w-screen-2xl mx-auto grid grid-cols-4 md:grid-cols-12 gap-x-6 gap-y-12 content-center items-end py-20 group relative overflow-hidden"
+                            className="w-full h-full max-w-screen-2xl mx-auto grid grid-cols-4 md:grid-cols-12 gap-x-6 gap-y-12 content-center items-end py-20 relative"
                         >
                             {/* Project Header - Micro Label Style */}
                             <div className="col-span-4 md:col-span-12 lg:col-span-10 z-10 flex flex-col gap-10">
-                                <span className="font-heading text-step--1 uppercase tracking-micro text-neutral-500 block mb-8">
+                                <span className="font-heading text-step--1 uppercase tracking-micro text-neutral-500 block mb-8 transition-colors duration-200 group-hover:text-neutral-400">
                                     SYS // 0{i + 1}
                                 </span>
 
                                 {/* Title - Magazine Cover Aesthetic */}
-                                <h3 className="font-title text-step-5 leading-tight-title text-white uppercase tracking-tight-title transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.01] transform origin-left">
+                                <h3 className="font-title text-step-5 leading-tight-title text-white uppercase tracking-tight-title transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1">
                                     {project.name}
                                 </h3>
 
                                 {/* Descriptor - Space Grotesk Neutral */}
-                                <p className="font-body text-step-2 text-neutral-400 font-light mt-12 mb-20 tracking-wide max-w-[40ch] leading-tight">
+                                <p className="font-body text-step-2 text-neutral-400 font-light mt-12 mb-20 tracking-wide max-w-[40ch] leading-tight transition-colors duration-200 group-hover:text-neutral-300">
                                     {project.descriptor}
                                 </p>
 
                                 {/* Action Link - HK Grotesk Wide Uppercase Wide Tracking */}
                                 <Link
                                     href={project.slug}
-                                    className="font-heading text-step-0 uppercase tracking-micro text-white hover:text-neutral-500 transition-colors border-b border-transparent hover:border-neutral-500 pb-2 inline-block max-w-fit"
+                                    className="font-heading text-step-0 uppercase tracking-micro text-white link-precision pb-2 inline-block max-w-fit"
                                 >
                                     Enter System
                                 </Link>

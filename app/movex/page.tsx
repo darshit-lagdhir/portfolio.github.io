@@ -7,17 +7,13 @@ export default function MoveXPage() {
     const ease = [0.16, 1, 0.3, 1] as const;
 
     return (
-        <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1, ease: ease }}
-            className="min-h-screen w-full bg-[#050505] text-neutral-50 px-8 py-32 md:px-12 xl:px-32 relative"
+        <div
+            className="min-h-screen w-full bg-[#050505] text-neutral-50 px-8 py-32 md:px-12 xl:px-32 relative bg-layered overflow-hidden"
         >
             <div className="w-full max-w-screen-2xl mx-auto flex flex-col gap-40">
 
-                {/* Back Link - Micro Style */}
                 <div className="border-b border-neutral-900 pb-10">
-                    <Link href="/" className="font-heading text-step--1 uppercase tracking-micro text-neutral-500 hover:text-white transition-colors">
+                    <Link href="/" className="font-heading text-step--1 uppercase tracking-micro text-neutral-500 hover:text-white link-precision transition-colors duration-200">
                         ← RETURN / INDEX
                     </Link>
                 </div>
@@ -50,7 +46,7 @@ export default function MoveXPage() {
                         <span className="font-heading text-step--1 uppercase tracking-micro text-neutral-600 block border-b border-neutral-900 pb-4">CORE MODULES // 01</span>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-32">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border-l border-t border-neutral-900/50">
                         {[
                             { title: "Authentication", desc: "Argon2 encryption + dual JWT isolated pathways." },
                             { title: "Route Engine", desc: "Optimized multi-node dispatch routing." },
@@ -59,7 +55,7 @@ export default function MoveXPage() {
                             { title: "Telemetry Analytics", desc: "PostgreSQL analytical query optimization." },
                             { title: "Notification Sync", desc: "Webhook-based scalable notification streams." }
                         ].map((mod, i) => (
-                            <div key={i} className="flex flex-col gap-8">
+                            <div key={i} className="flex flex-col gap-8 p-12 border-r border-b border-neutral-900/50 bg-[#070707] hover:bg-[#0a0a0a] transition-colors duration-500">
                                 <h3 className="font-heading text-step-0 font-bold uppercase tracking-micro text-white">{mod.title}</h3>
                                 <div className="w-12 h-px bg-neutral-900" />
                                 <p className="font-body text-step-1 text-neutral-500 font-light max-w-[30ch] leading-snug">{mod.desc}</p>
@@ -68,8 +64,7 @@ export default function MoveXPage() {
                     </div>
                 </div>
 
-                {/* Architecture Narrative - Center Heavy */}
-                <div className="w-full bg-neutral-900/10 border border-neutral-900 py-32 md:py-60 flex flex-col items-center justify-center text-center px-8">
+                <div className="w-full bg-neutral-900/10 border border-neutral-900 py-32 md:py-60 flex flex-col items-center justify-center text-center px-8 transition-colors duration-300 hover:border-neutral-800">
                     <span className="font-heading text-step--1 uppercase tracking-micro text-neutral-600 block mb-16">ARCHITECTURE // 02</span>
                     <h2 className="font-title text-step-4 text-neutral-200 uppercase tracking-tight-title block mb-12 leading-none">
                         Node.js <span className="text-neutral-800 mx-4">/</span> Prisma <span className="text-neutral-800 mx-4">/</span> PostgreSQL
@@ -103,12 +98,12 @@ export default function MoveXPage() {
                 {/* Closing Link */}
                 <div className="border-t border-neutral-900 pt-20 pb-40 flex justify-between items-baseline">
                     <span className="font-heading text-step--1 text-neutral-600">DARSHIT LAGDHIR / 25</span>
-                    <a href="https://github.com/darshit-lagdhir/" target="_blank" className="font-title text-step-4 text-white uppercase tracking-tight-title hover:italic transition-all duration-700">
+                    <a href="https://github.com/darshit-lagdhir/" target="_blank" className="font-title text-step-4 text-white uppercase tracking-tight-title link-precision transition-all duration-700">
                         Source
                     </a>
                 </div>
 
             </div>
-        </motion.div>
+        </div>
     );
 }

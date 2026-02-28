@@ -38,13 +38,13 @@ export default function BrutalistContact() {
 
                     {/* Links - HK Grotesk Wide (step-0) */}
                     <div className="col-span-2 md:col-start-9 md:col-span-2 text-right md:text-left">
-                        <a href="https://github.com/darshit-lagdhir" target="_blank" className="font-heading text-step-0 uppercase tracking-micro text-neutral-400 hover:text-white transition-colors duration-300">
+                        <a href="https://github.com/darshit-lagdhir" target="_blank" className="font-heading text-step-0 uppercase tracking-micro text-neutral-400 link-precision transition-colors duration-200">
                             GITHUB
                         </a>
                     </div>
 
                     <div className="col-span-2 md:col-start-11 md:col-span-2 text-right">
-                        <a href="https://linkedin.com/in/darshit-lagdhir" target="_blank" className="font-heading text-step-0 uppercase tracking-micro text-neutral-400 hover:text-white transition-colors duration-300">
+                        <a href="https://linkedin.com/in/darshit-lagdhir" target="_blank" className="font-heading text-step-0 uppercase tracking-micro text-neutral-400 link-precision transition-colors duration-200">
                             LINKEDIN
                         </a>
                     </div>

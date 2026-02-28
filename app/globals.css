@@ -1,187 +1,184 @@
 ﻿@import "tailwindcss";
 @import "./fonts.css";
 
-@theme {
-  /* Brutalist Typography Architecture */
+/* 
+  DARSHIT LAGDHIR — SUPREME ARCHITECTURAL MANIFEST
+  PHASE 93: VISUAL IDENTITY DEPTH + ATMOSPHERE CONTROL SYSTEM
+  
+  Created with restraint. Cold but artistic. 
+  Layered darkness. Subtle material depth. Intentional texture.
+*/
+
+/* ------------------------------------------------------------
+   ROOT DESIGN TOKENS (CSS VARIABLE ENGINE)
+   Enforced at :root level for maximum IDE compatibility.
+   ------------------------------------------------------------ */
+
+:root {
+  /* Core Brand Colors */
+  --background: #050505;
+  --foreground: #ffffff;
+  --accent: #ffffff;
+  --muted: #6b6b6b;
+  --border: #1a1a1a;
+  --surface: #0a0a0a;
+  --glass: rgba(5, 5, 5, 0.8);
+
+  /* Font Families - Strict Self-Hosted Hierarchy */
   --font-sans: "Space Grotesk", system-ui, sans-serif;
   --font-display: "Aalto Display Font", "Space Grotesk", sans-serif;
   --font-wide: "HK Grotesk Wide", "Space Grotesk", sans-serif;
 
-  /* Architectural Color Palette */
-  --color-background: #050505;
-  --color-foreground: #ffffff;
-  --color-accent: #ffffff;
-  --color-muted: #666666;
-  --color-surface: #0a0a0a;
-
-  /* Typography Scale Overhaul - Modular */
-  --font-size-mega: clamp(4rem, 10vw, 12rem);
-  --font-size-display: clamp(3rem, 8vw, 8rem);
-}
-
-:root {
-  --font-sans: "Space Grotesk", sans-serif;
-  --font-display: "Aalto Display Font", "Space Grotesk", sans-serif;
-
-  /* Project Variable Mapping */
+  /* Typed Font Classes */
   --font-title: "Aalto Display Font", "Space Grotesk", sans-serif;
   --font-heading: "HK Grotesk Wide", "Space Grotesk", sans-serif;
   --font-body: "Space Grotesk", sans-serif;
 
-  --accent: #ffffff;
-
-  /* Modular Scale Architecture (Prompt 91) */
+  /* Modular Scale steps (Prompt 91) */
   --step--1: clamp(0.7rem, 0.8vw, 0.8rem);
-  /* Micro Label */
   --step-0: clamp(0.9rem, 1vw, 1rem);
-  /* UI Utility / Navigation */
   --step-1: clamp(1rem, 1.2vw, 1.25rem);
-  /* Body Regular */
   --step-2: clamp(1.25rem, 1.5vw, 1.5rem);
-  /* Body Large / Subheading */
   --step-3: clamp(2rem, 4vw, 3.5rem);
-  /* Section Heading */
   --step-4: clamp(3.5rem, 8vw, 8rem);
-  /* Project Title */
   --step-5: clamp(5rem, 15vw, 18rem);
-  /* Hero Display */
 
-  /* Spacing System */
+  /* Advanced Spacing Tokens */
+  --space-micro: 0.25rem;
   --space-xs: clamp(0.5rem, 1vw, 0.75rem);
   --space-s: clamp(1rem, 2vw, 1.5rem);
   --space-m: clamp(2rem, 4vw, 4rem);
   --space-l: clamp(4rem, 8vw, 8rem);
   --space-xl: clamp(8rem, 16vw, 16rem);
+  --space-section: clamp(10rem, 20vw, 25rem);
+
+  /* High-Performance Interaction Timing */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-micro: 100ms;
+  --duration-fast: 200ms;
+  --duration-normal: 400ms;
+  --duration-slow: 800ms;
+  --duration-luxury: 1200ms;
+
+  /* Design Accents */
+  --border-radius: 0px;
+
+  /* Atmosphere Constants */
+  --bg-deep: #050505;
+  --bg-secondary: #080808;
+  --text-primary: #ffffff;
+  --text-muted: #6b6b6b;
+  --border-subtle: rgba(255, 255, 255, 0.05);
+}
+
+/* Mapping Root to Tailwind 4 @theme */
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-surface: var(--surface);
+
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+  --font-wide: var(--font-wide);
+}
+
+/* ------------------------------------------------------------
+   BASE RESET & ARCHITECTURAL FOUNDATION
+   ------------------------------------------------------------ */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+  background-color: var(--background);
 }
 
 body {
-  background-color: #050505;
-  color: #ffffff;
+  background-color: var(--background);
+  color: var(--foreground);
   font-family: var(--font-body);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  /* Removed custom cursor as per Propmt 91's lean towards minimal noise */
+  cursor: default;
 }
 
-/* Base Spacing & Hierarchy */
-section {
-  padding-top: var(--space-xl);
-  padding-bottom: var(--space-xl);
+::selection {
+  background-color: var(--foreground);
+  color: var(--background);
 }
 
-h1,
-h2,
-h3 {
-  margin-bottom: var(--space-m);
+/* ------------------------------------------------------------
+   LAYOUT GEOMETRY (GLOBAL)
+   ------------------------------------------------------------ */
+
+.container-grid {
+  display: grid;
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 2rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
 }
 
-p {
-  max-width: 65ch;
-  /* Prompt 91: Paragraph width control */
-  line-height: 1.6;
-}
-
-/* Kinetic Typography Utilities (Kept from User Restore Request) */
-.text-kinetic {
-  display: inline-block;
-  white-space: nowrap;
-}
-
-.char-kinetic {
-  display: inline-block;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.text-mask {
-  -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
-  mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
-  -webkit-mask-size: 100% 200%;
-  mask-size: 100% 200%;
-  -webkit-mask-position: 0 0;
-  mask-position: 0 0;
-  transition: mask-position 0.8s ease;
-}
-
-/* Layered Depth Stacks */
-.depth-stack {
-  position: relative;
-  z-index: 10;
-}
-
-.depth-layer-back {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: -1;
-  opacity: 0.03;
-  pointer-events: none;
-  font-size: clamp(6rem, 20vw, 25rem);
-  line-height: 0.8;
-  white-space: nowrap;
-}
-
-/* Visual Saturation Overlays */
-.noise-overlay {
-  position: fixed;
-  inset: -200%;
-  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-  opacity: 0.03;
-  pointer-events: none;
-  z-index: 9999;
-  animation: noise 0.2s infinite;
-}
-
-@keyframes noise {
-  0% {
-    transform: translate(0, 0)
-  }
-
-  10% {
-    transform: translate(-5%, -5%)
-  }
-
-  20% {
-    transform: translate(-10%, 5%)
-  }
-
-  30% {
-    transform: translate(5%, -10%)
-  }
-
-  40% {
-    transform: translate(-5%, 15%)
-  }
-
-  50% {
-    transform: translate(-10%, 5%)
-  }
-
-  60% {
-    transform: translate(15%, 0)
-  }
-
-  70% {
-    transform: translate(0, 10%)
-  }
-
-  80% {
-    transform: translate(-15%, 0)
-  }
-
-  90% {
-    transform: translate(10%, 5%)
-  }
-
-  100% {
-    transform: translate(5%, 0)
+@media (min-width: 768px) {
+  .container-grid {
+    grid-template-columns: repeat(12, 1fr);
+    padding-inline: 4rem;
+    gap: 2rem;
   }
 }
 
-/* Typography Utility layers */
+@media (min-width: 1536px) {
+  .container-grid {
+    max-width: 1536px;
+    padding-inline: 0;
+  }
+}
+
+/* ------------------------------------------------------------
+   TYPOGRAPHIC DOMINANCE SYSTEM (PROMPT 91)
+   ------------------------------------------------------------ */
+
+@layer base {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-title);
+    text-transform: uppercase;
+    font-weight: 400;
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    color: var(--text-primary);
+  }
+
+  p {
+    font-family: var(--font-body);
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 65ch;
+    color: var(--text-muted);
+  }
+}
+
 @layer utilities {
+
+  /* Scale Primitive Classes */
   .text-step--1 {
     font-size: var(--step--1);
   }
@@ -210,6 +207,7 @@ p {
     font-size: var(--step-5);
   }
 
+  /* Font Family Mappings */
   .font-title {
     font-family: var(--font-title);
   }
@@ -222,8 +220,14 @@ p {
     font-family: var(--font-body);
   }
 
+  /* Tracking & Leading Precision */
   .tracking-micro {
     letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+
+  .tracking-wide {
+    letter-spacing: 0.05em;
   }
 
   .tracking-tight-title {
@@ -237,20 +241,238 @@ p {
   .leading-tight-title {
     line-height: 0.9;
   }
+
+  .leading-none {
+    line-height: 1;
+  }
+
+  /* Architectural Components */
+  .hr-architectural {
+    border: none;
+    border-top: 1px solid var(--border-subtle);
+    margin-block: var(--space-l);
+    position: relative;
+    width: 100%;
+  }
+
+  .hr-architectural::after {
+    content: "/////";
+    position: absolute;
+    right: 0;
+    top: 0.5rem;
+    font-family: var(--font-heading);
+    font-size: var(--step--1);
+    color: var(--border-subtle);
+    letter-spacing: 0.3em;
+  }
+
+  .border-architectural {
+    border: 1px solid var(--border-subtle);
+  }
+
+  .bg-layered {
+    background-color: var(--bg-deep);
+    position: relative;
+  }
+
+  .bg-layered::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(255, 255, 255, 0.01) 100%);
+    pointer-events: none;
+  }
 }
 
-/* Scroll Behavior */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
+/* ------------------------------------------------------------
+   INTERACTION PRECISION SYSTEM (PROMPT 92)
+   ------------------------------------------------------------ */
+
+.link-precision {
+  position: relative;
+  transition: color var(--duration-fast) var(--ease-out);
+  cursor: pointer;
 }
 
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+.link-precision::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: -4px;
+  left: 0;
+  background-color: currentColor;
+  transition: width var(--duration-fast) var(--ease-out);
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+.link-precision:hover::after {
+  width: 100%;
+}
+
+.btn-precision {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 2.5rem;
+  border: 1px solid var(--border);
+  transition: all var(--duration-fast) var(--ease-out);
+  text-transform: uppercase;
+  font-family: var(--font-heading);
+  font-size: var(--step--1);
+  letter-spacing: 0.25em;
+  background: transparent;
+  color: var(--foreground);
+}
+
+.btn-precision:hover {
+  background-color: var(--foreground);
+  color: var(--background);
+  transform: translateY(-2px);
+}
+
+.btn-precision:active {
+  transform: translateY(0) scale(0.98);
+}
+
+*:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 4px;
+}
+
+/* ------------------------------------------------------------
+   REMOVED KINETIC MASKS FOR ATMOSPHERE RESTRAINT (PROMPT 93)
+   ------------------------------------------------------------ */
+
+/* ------------------------------------------------------------
+   HIGH-FIDELITY VISUAL TEXTURE
+   ------------------------------------------------------------ */
+
+.noise-overlay {
+  position: fixed;
+  inset: -150%;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.015;
+  pointer-events: none;
+  z-index: 9999;
+  animation: noise 8s steps(10) infinite;
+}
+
+@keyframes noise {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  10% {
+    transform: translate(-1%, -1%);
+  }
+
+  20% {
+    transform: translate(-2%, 1%);
+  }
+
+  33% {
+    transform: translate(1%, -2%);
+  }
+
+  44% {
+    transform: translate(-1%, 2%);
+  }
+
+  51% {
+    transform: translate(-2%, 1%);
+  }
+
+  67% {
+    transform: translate(2%, 0px);
+  }
+
+  80% {
+    transform: translate(1%, 2%);
+  }
+
+  90% {
+    transform: translate(-2%, 1%);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.grid-lines {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
+  background-size: clamp(4rem, 10vw, 10rem) clamp(4rem, 10vw, 10rem);
+  opacity: 1;
+}
+
+/* ------------------------------------------------------------
+   SCROLLBAR & ASYMMETRIC UTILITY
+   ------------------------------------------------------------ */
+
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1a1a1a;
+  transition: background var(--duration-fast) var(--ease-out);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #404040;
+}
+
+section {
+  position: relative;
+  width: 100%;
+  padding-block: var(--space-xl);
+}
+
+.snap-container {
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+.snap-section {
+  height: 100vh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.asymmetric-right {
+  margin-left: auto;
+  text-align: right;
+}
+
+.asymmetric-left {
+  margin-right: auto;
+  text-align: left;
+}
+
+.border-dashed-v {
+  border-left: 1px dashed var(--border);
+}
+
+.border-dashed-h {
+  border-top: 1px dashed var(--border);
+}
+
+@media (max-width: 768px) {
+
+  .asymmetric-right,
+  .asymmetric-left {
+    text-align: left;
+  }
 }

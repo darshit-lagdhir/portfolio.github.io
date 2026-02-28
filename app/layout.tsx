@@ -1,6 +1,5 @@
 import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
-import CustomCursor from "@/components/ui/CustomCursor";
 import BrutalistNavbar from "@/components/brutalist/BrutalistNavbar";
 
 export const metadata = {
@@ -21,11 +20,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="selection:bg-neutral-800 selection:text-white" suppressHydrationWarning>
-      <body className="bg-[#050505] text-neutral-50 transition-colors duration-[1500ms] antialiased overflow-x-hidden snap-y snap-mandatory scroll-smooth" suppressHydrationWarning>
+    <html lang="en" className="selection:bg-white selection:text-black" suppressHydrationWarning>
+      <body className="bg-[#050505] text-neutral-50 antialiased overflow-x-hidden snap-y snap-mandatory scroll-smooth" suppressHydrationWarning>
+        <div className="noise-overlay" />
+        <div className="grid-lines" />
+
         <ThemeProvider>
           <BrutalistNavbar />
-          <CustomCursor />
           <main className="relative z-10">{children}</main>
         </ThemeProvider>
       </body>

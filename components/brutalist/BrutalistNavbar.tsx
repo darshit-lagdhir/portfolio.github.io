@@ -25,7 +25,7 @@ export default function BrutalistNavbar() {
             className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-[#050505] border-b border-neutral-900 py-4" : "bg-transparent py-8 pt-12"
                 }`}
         >
-            <div className="w-full px-8 md:px-12 grid grid-cols-4 md:grid-cols-12 items-center">
+            <div className="w-full max-w-screen-2xl mx-auto px-8 md:px-12 xl:px-32 grid grid-cols-4 md:grid-cols-12 items-center">
                 {/* Brand / Name */}
                 <div className="col-span-2 md:col-span-4 lg:col-span-3">
                     <Link href="/" className="font-heading text-step-0 uppercase tracking-micro text-neutral-100 hover:text-neutral-400 transition-colors">
@@ -34,21 +34,24 @@ export default function BrutalistNavbar() {
                 </div>
 
                 {/* Navigation Links */}
-                <nav className="col-span-2 md:col-span-8 lg:col-span-9 flex justify-end gap-12">
+                <nav className="col-span-2 md:col-span-8 lg:col-span-9 flex justify-end gap-16">
                     {[
                         { name: "Home", href: "/" },
                         { name: "Systems", href: "/#projects" },
                         { name: "Archive", href: "https://github.com/darshit-lagdhir" }
-                    ].map((link, i) => (
-                        <Link
-                            key={i}
-                            href={link.href}
-                            className={`font-heading text-step--1 uppercase tracking-micro transition-colors ${pathname === link.href ? "text-white border-b border-white pb-1" : "text-neutral-500 hover:text-neutral-200"
-                                }`}
-                        >
-                            {link.name}
-                        </Link>
-                    ))}
+                    ].map((link, i) => {
+                        const isActive = pathname === link.href;
+                        return (
+                            <Link
+                                key={i}
+                                href={link.href}
+                                className={`font-heading text-step--1 uppercase tracking-micro link-precision transition-colors duration-200 ${isActive ? "text-white after:w-full" : "text-neutral-500 hover:text-white"
+                                    }`}
+                            >
+                                {link.name}
+                            </Link>
+                        );
+                    })}
                 </nav>
             </div>
         </motion.header>

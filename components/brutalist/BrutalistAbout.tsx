@@ -26,7 +26,7 @@ export default function BrutalistAbout() {
                 <span className="font-heading text-step--1 uppercase tracking-micro text-neutral-600 block mb-2 font-bold">SECT // 01</span>
             </div>
 
-            <div className="w-full max-w-screen-2xl mx-auto flex flex-col gap-40">
+            <div className="w-full max-w-screen-2xl mx-auto flex flex-col gap-60">
                 {aboutBlocks.map((block, i) => {
                     const isEven = i % 2 === 0;
                     return (
