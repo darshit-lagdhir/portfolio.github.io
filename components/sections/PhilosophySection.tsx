@@ -44,7 +44,7 @@ export default function PhilosophySection() {
                         {pillars.map((pillar) => (
                             <div
                                 key={pillar.title}
-                                className="rounded-lg border border-neutral-200 dark:border-neutral-800 p-6 transition-colors duration-200 hover:border-neutral-400 dark:hover:border-neutral-600"
+                                className="rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900/50 p-6 transition-colors duration-200 hover:border-neutral-400 dark:hover:border-neutral-600"
                             >
                                 <h3 className="text-lg font-medium">{pillar.title}</h3>
                                 <p className="mt-3 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400 max-w-md">
