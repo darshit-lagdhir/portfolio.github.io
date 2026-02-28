@@ -12,7 +12,7 @@ export default function FootprintSection() {
     return (
         <SectionWrapper id="footprint" surface>
             <motion.div {...sectionReveal}>
-                <SectionHeading>Engineering Footprint</SectionHeading>
+                <SectionHeading number="04">Engineering Footprint</SectionHeading>
             </motion.div>
 
             <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-10">

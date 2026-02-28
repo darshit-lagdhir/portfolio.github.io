@@ -49,7 +49,7 @@ export default function SkillsSection() {
     return (
         <SectionWrapper id="skills" surface>
             <motion.div {...sectionReveal}>
-                <SectionHeading>System Capabilities</SectionHeading>
+                <SectionHeading number="02">System Capabilities</SectionHeading>
             </motion.div>
 
             <motion.div

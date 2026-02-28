@@ -28,7 +28,7 @@ export default function PhilosophySection() {
     return (
         <SectionWrapper id="philosophy">
             <motion.div {...sectionReveal}>
-                <SectionHeading>Engineering Philosophy</SectionHeading>
+                <SectionHeading number="01">Engineering Philosophy</SectionHeading>
             </motion.div>
 
             <motion.div
