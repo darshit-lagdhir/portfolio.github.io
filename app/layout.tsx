@@ -1,5 +1,7 @@
 import "./globals.css";
 import BrutalistNavbar from "@/components/brutalist/BrutalistNavbar";
+import AtmosphericBackground from "@/components/brutalist/AtmosphericBackground";
+import SmoothScroll from "@/components/brutalist/SmoothScroll";
 
 export const metadata = {
   title: "Darshit Lagdhir — Digital Architect",
@@ -21,10 +23,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className="bg-background text-foreground antialiased overflow-x-hidden selection:bg-foreground selection:text-background" suppressHydrationWarning>
+        <SmoothScroll />
+        <AtmosphericBackground />
         <BrutalistNavbar />
         <main className="relative z-10 w-full">{children}</main>
       </body>
     </html>
   );
 }
+
+
 

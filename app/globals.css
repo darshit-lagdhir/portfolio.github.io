@@ -2,21 +2,23 @@
 @import "./fonts.css";
 
 /* 
-  DARSHIT LAGDHIR — ARCHITECTURAL INDEX
-  PROMPT 100: IDENTITY SILENCE
+  DARSHIT LAGDHIR — SPATIAL ARCHITECTURE 102
+  PHASE 2: SPATIAL DRAMA + 3D ENVIRONMENT
 */
 
 :root {
-  /* Core Foundation */
+  /* Core Foundation — Dimensional Palette */
   --background: #050505;
   --bg-subtle: #080808;
+  --bg-elevated: #0a0a0a;
   --foreground: #ffffff;
   --accent: #ffffff;
   --muted: #525252;
   --border: #141414;
   --surface: #070707;
+  --glow: rgba(255, 255, 255, 0.03);
 
-  /* Font Families — Strict 3-Font System */
+  /* Font Families */
   --font-sans: "Space Grotesk", system-ui, sans-serif;
   --font-display: "Aalto Display Font", "Space Grotesk", sans-serif;
   --font-wide: "HK Grotesk Wide", "Space Grotesk", sans-serif;
@@ -25,14 +27,14 @@
   --font-heading: var(--font-wide);
   --font-body: var(--font-sans);
 
-  /* Restrained Type Scale (Prompt 100) */
+  /* Type Scale */
   --step--1: clamp(0.65rem, 0.75vw, 0.75rem);
   --step-0: clamp(0.85rem, 0.9vw, 0.95rem);
-  --step-1: clamp(1rem, 1.1vw, 1.1rem);
-  --step-2: clamp(1.2rem, 1.3vw, 1.4rem);
-  --step-3: clamp(1.6rem, 3vw, 2.2rem);
-  --step-4: clamp(2.2rem, 5vw, 4rem);
-  --step-5: clamp(3rem, 7vw, 7rem);
+  --step-1: clamp(1rem, 1.1vw, 1.25rem);
+  --step-2: clamp(1.2rem, 1.5vw, 1.75rem);
+  --step-3: clamp(2rem, 4vw, 3rem);
+  --step-4: clamp(3rem, 7vw, 5.5rem);
+  --step-5: clamp(4.5rem, 10vw, 10rem);
 
   /* Spacing Discipline */
   --gap-xs: 0.5rem;
@@ -40,14 +42,14 @@
   --gap-m: 2rem;
   --gap-l: 4rem;
   --gap-xl: 8rem;
-  --gap-section: clamp(6rem, 10vh, 8rem);
+  --gap-section: clamp(10rem, 20vh, 15rem);
 
-  /* Invisible Motion System */
-  --ease-control: cubic-bezier(0.16, 1, 0.3, 1);
-  --duration-fast: 200ms;
+  /* Kinetic Easing */
+  --ease-spatial: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-immersive: cubic-bezier(0.25, 1, 0.5, 1);
+  --duration-kinetic: 600ms;
 }
 
-/* Tailwind 4 Theme Mapping */
 @theme {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -56,16 +58,17 @@
   --color-border: var(--border);
   --color-surface: var(--surface);
   --color-bg-subtle: var(--bg-subtle);
+  --color-bg-elevated: var(--bg-elevated);
 
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);
   --font-wide: var(--font-wide);
 
-  --ease-out: var(--ease-control);
+  --ease-immersive: var(--ease-immersive);
 }
 
 /* ------------------------------------------------------------
-   BASE RESET
+   BASE ARCHITECTURE & SPATIAL ROOT
    ------------------------------------------------------------ */
 
 * {
@@ -76,9 +79,10 @@
 }
 
 html {
-  scroll-behavior: smooth;
-  scrollbar-gutter: stable;
+  scroll-behavior: auto;
+  /* Managed by Lenis for buttery feel */
   background-color: var(--background);
+  overflow-x: hidden;
 }
 
 body {
@@ -87,37 +91,57 @@ body {
   font-family: var(--font-body);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-  cursor: default;
+  position: relative;
+  min-height: 100vh;
+
+  /* Global Perspective Root */
+  perspective: 1200px;
+  perspective-origin: 50% 50%;
 }
 
-::selection {
-  background-color: var(--foreground);
-  color: var(--background);
+/* Micro-Grain Overlay */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  pointer-events: none;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.04;
+  mix-blend-mode: soft-light;
+}
+
+/* Atmospheric Background Enhancement */
+.atmospheric-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(255, 255, 255, 0.03) 0%,
+      rgba(0, 0, 0, 0) 60%),
+    linear-gradient(135deg, #050505 0%, #0a0a0a 100%);
+  pointer-events: none;
+  transition: background 0.2s var(--ease-spatial);
 }
 
 /* ------------------------------------------------------------
-   TYPOGRAPHIC RESTRAINT (PROMPT 100)
+   TYPOGRAPHIC SPECTACLE
    ------------------------------------------------------------ */
 
 @layer base {
 
   h1,
   h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  h3 {
     font-family: var(--font-title);
     text-transform: uppercase;
     font-weight: 400;
-    line-height: 1.1;
-    /* Normalized */
-    letter-spacing: -0.02em;
-    /* Reduced intensity */
+    line-height: 0.85;
+    letter-spacing: -0.06em;
     color: var(--foreground);
     text-rendering: optimizeLegibility;
+    transform-style: preserve-3d;
   }
 
   p {
@@ -125,28 +149,11 @@ body {
     font-weight: 300;
     line-height: 1.6;
     letter-spacing: 0.01em;
-    max-width: 60ch;
     color: var(--muted);
   }
 }
 
 @layer utilities {
-  .text-step--1 {
-    font-size: var(--step--1);
-  }
-
-  .text-step-0 {
-    font-size: var(--step-0);
-  }
-
-  .text-step-1 {
-    font-size: var(--step-1);
-  }
-
-  .text-step-2 {
-    font-size: var(--step-2);
-  }
-
   .text-step-3 {
     font-size: var(--step-3);
   }
@@ -160,35 +167,24 @@ body {
   }
 
   .tracking-micro {
-    letter-spacing: 0.1em;
-    /* Reduced */
+    letter-spacing: 0.2em;
     text-transform: uppercase;
   }
 
-  .tracking-tight-title {
-    letter-spacing: -0.03em;
-  }
-
-  .leading-tight-title {
-    line-height: 1.0;
-  }
-
-  /* ------------------------------------------------------------
-     GRID ARCHITECTURE (12-COLUMN DISCIPLINE)
-     ------------------------------------------------------------ */
-
+  /* Dimensional Containers */
   .grid-layout {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(12, 1fr);
     gap: var(--gap-m);
     width: 100%;
     margin: 0 auto;
     padding-inline: 1.5rem;
+    max-width: 1600px;
+    transform-style: preserve-3d;
   }
 
   @media (min-width: 768px) {
     .grid-layout {
-      grid-template-columns: repeat(8, 1fr);
       gap: var(--gap-l);
       padding-inline: 4rem;
     }
@@ -196,38 +192,82 @@ body {
 
   @media (min-width: 1280px) {
     .grid-layout {
-      grid-template-columns: repeat(12, 1fr);
-      gap: var(--gap-l);
-      max-width: 1600px;
       padding-inline: 6rem;
     }
+  }
+
+  /* Layering Utilities */
+  .z-plane-back {
+    transform: translateZ(-100px);
+  }
+
+  .z-plane-base {
+    transform: translateZ(0);
+  }
+
+  .z-plane-mid {
+    transform: translateZ(50px);
+  }
+
+  .z-plane-front {
+    transform: translateZ(100px);
+  }
+
+  .bg-radial-glow {
+    background: radial-gradient(circle at center,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0) 70%);
   }
 }
 
 /* ------------------------------------------------------------
-   PANEL SYSTEM (STRUCTURAL ZONES)
+   SPATIAL INTERFACES
    ------------------------------------------------------------ */
 
-.snap-section {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.spatial-section {
   position: relative;
   width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  transform-style: preserve-3d;
   padding-block: var(--gap-section);
 }
 
-.section-bg-alt {
-  background-color: var(--bg-subtle) !important;
+.spatial-card {
+  transition: transform 0.6s var(--ease-spatial), background 0.6s var(--ease-spatial);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.spatial-card:hover {
+  background: var(--surface);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Breathing Animation for Spatial Objects */
+@keyframes spatial-breath {
+
+  0%,
+  100% {
+    transform: translateZ(0) rotateX(0) rotateY(0);
+  }
+
+  50% {
+    transform: translateZ(10px) rotateX(0.5deg) rotateY(0.5deg);
+  }
+}
+
+.animate-spatial-breath {
+  animation: spatial-breath 8s ease-in-out infinite;
 }
 
 /* ------------------------------------------------------------
-   BRUTAL SCROLLBAR
+   SCROLLBAR
    ------------------------------------------------------------ */
 
 ::-webkit-scrollbar {
-  width: 2px;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {
@@ -235,9 +275,10 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #181818;
+  background: #1a1a1a;
+  transition: background 0.3s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #222222;
+  background: #333;
 }
