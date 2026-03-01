@@ -3,51 +3,60 @@
 
 /* 
   DARSHIT LAGDHIR — ARCHITECTURAL INDEX
-  RECONSTRUCTION PASS 96: CLEAN SLATE
+  RECONSTRUCTION PASS 97: VISUAL MATURITY
 */
 
 /* ------------------------------------------------------------
-   ROOT DESIGN TOKENS
+   ROOT DESIGN TOKENS (REFINED)
    ------------------------------------------------------------ */
 
 :root {
-  /* Core Palette */
+  /* Core Foundation */
   --background: #050505;
+  --bg-subtle: #080808;
+  /* 1-2% shift */
   --foreground: #ffffff;
   --accent: #ffffff;
-  --muted: #6b6b6b;
-  --border: #1a1a1a;
-  --surface: #0a0a0a;
+  --muted: #525252;
+  /* Refined visibility */
+  --border: #141414;
+  --surface: #070707;
 
   /* Font Families — Strict 3-Font System */
   --font-sans: "Space Grotesk", system-ui, sans-serif;
   --font-display: "Aalto Display Font", "Space Grotesk", sans-serif;
   --font-wide: "HK Grotesk Wide", "Space Grotesk", sans-serif;
 
-  --font-title: "Aalto Display Font", "Space Grotesk", sans-serif;
-  --font-heading: "HK Grotesk Wide", "Space Grotesk", sans-serif;
-  --font-body: "Space Grotesk", sans-serif;
+  --font-title: var(--font-display);
+  --font-heading: var(--font-wide);
+  --font-body: var(--font-sans);
 
-  /* Modular Type Scale — Refined for Stability (Prompt 95) */
-  --step--1: clamp(0.7rem, 0.8vw, 0.8rem);
-  --step-0: clamp(0.9rem, 1vw, 1rem);
-  --step-1: clamp(1rem, 1.25vw, 1.25rem);
-  --step-2: clamp(1.25rem, 1.5vw, 1.75rem);
-  --step-3: clamp(2rem, 4vw, 3rem);
-  --step-4: clamp(3rem, 7vw, 6rem);
-  --step-5: clamp(4rem, 10vw, 12rem);
+  /* Refined Type Scale (Slightly Smaller for Maturity) */
+  --step--1: clamp(0.65rem, 0.75vw, 0.75rem);
+  --step-0: clamp(0.85rem, 0.9vw, 0.95rem);
+  --step-1: clamp(1rem, 1.1vw, 1.15rem);
+  --step-2: clamp(1.2rem, 1.4vw, 1.5rem);
+  --step-3: clamp(1.8rem, 3.5vw, 2.5rem);
+  --step-4: clamp(2.5rem, 6vw, 5rem);
+  --step-5: clamp(3.5rem, 9vw, 10rem);
 
-  /* Spacing Tokens — Strict Scale */
+  /* Spacing Discipline — strict 8px base */
+  --gap-xs: 0.5rem;
+  /* 8px */
   --gap-s: 1rem;
+  /* 16px */
   --gap-m: 2rem;
+  /* 32px */
   --gap-l: 4rem;
-  --gap-section: 8rem;
+  /* 64px */
+  --gap-xl: 8rem;
+  /* 128px */
+  --gap-section: clamp(10rem, 15vh, 14rem);
 
-  /* Standardized Motion System (Prompt 90) */
-  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
-  --duration-micro: 200ms;
+  /* Standardized Motion System */
+  --ease-control: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 200ms;
   --duration-normal: 500ms;
-  --duration-page: 700ms;
 }
 
 /* Tailwind 4 Theme Mapping */
@@ -58,14 +67,23 @@
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-surface: var(--surface);
+  --color-bg-subtle: var(--bg-subtle);
 
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);
   --font-wide: var(--font-wide);
 
-  --ease-out: var(--ease-premium);
-  --ease-in-out: var(--ease-premium);
+  --ease-out: var(--ease-control);
 }
+
+/* ------------------------------------------------------------
+   UTILITY — SECTION LAYERING (PROMPT 97 PHASE 3)
+   ------------------------------------------------------------ */
+
+.section-bg-alt {
+  background-color: var(--bg-subtle) !important;
+}
+
 
 /* ------------------------------------------------------------
    BASE RESET
@@ -101,7 +119,7 @@ body {
 }
 
 /* ------------------------------------------------------------
-   TYPOGRAPHIC SYSTEM
+   TYPOGRAPHIC TENSION
    ------------------------------------------------------------ */
 
 @layer base {
@@ -115,10 +133,8 @@ body {
     font-family: var(--font-title);
     text-transform: uppercase;
     font-weight: 400;
-    line-height: 0.95;
-    /* Soften from 0.9 for better balance */
-    letter-spacing: -0.04em;
-    /* Soften from -0.05em */
+    line-height: 0.92;
+    letter-spacing: -0.045em;
     color: var(--foreground);
     text-rendering: optimizeLegibility;
   }
@@ -127,15 +143,15 @@ body {
     font-family: var(--font-body);
     font-weight: 300;
     line-height: 1.6;
-    max-width: 65ch;
+    letter-spacing: 0.01em;
+    /* Subtle tension */
+    max-width: 60ch;
     color: var(--muted);
     text-rendering: optimizeLegibility;
   }
 }
 
 @layer utilities {
-
-  /* Type Scale */
   .text-step--1 {
     font-size: var(--step--1);
   }
@@ -164,27 +180,9 @@ body {
     font-size: var(--step-5);
   }
 
-  /* Font Families */
-  .font-title {
-    font-family: var(--font-title);
-  }
-
-  .font-heading {
-    font-family: var(--font-heading);
-  }
-
-  .font-body {
-    font-family: var(--font-body);
-  }
-
-  /* Tracking & Leading */
   .tracking-micro {
-    letter-spacing: 0.3em;
+    letter-spacing: 0.35em;
     text-transform: uppercase;
-  }
-
-  .tracking-wide {
-    letter-spacing: 0.05em;
   }
 
   .tracking-tight-title {
@@ -195,26 +193,24 @@ body {
     line-height: 0.9;
   }
 
-  .leading-none {
-    line-height: 1;
-  }
-
   /* ------------------------------------------------------------
-     GRID SYSTEM (12-COLUMN DISCIPLINE)
+     GRID SYSTEM (12-COLUMN MATURITY)
      ------------------------------------------------------------ */
 
   .grid-layout {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: var(--gap-s);
+    gap: var(--gap-m);
     width: 100%;
     margin: 0 auto;
+    padding-inline: 1.5rem;
   }
 
   @media (min-width: 768px) {
     .grid-layout {
       grid-template-columns: repeat(8, 1fr);
-      gap: var(--gap-m);
+      gap: var(--gap-l);
+      padding-inline: 4rem;
     }
   }
 
@@ -222,158 +218,41 @@ body {
     .grid-layout {
       grid-template-columns: repeat(12, 1fr);
       gap: var(--gap-l);
-      max-width: 1600px;
-    }
-  }
-
-  /* ------------------------------------------------------------
-     TRANSITION DISCIPLINE
-     ------------------------------------------------------------ */
-
-  .page-fade {
-    animation: fade-through-black var(--duration-page) var(--ease-premium) forwards;
-    will-change: opacity;
-  }
-
-  @keyframes fade-through-black {
-    0% {
-      opacity: 0;
-      background-color: #000;
-    }
-
-    100% {
-      opacity: 1;
-      background-color: transparent;
+      max-width: 1440px;
+      /* Reduced for better proportion */
+      padding-inline: 0;
     }
   }
 }
 
 /* ------------------------------------------------------------
-   INTERACTION SYSTEM
+   SUBTLE ARTISTIC ELEMENT: ATMOSPHERIC DRIFT
    ------------------------------------------------------------ */
 
-.link-precision {
-  position: relative;
-  transition: color var(--duration-micro) var(--ease-premium);
-  cursor: pointer;
-}
-
-.link-precision::after {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 1px;
-  bottom: -4px;
-  left: 0;
-  background-color: currentColor;
-  transition: width var(--duration-micro) var(--ease-premium);
-}
-
-.link-precision:hover::after {
-  width: 100%;
-}
-
-*:focus-visible {
-  outline: 1px solid var(--accent);
-  outline-offset: 4px;
-}
-
-/* ------------------------------------------------------------
-   SUBTLE TEXTURE
-   ------------------------------------------------------------ */
-
-.noise-overlay {
-  position: fixed;
-  inset: -150%;
-  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
-  opacity: 0.015;
-  pointer-events: none;
-  z-index: 9999;
-  animation: noise 8s steps(10) infinite;
-}
-
-@keyframes noise {
-  0% {
-    transform: translate(0, 0);
-  }
-
-  10% {
-    transform: translate(-1%, -1%);
-  }
-
-  20% {
-    transform: translate(-2%, 1%);
-  }
-
-  33% {
-    transform: translate(1%, -2%);
-  }
-
-  44% {
-    transform: translate(-1%, 2%);
-  }
-
-  51% {
-    transform: translate(-2%, 1%);
-  }
-
-  67% {
-    transform: translate(2%, 0px);
-  }
-
-  80% {
-    transform: translate(1%, 2%);
-  }
-
-  90% {
-    transform: translate(-2%, 1%);
-  }
-
-  100% {
-    transform: translate(0, 0);
-  }
-}
-
-.grid-lines {
+.atmospheric-drift {
   position: fixed;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-  background-size: clamp(4rem, 10vw, 10rem) clamp(4rem, 10vw, 10rem);
+  background: radial-gradient(circle at 50% 50%,
+      rgba(255, 255, 255, 0.015) 0%,
+      transparent 60%);
+  animation: drift 20s ease-in-out infinite alternate;
+}
+
+@keyframes drift {
+  0% {
+    transform: scale(1) translate(-2%, -2%);
+  }
+
+  100% {
+    transform: scale(1.1) translate(2%, 2%);
+  }
 }
 
 /* ------------------------------------------------------------
-   SCROLLBAR
+   SECTION SYSTEM
    ------------------------------------------------------------ */
-
-::-webkit-scrollbar {
-  width: 4px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--background);
-}
-
-::-webkit-scrollbar-thumb {
-  background: #1a1a1a;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #404040;
-}
-
-/* ------------------------------------------------------------
-   SNAP SCROLL SYSTEM (HOME)
-   ------------------------------------------------------------ */
-
-.snap-container {
-  height: auto;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
 
 .snap-section {
   min-height: 100vh;
@@ -382,31 +261,29 @@ body {
   justify-content: center;
   position: relative;
   width: 100%;
-  padding-inline: 2rem;
   padding-block: var(--gap-section);
 }
 
-@media (min-width: 768px) {
-  .snap-section {
-    padding-inline: 3rem;
-  }
-}
-
-@media (min-width: 1280px) {
-  .snap-section {
-    padding-inline: 0;
-    width: 100%;
-    max-width: 1600px;
-    margin-inline: auto;
-  }
+.section-bg-alt {
+  background-color: var(--bg-subtle);
 }
 
 /* ------------------------------------------------------------
-   MOBILE ADJUSTMENTS
+   SCROLLBAR
    ------------------------------------------------------------ */
 
-@media (max-width: 768px) {
-  .hide-mobile {
-    display: none;
-  }
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #141414;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #333333;
 }

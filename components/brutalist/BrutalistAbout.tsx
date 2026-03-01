@@ -21,27 +21,27 @@ export default function BrutalistAbout() {
     const ease = [0.16, 1, 0.3, 1] as const;
 
     return (
-        <section className="snap-section" id="about">
-            <div className="grid-layout px-8 md:px-0 gap-y-32 md:gap-y-48">
+        <section className="snap-section section-bg-alt" id="about">
+            <div className="grid-layout gap-y-32 lg:gap-y-40">
                 {principles.map((p, i) => (
                     <div
                         key={i}
-                        className="col-span-12 grid grid-cols-1 md:grid-cols-12 gap-8 items-start border-t border-neutral-900 pt-16 md:pt-24"
+                        className="col-span-12 grid grid-cols-1 md:grid-cols-12 gap-12 items-start border-t border-border pt-16 lg:pt-24"
                     >
-                        {/* Principle Index (HK Grotesk Wide) */}
+                        {/* Principle Selector (HK Grotesk Wide) */}
                         <div className="md:col-span-3 lg:col-span-2">
-                            <span className="font-wide text-step--1 text-neutral-800 uppercase tracking-micro font-bold">
-                                PRINCIPLE // 0{i + 1}
+                            <span className="font-wide text-step--1 text-muted uppercase tracking-micro font-bold">
+                                SELECT // 0{i + 1}
                             </span>
                         </div>
 
-                        {/* Statement (Aalto Display) */}
+                        {/* Concept Headline (Aalto) */}
                         <div className="md:col-span-5 lg:col-span-6">
                             <motion.h2
-                                initial={{ opacity: 0, y: 10 }}
+                                initial={{ opacity: 0, y: 15 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, margin: "-10%" }}
-                                transition={{ duration: 0.7, ease }}
+                                transition={{ duration: 0.8, ease }}
                                 className="font-title text-step-3 text-white uppercase tracking-tight-title"
                                 style={{ willChange: "transform, opacity" }}
                             >
@@ -49,14 +49,14 @@ export default function BrutalistAbout() {
                             </motion.h2>
                         </div>
 
-                        {/* Depth (Space Grotesk) */}
+                        {/* Support Context (Space Grotesk) */}
                         <div className="md:col-span-4 flex justify-end">
                             <motion.p
                                 initial={{ opacity: 0 }}
                                 whileInView={{ opacity: 1 }}
                                 viewport={{ once: true }}
-                                transition={{ delay: 0.2, duration: 0.7, ease }}
-                                className="font-body text-step-0 text-neutral-600 font-light leading-relaxed max-w-[32ch]"
+                                transition={{ delay: 0.2, duration: 0.8, ease }}
+                                className="font-body text-step-0 text-muted font-light leading-relaxed max-w-[32ch]"
                             >
                                 {p.details}
                             </motion.p>
@@ -67,6 +67,7 @@ export default function BrutalistAbout() {
         </section>
     );
 }
+
 
 
 

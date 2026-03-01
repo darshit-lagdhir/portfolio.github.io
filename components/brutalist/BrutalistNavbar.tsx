@@ -10,46 +10,57 @@ export default function BrutalistNavbar() {
 
     useEffect(() => {
         const handleScroll = () => {
-            setScrolled(window.scrollY > 40);
+            setScrolled(window.scrollY > 20);
         };
         window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
     const navLinks = [
-        { name: "Home", href: "/" },
-        { name: "Systems", href: "/#projects" },
-        { name: "About", href: "/#about" },
-        { name: "Contact", href: "/#contact" },
+        { name: "Portfolio", href: "/" },
+        { name: "Archive", href: "/#projects" },
+        { name: "Focus", href: "/#about" },
+        { name: "Connect", href: "/#contact" },
     ];
 
     return (
         <header
             className={`
-                fixed top-0 left-0 w-full z-100 transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]
-                ${scrolled ? "py-4 bg-[#050505]/95 backdrop-blur-md border-b border-neutral-900" : "py-10 bg-transparent border-b border-transparent"}
+                fixed top-0 left-0 w-full z-100 transition-all duration-300 ease-control
+                ${scrolled ? "py-4 bg-background/95 backdrop-blur-md border-b border-border shadow-[0_1px_12px_rgba(0,0,0,0.5)]" : "py-8 bg-transparent border-b border-transparent"}
             `}
         >
-            <nav className="grid-layout px-8 md:px-0">
-                {/* Brand — Col 1-4 */}
+            <nav className="grid-layout">
+                {/* Brand Execution (Aalto) */}
                 <div className="col-span-12 md:col-span-4">
-                    <Link href="/" className="font-title text-step-0 tracking-tight-title text-white uppercase select-none font-bold">
+                    <Link
+                        href="/"
+                        className="font-title text-step-0 text-white uppercase tracking-tight-title font-bold hover:text-muted transition-colors duration-200"
+                        style={{ letterSpacing: "-0.05em" }}
+                    >
                         DARSHIT LAGDHIR
                     </Link>
                 </div>
 
-                {/* Links — Optimized for 12-col grid */}
-                <div className="hidden md:flex md:col-start-8 md:col-span-5 justify-end gap-x-12">
+                {/* System Navigation (HK Grotesk Wide) */}
+                <div className="hidden md:flex md:col-start-7 md:col-span-6 justify-end gap-x-12 lg:gap-x-16">
                     {navLinks.map((link) => {
                         const isActive = pathname === link.href;
                         return (
                             <Link
                                 key={link.name}
                                 href={link.href}
-                                className={`font-wide text-step--2 uppercase tracking-micro transition-colors duration-200 font-bold ${isActive ? "text-white" : "text-neutral-800 hover:text-white"
-                                    }`}
+                                className={`
+                                    relative font-wide text-step--1 uppercase tracking-micro font-bold 
+                                    transition-colors duration-200 group
+                                    ${isActive ? "text-white" : "text-muted hover:text-white"}
+                                `}
                             >
                                 {link.name}
+                                <span className={`
+                                    absolute -bottom-1.5 left-0 h-[1px] bg-white transition-all duration-300
+                                    ${isActive ? "w-full" : "w-0 group-hover:w-full"}
+                                `} />
                             </Link>
                         );
                     })}
@@ -58,5 +69,7 @@ export default function BrutalistNavbar() {
         </header>
     );
 }
+
+
 
 

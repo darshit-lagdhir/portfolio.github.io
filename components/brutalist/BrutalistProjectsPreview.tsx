@@ -29,39 +29,39 @@ export default function BrutalistProjectsPreview() {
 
     return (
         <section className="snap-section" id="projects">
-            <div className="grid-layout px-8 md:px-0">
-                {/* 1. Header Label */}
-                <div className="col-span-12 mb-16">
-                    <span className="font-wide text-step--1 text-neutral-800 uppercase tracking-micro font-bold">
-                        SYSTEMS CATALOG // PROJECT INDEX
+            <div className="grid-layout">
+                {/* Selector Label */}
+                <div className="col-span-12 mb-16 lg:mb-24">
+                    <span className="font-wide text-step--1 text-muted uppercase tracking-micro font-bold">
+                        SYSTEMS ARCHIVE // SELECTION
                     </span>
                 </div>
 
-                {/* 3 Panels (Grid-based selection) */}
+                {/* 3 Physical Panels */}
                 <div className="col-span-12 grid grid-cols-1 md:grid-cols-3 gap-8">
                     {projects.map((p, i) => (
-                        <Link key={i} href={p.slug} className="group">
+                        <Link key={i} href={p.slug} className="group flex">
                             <motion.div
-                                initial={{ opacity: 0, y: 15 }}
+                                initial={{ opacity: 0, y: 20 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.6, delay: i * 0.1, ease }}
+                                transition={{ duration: 0.8, delay: i * 0.1, ease }}
                                 viewport={{ once: true }}
-                                whileHover={{ y: -8 }}
-                                className="border border-neutral-900 bg-[#070707] p-10 h-full min-h-[500px] flex flex-col justify-between hover:border-neutral-600 transition-all duration-300"
+                                whileHover={{ y: -4 }}
+                                className="w-full min-h-[520px] border border-border bg-surface p-12 flex flex-col justify-between hover:border-muted transition-all duration-300"
                             >
-                                <div className="flex flex-col gap-8">
-                                    <span className="font-wide text-step--1 text-neutral-800 uppercase tracking-micro">
-                                        {p.index}
+                                <div className="flex flex-col gap-10">
+                                    <span className="font-wide text-step--1 text-muted uppercase tracking-micro">
+                                        INDEX // {p.index}
                                     </span>
-                                    <h3 className="font-title text-step-3 text-white uppercase tracking-tight-title group-hover:text-neutral-400 transition-colors duration-300">
+                                    <h3 className="font-title text-step-3 text-white uppercase tracking-tight-title group-hover:text-muted transition-colors duration-300">
                                         {p.name}
                                     </h3>
-                                    <p className="font-body text-step-0 text-neutral-600 font-light leading-snug max-w-[20ch]">
+                                    <p className="font-body text-step-0 text-muted font-light leading-snug max-w-[22ch]">
                                         {p.descriptor}
                                     </p>
                                 </div>
 
-                                <div className="border-t border-neutral-900 pt-8 flex justify-between items-center group-hover:border-neutral-600 transition-colors duration-300">
+                                <div className="border-t border-border pt-10 flex items-center group-hover:border-muted transition-colors duration-300">
                                     <span className="font-wide text-step--1 text-white uppercase tracking-micro font-bold">
                                         ENTER SYSTEM &rarr;
                                     </span>
@@ -74,4 +74,5 @@ export default function BrutalistProjectsPreview() {
         </section>
     );
 }
+
 

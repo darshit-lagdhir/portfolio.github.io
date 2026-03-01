@@ -20,12 +20,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="bg-[#050505] text-neutral-50 antialiased overflow-x-hidden" suppressHydrationWarning>
-        <div className="noise-overlay" />
-        <div className="grid-lines" />
+      <body className="bg-background text-foreground antialiased overflow-x-hidden selection:bg-foreground selection:text-background" suppressHydrationWarning>
+        <div className="atmospheric-drift" />
 
         <BrutalistNavbar />
-        <main className="relative z-10">{children}</main>
+        <main className="relative z-10 w-full">{children}</main>
       </body>
     </html>
   );
