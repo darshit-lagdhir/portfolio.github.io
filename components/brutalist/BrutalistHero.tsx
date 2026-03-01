@@ -12,10 +12,11 @@ export default function BrutalistHero() {
         offset: ["start start", "end start"]
     });
 
-    // Parallax Hierarchy (Background slowest, Mid normal, Foreground faster)
+    // CINEMATIC DEPTH (PHASE 5: REFINED INTENSITY)
     const yBack = useTransform(scrollYProgress, [0, 1], [0, 150]);
-    const zContent = useTransform(scrollYProgress, [0, 1], [0, -150]);
-    const opacityBack = useTransform(scrollYProgress, [0, 0.5], [0.15, 0]);
+    const zContent = useTransform(scrollYProgress, [0, 1], [0, -250]);
+    const blurContent = useTransform(scrollYProgress, [0, 0.5], [0, 8]);
+    const opacityBack = useTransform(scrollYProgress, [0, 0.4], [0.2, 0]);
 
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
@@ -28,121 +29,114 @@ export default function BrutalistHero() {
         return () => window.removeEventListener("mousemove", handleMouseMove);
     }, []);
 
-    const springX = useSpring(mousePos.x, { damping: 30, stiffness: 200 });
-    const springY = useSpring(mousePos.y, { damping: 30, stiffness: 200 });
+    const springX = useSpring(mousePos.x, { damping: 45, stiffness: 120 });
+    const springY = useSpring(mousePos.y, { damping: 45, stiffness: 120 });
 
-    const rotateYGeneral = useTransform(springX, (v) => v * 0.15);
-    const rotateXGeneral = useTransform(springY, (v) => v * -0.15);
+    const rotateYGeneral = useTransform(springX, (v) => v * 0.08);
+    const rotateXGeneral = useTransform(springY, (v) => v * -0.08);
 
-    // Background layer specific rotation
-    const rotateYBack = useTransform(springX, (v) => v * 0.05);
-
-    // 3D Title Offsets
-    const xTitle = useTransform(springX, (v) => v * 0.8);
-    const yTitle = useTransform(springY, (v) => v * 0.8);
-
-    // Foreground Parallax
-    const xForeground = useTransform(springX, (v) => v * -5);
-    const yForeground = useTransform(springY, (v) => v * -5);
+    // Magnetic Typography (PHASE 3: CINEMATIC CONTROL)
+    const xTitle = useTransform(springX, (v) => v * 0.2);
+    const yTitle = useTransform(springY, (v) => v * 0.2);
+    const rotateYBack = useTransform(springX, (v) => v * 0.02);
 
     const ease = [0.16, 1, 0.3, 1] as const;
 
-    return (
-        <section ref={sectionRef} className="spatial-section overflow-hidden" id="hero">
+    // HERO CINEMATIC OPENING (PHASE 1: ACT 1)
+    const openingTransition = { duration: 1, ease };
 
-            {/* BACKGROUND ENVIRONMENT (PHASE 2 & 6: ATMOSPHERIC) */}
+    return (
+        <section ref={sectionRef} className="spatial-section overflow-hidden bg-black/10" id="hero">
+
+            {/* AMBIENT ENVIRONMENT (PHASE 1) */}
             <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1.5, ease }}
                 style={{ y: yBack, x: springX, rotateY: rotateYBack, opacity: opacityBack }}
-                className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center"
+                className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center translate-z-[-150px]"
             >
-                <div className="w-[140%] h-[140%] border-[1px] border-white/5 opacity-20 rotate-12 grid grid-cols-12 grid-rows-12 gap-8">
-                    {Array.from({ length: 144 }).map((_, i) => (
-                        <div key={i} className="border-[0.5px] border-white/5 h-64" />
+                <div className="w-[140%] h-[140%] border-[2px] border-white/5 opacity-10 rotate-12 grid grid-cols-24 grid-rows-24 gap-12">
+                    {Array.from({ length: 576 }).map((_, i) => (
+                        <div key={i} className="border-[0.5px] border-white/5 h-80 w-full" />
                     ))}
                 </div>
             </motion.div>
 
-            <div className="grid-layout relative z-10 perspective-origin-center">
+            <div className="grid-layout relative z-10 md:pl-[6%] lg:pl-[10%]">
 
-                {/* CONTENT CHAMBER (PHASE 1: DEPTH STACKING) */}
                 <motion.div
-                    style={{ z: zContent, rotateX: rotateXGeneral, rotateY: rotateYGeneral }}
-                    className="col-span-12 items-center flex flex-col gap-12 text-center md:text-left md:items-start"
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={openingTransition}
+                    style={{ z: zContent, rotateX: rotateXGeneral, rotateY: rotateYGeneral, filter: `blur(${blurContent}px)` }}
+                    className="col-span-12 items-center flex flex-col gap-12 text-center md:text-left md:items-start morph-surface"
                 >
 
-                    {/* 3D LAYERED TITLE (PHASE 2: DIMENSIONAL OBJECT) */}
+                    {/* TITLE WITH DEPTH COMPRESSION (PHASE 1) */}
                     <div className="relative group">
-                        {/* Shadow Layers for Volume */}
-                        {[0.5, 0.3, 0.15].map((op, i) => (
-                            <motion.h1
-                                key={i}
-                                style={{
-                                    x: xTitle,
-                                    y: yTitle,
-                                    translateZ: -(i + 1) * 20,
-                                    opacity: op * 0.3
-                                }}
-                                className="absolute inset-0 font-title text-step-5 text-white/10 uppercase tracking-tight-title pointer-events-none select-none blur-[1px]"
-                            >
-                                <span className="block">DARSHIT</span>
-                                <span className="block">LAGDHIR</span>
-                            </motion.h1>
-                        ))}
-
-                        <motion.h1
-                            className="font-title text-step-5 text-white uppercase tracking-tight-title flex flex-col leading-[0.85]"
+                        <motion.div
+                            initial={{ clipPath: "polygon(0 0, 0 0, 0 100%, 0% 100%)" }}
+                            animate={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)" }}
+                            transition={{ duration: 1.2, ease, delay: 0.2 }}
+                            className="relative z-10"
                         >
-                            {["DARSHIT", "LAGDHIR"].map((word, i) => (
-                                <motion.span
+                            {[0.4, 0.2].map((op, i) => (
+                                <motion.h1
                                     key={i}
-                                    initial={{ y: "100%", opacity: 0 }}
-                                    animate={{ y: 0, opacity: 1 }}
-                                    transition={{ duration: 1.5, delay: i * 0.2, ease }}
-                                    className="block"
+                                    style={{
+                                        x: xTitle,
+                                        y: yTitle,
+                                        translateZ: -(i + 1) * 25,
+                                        opacity: op * 0.3
+                                    }}
+                                    className="absolute inset-0 font-title text-step-5 text-white/5 uppercase tracking-tight-title pointer-events-none select-none blur-[2px]"
                                 >
-                                    {word}
-                                </motion.span>
+                                    <span className="block italic">DARSHIT</span>
+                                    <span className="block">LAGDHIR</span>
+                                </motion.h1>
                             ))}
-                        </motion.h1>
+
+                            <h1
+                                className="font-title text-step-5 text-white uppercase tracking-tight-title flex flex-col leading-[0.8] text-physical"
+                            >
+                                <span className="block italic">DARSHIT</span>
+                                <span className="block">LAGDHIR</span>
+                            </h1>
+                        </motion.div>
                     </div>
 
+                    {/* SECONDARY CONTENT CHOREOGRAPHY (PHASE 1) */}
                     <motion.div
-                        style={{ translateZ: 40 }}
-                        className="flex flex-col md:flex-row gap-12 md:gap-32 w-full mt-12 items-end md:items-baseline"
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.8, duration: 0.8, ease }}
+                        style={{ translateZ: 50 }}
+                        className="flex flex-col md:flex-row gap-16 md:gap-40 w-full mt-10 items-end md:items-baseline"
                     >
-                        <motion.div
-                            initial={{ opacity: 0, x: -40 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 1, duration: 1, ease }}
-                            className="max-w-[45ch]"
-                        >
+                        <div className="max-w-[48ch]">
                             <p className="font-body text-step-1 text-muted font-light leading-relaxed">
-                                BUILDING ARCHITECTURAL SYSTEMS FOR LOGISTICS, ADVISORY INTELLIGENCE, AND CONTRACT VERIFICATION.
+                                ENGINEERING CINEMATIC ARCHITECTURE FOR LOGISTICS, ADVISORY INTELLIGENCE, AND CONTRACT VERIFICATION.
                             </p>
-                        </motion.div>
+                        </div>
 
+                        {/* NAVIGATION (PHASE 1: FADES LAST) */}
                         <motion.div
-                            initial={{ opacity: 0, x: 40 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 1.2, duration: 1, ease }}
-                            className="flex flex-col gap-4 text-right md:text-left ml-auto"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 1, duration: 0.5, ease }}
+                            className="flex flex-col gap-5 text-right md:text-left ml-auto"
                         >
-                            <a href="#projects" className="font-wide text-step--1 text-white uppercase tracking-micro hover:scale-105 transition-transform duration-300 font-bold block">
-                                [ SYSTEMS ]
+                            <a href="#projects" className="link-underline font-wide text-step--1 text-white uppercase tracking-micro font-bold block translate-z-[30px] drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+                                [ VIEW SYSTEMS ]
                             </a>
-                            <a href="#about" className="font-wide text-step--1 text-muted uppercase tracking-micro hover:text-white transition-colors duration-200 font-bold block">
+                            <a href="#about" className="link-underline font-wide text-step--1 text-muted uppercase tracking-micro font-bold block opacity-40 hover:opacity-100 transition-opacity">
                                 [ PHILOSOPHY ]
                             </a>
                         </motion.div>
                     </motion.div>
                 </motion.div>
             </div>
-
-            {/* FOREGROUND ACCENTS (PHASE 3: PARALLAX HIERARCHY) */}
-            <motion.div
-                style={{ x: xForeground, y: yForeground, translateZ: 100 }}
-                className="absolute top-1/2 left-1/4 w-48 h-[1px] bg-white/30 origin-left scale-x-150 rotate-45 pointer-events-none z-20"
-            />
         </section>
     );
 }

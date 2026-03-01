@@ -2,8 +2,8 @@
 @import "./fonts.css";
 
 /* 
-  DARSHIT LAGDHIR — SPATIAL ARCHITECTURE 102
-  PHASE 2: SPATIAL DRAMA + 3D ENVIRONMENT
+  DARSHIT LAGDHIR — CINEMATIC REFINEMENT 105
+  PHASE 5: CINEMATIC FLOW + VISUAL CONTROL
 */
 
 :root {
@@ -16,7 +16,8 @@
   --muted: #525252;
   --border: #141414;
   --surface: #070707;
-  --glow: rgba(255, 255, 255, 0.03);
+  --glow: rgba(255, 255, 255, 0.02);
+  /* Reduced for atmospheric refinement */
 
   /* Font Families */
   --font-sans: "Space Grotesk", system-ui, sans-serif;
@@ -44,10 +45,13 @@
   --gap-xl: 8rem;
   --gap-section: clamp(10rem, 20vh, 15rem);
 
-  /* Kinetic Easing */
-  --ease-spatial: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-immersive: cubic-bezier(0.25, 1, 0.5, 1);
-  --duration-kinetic: 600ms;
+  /* Cinematic Timing & Physics (PHASE 9) */
+  --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-heavy: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --duration-hover: 200ms;
+  --duration-reveal: 450ms;
+  --duration-transition: 600ms;
+  --duration-env: 40s;
 }
 
 @theme {
@@ -64,7 +68,7 @@
   --font-display: var(--font-display);
   --font-wide: var(--font-wide);
 
-  --ease-immersive: var(--ease-immersive);
+  --ease-cinematic: var(--ease-cinematic);
 }
 
 /* ------------------------------------------------------------
@@ -80,7 +84,6 @@
 
 html {
   scroll-behavior: auto;
-  /* Managed by Lenis for buttery feel */
   background-color: var(--background);
   overflow-x: hidden;
 }
@@ -93,10 +96,10 @@ body {
   -webkit-font-smoothing: antialiased;
   position: relative;
   min-height: 100vh;
-
-  /* Global Perspective Root */
   perspective: 1200px;
+  /* Standardized for cinematic feel */
   perspective-origin: 50% 50%;
+  overflow-x: hidden;
 }
 
 /* Micro-Grain Overlay */
@@ -111,18 +114,37 @@ body::after {
   mix-blend-mode: soft-light;
 }
 
-/* Atmospheric Background Enhancement */
+/* Atmospheric Dynamics (PHASE 5: ATMOSPHERE, NOT EFFECT) */
+@keyframes bg-drift {
+  0% {
+    transform: translate(-5%, -5%) rotate(0deg);
+  }
+
+  50% {
+    transform: translate(5%, 5%) rotate(2deg);
+  }
+
+  100% {
+    transform: translate(-5%, -5%) rotate(0deg);
+  }
+}
+
 .atmospheric-canvas {
   position: fixed;
-  inset: 0;
+  inset: -20%;
   z-index: -1;
   background:
     radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-      rgba(255, 255, 255, 0.03) 0%,
-      rgba(0, 0, 0, 0) 60%),
-    linear-gradient(135deg, #050505 0%, #0a0a0a 100%);
+      rgba(255, 255, 255, 0.02) 0%,
+      /* Reduced intensity */
+      rgba(0, 0, 0, 0) 70%),
+    linear-gradient(135deg, #050505, #080808, #050505);
+  background-size: 200% 200%;
+  animation: bg-drift var(--duration-env) ease-in-out infinite;
   pointer-events: none;
-  transition: background 0.2s var(--ease-spatial);
+  transform: translateZ(-500px);
+  filter: blur(40px);
+  /* Softer lighting */
 }
 
 /* ------------------------------------------------------------
@@ -137,11 +159,18 @@ body::after {
     font-family: var(--font-title);
     text-transform: uppercase;
     font-weight: 400;
-    line-height: 0.85;
+    line-height: 0.8;
     letter-spacing: -0.06em;
     color: var(--foreground);
     text-rendering: optimizeLegibility;
     transform-style: preserve-3d;
+  }
+
+  /* Refined Micro Bevel (PHASE 7) */
+  .text-physical {
+    text-shadow:
+      0.5px 0.5px 0px rgba(255, 255, 255, 0.04),
+      -0.5px -0.5px 0px rgba(0, 0, 0, 0.4);
   }
 
   p {
@@ -171,6 +200,30 @@ body::after {
     text-transform: uppercase;
   }
 
+  /* Interactive Text Emphasis (PHASE 9) */
+  .link-underline {
+    position: relative;
+    display: inline-block;
+  }
+
+  .link-underline::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 1px;
+    bottom: -1px;
+    left: 0;
+    background-color: currentColor;
+    transform-origin: bottom right;
+    transition: transform var(--duration-hover) var(--ease-cinematic);
+  }
+
+  .link-underline:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+
   /* Dimensional Containers */
   .grid-layout {
     display: grid;
@@ -190,32 +243,30 @@ body::after {
     }
   }
 
-  @media (min-width: 1280px) {
-    .grid-layout {
-      padding-inline: 6rem;
-    }
-  }
-
-  /* Layering Utilities */
-  .z-plane-back {
+  /* Z-Hierarchy (PHASE 10) */
+  .z-back {
     transform: translateZ(-100px);
   }
 
-  .z-plane-base {
+  .z-base {
     transform: translateZ(0);
   }
 
-  .z-plane-mid {
-    transform: translateZ(50px);
+  .z-mid {
+    transform: translateZ(40px);
   }
 
-  .z-plane-front {
-    transform: translateZ(100px);
+  .z-front {
+    transform: translateZ(80px);
+  }
+
+  .z-overlay {
+    transform: translateZ(120px);
   }
 
   .bg-radial-glow {
     background: radial-gradient(circle at center,
-        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.06) 0%,
         rgba(255, 255, 255, 0) 70%);
   }
 }
@@ -234,32 +285,36 @@ body::after {
   padding-block: var(--gap-section);
 }
 
+.morph-surface {
+  transition: transform var(--duration-reveal) var(--ease-cinematic), filter var(--duration-reveal) var(--ease-cinematic);
+  will-change: transform, filter;
+}
+
 .spatial-card {
-  transition: transform 0.6s var(--ease-spatial), background 0.6s var(--ease-spatial);
+  transition: transform var(--duration-hover) var(--ease-heavy), background var(--duration-hover) var(--ease-heavy), border-color var(--duration-hover) var(--ease-heavy);
   transform-style: preserve-3d;
   will-change: transform;
 }
 
 .spatial-card:hover {
   background: var(--surface);
-  border-color: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
-/* Breathing Animation for Spatial Objects */
 @keyframes spatial-breath {
 
   0%,
   100% {
-    transform: translateZ(0) rotateX(0) rotateY(0);
+    transform: translateZ(0);
   }
 
   50% {
-    transform: translateZ(10px) rotateX(0.5deg) rotateY(0.5deg);
+    transform: translateZ(10px);
   }
 }
 
 .animate-spatial-breath {
-  animation: spatial-breath 8s ease-in-out infinite;
+  animation: spatial-breath 12s ease-in-out infinite;
 }
 
 /* ------------------------------------------------------------
@@ -275,10 +330,5 @@ body::after {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1a1a1a;
-  transition: background 0.3s ease;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #333;
+  background: #121212;
 }
