@@ -4,43 +4,41 @@ import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import { useRef, useState } from "react";
 import { useScene } from "@/context/SceneContext";
 
+// PHASE 1: CENTRAL MOTION CONTROLLER
+const GLOBAL_EASE = [0.33, 1, 0.68, 1] as [number, number, number, number];
+
 const bentoCells = [
     {
         id: "ai",
         title: "AIML.",
-        descriptor: "AUTONOMOUS PATTERN RECOGNITION.",
+        descriptor: "AUTONOMOUS PATTERN.",
         full: "SIGNAL TO INTELLIGENCE MAPPING. DEEP NEURAL ARCHITECTURES FOR PREDICTIVE LOGISTICS AND PATTERN RECOVERY.",
-        span: "col-span-12 md:col-span-8",
-        height: "h-[300px] md:h-[400px]",
+        span: "col-span-12 md:col-span-4",
+        height: "h-[300px]",
         index: "DATA_NODE_01"
     },
     {
         id: "sec",
         title: "SECURITY.",
-        descriptor: "ZERO-TRUST PROTOCOLS.",
+        descriptor: "ZERO-TRUST.",
         full: "FORMAL-VERIFICATION AND REDUCING UNCERTAINTY IN CROSS-LANGUAGE INTERACTIONS. HARDENED SYSTEM BOUNDARIES.",
         span: "col-span-12 md:col-span-4",
-        height: "h-[300px] md:h-[400px]",
+        height: "h-[300px]",
         index: "SEC_NODE_02"
     },
     {
         id: "arch",
         title: "ARCH.",
-        descriptor: "SPATIAL SYSTEM DESIGN.",
+        descriptor: "SPATIAL SYSTEM.",
         full: "BEYOND INTERFACES. WE BUILD ENVIRONMENTS. 3D SPATIAL SLABS AND DIMENSIONAL DATA VISUALIZATION.",
         span: "col-span-12 md:col-span-4",
         height: "h-[300px]",
         index: "STRUCT_NODE_03"
-    },
-    {
-        id: "ffi",
-        title: "VERIFIER.",
-        descriptor: "POLYGLOT CONTRACTS.",
-        full: "ENSURING LOGICAL INTEGRITY ACROSS FFI BOUNDARIES. AUTOMATED FORMAL VERIFICATION FOR POLYGLOT SYSTEMS.",
-        span: "col-span-12 md:col-span-8",
-        height: "h-[300px]",
-        index: "LOGIC_NODE_04"
     }
+];
+
+const techStack = [
+    "REACT", "NEXT.JS", "FRAMER_MOTION", "THREE.JS", "PRISMA", "NODE.JS", "POSTGRESQL", "TYPESCRIPT"
 ];
 
 function BentoCard({ cell, isActive, onToggle, activeId }: { cell: any, isActive: boolean, onToggle: (id: string | null) => void, activeId: string | null }) {
@@ -55,51 +53,37 @@ function BentoCard({ cell, isActive, onToggle, activeId }: { cell: any, isActive
                 transformStyle: "preserve-3d"
             }}
             animate={{
-                borderRadius: isActive ? 24 : 4,
-                scale: isActive ? 1.02 : 1
+                borderRadius: isActive ? 12 : 0,
+                scale: isActive ? 1.01 : 1,
+                translateZ: isActive ? 30 : 0
             }}
-            transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+            transition={{ duration: 0.5, ease: GLOBAL_EASE }}
             className={`
-                bento-card relative cursor-none group ${cell.span} ${cell.height} 
-                ${isActive ? "z-50 !col-span-12 !h-[500px]" : "z-10"}
-                ${!isActive && "hover:scale-[0.99]"}
+                heavy-panel mat-glass btn-tactile relative cursor-none group ${cell.span} ${cell.height} 
+                ${isActive ? "z-50 !col-span-12 !h-[400px]" : "z-10"}
+                ${!isActive && "hover:bg-[#0c0c0c]"}
             `}
         >
-            <div className="absolute inset-x-8 inset-y-8 flex flex-col justify-between z-10 transition-transform duration-500">
+            <div className="absolute inset-x-10 inset-y-10 flex flex-col justify-between z-10 transition-transform duration-500">
                 <div className="flex justify-between items-start">
                     <motion.span
                         layout="position"
-                        className="font-mono text-[10px] text-muted tracking-widest uppercase opacity-50"
+                        className="text-micro font-bold text-muted opacity-30"
                     >
                         {cell.index}
                     </motion.span>
-
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        className="flex items-center gap-2"
-                    >
-                        <div className="w-12 h-1 bg-white/5 relative overflow-hidden">
-                            <motion.div
-                                animate={{ width: ["0%", "80%", "0%"] }}
-                                transition={{ duration: 4, repeat: Infinity }}
-                                className="absolute top-0 left-0 h-full bg-white opacity-40"
-                            />
-                        </div>
-                        <span className="font-mono text-[9px] opacity-40">CALIBRATING_NODE</span>
-                    </motion.div>
                 </div>
 
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-6">
                     <motion.h3
                         layout="position"
-                        className="font-title text-step-2 md:text-step-3 text-white uppercase tracking-tight-title text-physical"
+                        className="text-medium text-white tracking-widest italic first-letter:not-italic"
                     >
                         {cell.title}
                     </motion.h3>
                     <motion.p
                         layout="position"
-                        className={`font-body text-step-0 text-muted uppercase tracking-micro font-bold ${isActive ? "opacity-100" : "opacity-40"}`}
+                        className={`text-body text-step-0 tracking-wide leading-relaxed ${isActive ? "opacity-100" : "opacity-30"}`}
                     >
                         {isActive ? cell.full : cell.descriptor}
                     </motion.p>
@@ -108,28 +92,16 @@ function BentoCard({ cell, isActive, onToggle, activeId }: { cell: any, isActive
 
             <AnimatePresence>
                 {isActive && (
-                    <>
-                        <motion.div
-                            initial={{ clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)" }}
-                            animate={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)" }}
-                            exit={{ clipPath: "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)" }}
-                            transition={{ duration: 0.6, ease: "circOut" }}
-                            className={`absolute inset-0 z-0 ${mode === 'minimal' ? 'bg-background border-2 border-white/10' : 'bg-white/5 backdrop-blur-3xl'}`}
-                        />
-                        {mode !== 'minimal' && (
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                transition={{ duration: 0.8, delay: 0.2 }}
-                                className="absolute inset-x-0 inset-y-0 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.05),transparent_70%)] z-0"
-                            />
-                        )}
-                    </>
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className={`absolute inset-0 z-0 ${mode === 'minimal' ? 'bg-background border border-white/10' : 'bg-white/[0.03] backdrop-blur-2xl'}`}
+                    />
                 )}
             </AnimatePresence>
 
-            <motion.div className="absolute inset-0 bg-white/[0.01] group-hover:bg-white/[0.02] transition-colors" />
+            <div className="absolute inset-0 z-[-1] opacity-0 group-hover:opacity-100 transition-opacity rim-highlight" />
         </motion.div>
     );
 }
@@ -140,35 +112,47 @@ export default function BrutalistFocus() {
     const [activeId, setActiveId] = useState<string | null>(null);
 
     const { scrollYProgress: sectionScroll } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
-    const rotateX = useTransform(sectionScroll, [0, 0.4, 0.6, 1], mode === 'depth' ? [5, 0, 0, -5] : [3, 0, 0, -3]);
+    const rotateX = useTransform(sectionScroll, [0, 0.4, 0.6, 1], mode === 'depth' ? [2.5, 0, 0, -2.5] : [1.2, 0, 0, -1.2]);
 
     return (
         <section
-            onMouseOver={() => setActiveSection("focus")}
+            onPointerEnter={() => setActiveSection("focus")}
             ref={sectionRef}
-            className="spatial-section relative overflow-hidden"
+            className="spatial-section relative flex items-center justify-center section-tone-shift tone-01"
             id="focus"
         >
             <motion.div
-                style={{
-                    rotateX,
-                    transformStyle: "preserve-3d"
-                }}
-                className="grid-layout items-start relative z-10 morph-surface md:pl-[6%] lg:pl-[10%]"
+                style={{ rotateX, transformStyle: "preserve-3d" }}
+                className="grid-poster py-24 flex flex-col gap-y-12"
             >
-                <div className="col-span-12 mb-16 flex justify-between items-end">
-                    <motion.span
-                        initial={{ opacity: 0, x: -15 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ margin: "-10%" }}
-                        transition={{ duration: 0.8 }}
-                        className="font-wide text-step--1 text-muted uppercase tracking-micro font-bold link-underline"
-                    >
-                        04 RESEARCH FOCUS // BENTO ARCHITECTURE
-                    </motion.span>
+                <div className="col-span-12 lg:col-span-8 flex flex-col items-start gap-12">
+                    <div className="flex flex-col gap-6 items-start">
+                        <span className="text-micro font-bold text-muted border-l border-white/20 pl-6 h-4 flex items-center">SECTION_ID_04</span>
+                        <h2 className="text-large text-white flex flex-col italic first-letter:not-italic select-none pointer-events-none border-b border-white/5 pb-10 w-full mb-4">
+                            RESEARCH_FOCUS // TOOLS
+                        </h2>
+                    </div>
+
+                    <p className="text-small text-muted font-light tracking-wide max-w-[42ch]">
+                        Our workflow is built on autonomous pattern detection and structural isolation across all system boundaries.
+                    </p>
                 </div>
 
-                <div className="col-span-12 grid grid-cols-12 gap-6 relative">
+                {/* PHASE 10: HORIZONTAL MICRO-SCROLL (TECH TRAY) */}
+                <div className="col-span-12 mt-4">
+                    <div className="horizontal-tray py-10 opacity-40 hover:opacity-100 transition-opacity">
+                        {techStack.map((tech, i) => (
+                            <div
+                                key={i}
+                                className="text-micro font-bold border border-white/5 px-8 h-12 flex items-center bg-white/[0.02] elastic-micro hover:bg-white/10 hover:border-white/20 transition-all cursor-none"
+                            >
+                                [ {tech} ]
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="col-span-12 grid grid-cols-12 gap-8 relative mt-10">
                     {bentoCells.map((cell) => (
                         <BentoCard
                             key={cell.id}
@@ -180,6 +164,11 @@ export default function BrutalistFocus() {
                     ))}
                 </div>
             </motion.div>
+
+            {/* PHASE 8: INTERACTIVE NEGATIVE SPACE (AMBIENT BRACKETS) */}
+            <div className="absolute top-[20%] right-[12%] opacity-10 pointer-events-none hidden lg:block">
+                <div className="w-16 h-16 border-t border-r border-white" />
+            </div>
         </section>
     );
 }

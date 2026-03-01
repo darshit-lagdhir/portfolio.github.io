@@ -1,113 +1,124 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { useScene } from "@/context/SceneContext";
+
+// PHASE 1: CENTRAL MOTION CONTROLLER
+const GLOBAL_EASE = [0.33, 1, 0.68, 1] as [number, number, number, number];
 
 const principles = [
     {
-        statement: "Logic-First Architecture.",
-        details: "Prioritizing structural integrity over surface aesthetics. Foundation dictates performance ceiling."
+        index: "01",
+        label: "ARCHITECTURE",
+        statement: "Logic-First.",
+        details: "Foundation dictates performance ceiling. Systems must be engineered, not decorated."
     },
     {
-        statement: "Absolute Modular Isolation.",
-        details: "Every system engineered for strict independence, ensuring zero-trust reliability across boundaries."
+        index: "02",
+        label: "MODULARITY",
+        statement: "Isolation.",
+        details: "Strict independence for every system component. Zero-trust reliability across boundaries."
     },
     {
-        statement: "Honest System Refinement.",
-        details: "True stability is forged through controlled failure and recursive debugging. Logic-driven recovery."
+        index: "03",
+        label: "REFINEMENT",
+        statement: "Honesty.",
+        details: "Stability is forged through controlled failure. Logic-driven recovery is maturity."
     }
 ];
 
 export default function BrutalistAbout() {
     const sectionRef = useRef<HTMLElement>(null);
     const { mode, setActiveSection } = useScene();
-    const [activeId, setActiveId] = useState<number | null>(null);
 
     const { scrollYProgress: sectionScroll } = useScroll({
         target: sectionRef,
         offset: ["start end", "end start"]
     });
 
-    // SCROLLYTELLING LAYER (PHASE 3: MASKED REVEAL)
-    const clipPathScale = useTransform(sectionScroll, [0, 0.4, 0.6, 1], ["polygon(0 0, 0 0, 0 100%, 0% 100%)", "polygon(0 0, 100% 0, 100% 100%, 0 100%)", "polygon(0 0, 100% 0, 100% 100%, 0 100%)", "polygon(100% 0, 100% 0, 100% 100%, 100% 100%)"]);
-
-    // PERSPECTIVE SLAB (MODE: DEPTH BOOST)
-    const perspectiveRotateX = mode === "depth" ? [5, 0, 0, -5] : [3, 0, 0, -3];
-    const rotateX = useTransform(sectionScroll, [0, 0.4, 0.6, 1], perspectiveRotateX);
-    const baseZ = mode === "depth" ? 50 : 20;
+    // PHASE 6: SECTION TRANSITION (TONE SHIFT)
+    const rotateX = useTransform(sectionScroll, [0, 0.4, 0.6, 1], mode === "depth" ? [2.5, 0, 0, -2.5] : [1, 0, 0, -1]);
 
     return (
         <section
             onPointerEnter={() => setActiveSection("about")}
             ref={sectionRef}
-            className="spatial-section relative overflow-hidden"
+            className="spatial-section relative flex items-center justify-center section-tone-shift tone-02"
             id="about"
         >
             <motion.div
-                style={{
-                    rotateX,
-                    translateZ: useTransform(sectionScroll, (v) => baseZ + (v * (mode === 'depth' ? 30 : 15))),
-                    clipPath: mode === "minimal" ? "none" : clipPathScale, // Minimal mode disables scrolly mask
-                    transformStyle: "preserve-3d"
-                }}
-                className={`grid-layout items-start relative z-10 morph-surface md:pl-[6%] transition-colors duration-700 ${activeId !== null ? 'bg-white invert-section' : ''}`}
+                style={{ rotateX, transformStyle: "preserve-3d" }}
+                className="w-full relative z-10"
             >
-                <div className="col-span-12 mb-16">
-                    <motion.span
+                <div className="grid-poster py-24 flex flex-col gap-y-12">
+
+                    {/* PHASE 3: LEFT-DOMINANT LAYOUT */}
+                    <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ margin: "-10%" }}
-                        transition={{ duration: 1.2 }}
-                        className="font-wide text-step--1 text-muted uppercase tracking-micro font-bold link-underline"
+                        viewport={{ once: true, margin: "-10%" }}
+                        transition={{ duration: 1, ease: GLOBAL_EASE }}
+                        className="col-span-12 md:col-span-8 lg:col-span-6 flex flex-col items-start gap-12"
                     >
-                        02 SYSTEM PHILOSOPHY // SCROLLY REVEAL
-                    </motion.span>
-                </div>
+                        {/* PHASE 9: TYPOGRAPHY HIERARCHY (FS-SECTION) */}
+                        <div className="flex flex-col gap-6 items-start">
+                            <span className="text-micro font-bold text-muted border-l border-white/20 pl-6 h-4 flex items-center">SECTION_ID_02</span>
+                            <h2 className="text-large text-white flex flex-col border-b border-white/5 pb-10 w-full italic first-letter:not-italic select-none pointer-events-none transition-all duration-700 hover:tracking-tighter">
+                                SYSTEM_ARCHITECT // PHILOSOPHY
+                            </h2>
+                        </div>
 
-                {principles.map((p, i) => {
-                    const principleRef = useRef<HTMLDivElement>(null);
-                    const { scrollYProgress } = useScroll({
-                        target: principleRef,
-                        offset: ["start end", "end start"]
-                    });
+                        {/* PHASE 2: SHORT PUNCHY CONTENT */}
+                        <p className="text-small text-muted font-light tracking-wide max-w-[42ch]">
+                            We do not decorate. We build structural environments. Every visual choice is a logical consequence of technical integrity.
+                        </p>
+                    </motion.div>
 
-                    const itemZ = useTransform(scrollYProgress, [0, 0.5, 1], [mode === 'depth' ? -200 : -100, 0, mode === 'depth' ? 200 : 100]);
-                    const itemOpacity = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0.2, 1, 1, 0.2]);
-
-                    return (
-                        <motion.div
-                            ref={principleRef}
-                            key={i}
-                            style={{ translateZ: itemZ, opacity: itemOpacity, transformStyle: "preserve-3d" }}
-                            className="col-span-12 grid grid-cols-1 md:grid-cols-12 gap-10 border-t border-border pt-16 pb-20 md:pb-32 relative group"
-                        >
-                            <div className="md:col-span-8">
-                                <motion.h3
-                                    initial={{ clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)" }}
-                                    whileInView={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)" }}
-                                    viewport={{ once: true, margin: "-10%" }}
-                                    transition={{ duration: 1, delay: i * 0.1 }}
-                                    className={`font-title text-step-4 uppercase tracking-tight-title transition-all duration-700 text-physical italic first-letter:not-italic ${activeId !== null ? 'text-black' : 'text-white'}`}
+                    {/* PHASE 10: HORIZONTAL MICRO-SCROLL (PRINCIPLES TRAY) */}
+                    <div className="col-span-12 mt-10">
+                        <div className="horizontal-tray pb-12 overflow-x-visible pb-20">
+                            {principles.map((p, i) => (
+                                <motion.div
+                                    key={i}
+                                    initial={{ opacity: 0, scale: 0.98, x: 20 }}
+                                    whileInView={{ opacity: 1, scale: 1, x: 0 }}
+                                    viewport={{ margin: "-10%" }}
+                                    transition={{ duration: 0.6, delay: i * 0.1, ease: GLOBAL_EASE }}
+                                    // PHASE 5: HEAVY PANEL V1 + TACTILE MATTE (PH-116)
+                                    className="heavy-panel mat-paper btn-tactile elastic-micro min-w-[320px] md:min-w-[400px] p-12 pr-24 flex flex-col gap-10 group"
                                 >
-                                    {p.statement}
-                                </motion.h3>
-                            </div>
+                                    <div className="flex justify-between items-start">
+                                        <span className="text-micro font-bold text-muted group-hover:text-white transition-colors">{p.label}</span>
+                                        <span className="text-micro opacity-10">{p.index}</span>
+                                    </div>
 
-                            <motion.div
-                                onMouseEnter={() => setActiveId(i)}
-                                onMouseLeave={() => setActiveId(null)}
-                                whileHover={{ x: 15, scale: 1.01, translateZ: 40 }}
-                                className={`md:col-span-4 md:col-start-9 transition-all duration-500 mt-6 md:mt-0 p-6 ${mode === 'minimal' ? 'border border-border' : 'glass-panel'}`}
-                            >
-                                <p className={`font-body text-step-0 font-light leading-relaxed transition-colors ${activeId === i ? 'text-black' : 'text-muted'}`}>
-                                    {p.details}
-                                </p>
-                            </motion.div>
-                        </motion.div>
-                    );
-                })}
+                                    <h3 className="text-massive-mini text-step-2 md:text-step-3 text-white tracking-widest italic group-hover:tracking-tighter transition-all duration-700">
+                                        {p.statement}
+                                    </h3>
+
+                                    <p className="text-body text-step-0 text-muted leading-relaxed font-light group-hover:text-white transition-colors">
+                                        {p.details}
+                                    </p>
+
+                                    {/* PHASE 3: RIM HIGHLIGHT */}
+                                    <div className="absolute inset-0 z-[-1] opacity-0 group-hover:opacity-100 transition-all rim-highlight" />
+                                </motion.div>
+                            ))}
+                        </div>
+                    </div>
+
+                </div>
             </motion.div>
+
+            {/* PHASE 8: INTERACTIVE NEGATIVE SPACE (AMBIENT OBJECTS) */}
+            <div className="absolute top-[15%] right-[10%] opacity-10 pointer-events-none hidden lg:block">
+                <motion.div
+                    animate={{ opacity: [0.1, 0.4, 0.1], scale: [1, 1.05, 1], rotate: [0, 4, 0] }}
+                    transition={{ duration: 8, repeat: Infinity }}
+                    className="w-80 h-px bg-gradient-to-r from-transparent via-white to-transparent"
+                />
+            </div>
         </section>
     );
 }

@@ -1,8 +1,11 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useRef, useState } from "react";
 import { useScene } from "@/context/SceneContext";
+
+// PHASE 1: CENTRAL MOTION CONTROLLER
+const GLOBAL_EASE = [0.33, 1, 0.68, 1] as [number, number, number, number];
 
 const contactLinks = [
     { label: "TELEGRAM", value: "@darshit_lagdhir", link: "https://t.me/ghalib_shayar" },
@@ -17,38 +20,37 @@ export default function BrutalistContact() {
     const [isHovered, setIsHovered] = useState<number | null>(null);
 
     const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
-    const rotateX = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], mode === 'depth' ? [5, 0, 0, -5] : [3, 0, 0, -3]);
-    const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.3, 1, 1, 0.3]);
+    const rotateX = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], mode === 'depth' ? [2.5, 0, 0, -2.5] : [1, 0, 0, -1]);
 
     return (
         <section
-            onMouseOver={() => setActiveSection("contact")}
+            onPointerEnter={() => setActiveSection("contact")}
             ref={sectionRef}
-            className="spatial-section relative overflow-hidden"
+            className="spatial-section relative flex items-center justify-center section-tone-shift tone-02"
             id="contact"
         >
             <motion.div
-                style={{ rotateX, opacity, transformStyle: "preserve-3d" }}
-                className="grid-layout items-start relative z-10 morph-surface md:pl-[6%] lg:pl-[10%]"
+                style={{ rotateX, transformStyle: "preserve-3d" }}
+                className="w-full relative z-10"
             >
-                <div className="col-span-12 mb-16">
-                    <motion.span
-                        initial={{ opacity: 0, x: -15 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ margin: "-10%" }}
-                        transition={{ duration: 0.8 }}
-                        className="font-wide text-step--1 text-muted uppercase tracking-micro font-bold link-underline"
-                    >
-                        05 SYSTEM TERMINAL // CONNECT MODES
-                    </motion.span>
-                </div>
+                <div className="grid-poster py-24 flex flex-col lg:flex-row gap-16 items-end">
 
-                <div className="col-span-12 md:col-span-10 lg:col-span-8 flex flex-col gap-10">
-                    <h2 className="font-title text-step-3 md:text-step-5 text-white uppercase tracking-tight-title text-physical italic first-letter:not-italic">
-                        READY FOR <br /> NEW CONTRACTS.
-                    </h2>
+                    {/* PHASE 3: LEFT-DOMINANT LAYOUT */}
+                    <div className="flex-1 flex flex-col items-start gap-12">
+                        <div className="flex flex-col gap-6 items-start">
+                            <span className="text-micro font-bold text-muted border-l border-white/20 pl-6 h-4 flex items-center">SECTION_ID_05</span>
+                            <h2 className="text-large text-white flex flex-col italic first-letter:not-italic select-none pointer-events-none border-b border-white/5 pb-10 w-full">
+                                SYSTEM_TERMINAL // SYNC
+                            </h2>
+                        </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-10">
+                        <p className="text-small text-muted font-light tracking-wide max-w-[42ch]">
+                            Terminal session remains active for integration protocols. Select a transmission node to establish contact.
+                        </p>
+                    </div>
+
+                    {/* PHASE 5: HEAVY PANEL V3 (CONTACT NODES) */}
+                    <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-8 relative z-10 w-full">
                         {contactLinks.map((link, i) => (
                             <motion.a
                                 key={link.label}
@@ -57,39 +59,32 @@ export default function BrutalistContact() {
                                 rel="noopener noreferrer"
                                 onMouseEnter={() => setIsHovered(i)}
                                 onMouseLeave={() => setIsHovered(null)}
-                                initial={{ opacity: 0, y: 10 }}
+                                initial={{ opacity: 0, y: 15 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: i * 0.1, duration: 0.8 }}
-                                className={`group p-8 border border-border flex flex-col gap-3 transition-all duration-500 relative overflow-hidden ${mode === 'minimal' ? 'hover:border-white' : 'glass-panel hover:border-white/20'}`}
+                                transition={{ delay: i * 0.1, duration: 0.8, ease: GLOBAL_EASE }}
+                                className={`heavy-panel btn-tactile elastic-micro p-8 md:p-10 flex flex-col justify-between h-48 md:h-56 transition-all duration-500 relative group overflow-hidden ${mode === 'minimal' ? 'hover:bg-[#0c0c0c]' : 'mat-matte'}`}
                             >
-                                <span className="font-mono text-[9px] text-muted tracking-widest uppercase opacity-50 group-hover:text-white transition-colors">
+                                <span className="text-micro font-bold text-muted group-hover:text-white transition-all opacity-40">
                                     {link.label}
                                 </span>
-                                <span className="font-title text-step-1 text-white uppercase group-hover:tracking-wider transition-all duration-500">
+
+                                <span className="text-medium text-white tracking-widest italic first-letter:not-italic group-hover:tracking-tighter transition-all duration-700">
                                     {link.value}
                                 </span>
 
-                                {/* HUD RIPPLE FEEDBACK (PHASE 4: LOCAL) */}
-                                {isHovered === i && mode !== 'minimal' && (
-                                    <motion.div
-                                        layoutId="contact-hover"
-                                        className="absolute inset-0 bg-white/5 pointer-events-none"
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        exit={{ opacity: 0 }}
-                                    />
-                                )}
+                                {/* PHASE 9: RIM HIGHLIGHT */}
+                                <div className="absolute inset-0 z-[-1] opacity-0 group-hover:opacity-100 transition-opacity rim-highlight" />
                             </motion.a>
                         ))}
                     </div>
                 </div>
-
-                <div className="col-span-12 md:col-span-8 mt-24">
-                    <p className="font-body text-step-0 text-muted font-light leading-relaxed max-w-[45ch]">
-                        OUR SYSTEM IS BUILT FOR ADAPTIVE LOGISTICS AND FORMAL VERIFICATION. CONNECT FOR INTEGRATION PROTOCOLS.
-                    </p>
-                </div>
             </motion.div>
+
+            {/* PHASE 8: INTERACTIVE NEGATIVE SPACE (AMBIENT OBJECTS) */}
+            <div className="absolute bottom-12 right-12 flex flex-col gap-4 opacity-10">
+                <div className="w-[1px] h-20 bg-white" />
+                <span className="text-micro rotate-90 origin-bottom-left absolute -bottom-10 left-4">EOT_TRANSMISSION</span>
+            </div>
         </section>
     );
 }

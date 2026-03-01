@@ -1,55 +1,50 @@
 ﻿@import "tailwindcss";
 @import "./fonts.css";
 
-/* 
-  DARSHIT LAGDHIR — FEATURE EXPANSION 110
-  PHASE 10: MORPHING OBJECTS + ADVANCED SCENE TRANSITIONS
-*/
+/**
+ * DARSHIT LAGDHIR — VISUAL DOMINANCE ARCHITECTURE (PROMPT 114)
+ * PHASE 3: SPATIAL RECOMPOSITION + SCREEN IMPACT OPTIMIZATION
+ */
 
 :root {
-  /* Core Foundation — Expansion Palette */
-  --background: #050505;
-  --bg-subtle: #080808;
-  --bg-elevated: #0a0a0a;
-  --foreground: #ffffff;
+  /* PHASE 8: CONTROLLED COLOR PALETTE */
+  --background: #030303;
+  /* Ambient depth */
+  --bg-subtle: rgba(15, 15, 15, 0.4);
+  --bg-elevated: rgba(25, 25, 25, 0.6);
+  --foreground: #f0f0f0;
   --accent: #ffffff;
-  --muted: #525252;
-  --border: #141414;
-  --surface: #070707;
-  --glow: rgba(255, 255, 255, 0.05);
+  --muted: #a3a3a3;
+  /* Brightened for better legibility (PH-114 Contrast Fix) */
+  --border: rgba(255, 255, 255, 0.05);
+  /* Fainter borders PH-12 */
 
-  /* Font Families */
-  --font-sans: "Space Grotesk", system-ui, sans-serif;
-  --font-display: "Aalto Display Font", "Space Grotesk", sans-serif;
-  --font-wide: "HK Grotesk Wide", "Space Grotesk", sans-serif;
+  /* PHASE 9: TYPOGRAPHY SCALE SYSTEM (FIXED) */
+  --fs-hero: clamp(5rem, 15vw, 12rem);
+  /* Massive */
+  --fs-section: clamp(2rem, 5vw, 4rem);
+  /* Large */
+  --fs-sub: clamp(1.125rem, 2vw, 1.5rem);
+  /* Medium */
+  --fs-body: 1rem;
+  /* Small */
+  --fs-micro: 0.65rem;
+  /* Smallest */
 
-  --font-title: var(--font-display);
-  --font-heading: var(--font-wide);
-  --font-body: var(--font-sans);
+  /* PHASE 2: MOTION SYSTEM (RETAINED FROM PH-2) */
+  --ease-cubic: cubic-bezier(0.33, 1, 0.68, 1);
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
 
-  /* Type Scale */
-  --step--1: clamp(0.65rem, 0.75vw, 0.75rem);
-  --step-0: clamp(0.85rem, 0.9vw, 0.95rem);
-  --step-1: clamp(1rem, 1.1vw, 1.25rem);
-  --step-2: clamp(1.2rem, 1.5vw, 1.75rem);
-  --step-3: clamp(2rem, 4vw, 3rem);
-  --step-4: clamp(3rem, 7vw, 5.5rem);
-  --step-5: clamp(4.5rem, 10vw, 10rem);
+  /* PHASE 1: SPACING & LAYOUT (SCREEN-FIRST) */
+  --grid-gap: clamp(20px, 4vw, 40px);
+  --grid-margin: clamp(40px, 10vw, 160px);
+  --max-width: 1800px;
+  /* Wider for screen-poster feel */
 
-  /* Spacing Discipline */
-  --gap-section: clamp(8rem, 15vh, 12rem);
-
-  /* Expansion Timing (PHASE 10: MORPH TEMPO) */
-  --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-heavy: cubic-bezier(0.25, 0.1, 0.25, 1);
-  --ease-spring: cubic-bezier(0.3, 0, 0, 1);
-  --ease-morph: cubic-bezier(0.4, 0, 0.2, 1);
-  /* Dedicated for shape shifting */
-
-  --duration-hover: 250ms;
-  --duration-reveal: 400ms;
-  /* Under 400ms for clip transitions */
-  --duration-morph: 600ms;
+  /* PHASE 0: FONT SYSTEM OVERRIDE (STRICT ISOLATION) */
+  --font-sans: 'Space Grotesk', sans-serif;
+  --font-display: 'Aalto Display Font', sans-serif;
+  --font-wide: 'HK Grotesk Wide', sans-serif;
 }
 
 @theme {
@@ -58,17 +53,14 @@
   --color-accent: var(--accent);
   --color-muted: var(--muted);
   --color-border: var(--border);
-  --color-surface: var(--surface);
 
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);
   --font-wide: var(--font-wide);
-
-  --ease-cinematic: var(--ease-cinematic);
 }
 
 /* ------------------------------------------------------------
-   BASE ARCHITECTURE & EXPANSION ROOT
+   PHASE 1: SCREEN-FIRST COMPOSITION
    ------------------------------------------------------------ */
 
 * {
@@ -76,330 +68,262 @@
   margin: 0;
   padding: 0;
   cursor: none !important;
+  -webkit-font-smoothing: antialiased;
 }
 
-@media (max-width: 768px) {
-  * {
-    cursor: auto !important;
-  }
-}
-
-html {
-  scroll-behavior: auto;
-  background-color: var(--background);
-  overflow-x: hidden;
-}
-
+html,
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-body);
-  -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
-  /* Perspective removed from body to fix fixed-element behavior on scroll */
-  overflow-x: hidden;
+  font-family: var(--font-sans);
 }
 
-/* ------------------------------------------------------------
-   PHASE 1: SHAPE MORPHING PANELS & DEFORMATION
-   ------------------------------------------------------------ */
-
-.morph-surface {
-  transition: clip-path var(--duration-morph) var(--ease-morph), border-radius var(--duration-morph) var(--ease-morph);
-}
-
-/* Panel Border Morph (PHASE 1) */
-.project-card-morph {
-  clip-path: inset(0% 0% 0% 0% round 0px);
-  transition: clip-path 0.5s var(--ease-morph);
-}
-
-.project-card-morph:hover {
-  clip-path: inset(2% 2% 2% 2% round 24px);
-}
-
-/* Interactive Deformation (PHASE 5) */
-.deformation-surface {
-  transition: transform 0.4s var(--ease-cinematic);
-}
-
-/* ------------------------------------------------------------
-   EXPANSION UTILITIES
-   ------------------------------------------------------------ */
-
-@layer utilities {
-  .glass-panel {
-    background: rgba(255, 255, 255, 0.02);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-  }
-
-  .text-physical {
-    text-shadow:
-      0.5px 0.5px 0px rgba(255, 255, 255, 0.06),
-      -0.5px -0.5px 0px rgba(0, 0, 0, 0.5);
-  }
-
-  @keyframes glare-sweep {
-    from {
-      transform: translateX(-150%) skewX(-20deg);
-    }
-
-    to {
-      transform: translateX(150%) skewX(-20deg);
-    }
-  }
-
-  .glare-effect {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
-    z-index: 5;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 1s var(--ease-cinematic);
-  }
-
-  .spatial-card:hover .glare-effect {
-    opacity: 1;
-    animation: glare-sweep 2s var(--ease-cinematic) forwards;
-  }
-
-  @keyframes shimmer {
-    0% {
-      background-position: -200% 0;
-    }
-
-    100% {
-      background-position: 200% 0;
-    }
-  }
-
-  .skeleton {
-    background: linear-gradient(90deg, #0a0a0a 25%, #121212 50%, #0a0a0a 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite linear;
-    border-radius: 2px;
-  }
-
-  .invert-section {
-    mix-blend-mode: difference;
-  }
-}
-
-/* ------------------------------------------------------------
-   PHASE 11: SCENE MODES & TELEMETRY
-   ------------------------------------------------------------ */
-
-/* MODE: DEPTH — ENHANCED 3D (PHASE 6) */
-.scene-mode-depth {
-  --parallax-amp: 1.5;
-  --tilt-amp: 1.4;
-  --shadow-depth: 40px;
-}
-
-/* MODE: MINIMAL — STRIPPED BACK (PHASE 7) */
-.scene-mode-minimal .mesh-container,
-.scene-mode-minimal .progress-bar,
-.scene-mode-minimal .fixed-hud {
-  display: none !important;
-}
-
-.scene-mode-minimal {
-  --parallax-amp: 0.1;
-  --tilt-amp: 0.2;
-}
-
-/* MICRO TELEMETRY (PHASE 9) */
-@keyframes telemetry-wave {
-  0% {
-    transform: scaleY(0.4);
-    opacity: 0.1;
-  }
-
-  50% {
-    transform: scaleY(1.2);
-    opacity: 0.4;
-  }
-
-  100% {
-    transform: scaleY(0.4);
-    opacity: 0.1;
-  }
-}
-
-.telemetry-bar {
-  width: 2px;
-  background: white;
-  animation: telemetry-wave 1s ease-in-out infinite;
-}
-
-/* PROGRESS INTELLIGENCE BAR (PHASE 1) */
-.progress-intel {
-  position: fixed;
-  right: 2rem;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  z-index: 200;
-}
-
-.intel-marker {
-  width: 8px;
-  height: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  rotate: 45deg;
-  transition: all 0.5s var(--ease-cinematic);
-  position: relative;
-}
-
-.intel-marker.active {
-  background: white;
-  border-color: white;
-  scale: 1.2;
-  box-shadow: 0 0 10px white;
-}
-
-.intel-tooltip {
-  position: absolute;
-  right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-family: var(--font-body);
-  font-size: 10px;
-  color: white;
-  white-space: nowrap;
-  opacity: 0;
-  transition: opacity 0.3s;
-  pointer-events: none;
-}
-
-.intel-marker:hover .intel-tooltip {
-  opacity: 0.6;
-}
-
-/* Bento Grid System (PHASE 3) */
-.bento-grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-auto-rows: minmax(100px, auto);
-  gap: 1.5rem;
-  width: 100%;
-}
-
-.bento-card {
-  position: relative;
-  background: var(--bg-subtle);
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  overflow: hidden;
-  transition: all 0.5s var(--ease-cinematic);
-  transform-style: preserve-3d;
-}
-
-/* Infinite Marquee Strip (PHASE 11) */
-@keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.marquee-container {
-  display: flex;
-  overflow: hidden;
-  user-select: none;
-  gap: 4rem;
-  white-space: nowrap;
-}
-
-.marquee-content {
-  display: flex;
-  gap: 4rem;
-  animation: marquee 20s linear infinite;
-  min-width: 200%;
-}
-
-/* Standard Section Layout */
 .spatial-section {
   position: relative;
   width: 100%;
   min-height: 100vh;
+  /* Every section is a stage (PHASE 1) */
   display: flex;
   align-items: center;
-  transform-style: preserve-3d;
-  padding-block: var(--gap-section);
+  justify-content: center;
 }
 
-.grid-layout {
+.grid-poster {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  gap: 2rem;
+  gap: var(--grid-gap);
   width: 100%;
+  max-width: var(--max-width);
   margin: 0 auto;
-  padding-inline: 1.5rem;
-  max-width: 1600px;
-  transform-style: preserve-3d;
+  padding-inline: var(--grid-margin);
+  position: relative;
+  z-index: 10;
 }
 
-@media (min-width: 768px) {
-  .grid-layout {
-    padding-inline: 4rem;
-  }
+/* ------------------------------------------------------------
+   PHASE 9: TYPOGRAPHY HIERARCHY
+   ------------------------------------------------------------ */
+
+.text-massive {
+  font-size: var(--fs-hero);
+  font-family: var(--font-display);
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  font-weight: 700;
 }
 
-/* Vertical Progress Bar (PHASE 19) */
-.progress-bar {
-  position: fixed;
-  right: 1.5rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 1px;
-  height: 15vh;
-  background: rgba(255, 255, 255, 0.05);
-  z-index: 100;
+.text-large {
+  font-size: var(--fs-section);
+  font-family: var(--font-wide);
+  line-height: 1.1;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
 }
 
-.progress-fill {
+.text-medium {
+  font-size: var(--fs-sub);
+  font-family: var(--font-wide);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.text-small {
+  font-size: var(--fs-body);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+}
+
+.text-micro {
+  font-size: var(--fs-micro);
+  font-family: var(--font-wide);
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------
+   PHASE 5/11/12: DIGITAL SLABS V3 (SUBSURFACE PANEL)
+   ------------------------------------------------------------ */
+
+.heavy-panel {
+  background: linear-gradient(160deg, var(--bg-subtle) 0%, rgba(5, 5, 5, 0.4) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.02);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.03),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.8),
+    0 15px 35px -10px rgba(0, 0, 0, 0.9);
+  transition: all 600ms var(--ease-cubic);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.heavy-panel::after {
+  content: '';
   position: absolute;
   top: 0;
+  left: -150%;
   width: 100%;
-  background: white;
-  transition: height 0.3s var(--ease-cinematic);
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+  transform: skewX(-20deg);
+  transition: left 0s;
+  pointer-events: none;
 }
 
-/* Mesh Gradient Backdrop (PHASE 12 evolution) */
-@keyframes mesh-drift {
+.heavy-panel:hover {
+  background: linear-gradient(160deg, var(--bg-elevated) 0%, rgba(10, 10, 10, 0.6) 100%);
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.06),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.9),
+    0 25px 50px -12px rgba(0, 0, 0, 1);
+  transform: scale(1.01) translateY(-2px);
+}
+
+.heavy-panel:hover::after {
+  left: 200%;
+  transition: left 800ms var(--ease-cubic);
+}
+
+/* ------------------------------------------------------------
+   PHASE 6: SECTION TRANSITION RESTRUCTURE (TRANSPARENT)
+   ------------------------------------------------------------ */
+
+.section-tone-shift {
+  background-color: transparent !important;
+  /* Managed by global env now */
+}
+
+/* ------------------------------------------------------------
+   PHASE 1/2/5: ENVIRONMENTAL ATMOSPHERE + LENS (PH-116.9)
+   ------------------------------------------------------------ */
+.env-vignette {
+  background: radial-gradient(circle at 50% 50%, transparent 50%, rgba(2, 2, 2, 0.85) 150%);
+  pointer-events: none;
+}
+
+.env-fog {
+  background: linear-gradient(to bottom, rgba(3, 3, 3, 0) 0%, rgba(3, 3, 3, 0.95) 100%);
+  pointer-events: none;
+}
+
+.lens-distortion {
+  background: radial-gradient(circle, transparent 60%, rgba(0, 0, 0, 0.3) 130%);
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.9);
+  pointer-events: none;
+}
+
+/* ------------------------------------------------------------
+   PHASE 116.1: GLOBAL GRAIN TEXTURE OVERLAY
+   ------------------------------------------------------------ */
+.env-grain {
+  position: fixed;
+  inset: -100%;
+  width: 300%;
+  height: 300%;
+  background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+  opacity: 0.025;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  animation: grainShift 8s steps(10) infinite;
+}
+
+@keyframes grainShift {
   0% {
-    transform: translate(-2%, -2%) rotate(0deg) scale(1.1);
+    transform: translate(0, 0);
   }
 
-  33% {
-    transform: translate(2%, 1%) rotate(0.5deg) scale(1);
+  25% {
+    transform: translate(-1%, 1%);
   }
 
-  66% {
-    transform: translate(-1%, 2%) rotate(-0.3deg) scale(1.15);
+  50% {
+    transform: translate(1%, -1%);
+  }
+
+  75% {
+    transform: translate(-1%, -1%);
   }
 
   100% {
-    transform: translate(-2%, -2%) rotate(0deg) scale(1.1);
+    transform: translate(0, 0);
   }
 }
 
-.mesh-container {
-  position: fixed;
-  inset: -10%;
-  z-index: -2;
-  filter: blur(100px);
-  opacity: 0.15;
-  animation: mesh-drift 30s linear infinite;
-  pointer-events: none;
+/* ------------------------------------------------------------
+   PHASE 116.2: MATERIAL SURFACE TYPES
+   ------------------------------------------------------------ */
+.mat-matte {
+  background: var(--bg-subtle);
+  backdrop-filter: blur(5px);
+}
+
+.mat-glass {
+  background: linear-gradient(135deg, rgba(20, 20, 20, 0.4) 0%, rgba(5, 5, 5, 0.6) 100%);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.mat-metallic {
+  background: linear-gradient(160deg, #111 0%, #050505 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.mat-paper {
+  background: #080808;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+/* ------------------------------------------------------------
+   PHASE 116.4: TACTILE BUTTON RESPONSE
+   ------------------------------------------------------------ */
+.btn-tactile {
+  transition: transform 150ms var(--ease-spring), box-shadow 150ms var(--ease-cubic), border-color 150ms var(--ease-cubic);
+}
+
+.btn-tactile:hover {
+  transform: scale(1.015);
+  box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.btn-tactile:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 5px -2px rgba(0, 0, 0, 0.8), inset 0 -1px 1px rgba(0, 0, 0, 0.6);
+}
+
+/* ------------------------------------------------------------
+   PHASE 116.5: ELASTIC MICRO INTERACTION
+   ------------------------------------------------------------ */
+.elastic-micro {
+  transition: transform 300ms var(--ease-spring);
+}
+
+.elastic-micro:hover {
+  transform: scaleX(1.03) scaleY(0.97);
+}
+
+/* ------------------------------------------------------------
+   PHASE 10: HORIZONTAL MICRO-SCROLL
+   ------------------------------------------------------------ */
+
+.horizontal-tray {
+  display: flex;
+  gap: 40px;
+  overflow-x: auto;
+  padding-block: 20px;
+  scrollbar-width: none;
+}
+
+.horizontal-tray::-webkit-scrollbar {
+  display: none;
+}
+
+/* REPLACING OLD PROGRESS BAR WITH MINIMAL IMPACT */
+.progress-bar {
+  opacity: 0.2;
 }
 
 ::-webkit-scrollbar {
@@ -411,6 +335,6 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1a1a1a;
+  background: #222;
   border-radius: 10px;
 }
