@@ -87,11 +87,12 @@ export default function BrutalistHero() {
                             transition={{ duration: 1.2, ease: GLOBAL_EASE, delay: 0.1 }}
                             className="relative group h-auto"
                         >
-                            <h1 className="text-massive text-white flex flex-col select-none pointer-events-none mb-6">
-                                <span className="block drop-shadow-xl z-10">
-                                    <ScrambleText text="DARSHIT" delay={0.1} />
+                            <h1 className="text-massive text-white flex flex-col italic first-letter:not-italic select-none pointer-events-none mb-12 tracking-[0.1em]">
+                                <span className="block drop-shadow-xl z-20 mb-10 flex items-baseline">
+                                    <ScrambleText text="DARSHI" delay={0.1} />
+                                    <span className="text-outline border-text stroke-white transition-colors duration-[2000ms] ml-4">T</span>
                                 </span>
-                                <span className="block drop-shadow-xl z-20">
+                                <span className="block drop-shadow-xl z-10 pl-12">
                                     <ScrambleText text="LAGDHIR" delay={0.25} />
                                 </span>
                             </h1>
