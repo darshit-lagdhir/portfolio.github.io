@@ -1,13 +1,24 @@
 "use client";
 
+import { useScene } from "@/context/SceneContext";
+import SystemBreadcrumbs from "@/components/brutalist/SystemBreadcrumbs";
+import { useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-export default function PFCVSystemPage() {
+export default function PFCVPage() {
     const ease = [0.16, 1, 0.3, 1] as const;
+    const { setActiveSection } = useScene();
+
+    useEffect(() => {
+        setActiveSection("pfcv");
+    }, [setActiveSection]);
 
     return (
         <div className="min-h-screen w-full bg-background text-foreground relative overflow-hidden">
+            <div className="grid-layout pt-40 pointer-events-none md:pl-[6%] lg:pl-[10%]">
+                <SystemBreadcrumbs current="PFCV" />
+            </div>
 
             {/* PROJECT MOOD: SHARP/CONTRAST (PHASE 4) */}
             <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center opacity-30">

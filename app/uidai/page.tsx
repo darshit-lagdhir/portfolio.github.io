@@ -1,13 +1,24 @@
 "use client";
 
+import { useScene } from "@/context/SceneContext";
+import SystemBreadcrumbs from "@/components/brutalist/SystemBreadcrumbs";
+import { useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-export default function UIDAIAdvisoryPage() {
+export default function UIDAIPage() {
     const ease = [0.16, 1, 0.3, 1] as const;
+    const { setActiveSection } = useScene();
+
+    useEffect(() => {
+        setActiveSection("uidai");
+    }, [setActiveSection]);
 
     return (
         <div className="min-h-screen w-full bg-background text-foreground relative overflow-hidden">
+            <div className="grid-layout pt-40 pointer-events-none md:pl-[6%] lg:pl-[10%]">
+                <SystemBreadcrumbs current="UIDAI" />
+            </div>
 
             {/* PROJECT MOOD: CALM/NEUTRAL (PHASE 4) */}
             <div className="absolute inset-x-0 top-0 h-[400px] z-0 pointer-events-none opacity-10 bg-gradient-to-b from-white/10 to-transparent blur-3xl rounded-full translate-y-[-50%]" />

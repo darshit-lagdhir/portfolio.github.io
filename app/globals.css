@@ -2,8 +2,8 @@
 @import "./fonts.css";
 
 /* 
-  DARSHIT LAGDHIR — FEATURE EXPANSION 108
-  PHASE 8: FULL INTERACTION & EFFECT INTEGRATION
+  DARSHIT LAGDHIR — FEATURE EXPANSION 110
+  PHASE 10: MORPHING OBJECTS + ADVANCED SCENE TRANSITIONS
 */
 
 :root {
@@ -39,13 +39,17 @@
   /* Spacing Discipline */
   --gap-section: clamp(8rem, 15vh, 12rem);
 
-  /* Expansion Timing (PHASE 9: VISUAL TEMPO) */
+  /* Expansion Timing (PHASE 10: MORPH TEMPO) */
   --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-heavy: cubic-bezier(0.25, 0.1, 0.25, 1);
   --ease-spring: cubic-bezier(0.3, 0, 0, 1);
+  --ease-morph: cubic-bezier(0.4, 0, 0.2, 1);
+  /* Dedicated for shape shifting */
 
   --duration-hover: 250ms;
-  --duration-reveal: 600ms;
+  --duration-reveal: 400ms;
+  /* Under 400ms for clip transitions */
+  --duration-morph: 600ms;
 }
 
 @theme {
@@ -72,7 +76,6 @@
   margin: 0;
   padding: 0;
   cursor: none !important;
-  /* Enable Custom Cursor */
 }
 
 @media (max-width: 768px) {
@@ -93,39 +96,31 @@ body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
-  perspective: 1500px;
+  /* Perspective removed from body to fix fixed-element behavior on scroll */
   overflow-x: hidden;
 }
 
-/* Mesh Gradient Backdrop (PHASE 12) */
-@keyframes mesh-drift {
-  0% {
-    transform: translate(-2%, -2%) rotate(0deg);
-  }
+/* ------------------------------------------------------------
+   PHASE 1: SHAPE MORPHING PANELS & DEFORMATION
+   ------------------------------------------------------------ */
 
-  50% {
-    transform: translate(2%, 2%) rotate(0.5deg);
-  }
-
-  100% {
-    transform: translate(-2%, -2%) rotate(0deg);
-  }
+.morph-surface {
+  transition: clip-path var(--duration-morph) var(--ease-morph), border-radius var(--duration-morph) var(--ease-morph);
 }
 
-.mesh-container {
-  position: fixed;
-  inset: -10%;
-  z-index: -2;
-  filter: blur(100px);
-  opacity: 0.15;
-  animation: mesh-drift 40s linear infinite;
-  pointer-events: none;
+/* Panel Border Morph (PHASE 1) */
+.project-card-morph {
+  clip-path: inset(0% 0% 0% 0% round 0px);
+  transition: clip-path 0.5s var(--ease-morph);
 }
 
-.mesh-blob {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
+.project-card-morph:hover {
+  clip-path: inset(2% 2% 2% 2% round 24px);
+}
+
+/* Interactive Deformation (PHASE 5) */
+.deformation-surface {
+  transition: transform 0.4s var(--ease-cinematic);
 }
 
 /* ------------------------------------------------------------
@@ -133,22 +128,18 @@ body {
    ------------------------------------------------------------ */
 
 @layer utilities {
-
-  /* Glassmorphism Overlay (PHASE 17) */
   .glass-panel {
     background: rgba(255, 255, 255, 0.02);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.05);
   }
 
-  /* Physical Text Signature */
   .text-physical {
     text-shadow:
       0.5px 0.5px 0px rgba(255, 255, 255, 0.06),
       -0.5px -0.5px 0px rgba(0, 0, 0, 0.5);
   }
 
-  /* Glare Sweep (PHASE 11) */
   @keyframes glare-sweep {
     from {
       transform: translateX(-150%) skewX(-20deg);
@@ -174,13 +165,6 @@ body {
     animation: glare-sweep 2s var(--ease-cinematic) forwards;
   }
 
-  /* SVG Line Draw (PHASE 16) */
-  .line-draw {
-    stroke-dashoffset: 0;
-    transition: stroke-dashoffset 1s var(--ease-cinematic);
-  }
-
-  /* Skeleton Loading Shimmer (PHASE 15) */
   @keyframes shimmer {
     0% {
       background-position: -200% 0;
@@ -197,6 +181,148 @@ body {
     animation: shimmer 1.5s infinite linear;
     border-radius: 2px;
   }
+
+  .invert-section {
+    mix-blend-mode: difference;
+  }
+}
+
+/* ------------------------------------------------------------
+   PHASE 11: SCENE MODES & TELEMETRY
+   ------------------------------------------------------------ */
+
+/* MODE: DEPTH — ENHANCED 3D (PHASE 6) */
+.scene-mode-depth {
+  --parallax-amp: 1.5;
+  --tilt-amp: 1.4;
+  --shadow-depth: 40px;
+}
+
+/* MODE: MINIMAL — STRIPPED BACK (PHASE 7) */
+.scene-mode-minimal .mesh-container,
+.scene-mode-minimal .progress-bar,
+.scene-mode-minimal .fixed-hud {
+  display: none !important;
+}
+
+.scene-mode-minimal {
+  --parallax-amp: 0.1;
+  --tilt-amp: 0.2;
+}
+
+/* MICRO TELEMETRY (PHASE 9) */
+@keyframes telemetry-wave {
+  0% {
+    transform: scaleY(0.4);
+    opacity: 0.1;
+  }
+
+  50% {
+    transform: scaleY(1.2);
+    opacity: 0.4;
+  }
+
+  100% {
+    transform: scaleY(0.4);
+    opacity: 0.1;
+  }
+}
+
+.telemetry-bar {
+  width: 2px;
+  background: white;
+  animation: telemetry-wave 1s ease-in-out infinite;
+}
+
+/* PROGRESS INTELLIGENCE BAR (PHASE 1) */
+.progress-intel {
+  position: fixed;
+  right: 2rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  z-index: 200;
+}
+
+.intel-marker {
+  width: 8px;
+  height: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  rotate: 45deg;
+  transition: all 0.5s var(--ease-cinematic);
+  position: relative;
+}
+
+.intel-marker.active {
+  background: white;
+  border-color: white;
+  scale: 1.2;
+  box-shadow: 0 0 10px white;
+}
+
+.intel-tooltip {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-body);
+  font-size: 10px;
+  color: white;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.intel-marker:hover .intel-tooltip {
+  opacity: 0.6;
+}
+
+/* Bento Grid System (PHASE 3) */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-rows: minmax(100px, auto);
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.bento-card {
+  position: relative;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: all 0.5s var(--ease-cinematic);
+  transform-style: preserve-3d;
+}
+
+/* Infinite Marquee Strip (PHASE 11) */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-container {
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  gap: 4rem;
+  white-space: nowrap;
+}
+
+.marquee-content {
+  display: flex;
+  gap: 4rem;
+  animation: marquee 20s linear infinite;
+  min-width: 200%;
 }
 
 /* Standard Section Layout */
@@ -247,9 +373,34 @@ body {
   transition: height 0.3s var(--ease-cinematic);
 }
 
-/* ------------------------------------------------------------
-   SCROLLBAR
-   ------------------------------------------------------------ */
+/* Mesh Gradient Backdrop (PHASE 12 evolution) */
+@keyframes mesh-drift {
+  0% {
+    transform: translate(-2%, -2%) rotate(0deg) scale(1.1);
+  }
+
+  33% {
+    transform: translate(2%, 1%) rotate(0.5deg) scale(1);
+  }
+
+  66% {
+    transform: translate(-1%, 2%) rotate(-0.3deg) scale(1.15);
+  }
+
+  100% {
+    transform: translate(-2%, -2%) rotate(0deg) scale(1.1);
+  }
+}
+
+.mesh-container {
+  position: fixed;
+  inset: -10%;
+  z-index: -2;
+  filter: blur(100px);
+  opacity: 0.15;
+  animation: mesh-drift 30s linear infinite;
+  pointer-events: none;
+}
 
 ::-webkit-scrollbar {
   width: 4px;
