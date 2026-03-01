@@ -10,17 +10,17 @@ export default function MoveXPage() {
         <div className="min-h-screen w-full bg-background text-foreground">
             <div className="grid-layout py-32 lg:py-48 flex flex-col gap-y-40 md:gap-y-64">
 
-                {/* PROJECT HEADER (IDENTITY PANEL) */}
+                {/* PROJECT HEADER */}
                 <div className="col-span-12 lg:col-span-10">
-                    <div className="flex flex-col gap-12">
+                    <div className="flex flex-col gap-8">
                         <span className="font-wide text-step--1 text-muted uppercase tracking-micro font-bold">
-                            SYSTEM // ARCHIVE-001
+                            01 LOGISTICS
                         </span>
                         <h1 className="font-title text-step-5 leading-tight-title uppercase tracking-tight-title">
                             MoveX
                         </h1>
                         <p className="font-body text-step-1 text-muted font-light max-w-[50ch] leading-relaxed">
-                            Modular backend infrastructure for role-isolated logistics management. Built with absolute integrity in Node.js and PostgreSQL.
+                            Modular backend infrastructure for role-isolated logistics management. Built with Node.js and PostgreSQL.
                         </p>
                     </div>
                 </div>
@@ -30,7 +30,7 @@ export default function MoveXPage() {
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
                         <div className="md:col-span-4 lg:col-span-3">
                             <span className="font-wide text-step--1 text-muted uppercase tracking-micro font-bold">
-                                // 01 ANALYTICS
+                                OVERVIEW
                             </span>
                         </div>
                         <div className="md:col-span-8 md:col-start-6 lg:col-start-6">
@@ -38,7 +38,7 @@ export default function MoveXPage() {
                                 Secure Logistics Pathway
                             </h2>
                             <p className="font-body text-step-0 text-muted font-light leading-relaxed">
-                                Engineering a multi-tenant logistics environment required a zero-trust approach to data access. MoveX implements strict role-based pathway isolation, ensuring that every interaction—from administrative oversight to individual user state tracking—is cryptographically secure and auditable.
+                                MoveX implements strict role-based pathway isolation, ensuring that interactions are secure and auditable. The architecture focuses on data access integrity and zero-trust reliability.
                             </p>
                         </div>
                     </div>
@@ -49,16 +49,16 @@ export default function MoveXPage() {
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
                         <div className="md:col-span-4 lg:col-span-3">
                             <span className="font-wide text-step--1 text-muted uppercase tracking-micro font-bold">
-                                // 02 ARCHITECTURE
+                                ARCHITECTURE
                             </span>
                         </div>
                         <div className="md:col-span-8 md:col-start-6 lg:col-start-6">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-16 gap-y-24">
                                 {[
-                                    { title: "Isolated Dashboarding", desc: "Granular UI/UX separation based on verified role signatures." },
-                                    { title: "Prisma Layering", desc: "Type-safe relational mapping for complex supply chain telemetry." },
-                                    { title: "Session Enforcement", desc: "Stateless JWT propagation with rotating secret validation." },
-                                    { title: "Audit Logging", desc: "Immutable state-change ledger for every parcel transaction." }
+                                    { title: "Isolated Dashboarding", desc: "UI/UX separation based on verified role signatures." },
+                                    { title: "Prisma Layering", desc: "Type-safe mapping for supply chain telemetry." },
+                                    { title: "Session Enforcement", desc: "JWT propagation with rotating secret validation." },
+                                    { title: "Audit Logging", desc: "Immutable state-change ledger for transactions." }
                                 ].map((m, i) => (
                                     <div key={i} className="flex flex-col gap-4">
                                         <h3 className="font-wide text-step-0 text-white uppercase tracking-micro font-bold">
@@ -74,29 +74,13 @@ export default function MoveXPage() {
                     </div>
                 </div>
 
-                {/* ANALYTICAL ROW 03: REFLECTION */}
-                <div className="col-span-12 border-t border-border pt-12">
-                    <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
-                        <div className="md:col-span-4 lg:col-span-3">
-                            <span className="font-wide text-step--1 text-muted uppercase tracking-micro font-bold">
-                                // 03 REFLECTION
-                            </span>
-                        </div>
-                        <div className="md:col-span-8 md:col-start-6 lg:col-start-6">
-                            <p className="font-body text-step-1 text-muted font-light italic leading-relaxed">
-                                The focus was not on visual complexity, but on the architectural purity of the backend. Truth exists in the logic, not the interface.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
                 {/* SYSTEM EXIT NAVIGATION */}
                 <div className="col-span-12 border-t border-border pt-24 pb-12 flex justify-between items-baseline">
                     <Link href="/" className="font-wide text-step-0 text-muted uppercase tracking-micro font-bold hover:text-white transition-colors duration-200">
-                        // INDEX
+                        INDEX
                     </Link>
                     <Link href="/uidai" className="font-wide text-step-0 text-muted uppercase tracking-micro font-bold hover:text-white transition-colors duration-200">
-                        NEXT SYSTEM &rarr;
+                        NEXT &rarr;
                     </Link>
                 </div>
 
@@ -104,7 +88,3 @@ export default function MoveXPage() {
         </div>
     );
 }
-
-
-
-

@@ -11,7 +11,7 @@ export default function BrutalistContact() {
                 {/* Identification Label (Grid Zone 1) */}
                 <div className="col-span-12 mb-20 lg:mb-32">
                     <span className="font-wide text-step--1 text-muted uppercase tracking-micro font-bold">
-                        SYSTEM TERMINAL // 005
+                        05 CONNECT
                     </span>
                 </div>
 
@@ -20,23 +20,20 @@ export default function BrutalistContact() {
                     <h2 className="font-title text-step-5 text-white uppercase tracking-tight-title">
                         CONNECT.
                     </h2>
-                    <p className="font-body text-step-0 text-muted font-light max-w-[45ch] leading-relaxed">
-                        Architectural systems are active. Archive is open for high-authority collaboration and technical modularity.
-                    </p>
                 </div>
 
                 {/* Structural Footer (Grid Zone 1-12) */}
                 <div className="col-span-12 border-t border-border pt-12 mt-40 lg:mt-64 pb-8">
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-baseline w-full">
                         {/* Selector Context (Grid Zone 1-7) */}
-                        <div className="md:col-span-7">
+                        <div className="md:col-span-12 lg:col-span-7">
                             <span className="font-wide text-step--1 text-muted uppercase tracking-micro font-bold">
                                 DARSHIT LAGDHIR // ARCHITECTURAL INDEX
                             </span>
                         </div>
 
                         {/* Network Channels (Grid Zone 9-12: R-Aligned) */}
-                        <div className="md:col-span-4 md:col-start-9 flex justify-end gap-12 lg:gap-16">
+                        <div className="md:col-span-12 lg:col-span-4 lg:col-start-9 flex justify-end gap-12 lg:gap-16">
                             {[
                                 { name: "GITHUB", url: "https://github.com/darshit-lagdhir" },
                                 { name: "LINKEDIN", url: "https://linkedin.com/in/darshit-lagdhir" }
@@ -47,7 +44,7 @@ export default function BrutalistContact() {
                                     target="_blank"
                                     className="font-wide text-step-0 text-muted uppercase tracking-micro hover:text-white transition-colors duration-200 font-bold"
                                 >
-                                    // {l.name}
+                                    {l.name}
                                 </a>
                             ))}
                         </div>
@@ -57,9 +54,3 @@ export default function BrutalistContact() {
         </section>
     );
 }
-
-
-
-
-
-

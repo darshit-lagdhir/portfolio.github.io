@@ -3,7 +3,7 @@
 
 /* 
   DARSHIT LAGDHIR — ARCHITECTURAL INDEX
-  RECONSTRUCTION PASS 99: STRUCTURE > STYLE
+  PROMPT 100: IDENTITY SILENCE
 */
 
 :root {
@@ -25,14 +25,14 @@
   --font-heading: var(--font-wide);
   --font-body: var(--font-sans);
 
-  /* Architectural Type Scale */
+  /* Restrained Type Scale (Prompt 100) */
   --step--1: clamp(0.65rem, 0.75vw, 0.75rem);
   --step-0: clamp(0.85rem, 0.9vw, 0.95rem);
-  --step-1: clamp(1rem, 1.1vw, 1.15rem);
-  --step-2: clamp(1.2rem, 1.4vw, 1.5rem);
-  --step-3: clamp(1.8rem, 3.5vw, 2.5rem);
-  --step-4: clamp(2.5rem, 6vw, 4.5rem);
-  --step-5: clamp(3.5rem, 8vw, 8rem);
+  --step-1: clamp(1rem, 1.1vw, 1.1rem);
+  --step-2: clamp(1.2rem, 1.3vw, 1.4rem);
+  --step-3: clamp(1.6rem, 3vw, 2.2rem);
+  --step-4: clamp(2.2rem, 5vw, 4rem);
+  --step-5: clamp(3rem, 7vw, 7rem);
 
   /* Spacing Discipline */
   --gap-xs: 0.5rem;
@@ -40,9 +40,9 @@
   --gap-m: 2rem;
   --gap-l: 4rem;
   --gap-xl: 8rem;
-  --gap-section: clamp(8rem, 12vh, 10rem);
+  --gap-section: clamp(6rem, 10vh, 8rem);
 
-  /* Standardized Motion System */
+  /* Invisible Motion System */
   --ease-control: cubic-bezier(0.16, 1, 0.3, 1);
   --duration-fast: 200ms;
 }
@@ -98,7 +98,7 @@ body {
 }
 
 /* ------------------------------------------------------------
-   TYPOGRAPHIC AUTHORITY (PROMPT 99)
+   TYPOGRAPHIC RESTRAINT (PROMPT 100)
    ------------------------------------------------------------ */
 
 @layer base {
@@ -112,8 +112,10 @@ body {
     font-family: var(--font-title);
     text-transform: uppercase;
     font-weight: 400;
-    line-height: 0.95;
-    letter-spacing: -0.04em;
+    line-height: 1.1;
+    /* Normalized */
+    letter-spacing: -0.02em;
+    /* Reduced intensity */
     color: var(--foreground);
     text-rendering: optimizeLegibility;
   }
@@ -121,7 +123,7 @@ body {
   p {
     font-family: var(--font-body);
     font-weight: 300;
-    line-height: 1.65;
+    line-height: 1.6;
     letter-spacing: 0.01em;
     max-width: 60ch;
     color: var(--muted);
@@ -158,17 +160,17 @@ body {
   }
 
   .tracking-micro {
-    letter-spacing: 0.15em;
-    /* Reduced for structural authority */
+    letter-spacing: 0.1em;
+    /* Reduced */
     text-transform: uppercase;
   }
 
   .tracking-tight-title {
-    letter-spacing: -0.05em;
+    letter-spacing: -0.03em;
   }
 
   .leading-tight-title {
-    line-height: 0.9;
+    line-height: 1.0;
   }
 
   /* ------------------------------------------------------------
@@ -197,7 +199,6 @@ body {
       grid-template-columns: repeat(12, 1fr);
       gap: var(--gap-l);
       max-width: 1600px;
-      /* Wider for structural panels */
       padding-inline: 6rem;
     }
   }
@@ -209,7 +210,6 @@ body {
 
 .snap-section {
   min-height: 100vh;
-  /* Restore 100vh for panels */
   display: flex;
   flex-direction: column;
   justify-content: center;

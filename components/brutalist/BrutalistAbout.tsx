@@ -26,7 +26,7 @@ export default function BrutalistAbout() {
                 {/* Identification Label (Grid Zone 1) */}
                 <div className="col-span-12 mb-16 lg:mb-24">
                     <span className="font-wide text-step--1 text-muted uppercase tracking-micro font-bold">
-                        SYSTEM PHILOSOPHY // 002
+                        02 PHILOSOPHY
                     </span>
                 </div>
 
@@ -44,9 +44,6 @@ export default function BrutalistAbout() {
 
                         {/* Principle Documentation (Grid Zone 8-12: R-Aligned) */}
                         <div className="md:col-span-5 md:col-start-8">
-                            <span className="font-wide text-step--1 text-muted uppercase tracking-micro block mb-6">
-                                // DOCUMENTATION
-                            </span>
                             <p className="font-body text-step-0 text-muted font-light leading-relaxed">
                                 {p.details}
                             </p>
@@ -57,6 +54,7 @@ export default function BrutalistAbout() {
         </section>
     );
 }
+
 
 
 

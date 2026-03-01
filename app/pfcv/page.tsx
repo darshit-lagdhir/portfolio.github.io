@@ -10,11 +10,11 @@ export default function PFCVSystemPage() {
         <div className="min-h-screen w-full bg-background text-foreground">
             <div className="grid-layout py-32 lg:py-48 flex flex-col gap-y-40 md:gap-y-64">
 
-                {/* PROJECT HEADER (IDENTITY PANEL) */}
+                {/* PROJECT HEADER */}
                 <div className="col-span-12 lg:col-span-10">
-                    <div className="flex flex-col gap-12">
+                    <div className="flex flex-col gap-8">
                         <span className="font-wide text-step--1 text-muted uppercase tracking-micro font-bold">
-                            SYSTEM // ARCHIVE-003
+                            03 SECURITY
                         </span>
                         <h1 className="font-title text-step-5 leading-tight-title uppercase tracking-tight-title">
                             POLYGLOT FFI
@@ -30,7 +30,7 @@ export default function PFCVSystemPage() {
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
                         <div className="md:col-span-4 lg:col-span-3">
                             <span className="font-wide text-step--1 text-muted uppercase tracking-micro font-bold">
-                                // 01 ANALYTICS
+                                OVERVIEW
                             </span>
                         </div>
                         <div className="md:col-span-8 md:col-start-6 lg:col-start-6">
@@ -38,7 +38,7 @@ export default function PFCVSystemPage() {
                                 Binary Contract Enforcement
                             </h2>
                             <p className="font-body text-step-0 text-muted font-light leading-relaxed">
-                                Polyglot FFI is an automated verification pipeline designed to eliminate memory layout uncertainty at the boundary between Rust, C++, and WebAssembly. By synthesizing a language-agnostic intermediate representation, the system validates memory alignment, padding invariants, and calling convention adherence before execution.
+                                Polyglot FFI eliminates memory layout uncertainty at the boundary between Rust, C++, and WebAssembly. By synthesizing an intermediate representation, the system validates memory alignment and calling conventions before execution.
                             </p>
                         </div>
                     </div>
@@ -49,7 +49,7 @@ export default function PFCVSystemPage() {
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
                         <div className="md:col-span-4 lg:col-span-3">
                             <span className="font-wide text-step--1 text-muted uppercase tracking-micro font-bold">
-                                // 02 PIPELINE
+                                PIPELINE
                             </span>
                         </div>
                         <div className="md:col-span-8 md:col-start-6 lg:col-start-6">
@@ -57,8 +57,8 @@ export default function PFCVSystemPage() {
                                 {[
                                     { title: "IR Normalization", desc: "Synthesis of Language-agnostic Intermediate Representation." },
                                     { title: "Layout Verifier", desc: "Validation of memory alignment and padding invariants." },
-                                    { title: "Convention Enforcement", desc: "Strict checks for stack discipline and register pressure." },
-                                    { title: "Safe Adapter Gen", desc: "Automatic generation of instrumented, safe FFI bridges." }
+                                    { title: "Convention Enforcement", desc: "Checks for stack discipline and register pressure." },
+                                    { title: "Safe Adapter Gen", desc: "Automatic generation of instrumented FFI bridges." }
                                 ].map((m, i) => (
                                     <div key={i} className="flex flex-col gap-4">
                                         <h3 className="font-wide text-step-0 text-white uppercase tracking-micro font-bold">
@@ -74,29 +74,13 @@ export default function PFCVSystemPage() {
                     </div>
                 </div>
 
-                {/* ANALYTICAL ROW 03: REFLECTION */}
-                <div className="col-span-12 border-t border-border pt-12">
-                    <div className="grid grid-cols-1 md:grid-cols-12 gap-12">
-                        <div className="md:col-span-4 lg:col-span-3">
-                            <span className="font-wide text-step--1 text-muted uppercase tracking-micro font-bold">
-                                // 03 REFLECTION
-                            </span>
-                        </div>
-                        <div className="md:col-span-8 md:col-start-6 lg:col-start-6">
-                            <p className="font-body text-step-1 text-muted font-light italic leading-relaxed">
-                                Uncertainty is the root of memory corruption. Formalizing the contract between languages is the only path to absolute binary safety.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
                 {/* SYSTEM EXIT NAVIGATION */}
                 <div className="col-span-12 border-t border-border pt-24 pb-12 flex justify-between items-baseline">
                     <Link href="/" className="font-wide text-step-0 text-muted uppercase tracking-micro font-bold hover:text-white transition-colors duration-200">
-                        // INDEX
+                        INDEX
                     </Link>
                     <Link href="/movex" className="font-wide text-step-0 text-muted uppercase tracking-micro font-bold hover:text-white transition-colors duration-200">
-                        NEXT SYSTEM &rarr;
+                        NEXT &rarr;
                     </Link>
                 </div>
 
@@ -104,4 +88,3 @@ export default function PFCVSystemPage() {
         </div>
     );
 }
-

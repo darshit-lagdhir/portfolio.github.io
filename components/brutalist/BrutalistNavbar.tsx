@@ -37,7 +37,7 @@ export default function BrutalistNavbar() {
                         href="/"
                         className="font-title text-step-0 text-white uppercase tracking-tight-title font-bold hover:text-muted transition-colors duration-200"
                     >
-                        // DARSHIT LAGDHIR
+                        DARSHIT LAGDHIR
                     </Link>
                 </div>
 
@@ -51,7 +51,7 @@ export default function BrutalistNavbar() {
                                 href={link.href}
                                 className={`
                                     relative font-wide text-step--1 uppercase tracking-micro font-bold 
-                                    transition-colors duration-200 group
+                                    transition-colors duration-200
                                     ${isActive ? "text-white" : "text-muted hover:text-white"}
                                 `}
                             >
@@ -64,6 +64,7 @@ export default function BrutalistNavbar() {
         </header>
     );
 }
+
 
 
 
