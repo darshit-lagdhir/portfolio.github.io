@@ -71,6 +71,13 @@
   -webkit-font-smoothing: antialiased;
 }
 
+/* PHASE 120.8: FOCUS STATE POLISH */
+*:focus-visible {
+  outline: 1px solid rgba(255, 255, 255, 0.4);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
 html,
 body {
   background-color: var(--background);
@@ -152,7 +159,8 @@ body {
     inset 0 1px 1px rgba(255, 255, 255, 0.03),
     inset 0 -1px 1px rgba(0, 0, 0, 0.8),
     0 15px 35px -10px rgba(0, 0, 0, 0.9);
-  transition: all 600ms var(--ease-cubic);
+  /* PHASE 120.12: HOVER EXIT CLEANUP */
+  transition: all 400ms var(--ease-cubic);
   position: relative;
   overflow: hidden;
   backdrop-filter: blur(10px);
@@ -171,14 +179,16 @@ body {
   pointer-events: none;
 }
 
+/* PHASE 120.1: HOVER CHOREOGRAPHY ENGINE (LAYERED SEQUENCE) */
 .heavy-panel:hover {
-  background: linear-gradient(160deg, var(--bg-elevated) 0%, rgba(10, 10, 10, 0.6) 100%);
+  background: linear-gradient(160deg, var(--bg-elevated) 0%, rgba(10, 10, 10, 0.7) 100%);
   border-color: rgba(255, 255, 255, 0.06);
   box-shadow:
     inset 0 1px 1px rgba(255, 255, 255, 0.06),
     inset 0 -1px 1px rgba(0, 0, 0, 0.9),
     0 25px 50px -12px rgba(0, 0, 0, 1);
-  transform: scale(1.01) translateY(-2px);
+  transform: translateY(-2px);
+  /* 40ms stagger micro delay applied to box-shadow/transform via specific component */
 }
 
 .heavy-panel:hover::after {
@@ -212,6 +222,161 @@ body {
   background: radial-gradient(circle, transparent 60%, rgba(0, 0, 0, 0.3) 130%);
   box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.9);
   pointer-events: none;
+}
+
+/* ------------------------------------------------------------
+   PHASE 117: GEOMETRIC INTELLIGENCE (ARCHITECTURAL BASE)
+   ------------------------------------------------------------ */
+.grid-blueprint {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 100px 100px;
+  background-position: center;
+  pointer-events: none;
+}
+
+.arch-line {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+.arch-line-h {
+  height: 1px;
+  width: 0;
+}
+
+.arch-line-v {
+  width: 1px;
+  height: 0;
+}
+
+.isometric-slab {
+  transform-style: preserve-3d;
+  transition: transform 600ms var(--ease-cubic), box-shadow 600ms var(--ease-cubic);
+}
+
+.isometric-slab:hover {
+  transform: rotateX(5deg) rotateY(-5deg) translateZ(10px) translateY(-5px) !important;
+  box-shadow: -15px 15px 30px rgba(0, 0, 0, 0.8), inset 1px -1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* ------------------------------------------------------------
+   PHASE 119: SIGNATURE VISUAL IDENTITY
+   ------------------------------------------------------------ */
+
+/* PHASE 119.1: SIGNATURE MOTIF (MICRO CORNER BRACKETS) */
+.signature-bracket {
+  position: relative;
+}
+
+.signature-bracket::before,
+.signature-bracket::after {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  pointer-events: none;
+  transition: all 400ms var(--ease-cubic);
+  z-index: 20;
+}
+
+.signature-bracket::before {
+  top: -1px;
+  left: -1px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.signature-bracket::after {
+  bottom: -1px;
+  right: -1px;
+  border-left: none;
+  border-top: none;
+}
+
+.signature-bracket:hover::before {
+  top: -4px;
+  left: -4px;
+}
+
+.signature-bracket:hover::after {
+  bottom: -4px;
+  right: -4px;
+}
+
+/* PHASE 119.2: SIGNATURE HOVER MOMENT (MICRO LIGHT BEAM) */
+.light-beam-pass {
+  position: relative;
+  overflow: hidden;
+}
+
+.light-beam-pass::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  transform: skewX(-20deg);
+  transition: none;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.light-beam-pass:hover::before {
+  left: 200%;
+  transition: left 600ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* PHASE 120.2: BUTTON MICRO-PHYSICS 2.0 */
+.btn-signature {
+  border-radius: 2px !important;
+  transition: transform 120ms var(--ease-spring), box-shadow 120ms var(--ease-cubic) 30ms, border-color 150ms var(--ease-cubic) !important;
+}
+
+.btn-signature:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 20px -5px rgba(0, 0, 0, 0.9), inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.btn-signature:active {
+  transform: scale(0.98) translateY(0px) !important;
+}
+
+/* PHASE 119.7: CREATIVE TYPOGRAPHY TWIST */
+.text-outline {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1px white;
+}
+
+/* PHASE 120.3: LINK UNDERLINE REWRITE */
+.text-highlight-sweep {
+  position: relative;
+  display: inline-block;
+}
+
+.text-highlight-sweep::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: calc(100% - 10px);
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.text-highlight-sweep:hover::after,
+.text-highlight-sweep.active::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 /* ------------------------------------------------------------

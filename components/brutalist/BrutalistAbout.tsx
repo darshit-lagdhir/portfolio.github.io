@@ -64,7 +64,7 @@ export default function BrutalistAbout() {
                         {/* PHASE 9: TYPOGRAPHY HIERARCHY (FS-SECTION) */}
                         <div className="flex flex-col gap-6 items-start">
                             <span className="text-micro font-bold text-muted border-l border-white/20 pl-6 h-4 flex items-center">SECTION_ID_02</span>
-                            <h2 className="text-large text-white flex flex-col border-b border-white/5 pb-10 w-full italic first-letter:not-italic select-none pointer-events-none transition-all duration-700 hover:tracking-tighter">
+                            <h2 className="text-large text-white flex flex-col border-b border-white/5 pb-10 w-full italic first-letter:not-italic select-none pointer-events-none transition-all duration-700 hover:tracking-tighter text-highlight-sweep">
                                 SYSTEM_ARCHITECT // PHILOSOPHY
                             </h2>
                         </div>
@@ -85,8 +85,8 @@ export default function BrutalistAbout() {
                                     whileInView={{ opacity: 1, scale: 1, x: 0 }}
                                     viewport={{ margin: "-10%" }}
                                     transition={{ duration: 0.6, delay: i * 0.1, ease: GLOBAL_EASE }}
-                                    // PHASE 5: HEAVY PANEL V1 + TACTILE MATTE (PH-116)
-                                    className="heavy-panel mat-paper btn-tactile elastic-micro min-w-[320px] md:min-w-[400px] p-12 pr-24 flex flex-col gap-10 group"
+                                    // PHASE 5 & 119: HEAVY PANEL + TACTILE MATTE + BRACKET
+                                    className="heavy-panel signature-bracket mat-paper btn-signature elastic-micro min-w-[320px] md:min-w-[400px] p-12 pr-24 flex flex-col gap-10 group"
                                 >
                                     <div className="flex justify-between items-start">
                                         <span className="text-micro font-bold text-muted group-hover:text-white transition-colors">{p.label}</span>

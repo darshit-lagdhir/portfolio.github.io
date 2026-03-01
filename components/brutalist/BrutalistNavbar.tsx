@@ -11,7 +11,7 @@ const GLOBAL_EASE = [0.33, 1, 0.68, 1] as [number, number, number, number];
 
 export default function BrutalistNavbar() {
     const pathname = usePathname();
-    const { mode, setMode, setIsNavigating } = useScene();
+    const { mode, setMode, setIsNavigating, activeSection } = useScene();
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -82,7 +82,10 @@ export default function BrutalistNavbar() {
                 {/* PHASE 2: DENSE NAV LINKS (SHORT NAMES) */}
                 <div className="hidden md:flex md:col-start-7 md:col-span-6 lg:col-start-8 lg:col-span-5 justify-end gap-x-10">
                     {navLinks.map((link) => {
-                        const isActive = pathname === link.href;
+                        const linkSection = link.href.replace("/#", "");
+                        // PHASE 120.6: ACTIVE STATE DESIGN 
+                        const isActive = activeSection === linkSection || (activeSection === 'hero' && linkSection === 'hero');
+
                         return (
                             <Link
                                 key={link.name}
@@ -90,8 +93,8 @@ export default function BrutalistNavbar() {
                                 onClick={() => setIsNavigating(true)}
                                 className={`
                                     relative text-micro font-bold tracking-[0.3em] elastic-micro
-                                    block link-underline h-4
-                                    ${isActive ? "text-white" : "text-white/40 hover:text-white"}
+                                    block text-highlight-sweep h-4
+                                    ${isActive ? "text-white active drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]" : "text-white/40 hover:text-white"}
                                 `}
                             >
                                 {link.name}

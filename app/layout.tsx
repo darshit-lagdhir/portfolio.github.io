@@ -2,6 +2,7 @@
 
 import { motion, useMotionValue, useSpring, useTransform, useScroll, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import "./globals.css";
 import SmoothScroll from "@/components/brutalist/SmoothScroll";
 import BrutalistNavbar from "@/components/brutalist/BrutalistNavbar";
@@ -71,17 +72,23 @@ export function CustomCursor() {
   const ringY = useSpring(mouseY, { damping: 40, stiffness: 500 });
 
   const [isHovering, setIsHovering] = useState(false);
+  const [isHoveringProject, setIsHoveringProject] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
+  const [isMounted, setIsMounted] = useState(false);
+
   useEffect(() => {
+    setIsMounted(true);
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize();
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
-      const target = e.target as HTMLElement;
-      // PHASE 13: ONLY REACT ON IMPORTANT ZONES
-      setIsHovering(!!target.closest("a, button, [role='button']"));
+      const target = e.target as Element;
+      if (target?.closest) {
+        setIsHovering(!!target.closest("a, button, [role='button']"));
+        setIsHoveringProject(!!target.closest("[data-project='true']"));
+      }
     };
 
     window.addEventListener("resize", handleResize);
@@ -92,7 +99,7 @@ export function CustomCursor() {
     }
   }, [mouseX, mouseY]);
 
-  if (isMobile) return null;
+  if (!isMounted || isMobile) return null;
 
   return (
     <>
@@ -102,7 +109,13 @@ export function CustomCursor() {
       />
       <motion.div
         style={{ x: ringX, y: ringY, translateX: "-50%", translateY: "-50%" }}
-        animate={{ scale: isHovering ? 2.5 : 1, opacity: isHovering ? 0.3 : 0.6 }}
+        animate={{
+          scale: isHoveringProject ? 3.5 : isHovering ? 2.5 : 1,
+          opacity: isHovering || isHoveringProject ? 0.3 : 0.6,
+          borderRadius: isHoveringProject ? "0px" : "50%",
+          rotate: isHoveringProject ? 45 : 0
+        }}
+        transition={{ duration: 0.15, ease: "linear" }}
         className="fixed top-0 left-0 w-8 h-8 rounded-full border border-white mix-blend-difference z-[99999] pointer-events-none"
       />
     </>
@@ -110,6 +123,7 @@ export function CustomCursor() {
 }
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
   const { scrollYProgress } = useScroll();
   const gridShiftY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
   // PHASE 116.10: SUBTLE PERSPECTIVE SHIFT
@@ -154,46 +168,29 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
       />
 
       {/* PHASE 12: MESH REFINEMENT (SUBTLE DUST/MESH) */}
-      <div className="mesh-container ambient-drift opacity-50">
-        <div className="mesh-blob w-[50vw] h-[50vw] bg-white opacity-5 left-0 top-0" />
-        <div className="mesh-blob w-[40vw] h-[40vw] bg-white opacity-2 right-0 bottom-0" />
+      <div className="fixed inset-0 z-[-4] pointer-events-none opacity-50 overflow-hidden mix-blend-screen">
+        <div className="absolute w-[50vw] h-[50vw] bg-white opacity-5 left-0 top-0 rounded-full blur-[100px]" />
+        <div className="absolute w-[40vw] h-[40vw] bg-white opacity-2 right-0 bottom-0 rounded-full blur-[100px]" />
       </div>
 
-      {/* PHASE 8: GRID + PARALLAX SHIFT */}
+      {/* PHASE 8 & 117.3: SPATIAL GRID SYSTEM OVERLAY */}
       <motion.div
         style={{ y: gridShiftY }}
-        className="fixed inset-[-10%] z-[-4] pointer-events-none opacity-[0.015]"
+        className="fixed inset-[-10%] z-[-2] pointer-events-none opacity-[0.4]"
       >
-        <div className="w-full h-full" style={{
-          backgroundImage: "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-          backgroundSize: "100px 100px" // Wider for architecture
-        }} />
+        <div className="w-full h-full grid-blueprint transition-opacity duration-1000" />
       </motion.div>
 
       <BrutalistNavbar />
 
-      {/* PHASE 14: PAGE TRANSITION CLEANUP & PHASE 116.10: PERSPECTIVE SHIFT */}
-      <AnimatePresence mode="wait">
-        <motion.main
-          initial={{ opacity: 0, scale: 0.99 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 1.01 }}
-          transition={{ duration: 0.6, ease: GLOBAL_EASE }}
-          className="relative z-10 w-full min-h-screen origin-top"
-        >
-          {children}
-        </motion.main>
-      </AnimatePresence>
+      {/* PHASE 118.4 & 120.13: ZERO-BUG ROUTE TRANSITION */}
+      <main className="relative z-10 w-full min-h-screen origin-top pt-24">
+        {children}
+      </main>
 
       <CustomCursor />
       <HUDOverlay />
 
-      {/* PHASE 2 & 5: FOG + VIGNETTE ENVIRONMENT TIER */}
-      <div className="fixed inset-0 z-[500] env-vignette mix-blend-multiply" />
-      <div className="fixed inset-0 z-[501] env-fog" />
-
-      {/* PHASE 116.1 & 116.9: TEXTURE ENGINE */}
-      <div className="fixed inset-0 z-[502] lens-distortion mix-blend-overlay" />
       <div className="env-grain" />
 
       {/* PHASE 12: PROGRESS REFINEMENT (STAY SHARP) */}

@@ -39,7 +39,7 @@ export default function BrutalistContact() {
                     <div className="flex-1 flex flex-col items-start gap-12">
                         <div className="flex flex-col gap-6 items-start">
                             <span className="text-micro font-bold text-muted border-l border-white/20 pl-6 h-4 flex items-center">SECTION_ID_05</span>
-                            <h2 className="text-large text-white flex flex-col italic first-letter:not-italic select-none pointer-events-none border-b border-white/5 pb-10 w-full">
+                            <h2 className="text-large text-white flex flex-col italic first-letter:not-italic select-none pointer-events-none border-b border-white/5 pb-10 w-full text-highlight-sweep">
                                 SYSTEM_TERMINAL // SYNC
                             </h2>
                         </div>
@@ -62,7 +62,7 @@ export default function BrutalistContact() {
                                 initial={{ opacity: 0, y: 15 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 transition={{ delay: i * 0.1, duration: 0.8, ease: GLOBAL_EASE }}
-                                className={`heavy-panel btn-tactile elastic-micro p-8 md:p-10 flex flex-col justify-between h-48 md:h-56 transition-all duration-500 relative group overflow-hidden ${mode === 'minimal' ? 'hover:bg-[#0c0c0c]' : 'mat-matte'}`}
+                                className={`heavy-panel btn-signature signature-bracket elastic-micro light-beam-pass p-8 md:p-10 flex flex-col justify-between h-48 md:h-56 transition-all duration-500 relative group overflow-hidden ${mode === 'minimal' ? 'hover:bg-[#0c0c0c]' : 'mat-matte'}`}
                             >
                                 <span className="text-micro font-bold text-muted group-hover:text-white transition-all opacity-40">
                                     {link.label}

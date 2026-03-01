@@ -128,9 +128,16 @@ export default function BrutalistFocus() {
                 <div className="col-span-12 lg:col-span-8 flex flex-col items-start gap-12">
                     <div className="flex flex-col gap-6 items-start">
                         <span className="text-micro font-bold text-muted border-l border-white/20 pl-6 h-4 flex items-center">SECTION_ID_04</span>
-                        <h2 className="text-large text-white flex flex-col italic first-letter:not-italic select-none pointer-events-none border-b border-white/5 pb-10 w-full mb-4">
+                        {/* PHASE 118.13: DRAMATIC TYPOGRAPHY HOLD */}
+                        <motion.h2
+                            initial={{ opacity: 0, y: 10, filter: "blur(5px)" }}
+                            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8, delay: 0.7, ease: GLOBAL_EASE }}
+                            className="text-large text-white flex flex-col italic first-letter:not-italic select-none pointer-events-none border-b border-white/5 pb-10 w-full mb-4"
+                        >
                             RESEARCH_FOCUS // TOOLS
-                        </h2>
+                        </motion.h2>
                     </div>
 
                     <p className="text-small text-muted font-light tracking-wide max-w-[42ch]">

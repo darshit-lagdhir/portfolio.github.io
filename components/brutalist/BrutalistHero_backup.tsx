@@ -87,11 +87,12 @@ export default function BrutalistHero() {
                             transition={{ duration: 1.2, ease: GLOBAL_EASE, delay: 0.1 }}
                             className="relative group h-auto"
                         >
-                            <h1 className="text-massive text-white flex flex-col select-none pointer-events-none mb-6">
-                                <span className="block drop-shadow-xl z-10">
-                                    <ScrambleText text="DARSHIT" delay={0.1} />
+                            <h1 className="text-massive text-white flex flex-col italic first-letter:not-italic select-none pointer-events-none mb-10">
+                                <span className="block mb-2">
+                                    <ScrambleText text="DARSHI" delay={0.1} />
+                                    <span className="text-outline border-text stroke-white transition-colors duration-[2000ms]">T</span>
                                 </span>
-                                <span className="block drop-shadow-xl z-20">
+                                <span className="block">
                                     <ScrambleText text="LAGDHIR" delay={0.25} />
                                 </span>
                             </h1>
@@ -99,7 +100,7 @@ export default function BrutalistHero() {
                             {/* PHASE 7 & 117.2: LOW POLY HERO ARCHITECTURAL FORM */}
                             <motion.div
                                 style={{ rotateX, rotateY: rotateY, z: -100 }}
-                                className="absolute -right-20 md:-right-40 top-10 w-64 h-64 hidden lg:block z-[-10] pointer-events-none"
+                                className="absolute -right-20 md:-right-40 top-10 w-64 h-64 hidden lg:block z-[-1] pointer-events-none"
                             >
                                 <motion.div
                                     animate={{ rotateZ: [0, 360] }}
@@ -119,12 +120,12 @@ export default function BrutalistHero() {
 
                         {/* PHASE 2: SHORT DENSE CONTENT (TAGLINE) */}
                         <motion.div
-                            initial={{ opacity: 0 }}
+                            initial={{ opacity: 1 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.7, duration: 1, ease: GLOBAL_EASE }}
                             className="max-w-[40ch] mt-4"
                         >
-                            <h2 className="text-medium text-white/40 font-bold mb-4 text-highlight-sweep tracking-[0.3em]">SYSTEM_ARCHITECT</h2>
+                            <h2 className="text-large text-white/40 font-bold mb-4 text-highlight-sweep">SYSTEM_ARCHITECT</h2>
                             <p className="text-small text-muted font-light tracking-wide max-w-[50ch]">
                                 Engineering high-precision digital environments through logic-first architecture and structural visual power.
                             </p>
@@ -132,7 +133,7 @@ export default function BrutalistHero() {
 
                         {/* PHASE 4: MINIMAL CTA */}
                         <motion.div
-                            initial={{ opacity: 0, y: 5 }}
+                            initial={{ opacity: 1, y: 5 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.78, duration: 1, ease: GLOBAL_EASE }}
                             className="mt-12"
