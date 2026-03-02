@@ -2,32 +2,31 @@
 @import "./fonts.css";
 
 :root {
-  --background: #030303;
-  --foreground: #f0f0f0;
+  /* PHASE 3 - BLACK/WHITE DOMINANCE LOCK */
+  --background: #000000;
+  --foreground: #ffffff;
   --accent: #ffffff;
-  --muted: #666666;
-  --border: rgba(255, 255, 255, 0.05);
+  --muted: #888888;
+  --border: #ffffff;
 
-  /* TYPE SCALE — PHASE 2 LOCK */
-  --fs-hero: clamp(3.5rem, 11vw, 9rem);
-  --fs-section: clamp(1.75rem, 4.5vw, 3.5rem);
-  --fs-sub: 1.15rem;
-  --fs-body: 1rem;
-  --fs-micro: 0.6rem;
+  /* TYPE SCALE — PHASE 3 POWER */
+  --fs-hero: clamp(5rem, 15vw, 14rem);
+  --fs-section: clamp(3rem, 10vw, 8rem);
+  --fs-sub: clamp(1rem, 2vw, 1.5rem);
+  --fs-body: 1.125rem;
+  --fs-micro: 0.7rem;
 
-  /* MOTION TOKENS — PHASE 2 LOCK */
+  /* MOTION TOKENS — PHASE 3 PRECISION */
   --m-fast: 0.2s;
   --m-med: 0.4s;
-  --m-slow: 1s;
-  --m-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --m-slow: 0.8s;
+  --m-ease: cubic-bezier(0.25, 1, 0.5, 1);
 
-  /* GRID — PHASE 2 LOCK */
-  --grid-w: 1600px;
-  --grid-gap: clamp(1.5rem, 3vw, 2.5rem);
-
-  --font-sans: 'Space Grotesk', sans-serif;
-  --font-display: 'Aalto Display Font', sans-serif;
-  --font-wide: 'HK Grotesk Wide', sans-serif;
+  /* FONTS — STEP 3 STRICT LOCK */
+  --font-hero: 'Clash Display', sans-serif;
+  --font-heading: 'Panchang', sans-serif;
+  --font-ui: 'HK Grotesk Wide', sans-serif;
+  --font-body: 'Space Grotesk', sans-serif;
 }
 
 @theme {
@@ -36,9 +35,10 @@
   --color-accent: var(--accent);
   --color-muted: var(--muted);
   --color-border: var(--border);
-  --font-sans: var(--font-sans);
-  --font-display: var(--font-display);
-  --font-wide: var(--font-wide);
+  --font-hero: var(--font-hero);
+  --font-heading: var(--font-heading);
+  --font-ui: var(--font-ui);
+  --font-body: var(--font-body);
 }
 
 * {
@@ -53,108 +53,132 @@ html,
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   overflow-x: hidden;
-  line-height: 1.5;
+  line-height: 1.4;
+}
+
+/* COMPOSITION UTILITIES */
+.bg-inverse {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.text-inverse {
+  color: #000000 !important;
+}
+
+.border-inverse {
+  border-color: #000000 !important;
 }
 
 .grid-poster {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   width: 100%;
-  max-width: var(--grid-w);
+  max-width: 1800px;
   margin: 0 auto;
-  gap: var(--grid-gap);
+  gap: 2rem;
 }
 
-/* TYPOGRAPHY COMPONENTS */
+/* TYPOGRAPHY ARCHITECTURE — PHASE 3 */
 .text-massive {
   font-size: var(--fs-hero);
-  font-family: var(--font-display);
+  font-family: var(--font-hero);
+  line-height: 0.8;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.text-massive-mini {
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-family: var(--font-hero);
   line-height: 0.85;
   text-transform: uppercase;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.04em;
 }
 
 .text-large {
   font-size: var(--fs-section);
-  font-family: var(--font-wide);
-  line-height: 1.1;
+  font-family: var(--font-heading);
+  line-height: 0.9;
   text-transform: uppercase;
-  letter-spacing: -0.01em;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.text-large-mini {
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-family: var(--font-heading);
+  line-height: 0.9;
+  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: -0.02em;
 }
 
 .text-medium {
   font-size: var(--fs-sub);
-  font-family: var(--font-wide);
-  letter-spacing: 0.05em;
+  font-family: var(--font-ui);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+  font-weight: 600;
 }
 
 .text-micro {
   font-size: var(--fs-micro);
-  font-family: var(--font-wide);
-  letter-spacing: 0.5em;
+  font-family: var(--font-ui);
+  letter-spacing: 0.4em;
   text-transform: uppercase;
   font-weight: 700;
 }
 
-.tracking-tight-title {
-  letter-spacing: -0.05em;
+.text-short-body {
+  font-size: var(--fs-body);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  max-width: 45ch;
 }
 
-/* AMBIENT EFFECTS — PHASE 2 SIMPLICITY */
-.grid-blueprint {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 60px 60px;
-  background-position: center;
-  mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
-}
-
-.env-grain {
-  position: fixed;
-  inset: 0;
-  background-image: url('https://grainy-gradients.vercel.app/noise.svg');
-  opacity: 0.015;
-  pointer-events: none;
-  z-index: 1000;
-  mix-blend-mode: overlay;
-}
-
-/* GLOBAL ANIMATION CLASSES */
-.section-reveal {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity var(--m-slow) var(--m-ease), transform var(--m-slow) var(--m-ease);
-}
-
-.section-reveal.active {
+/* GRID & DIVIDERS — PHASE 3 */
+.divider-h {
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
   opacity: 1;
-  transform: translateY(0);
 }
 
-/* UTILITIES */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
+.divider-v {
+  width: 1px;
+  height: 100%;
+  background-color: currentColor;
+  opacity: 1;
 }
 
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
+/* SCROLLBAR REWRITE */
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: #000000;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 2px;
+  background: #ffffff;
+}
+
+/* CURSOR INTERACTION STYLES */
+.cursor-invert {
+  mix-blend-mode: difference;
+}
+
+/* NOISY EFFECTS PURGED — CLEAN CANVAS LOCK */
+.env-grain {
+  display: none !important;
+}
+
+.grid-blueprint {
+  display: none !important;
 }

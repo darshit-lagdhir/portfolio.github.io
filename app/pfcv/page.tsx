@@ -6,8 +6,9 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
+const GLOBAL_EASE = [0.25, 1, 0.5, 1] as [number, number, number, number];
+
 export default function PFCVPage() {
-    const ease = [0.16, 1, 0.3, 1] as const;
     const { setActiveSection } = useScene();
 
     useEffect(() => {
@@ -15,81 +16,83 @@ export default function PFCVPage() {
     }, [setActiveSection]);
 
     return (
-        <div className="min-h-screen w-full bg-background text-foreground relative py-32 px-[5vw]">
+        <div className="min-h-screen w-full bg-black text-white relative py-40 px-[5vw]">
             <SystemBreadcrumbs current="PFCV" />
 
-            <div className="max-w-[1200px] mx-auto flex flex-col gap-y-32">
+            <div className="max-w-[1800px] mx-auto flex flex-col gap-y-40">
 
-                {/* PROJECT HEADER */}
+                {/* PROJECT HEADER — PHASE 3 */}
                 <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, ease }}
-                    className="col-span-12 lg:col-span-10"
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 1, ease: GLOBAL_EASE }}
+                    className="grid grid-cols-12 gap-10"
                 >
-                    <div className="flex flex-col gap-8">
-                        <span className="font-wide text-step--1 text-muted uppercase tracking-micro font-bold">
-                            03 SECURITY // SHARP MOOD
+                    <div className="col-span-12 lg:col-span-8 flex flex-col gap-12">
+                        <span className="text-micro font-bold text-white tracking-[0.8em]">
+                            03_SECURITY // MEMORY_SYNC
                         </span>
-                        <h1 className="font-title text-step-5 leading-tight-title uppercase tracking-tight-title text-physical italic first-letter:not-italic">
-                            POLYGLOT FFI
+                        <h1 className="text-large md:text-massive italic text-white font-heading leading-none uppercase tracking-tight-title">
+                            POLYGLOT_FFI
                         </h1>
-                        <p className="font-body text-step-1 text-muted font-light max-w-[50ch] leading-relaxed">
+                        <p className="text-short-body text-white/40 italic">
                             Cross-language contract verification pipeline for memory-safe FFI boundaries.
                         </p>
                     </div>
                 </motion.div>
 
-                {/* ANALYTICAL ROW 01: OVERVIEW */}
-                <div className="col-span-12 border-t border-border pt-12">
+                {/* ANALYTICAL ROW 01: OVERVIEW — PHASE 3 */}
+                <div className="col-span-12 border-t border-white/20 pt-20">
                     <motion.div
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
-                        transition={{ duration: 0.8 }}
-                        className="grid grid-cols-1 md:grid-cols-12 gap-12"
+                        viewport={{ once: true }}
+                        transition={{ duration: 1 }}
+                        className="grid grid-cols-1 md:grid-cols-12 gap-20"
                     >
                         <div className="md:col-span-4 lg:col-span-3">
-                            <span className="font-wide text-step--1 text-muted uppercase tracking-micro font-bold link-underline">
+                            <span className="text-micro font-bold tracking-[0.4em] text-white opacity-40">
                                 OVERVIEW
                             </span>
                         </div>
-                        <div className="md:col-span-8 md:col-start-6 lg:col-start-6">
-                            <h2 className="font-title text-step-3 text-white uppercase tracking-tight-title mb-8">
+                        <div className="md:col-span-8 lg:col-span-7">
+                            <h2 className="text-medium text-white font-heading uppercase tracking-widest mb-12">
                                 Binary Contract Enforcement
                             </h2>
-                            <p className="font-body text-step-0 text-muted font-light leading-relaxed">
+                            <p className="text-short-body text-white/40">
                                 Polyglot FFI eliminates memory layout uncertainty at the boundary between Rust, C++, and WebAssembly. By synthesizing an intermediate representation, the system validates memory alignment and calling conventions before execution.
                             </p>
                         </div>
                     </motion.div>
                 </div>
 
-                {/* ANALYTICAL ROW 02: PIPELINE */}
-                <div className="col-span-12 border-t border-border pt-12">
+                {/* ANALYTICAL ROW 02: PIPELINE — PHASE 3 */}
+                <div className="col-span-12 border-t border-white/20 pt-20">
                     <motion.div
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
-                        transition={{ duration: 0.8 }}
-                        className="grid grid-cols-1 md:grid-cols-12 gap-12"
+                        viewport={{ once: true }}
+                        transition={{ duration: 1 }}
+                        className="grid grid-cols-1 md:grid-cols-12 gap-20"
                     >
                         <div className="md:col-span-4 lg:col-span-3">
-                            <span className="font-wide text-step--1 text-muted uppercase tracking-micro font-bold link-underline">
+                            <span className="text-micro font-bold tracking-[0.4em] text-white opacity-40">
                                 PIPELINE
                             </span>
                         </div>
-                        <div className="md:col-span-8 md:col-start-6 lg:col-start-6">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-16 gap-y-24">
+                        <div className="md:col-span-8 lg:col-span-9">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-20 gap-y-32">
                                 {[
                                     { title: "IR Normalization", desc: "Synthesis of Language-agnostic Intermediate Representation." },
                                     { title: "Layout Verifier", desc: "Validation of memory alignment and padding invariants." },
                                     { title: "Convention Enforcement", desc: "Checks for stack discipline and register pressure." },
                                     { title: "Safe Adapter Gen", desc: "Automatic generation of instrumented FFI bridges." }
                                 ].map((m, i) => (
-                                    <div key={i} className="flex flex-col gap-4">
-                                        <h3 className="font-wide text-step-0 text-white uppercase tracking-micro font-bold">
+                                    <div key={i} className="flex flex-col gap-6">
+                                        <h3 className="text-micro font-bold text-white tracking-[0.4em]">
                                             {m.title}
                                         </h3>
-                                        <p className="font-body text-step--1 text-muted font-light leading-snug">
+                                        <p className="text-short-body text-white/20 italic">
                                             {m.desc}
                                         </p>
                                     </div>
@@ -99,13 +102,13 @@ export default function PFCVPage() {
                     </motion.div>
                 </div>
 
-                {/* SYSTEM EXIT NAVIGATION */}
-                <div className="col-span-12 border-t border-border pt-24 pb-12 flex justify-between items-baseline">
-                    <Link href="/" className="font-wide text-step-0 text-muted uppercase tracking-micro font-bold hover:text-white transition-colors duration-200">
-                        INDEX
+                {/* SYSTEM EXIT NAVIGATION — PHASE 3 */}
+                <div className="col-span-12 border-t border-white pt-32 pb-20 flex justify-between items-baseline">
+                    <Link href="/" className="text-micro font-bold text-white/40 tracking-[0.6em] hover:text-white transition-all">
+                        00_INDEX
                     </Link>
-                    <Link href="/movex" className="font-wide text-step-0 text-muted uppercase tracking-micro font-bold hover:text-white transition-colors duration-200 group">
-                        NEXT <span className="group-hover:translate-x-2 inline-block transition-transform duration-300 italic">&rarr;</span>
+                    <Link href="/movex" className="text-micro font-bold text-white/40 tracking-[0.6em] hover:text-white transition-all group flex items-center gap-4">
+                        NEXT_SYSTEM <span className="group-hover:translate-x-2 transition-transform">&rarr;</span>
                     </Link>
                 </div>
 
