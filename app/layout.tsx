@@ -208,34 +208,18 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
   const bgBlur = useTransform(scrollYProgress, [0, 1], ["blur(0px)", "blur(2px)"]);
   const mainContrast = useTransform(scrollYProgress, [0, 1], ["contrast(1)", "contrast(1.05)"]);
 
-  useEffect(() => {
-    const sections = ["hero", "about", "projects", "focus", "contact"];
-    const observers = sections.map((id) => {
-      const el = document.getElementById(id);
-      if (!el) return null;
-      const observer = new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting) setActiveSection(id);
-      }, { threshold: 0.5 });
-      observer.observe(el);
-      return observer;
-    });
-    return () => observers.forEach(o => o?.disconnect());
-  }, [setActiveSection]);
+  // Section observer is now handled in SceneProvider to avoid desync
 
   // PHASE 10: DYNAMIC AMBIENT TONE SHIFT + PHASE 8 INTENSITY
-  const getEnvColor = (section: string, velocity: number) => {
-    let base = "#030303";
+  const getEnvColor = (section: string) => {
     switch (section) {
-      case "hero": base = "#030303"; break;
-      case "projects": base = "#020305"; break;
-      case "about": base = "#040302"; break;
-      case "focus": base = "#020303"; break;
-      case "contact": base = "#040202"; break;
+      case "hero": return "#030303";
+      case "projects": return "#020305";
+      case "about": return "#040302";
+      case "focus": return "#020303";
+      case "contact": return "#040202";
+      default: return "#030303";
     }
-    // PHASE 9: REACTIVE BACKGROUND INTENSITY
-    const saturation = 100 + (velocity * 20);
-    if (velocity > 0.05) return `color-mix(in srgb, ${base}, black ${velocity * 4}%)`;
-    return base;
   };
 
   // PHASE 1: REACTIVE GEOMETRY ENGINE
@@ -275,11 +259,17 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
       {/* PHASE 1 & 10: BASE TONE SHIFT (DIMMED IF FOCUSING) */}
       <motion.div
         animate={{
-          backgroundColor: getEnvColor(activeSection, scrollVelocityValue),
+          backgroundColor: getEnvColor(activeSection),
           opacity: isFocusing ? 0.92 : 1
         }}
         transition={{ duration: 1.5, ease: GLOBAL_EASE }}
         className="fixed inset-0 z-[-5] pointer-events-none"
+      />
+
+      {/* PHASE 9: VELOCITY DARKENING OVERLAY (PERFORMANCE OPTIMIZED) */}
+      <motion.div
+        animate={{ opacity: scrollVelocityValue * 0.4 }}
+        className="fixed inset-0 z-[-4] bg-black pointer-events-none"
       />
 
       {/* PHASE 2, 5 & 9: DYNAMIC LIGHTING OVERLAY (SYNCED AMBIENT BREATH + LIGHT SOURCE) */}

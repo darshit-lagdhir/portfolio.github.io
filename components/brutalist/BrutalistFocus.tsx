@@ -59,8 +59,8 @@ function BentoCard({ cell, isActive, onToggle, activeId }: { cell: any, isActive
             }}
             transition={{ duration: 0.5, ease: GLOBAL_EASE }}
             className={`
-                heavy-panel mat-glass btn-tactile relative cursor-none group ${cell.span} ${cell.height} 
-                ${isActive ? "z-50 !col-span-12 !h-[400px]" : "z-10"}
+                heavy-panel mat-glass btn-tactile relative cursor-none group h-full w-full
+                ${isActive ? "z-50" : "z-10"}
                 ${!isActive && "hover:bg-[#0c0c0c]"}
             `}
         >
@@ -126,7 +126,7 @@ export default function BrutalistFocus() {
         <section
             onPointerEnter={() => setActiveSection("focus")}
             ref={sectionRef}
-            style={{ opacity: activeSection === "focus" ? 1 : 0.94 }} // PHASE 6: ACTIVE SECTION FOCUS DIMMING
+            style={{ opacity: activeSection === "focus" ? 1 : 0.94 }}
             className="spatial-section relative flex items-center justify-center section-tone-shift tone-01 transition-opacity duration-1000"
             id="focus"
         >
@@ -137,15 +137,14 @@ export default function BrutalistFocus() {
                 <div className="col-span-12 lg:col-span-8 flex flex-col items-start gap-12">
                     <div className="flex flex-col gap-6 items-start">
                         <span className="text-micro font-bold text-muted border-l border-white/20 pl-6 h-4 flex items-center">SECTION_ID_04</span>
-                        {/* PHASE 118.13: DRAMATIC TYPOGRAPHY HOLD */}
                         <motion.h2
-                            initial={{ opacity: 0, y: 10, filter: "blur(5px)" }}
+                            initial={{ opacity: 0, y: 15, filter: "blur(5px)" }}
                             whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.8, delay: 0.7, ease: GLOBAL_EASE }}
-                            className="text-large text-white flex flex-col italic first-letter:not-italic select-none pointer-events-none border-b border-white/5 pb-10 w-full mb-4"
+                            transition={{ duration: 0.9, delay: 0.3, ease: GLOBAL_EASE }}
+                            className="text-large text-white flex flex-col italic first-letter:not-italic select-none pointer-events-none border-b border-white/5 pb-10 w-full mb-4 text-white filter drop-shadow-[0_15px_35px_rgba(0,0,0,0.5)]"
                         >
-                            RESEARCH_FOCUS // TOOLS
+                            RESEARCH_FOCUS // <span className="text-white brightness-150 font-black tracking-tighter">TOOLS</span>
                         </motion.h2>
                     </div>
 
@@ -154,9 +153,13 @@ export default function BrutalistFocus() {
                     </p>
                 </div>
 
-                {/* PHASE 10: HORIZONTAL MICRO-SCROLL (TECH TRAY) */}
                 <div className="col-span-12 mt-4">
-                    <div className="horizontal-tray py-10 opacity-40 hover:opacity-100 transition-opacity">
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ delay: 0.8, duration: 1 }}
+                        className="horizontal-tray py-10 opacity-20 hover:opacity-100 transition-opacity"
+                    >
                         {techStack.map((tech, i) => (
                             <div
                                 key={i}
@@ -165,24 +168,29 @@ export default function BrutalistFocus() {
                                 [ {tech} ]
                             </div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
 
                 <div className="col-span-12 grid grid-cols-12 gap-8 relative mt-10">
                     {bentoCells.map((cell, i) => (
-                        <div key={cell.id} className={`${cell.span} ${i % 2 !== 0 ? 'translate-y-6' : 'translate-y-0'} transition-transform duration-1000`}> {/* PHASE 5: PREMIUM VISUAL TENSION */}
+                        <motion.div
+                            key={cell.id}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 1 + i * 0.1, duration: 1 }}
+                            className={`${cell.span} ${cell.height} ${i % 2 !== 0 ? 'translate-y-6' : 'translate-y-0'} transition-all duration-1000 ${activeId && activeId !== cell.id ? 'opacity-20 pointer-events-none blur-[2px]' : 'opacity-100 blur-0'}`}
+                        >
                             <BentoCard
                                 cell={cell}
                                 isActive={activeId === cell.id}
                                 onToggle={setActiveId}
                                 activeId={activeId}
                             />
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
             </motion.div>
 
-            {/* PHASE 8: INTERACTIVE NEGATIVE SPACE (AMBIENT BRACKETS) */}
             <div className="absolute top-[20%] right-[12%] opacity-10 pointer-events-none hidden lg:block">
                 <div className="w-16 h-16 border-t border-r border-white" />
             </div>

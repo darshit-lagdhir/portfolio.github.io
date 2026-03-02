@@ -37,6 +37,25 @@ export function SceneProvider({ children }: { children: React.ReactNode }) {
         }
     }, [isNavigating]);
 
+    // Sync activeSection with scroll position via IntersectionObserver
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting && entry.intersectionRatio > 0.4) {
+                        setActiveSection(entry.target.id);
+                    }
+                });
+            },
+            { threshold: [0.1, 0.4, 0.6], rootMargin: "-20% 0px -20% 0px" }
+        );
+
+        const sections = document.querySelectorAll("section[id]");
+        sections.forEach((section) => observer.observe(section));
+
+        return () => observer.disconnect();
+    }, []);
+
     // Update section context on route change
     useEffect(() => {
         if (pathname === "/") setActiveSection("hero");

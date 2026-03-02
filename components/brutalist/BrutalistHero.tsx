@@ -137,19 +137,18 @@ export default function BrutalistHero() {
                             {/* PHASE 7: SUBTLE TYPOGRAPHY MASK REVEAL */}
                             <h1 className="text-massive text-white flex flex-col italic first-letter:not-italic select-none pointer-events-none mb-14 overflow-hidden relative">
                                 <motion.span
-                                    initial={{ y: "100%" }}
-                                    animate={{ y: 0 }}
-                                    transition={{ duration: 0.8, ease: GLOBAL_EASE, delay: 0.2 }}
-                                    className="block drop-shadow-xl z-20 mb-[0.2em] whitespace-nowrap"
+                                    initial={{ y: "110%", opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    transition={{ duration: 0.9, ease: GLOBAL_EASE, delay: 0.2 }}
+                                    className="block z-20 mb-[0.2em] whitespace-nowrap text-white filter drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
                                 >
-                                    <ScrambleText text="DARSHI" delay={0.1} />
-                                    <span className="text-outline border-text stroke-white transition-colors duration-[2000ms] ml-[0.1em] inline-block">T</span>
+                                    <ScrambleText text="DARSHIT" delay={0.1} />
                                 </motion.span>
                                 <motion.span
-                                    initial={{ y: "100%" }}
-                                    animate={{ y: 0 }}
-                                    transition={{ duration: 0.8, ease: GLOBAL_EASE, delay: 0.35 }}
-                                    className="block drop-shadow-xl z-10 pl-[1.5em] whitespace-nowrap"
+                                    initial={{ y: "110%", opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    transition={{ duration: 0.9, ease: GLOBAL_EASE, delay: 0.35 }}
+                                    className="block z-10 pl-[1.5em] whitespace-nowrap text-white/90 filter drop-shadow-[0_15px_40px_rgba(0,0,0,0.4)]"
                                 >
                                     <ScrambleText text="LAGDHIR" delay={0.25} />
                                 </motion.span>
@@ -206,17 +205,17 @@ export default function BrutalistHero() {
                             </motion.div>
                         </motion.div>
 
-                        {/* PHASE 1 & 6: SECTION HEADING LAYER & CREATIVE WORD EMPHASIS */}
+                        {/* PHASE 5: VISUAL PAUSE MOMENTS (DELAYED SETTLE) */}
                         <motion.div
-                            initial={{ opacity: 0, y: 10 }}
+                            initial={{ opacity: 0, y: 15 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.7, duration: 1, ease: GLOBAL_EASE }}
+                            transition={{ delay: 0.9, duration: 1.2, ease: GLOBAL_EASE }} // INCREASED DELAY
                             className="max-w-[40ch] mt-4"
                         >
-                            <h2 className="text-medium text-white/40 font-bold mb-4 text-highlight-sweep tracking-[0.3em] uppercase">
-                                SYSTEM_<span className="text-white brightness-125 transition-all duration-700 animate-pulse-subtle">ARCHITECT</span>
+                            <h2 className="text-medium text-white/50 font-bold mb-4 text-highlight-sweep tracking-[0.3em] uppercase">
+                                SYSTEM_<span className="text-white brightness-125 transition-all duration-700">ARCHITECT</span>
                             </h2>
-                            <p className="text-small text-muted font-light tracking-wide max-w-[50ch] opacity-60">
+                            <p className="text-small text-muted font-light tracking-wide max-w-[50ch] opacity-40 group-hover:opacity-70 transition-opacity duration-1000">
                                 Engineering high-precision digital environments through <span className="italic text-white/80">logic-first</span> architecture and structural visual power.
                             </p>
                         </motion.div>
@@ -239,16 +238,16 @@ export default function BrutalistHero() {
 
                     </div>
 
-                    {/* PHASE 3: RIGHT VISUAL ANCHOR (SUBTLE AMBIENCE) */}
+                    {/* PHASE 10: INTERACTION HIERARCHY (SECONDARY HOVER) */}
                     <div className="hidden lg:flex col-span-4 col-start-9 items-end justify-end pb-20 overflow-hidden">
-                        <div className="flex flex-col gap-8 opacity-20">
+                        <div className="flex flex-col gap-8 opacity-10 group-hover:opacity-30 transition-opacity duration-1000">
                             <div className="flex flex-col gap-2">
-                                <span className="text-micro">LAT: GLOBAL_ALPHA</span>
-                                <div className="w-40 h-[1px] bg-white" />
+                                <span className="text-micro font-bold tracking-widest text-white/20">LAT: GLOBAL_ALPHA</span>
+                                <div className="w-40 h-[1px] bg-white/10" />
                             </div>
                             <div className="flex flex-col gap-2 text-right">
-                                <span className="text-micro">STATUS: ENFORCING_GRID</span>
-                                <div className="w-24 h-[1px] bg-white self-end" />
+                                <span className="text-micro font-bold tracking-widest text-white/20">STATUS: ENFORCING_GRID</span>
+                                <div className="w-24 h-[1px] bg-white/10 self-end" />
                             </div>
                         </div>
                     </div>

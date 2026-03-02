@@ -164,9 +164,23 @@ function InteractiveProjectPanel({ project, index, activeProject, setActiveProje
                         ))}
                     </div>
 
-                    <span className="mt-10 inline-block text-[10px] text-white tracking-widest font-bold opacity-0 group-hover:opacity-40 transition-opacity duration-500 delay-300">
-                        OPEN_INTEGRATION_PROTOCOLS &rarr;
-                    </span>
+                    {/* PHASE 8: PROJECT INTENTIONALITY (ARCHITECTURAL PORTAL INDICATOR) */}
+                    <div className="mt-10 flex items-center gap-4 group/cta overflow-hidden">
+                        <span className="text-[10px] text-white tracking-[0.4em] font-bold opacity-0 group-hover:opacity-40 transition-all duration-700 translate-x-[-10px] group-hover:translate-x-0">
+                            INITIALIZE_PORTAL
+                        </span>
+                        <motion.div
+                            animate={isHovered ? {
+                                x: [0, 8, 0],
+                                rotate: [45, 45, 45],
+                                scale: [1, 1.2, 1]
+                            } : { rotate: 45 }}
+                            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                            className="w-2 h-2 border border-white opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-center justify-center"
+                        >
+                            <div className="w-[2px] h-[2px] bg-white rounded-full" />
+                        </motion.div>
+                    </div>
                 </Link>
 
                 <div className="absolute inset-0 opacity-[0.01] pointer-events-none" style={{ backgroundImage: "url('https://grainy-gradients.vercel.app/noise.svg')" }} />
@@ -179,6 +193,7 @@ export default function BrutalistProjectsPreview() {
     const sectionRef = useRef<HTMLElement>(null);
     const { setActiveSection, activeSection } = useScene();
     const [activeProject, setActiveProject] = useState<string | null>(null);
+    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null); // PHASE 12: CURSOR FOCUS
     const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
     const [isMobile, setIsMobile] = useState(false);
 
@@ -194,9 +209,8 @@ export default function BrutalistProjectsPreview() {
 
     return (
         <section
-            onPointerEnter={() => setActiveSection("projects")}
             ref={sectionRef}
-            style={{ opacity: activeSection === "projects" ? 1 : 0.94 }} // PHASE 6: ACTIVE SECTION FOCUS DIMMING
+            style={{ opacity: activeSection === "projects" ? 1 : 0.94 }}
             className="spatial-section min-h-screen flex items-center justify-center section-tone-shift tone-03 transition-opacity duration-1000"
             id="projects"
         >
@@ -230,7 +244,12 @@ export default function BrutalistProjectsPreview() {
 
                 <div className="col-span-12 flex flex-col md:flex-row gap-8 lg:gap-12 mt-10">
                     {projects.map((p, i) => (
-                        <div key={i} className={i === 0 ? "md:ml-[-4vw]" : ""}> {/* PHASE 5: GRID BREAK */}
+                        <div
+                            key={i}
+                            onMouseEnter={() => setHoveredIndex(i)}
+                            onMouseLeave={() => setHoveredIndex(null)}
+                            className={`${i === 0 ? "md:ml-[-4vw]" : ""} flex-1 transition-all duration-700 ${hoveredIndex !== null && hoveredIndex !== i ? 'opacity-25 blur-[1px]' : 'opacity-100 blur-0'}`}
+                        > {/* PHASE 5: GRID BREAK + PHASE 12: FOCUS DIMMING */}
                             <InteractiveProjectPanel
                                 project={p}
                                 index={i}

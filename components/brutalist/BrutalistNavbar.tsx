@@ -42,7 +42,7 @@ export default function BrutalistNavbar() {
             transition={{ duration: 1, ease: GLOBAL_EASE }}
             className={`
                 fixed top-0 left-0 w-full z-[2000] transition-all duration-500 select-none
-                ${scrolled ? "py-4 bg-[#050505]/90 backdrop-blur-2xl border-b border-white/5" : "py-10 bg-transparent"}
+                ${scrolled ? "py-4 bg-[#050505]/90 backdrop-blur-2xl border-b border-white/5" : "py-10 bg-[#050505]/0"}
             `}
         >
             <nav className="grid-poster items-center">
@@ -53,21 +53,21 @@ export default function BrutalistNavbar() {
                         onClick={() => setIsNavigating(true)}
                         className="group flex flex-col gap-1"
                     >
-                        <span className="text-micro font-bold tracking-[0.4em] opacity-30 group-hover:opacity-100 transition-opacity">DARSHIT_LAGDHIR</span>
-                        <span className="text-micro font-light opacity-15">SYSTEM_ARCHITECT // v.01</span>
+                        <span className="text-micro font-bold tracking-[0.4em] opacity-20 group-hover:opacity-100 transition-opacity">DARSHIT_LAGDHIR</span>
+                        <span className="text-micro font-light opacity-10 group-hover:opacity-30 transition-opacity">SYSTEM_ARCHITECT // v.01</span>
                     </Link>
                 </div>
 
-                {/* PHASE 9: MODE SWITCHER (MICRO LABELS) */}
+                {/* PHASE 127.2: MODE SWITCHER (TIER 3 AMBIENT) */}
                 <div className="hidden lg:flex col-start-4 col-span-3 gap-6 items-center">
-                    <div className="flex gap-4 p-1">
+                    <div className="flex gap-4 p-1 opacity-10 hover:opacity-100 transition-opacity duration-700">
                         {modes.map((m) => (
                             <button
                                 key={m.id}
                                 onClick={() => setMode(m.id)}
                                 className={`
                                     elastic-micro text-[9px] font-bold tracking-[0.2em] relative px-2 py-1 rounded-sm
-                                    ${mode === m.id ? "text-white bg-white/5" : "text-white/20 hover:text-white/60"}
+                                    ${mode === m.id ? "text-white" : "text-white/40 hover:text-white/80"}
                                 `}
                             >
                                 {m.label}
@@ -79,11 +79,10 @@ export default function BrutalistNavbar() {
                     </div>
                 </div>
 
-                {/* PHASE 2: DENSE NAV LINKS (SHORT NAMES) */}
+                {/* PHASE 127.1: NAV LINKS (TIER 2 SECONDARY) */}
                 <div className="hidden md:flex md:col-start-7 md:col-span-6 lg:col-start-8 lg:col-span-5 justify-end gap-x-10">
                     {navLinks.map((link) => {
                         const linkSection = link.href.replace("/#", "");
-                        // PHASE 120.6: ACTIVE STATE DESIGN 
                         const isActive = activeSection === linkSection || (activeSection === 'hero' && linkSection === 'hero');
 
                         return (
@@ -93,8 +92,8 @@ export default function BrutalistNavbar() {
                                 onClick={() => setIsNavigating(true)}
                                 className={`
                                     relative text-micro font-bold tracking-[0.3em] elastic-micro
-                                    block text-highlight-sweep h-4
-                                    ${isActive ? "text-white active drop-shadow-[0_0_8px_rgba(255,255,255,0.4)]" : "text-white/40 hover:text-white"}
+                                    block text-highlight-sweep h-4 transition-all duration-700
+                                    ${isActive ? "text-white active drop-shadow-[0_0_15px_rgba(255,255,255,0.6)] scale-110" : "text-white/10 hover:text-white/60"} 
                                 `}
                             >
                                 {link.name}

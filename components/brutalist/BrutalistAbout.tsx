@@ -74,16 +74,17 @@ export default function BrutalistAbout() {
                             </motion.span>
                             <h2 className="text-large text-white flex flex-col border-b border-white/5 pb-10 w-full italic first-letter:not-italic select-none pointer-events-none transition-all duration-700 relative text-highlight-sweep overflow-hidden">
                                 <motion.span
-                                    initial={{ y: "100%" }}
-                                    whileInView={{ y: 0 }}
+                                    initial={{ y: "100%", opacity: 0 }}
+                                    whileInView={{ y: 0, opacity: 1 }}
                                     viewport={{ once: true }}
-                                    transition={{ duration: 0.6, ease: GLOBAL_EASE, delay: 0.3 }}
+                                    transition={{ duration: 0.8, ease: GLOBAL_EASE, delay: 0.3 }}
+                                    className="text-white filter drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
                                 >
-                                    SYSTEM_ARCHITECT // <span className="text-white brightness-125 font-black tracking-tighter animation-pulse-subtle">PHILOSOPHY</span>
+                                    SYSTEM_ARCHITECT // <span className="text-white brightness-150 font-black tracking-tighter">PHILOSOPHY</span>
                                 </motion.span>
 
-                                {/* PHASE 4: TYPOGRAPHY DEPTH (EMBOSSED EFFECT) */}
-                                <div className="absolute inset-x-0 bottom-10 z-[-1] opacity-10 blur-[2px] translate-x-[2px] translate-y-[2px] pointer-events-none text-black transition-all group-hover:opacity-20">
+                                {/* PHASE 127.2: FOCAL CONTRAST (TIER 3 AMBIENT) */}
+                                <div className="absolute inset-x-0 bottom-10 z-[-1] opacity-5 blur-[4px] translate-x-[4px] translate-y-[4px] pointer-events-none text-black transition-all group-hover:opacity-10">
                                     SYSTEM_ARCHITECT // PHILOSOPHY
                                 </div>
                             </h2>
@@ -104,10 +105,9 @@ export default function BrutalistAbout() {
                                     initial={{ opacity: 0, scale: 0.98, x: 20 }}
                                     whileInView={{ opacity: 1, scale: 1, x: 0 }}
                                     viewport={{ margin: "-10%" }}
-                                    transition={{ duration: 0.6, delay: i * 0.1, ease: GLOBAL_EASE }}
-                                    // PHASE 5, 119 & 124.9: HEAVY PANEL + TACTILE MATTE + PHYSICAL FEEDBACK
+                                    transition={{ duration: 0.8, delay: 0.5 + i * 0.15, ease: GLOBAL_EASE }}
                                     whileTap={{ scale: 0.98, backgroundColor: "rgba(10,10,10,1)" }}
-                                    className={`heavy-panel signature-bracket mat-paper btn-signature elastic-micro min-w-[320px] md:min-w-[400px] p-12 pr-24 flex flex-col gap-10 group relative ${i % 2 !== 0 ? 'translate-y-8' : 'translate-y-0'}`} // PHASE 5: PREMIUM VISUAL TENSION
+                                    className={`heavy-panel signature-bracket mat-paper btn-signature elastic-micro min-w-[320px] md:min-w-[400px] p-12 pr-24 flex flex-col gap-10 group relative ${i % 2 !== 0 ? 'translate-y-8' : 'translate-y-0'}`}
                                 >
                                     <div className="flex justify-between items-start">
                                         <span className="text-micro font-bold text-muted group-hover:text-white transition-colors tracking-widest">{p.label}</span>

@@ -10,11 +10,11 @@ export default function SmoothScroll() {
         // PHASE 3: SMOOTH INERTIA CALIBRATION (WEIGHTED SCROLL)
         // PHASE 125.15: SCROLL MOMENTUM & FRICTION POLISH
         const lenis = new Lenis({
-            duration: 1.8, // More "Sculpted" weight
+            duration: 1.4, // WEIGHTED SCULPTED SETTLE (PHASE 4)
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            touchMultiplier: 1.8,
-            wheelMultiplier: 1,
-            infinite: false,
+            touchMultiplier: 1.6,
+            wheelMultiplier: 0.9,
+            lerp: 0.08, // CINEMATIC FLOW CONTROL
             smoothWheel: true,
             syncTouch: true,
         });

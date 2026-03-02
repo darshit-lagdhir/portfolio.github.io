@@ -48,8 +48,8 @@ export default function BrutalistContact() {
                     <div className="flex-1 flex flex-col items-start gap-12">
                         <div className="flex flex-col gap-6 items-start">
                             <span className="text-micro font-bold text-muted border-l border-white/20 pl-6 h-4 flex items-center">SECTION_ID_05</span>
-                            <h2 className="text-large text-white flex flex-col italic first-letter:not-italic select-none pointer-events-none border-b border-white/5 pb-10 w-full text-highlight-sweep">
-                                SYSTEM_TERMINAL // SYNC
+                            <h2 className="text-large text-white flex flex-col italic first-letter:not-italic select-none pointer-events-none border-b border-white/5 pb-10 w-full text-white filter drop-shadow-[0_15px_35px_rgba(0,0,0,0.5)]">
+                                SYSTEM_TERMINAL // <span className="text-white brightness-150 font-black tracking-tighter transition-all duration-1000">SYNC</span>
                             </h2>
                         </div>
 
@@ -70,8 +70,8 @@ export default function BrutalistContact() {
                                 onMouseLeave={() => setIsHovered(null)}
                                 initial={{ opacity: 0, y: 15 }}
                                 whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: i * 0.1, duration: 0.8, ease: GLOBAL_EASE }}
-                                className={`heavy-panel btn-signature signature-bracket elastic-micro light-beam-pass p-8 md:p-10 flex flex-col justify-between h-48 md:h-56 transition-all duration-500 relative group overflow-hidden ${mode === 'minimal' ? 'hover:bg-[#0c0c0c]' : 'mat-matte'} ${i % 2 !== 0 ? 'mt-4' : ''}`} // PHASE 5: PREMIUM VISUAL TENSION
+                                transition={{ delay: 0.6 + i * 0.1, duration: 1, ease: GLOBAL_EASE }}
+                                className={`heavy-panel btn-signature signature-bracket elastic-micro light-beam-pass p-8 md:p-10 flex flex-col justify-between h-48 md:h-56 transition-all duration-500 relative group overflow-hidden ${mode === 'minimal' ? 'hover:bg-[#0c0c0c]' : 'mat-matte'} ${i % 2 !== 0 ? 'mt-4' : ''}`}
                             >
                                 <span className="text-micro font-bold text-muted group-hover:text-white transition-all opacity-40">
                                     {link.label}
@@ -89,11 +89,16 @@ export default function BrutalistContact() {
                 </div>
             </motion.div>
 
-            {/* PHASE 8: INTERACTIVE NEGATIVE SPACE (AMBIENT OBJECTS) */}
-            <div className="absolute bottom-12 right-12 flex flex-col gap-4 opacity-10">
-                <div className="w-[1px] h-20 bg-white" />
-                <span className="text-micro rotate-90 origin-bottom-left absolute -bottom-10 left-4">EOT_TRANSMISSION</span>
-            </div>
+            {/* PHASE 8 & 16: INTERACTIVE NEGATIVE SPACE (AMBIENT OBJECTS + EXIT CUE) */}
+            <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 0.2 }}
+                transition={{ delay: 1.5, duration: 2 }}
+                className="absolute bottom-12 right-12 flex flex-col gap-4"
+            >
+                <div className="w-[1px] h-24 bg-white/20" />
+                <span className="text-micro rotate-90 origin-bottom-left absolute -bottom-10 left-4 tracking-[0.5em] font-bold text-white/40">EOT_TRANSMISSION</span>
+            </motion.div>
         </section>
     );
 }

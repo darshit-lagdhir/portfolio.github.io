@@ -16,19 +16,19 @@ export default function InfiniteMarquee() {
                     {/* First Set */}
                     {skills.map((skill, i) => (
                         <div key={i} className="flex items-center gap-12">
-                            <span className="font-title text-step-2 text-white uppercase italic tracking-tight-title opacity-40 hover:opacity-100 transition-opacity">
+                            <span className="font-title text-step-2 text-white uppercase italic tracking-tight-title opacity-10 hover:opacity-100 transition-opacity duration-700">
                                 {skill}
                             </span>
-                            <div className="w-2 h-2 bg-white/20 rotate-45" />
+                            <div className="w-2 h-2 bg-white/5 rotate-45 transition-colors group-hover:bg-white/20" />
                         </div>
                     ))}
                     {/* Repeating Set for seamless loop */}
                     {skills.map((skill, i) => (
                         <div key={`dup-${i}`} className="flex items-center gap-12">
-                            <span className="font-title text-step-2 text-white uppercase italic tracking-tight-title opacity-40 hover:opacity-100 transition-opacity">
+                            <span className="font-title text-step-2 text-white uppercase italic tracking-tight-title opacity-10 hover:opacity-100 transition-opacity duration-700">
                                 {skill}
                             </span>
-                            <div className="w-2 h-2 bg-white/20 rotate-45" />
+                            <div className="w-2 h-2 bg-white/5 rotate-45 transition-colors group-hover:bg-white/20" />
                         </div>
                     ))}
                 </div>
