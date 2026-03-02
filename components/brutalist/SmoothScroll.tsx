@@ -7,14 +7,13 @@ export default function SmoothScroll() {
     const lenisRef = useRef<Lenis>(null);
 
     useEffect(() => {
-        // PHASE 3: SMOOTH INERTIA CALIBRATION (WEIGHTED SCROLL)
-        // PHASE 125.15: SCROLL MOMENTUM & FRICTION POLISH
+        // PHASE 2 — CORE SCROLL ENGINE (INERTIA FIRST)
         const lenis = new Lenis({
-            duration: 1.4, // WEIGHTED SCULPTED SETTLE (PHASE 4)
+            duration: 1.2, // Silky, fast response
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-            touchMultiplier: 1.6,
-            wheelMultiplier: 0.9,
-            lerp: 0.08, // CINEMATIC FLOW CONTROL
+            touchMultiplier: 2,
+            wheelMultiplier: 1,
+            lerp: 0.1, // Controlled fluid movement
             smoothWheel: true,
             syncTouch: true,
         });
@@ -38,9 +37,9 @@ export default function SmoothScroll() {
 
         rafId = requestAnimationFrame(raf);
 
-        // PHASE 11: SECTION SNAP INTEGRATION (SOFT SNAP)
-        const snapLinks = document.querySelectorAll('a[href^="#"]');
-        const handleSnap = (e: Event) => {
+        // Standard smooth anchor scroll
+        const scrollLinks = document.querySelectorAll('a[href^="#"]');
+        const handleScroll = (e: Event) => {
             e.preventDefault();
             const anchor = e.currentTarget as HTMLAnchorElement;
             const id = anchor.getAttribute("href")?.slice(1);
@@ -49,16 +48,16 @@ export default function SmoothScroll() {
                 if (target) {
                     lenis.scrollTo(target, {
                         offset: 0,
-                        duration: 1.4,
-                        easing: (t: number) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t) // Cinematic snap
+                        duration: 1.2,
+                        easing: (t: number) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t)
                     });
                 }
             }
         };
-        snapLinks.forEach((anchor) => anchor.addEventListener("click", handleSnap));
+        scrollLinks.forEach((anchor) => anchor.addEventListener("click", handleScroll));
 
         return () => {
-            snapLinks.forEach((anchor) => anchor.removeEventListener("click", handleSnap));
+            scrollLinks.forEach((anchor) => anchor.removeEventListener("click", handleScroll));
             cancelAnimationFrame(rafId);
             lenis.destroy();
         };

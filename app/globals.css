@@ -1,47 +1,30 @@
 ﻿@import "tailwindcss";
 @import "./fonts.css";
 
-/**
- * DARSHIT LAGDHIR — VISUAL DOMINANCE ARCHITECTURE (PROMPT 114)
- * PHASE 3: SPATIAL RECOMPOSITION + SCREEN IMPACT OPTIMIZATION
- */
-
 :root {
-  /* PHASE 8: CONTROLLED COLOR PALETTE */
   --background: #030303;
-  /* Ambient depth */
-  --bg-subtle: rgba(15, 15, 15, 0.4);
-  --bg-elevated: rgba(25, 25, 25, 0.6);
   --foreground: #f0f0f0;
   --accent: #ffffff;
-  --muted: #a3a3a3;
-  /* Brightened for better legibility (PH-114 Contrast Fix) */
+  --muted: #666666;
   --border: rgba(255, 255, 255, 0.05);
-  /* Fainter borders PH-12 */
 
-  /* PHASE 9: TYPOGRAPHY SCALE SYSTEM (FIXED) */
-  --fs-hero: clamp(5rem, 15vw, 12rem);
-  /* Massive */
-  --fs-section: clamp(2rem, 5vw, 4rem);
-  /* Large */
-  --fs-sub: clamp(1.125rem, 2vw, 1.5rem);
-  /* Medium */
+  /* TYPE SCALE — PHASE 2 LOCK */
+  --fs-hero: clamp(3.5rem, 11vw, 9rem);
+  --fs-section: clamp(1.75rem, 4.5vw, 3.5rem);
+  --fs-sub: 1.15rem;
   --fs-body: 1rem;
-  /* Small */
-  --fs-micro: 0.65rem;
-  /* Smallest */
+  --fs-micro: 0.6rem;
 
-  /* PHASE 2: MOTION SYSTEM (RETAINED FROM PH-2) */
-  --ease-cubic: cubic-bezier(0.33, 1, 0.68, 1);
-  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  /* MOTION TOKENS — PHASE 2 LOCK */
+  --m-fast: 0.2s;
+  --m-med: 0.4s;
+  --m-slow: 1s;
+  --m-ease: cubic-bezier(0.22, 1, 0.36, 1);
 
-  /* PHASE 1: SPACING & LAYOUT (SCREEN-FIRST) */
-  --grid-gap: clamp(20px, 4vw, 40px);
-  --grid-margin: clamp(40px, 10vw, 160px);
-  --max-width: 1800px;
-  /* Wider for screen-poster feel */
+  /* GRID — PHASE 2 LOCK */
+  --grid-w: 1600px;
+  --grid-gap: clamp(1.5rem, 3vw, 2.5rem);
 
-  /* PHASE 0: FONT SYSTEM OVERRIDE (STRICT ISOLATION) */
   --font-sans: 'Space Grotesk', sans-serif;
   --font-display: 'Aalto Display Font', sans-serif;
   --font-wide: 'HK Grotesk Wide', sans-serif;
@@ -53,15 +36,10 @@
   --color-accent: var(--accent);
   --color-muted: var(--muted);
   --color-border: var(--border);
-
   --font-sans: var(--font-sans);
   --font-display: var(--font-display);
   --font-wide: var(--font-wide);
 }
-
-/* ------------------------------------------------------------
-   PHASE 1: SCREEN-FIRST COMPOSITION
-   ------------------------------------------------------------ */
 
 * {
   box-sizing: border-box;
@@ -71,424 +49,101 @@
   -webkit-font-smoothing: antialiased;
 }
 
-/* PHASE 120.8: FOCUS STATE POLISH */
-*:focus-visible {
-  outline: 1px solid rgba(255, 255, 255, 0.4);
-  outline-offset: 4px;
-  border-radius: 2px;
-}
-
 html,
 body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
-}
-
-.spatial-section {
-  position: relative;
-  width: 100%;
-  min-height: 100vh;
-  /* Every section is a stage (PHASE 1) */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow-x: hidden;
+  line-height: 1.5;
 }
 
 .grid-poster {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  gap: var(--grid-gap);
   width: 100%;
-  max-width: var(--max-width);
+  max-width: var(--grid-w);
   margin: 0 auto;
-  padding-inline: var(--grid-margin);
-  position: relative;
-  z-index: 10;
+  gap: var(--grid-gap);
 }
 
-/* ------------------------------------------------------------
-   PHASE 9: TYPOGRAPHY HIERARCHY
-   ------------------------------------------------------------ */
-
+/* TYPOGRAPHY COMPONENTS */
 .text-massive {
   font-size: var(--fs-hero);
   font-family: var(--font-display);
-  line-height: 0.8;
-  letter-spacing: 0.02em;
+  line-height: 0.85;
   text-transform: uppercase;
   font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .text-large {
   font-size: var(--fs-section);
   font-family: var(--font-wide);
   line-height: 1.1;
-  letter-spacing: 0.2em;
   text-transform: uppercase;
+  letter-spacing: -0.01em;
 }
 
 .text-medium {
   font-size: var(--fs-sub);
   font-family: var(--font-wide);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-}
-
-.text-small {
-  font-size: var(--fs-body);
-  font-family: var(--font-sans);
-  line-height: 1.6;
 }
 
 .text-micro {
   font-size: var(--fs-micro);
   font-family: var(--font-wide);
-  letter-spacing: 0.4em;
+  letter-spacing: 0.5em;
   text-transform: uppercase;
+  font-weight: 700;
 }
 
-/* ------------------------------------------------------------
-   PHASE 5/11/12: DIGITAL SLABS V3 (SUBSURFACE PANEL)
-   ------------------------------------------------------------ */
-
-.heavy-panel {
-  background: linear-gradient(160deg, var(--bg-subtle) 0%, rgba(5, 5, 5, 0.4) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.02);
-  box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.03),
-    inset 0 -1px 1px rgba(0, 0, 0, 0.8),
-    0 15px 35px -10px rgba(0, 0, 0, 0.9);
-  /* PHASE 120.12: HOVER EXIT CLEANUP */
-  transition: all 400ms var(--ease-cubic);
-  position: relative;
-  overflow: hidden;
-  backdrop-filter: blur(10px);
+.tracking-tight-title {
+  letter-spacing: -0.05em;
 }
 
-.heavy-panel::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -150%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
-  transform: skewX(-20deg);
-  transition: left 0s;
-  pointer-events: none;
-}
-
-/* PHASE 120.1: HOVER CHOREOGRAPHY ENGINE (LAYERED SEQUENCE) */
-.heavy-panel:hover {
-  background: linear-gradient(160deg, var(--bg-elevated) 0%, rgba(10, 10, 10, 0.7) 100%);
-  border-color: rgba(255, 255, 255, 0.06);
-  box-shadow:
-    inset 0 1px 1px rgba(255, 255, 255, 0.06),
-    inset 0 -1px 1px rgba(0, 0, 0, 0.9),
-    0 25px 50px -12px rgba(0, 0, 0, 1);
-  transform: translateY(-2px);
-  /* 40ms stagger micro delay applied to box-shadow/transform via specific component */
-}
-
-.heavy-panel:hover::after {
-  left: 200%;
-  transition: left 800ms var(--ease-cubic);
-}
-
-/* ------------------------------------------------------------
-   PHASE 6: SECTION TRANSITION RESTRUCTURE (TRANSPARENT)
-   ------------------------------------------------------------ */
-
-.section-tone-shift {
-  background-color: transparent !important;
-  /* Managed by global env now */
-}
-
-/* ------------------------------------------------------------
-   PHASE 1/2/5: ENVIRONMENTAL ATMOSPHERE + LENS (PH-116.9)
-   ------------------------------------------------------------ */
-.env-vignette {
-  background: radial-gradient(circle at 50% 50%, transparent 50%, rgba(2, 2, 2, 0.85) 150%);
-  pointer-events: none;
-}
-
-.env-fog {
-  background: linear-gradient(to bottom, rgba(3, 3, 3, 0) 0%, rgba(3, 3, 3, 0.95) 100%);
-  pointer-events: none;
-}
-
-.lens-distortion {
-  background: radial-gradient(circle, transparent 60%, rgba(0, 0, 0, 0.3) 130%);
-  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.9);
-  pointer-events: none;
-}
-
-/* ------------------------------------------------------------
-   PHASE 117: GEOMETRIC INTELLIGENCE (ARCHITECTURAL BASE)
-   ------------------------------------------------------------ */
+/* AMBIENT EFFECTS — PHASE 2 SIMPLICITY */
 .grid-blueprint {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
-  background-size: 100px 100px;
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
   background-position: center;
-  pointer-events: none;
+  mask-image: radial-gradient(circle at center, black 0%, transparent 80%);
 }
 
-.arch-line {
-  position: absolute;
-  background: rgba(255, 255, 255, 0.1);
-  pointer-events: none;
-}
-
-.arch-line-h {
-  height: 1px;
-  width: 0;
-}
-
-.arch-line-v {
-  width: 1px;
-  height: 0;
-}
-
-.isometric-slab {
-  transform-style: preserve-3d;
-  transition: transform 600ms var(--ease-cubic), box-shadow 600ms var(--ease-cubic);
-}
-
-.isometric-slab:hover {
-  transform: rotateX(5deg) rotateY(-5deg) translateZ(10px) translateY(-5px) !important;
-  box-shadow: -15px 15px 30px rgba(0, 0, 0, 0.8), inset 1px -1px 0 rgba(255, 255, 255, 0.05);
-}
-
-/* ------------------------------------------------------------
-   PHASE 119: SIGNATURE VISUAL IDENTITY
-   ------------------------------------------------------------ */
-
-/* PHASE 119.1: SIGNATURE MOTIF (MICRO CORNER BRACKETS) */
-.signature-bracket {
-  position: relative;
-}
-
-.signature-bracket::before,
-.signature-bracket::after {
-  content: '';
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  pointer-events: none;
-  transition: all 400ms var(--ease-cubic);
-  z-index: 20;
-}
-
-.signature-bracket::before {
-  top: -1px;
-  left: -1px;
-  border-right: none;
-  border-bottom: none;
-}
-
-.signature-bracket::after {
-  bottom: -1px;
-  right: -1px;
-  border-left: none;
-  border-top: none;
-}
-
-.signature-bracket:hover::before {
-  top: -4px;
-  left: -4px;
-}
-
-.signature-bracket:hover::after {
-  bottom: -4px;
-  right: -4px;
-}
-
-/* PHASE 119.2: SIGNATURE HOVER MOMENT (MICRO LIGHT BEAM) */
-.light-beam-pass {
-  position: relative;
-  overflow: hidden;
-}
-
-.light-beam-pass::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
-  transform: skewX(-20deg);
-  transition: none;
-  pointer-events: none;
-  z-index: 10;
-}
-
-.light-beam-pass:hover::before {
-  left: 200%;
-  transition: left 600ms cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-/* PHASE 120.2: BUTTON MICRO-PHYSICS 2.0 */
-.btn-signature {
-  border-radius: 2px !important;
-  transition: transform 120ms var(--ease-spring), box-shadow 120ms var(--ease-cubic) 30ms, border-color 150ms var(--ease-cubic) !important;
-}
-
-.btn-signature:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 8px 20px -5px rgba(0, 0, 0, 0.9), inset 0 1px 1px rgba(255, 255, 255, 0.15) !important;
-  border-color: rgba(255, 255, 255, 0.15) !important;
-}
-
-.btn-signature:active {
-  transform: scale(0.98) translateY(0px) !important;
-}
-
-/* PHASE 119.7: CREATIVE TYPOGRAPHY TWIST */
-.text-outline {
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke: 1px white;
-}
-
-/* PHASE 120.3: LINK UNDERLINE REWRITE */
-.text-highlight-sweep {
-  position: relative;
-  display: inline-block;
-}
-
-.text-highlight-sweep::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: calc(100% - 10px);
-  height: 1px;
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-.text-highlight-sweep:hover::after,
-.text-highlight-sweep.active::after {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-
-/* ------------------------------------------------------------
-   PHASE 116.1: GLOBAL GRAIN TEXTURE OVERLAY
-   ------------------------------------------------------------ */
 .env-grain {
   position: fixed;
-  inset: -100%;
-  width: 300%;
-  height: 300%;
+  inset: 0;
   background-image: url('https://grainy-gradients.vercel.app/noise.svg');
-  opacity: 0.025;
+  opacity: 0.015;
   pointer-events: none;
+  z-index: 1000;
   mix-blend-mode: overlay;
-  animation: grainShift 8s steps(10) infinite;
 }
 
-@keyframes grainShift {
-  0% {
-    transform: translate(0, 0);
-  }
-
-  25% {
-    transform: translate(-1%, 1%);
-  }
-
-  50% {
-    transform: translate(1%, -1%);
-  }
-
-  75% {
-    transform: translate(-1%, -1%);
-  }
-
-  100% {
-    transform: translate(0, 0);
-  }
+/* GLOBAL ANIMATION CLASSES */
+.section-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity var(--m-slow) var(--m-ease), transform var(--m-slow) var(--m-ease);
 }
 
-/* ------------------------------------------------------------
-   PHASE 116.2: MATERIAL SURFACE TYPES
-   ------------------------------------------------------------ */
-.mat-matte {
-  background: var(--bg-subtle);
-  backdrop-filter: blur(5px);
+.section-reveal.active {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.mat-glass {
-  background: linear-gradient(135deg, rgba(20, 20, 20, 0.4) 0%, rgba(5, 5, 5, 0.6) 100%);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.03);
-}
-
-.mat-metallic {
-  background: linear-gradient(160deg, #111 0%, #050505 100%);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
-}
-
-.mat-paper {
-  background: #080808;
-  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.4);
-}
-
-/* ------------------------------------------------------------
-   PHASE 116.4: TACTILE BUTTON RESPONSE
-   ------------------------------------------------------------ */
-.btn-tactile {
-  transition: transform 150ms var(--ease-spring), box-shadow 150ms var(--ease-cubic), border-color 150ms var(--ease-cubic);
-}
-
-.btn-tactile:hover {
-  transform: scale(1.015);
-  box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.1);
-}
-
-.btn-tactile:active {
-  transform: scale(0.98);
-  box-shadow: 0 2px 5px -2px rgba(0, 0, 0, 0.8), inset 0 -1px 1px rgba(0, 0, 0, 0.6);
-}
-
-/* ------------------------------------------------------------
-   PHASE 116.5: ELASTIC MICRO INTERACTION
-   ------------------------------------------------------------ */
-.elastic-micro {
-  transition: transform 300ms var(--ease-spring);
-}
-
-.elastic-micro:hover {
-  transform: scaleX(1.03) scaleY(0.97);
-}
-
-/* ------------------------------------------------------------
-   PHASE 10: HORIZONTAL MICRO-SCROLL
-   ------------------------------------------------------------ */
-
-.horizontal-tray {
-  display: flex;
-  gap: 40px;
-  overflow-x: auto;
-  padding-block: 20px;
-  scrollbar-width: none;
-}
-
-.horizontal-tray::-webkit-scrollbar {
+/* UTILITIES */
+.no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 
-/* REPLACING OLD PROGRESS BAR WITH MINIMAL IMPACT */
-.progress-bar {
-  opacity: 0.2;
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 ::-webkit-scrollbar {
@@ -496,10 +151,10 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--background);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #222;
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
 }

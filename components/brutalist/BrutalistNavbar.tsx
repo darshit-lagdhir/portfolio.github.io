@@ -1,17 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useScene } from "@/context/SceneContext";
 
-// PHASE 1: CENTRAL MOTION CONTROLLER
-const GLOBAL_EASE = [0.33, 1, 0.68, 1] as [number, number, number, number];
+const GLOBAL_EASE = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
 export default function BrutalistNavbar() {
-    const pathname = usePathname();
-    const { mode, setMode, setIsNavigating, activeSection } = useScene();
+    const { activeSection } = useScene();
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -22,81 +19,52 @@ export default function BrutalistNavbar() {
     }, []);
 
     const navLinks = [
-        { name: "01_START", href: "/#hero" },
-        { name: "02_PHILO", href: "/#about" },
-        { name: "03_SYNC", href: "/#projects" },
-        { name: "04_BENTO", href: "/#focus" },
-        { name: "05_TERM", href: "/#contact" },
+        { name: "START", href: "/#hero", id: "hero" },
+        { name: "ARCHIVE", href: "/#projects", id: "projects" },
+        { name: "IDENTITY", href: "/#about", id: "about" },
+        { name: "CONTACT", href: "/#contact", id: "contact" },
     ];
-
-    const modes = [
-        { id: "standard", label: "STD" },
-        { id: "depth", label: "DPT" },
-        { id: "minimal", label: "MIN" }
-    ] as const;
 
     return (
         <motion.header
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, ease: GLOBAL_EASE }}
+            transition={{ duration: 1.2, ease: GLOBAL_EASE }}
             className={`
-                fixed top-0 left-0 w-full z-[2000] transition-all duration-500 select-none
-                ${scrolled ? "py-4 bg-[#050505]/90 backdrop-blur-2xl border-b border-white/5" : "py-10 bg-[#050505]/0"}
+                fixed top-0 left-0 w-full z-[2000] select-none transition-all duration-1000
+                ${scrolled ? "py-4 bg-[#030303]/90 backdrop-blur-xl border-b border-white/5" : "py-10 bg-transparent"}
             `}
         >
-            <nav className="grid-poster items-center">
-                {/* PHASE 3: LEFT-DOMINANT LOGO */}
-                <div className="col-span-6 md:col-span-3">
-                    <Link
-                        href="/"
-                        onClick={() => setIsNavigating(true)}
-                        className="group flex flex-col gap-1"
-                    >
-                        <span className="text-micro font-bold tracking-[0.4em] opacity-20 group-hover:opacity-100 transition-opacity">DARSHIT_LAGDHIR</span>
-                        <span className="text-micro font-light opacity-10 group-hover:opacity-30 transition-opacity">SYSTEM_ARCHITECT // v.01</span>
+            <nav className="grid-poster items-center px-[5vw]">
+                {/* LOGO AREA — PHASE 2 AALTO IDENTITY */}
+                <div className="col-span-6 md:col-span-4">
+                    <Link href="/" className="group flex flex-col gap-1 items-start">
+                        <span className="text-medium text-white italic tracking-tight font-display group-hover:tracking-tighter transition-all duration-700">D_L</span>
+                        <span className="text-[10px] font-sans opacity-10 group-hover:opacity-40 transition-opacity tracking-[0.2em] uppercase font-bold">SYSTEM_01 // 2024</span>
                     </Link>
                 </div>
 
-                {/* PHASE 127.2: MODE SWITCHER (TIER 3 AMBIENT) */}
-                <div className="hidden lg:flex col-start-4 col-span-3 gap-6 items-center">
-                    <div className="flex gap-4 p-1 opacity-10 hover:opacity-100 transition-opacity duration-700">
-                        {modes.map((m) => (
-                            <button
-                                key={m.id}
-                                onClick={() => setMode(m.id)}
-                                className={`
-                                    elastic-micro text-[9px] font-bold tracking-[0.2em] relative px-2 py-1 rounded-sm
-                                    ${mode === m.id ? "text-white" : "text-white/40 hover:text-white/80"}
-                                `}
-                            >
-                                {m.label}
-                                {mode === m.id && (
-                                    <motion.div layoutId="nav-mode-dot" className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-white rounded-full" />
-                                )}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-
-                {/* PHASE 127.1: NAV LINKS (TIER 2 SECONDARY) */}
-                <div className="hidden md:flex md:col-start-7 md:col-span-6 lg:col-start-8 lg:col-span-5 justify-end gap-x-10">
+                {/* NAV LINKS — PHASE 2 HK GROTESK WIDE */}
+                <div className="hidden md:flex md:col-span-8 justify-end gap-16">
                     {navLinks.map((link) => {
-                        const linkSection = link.href.replace("/#", "");
-                        const isActive = activeSection === linkSection || (activeSection === 'hero' && linkSection === 'hero');
+                        const isActive = activeSection === link.id;
 
                         return (
                             <Link
                                 key={link.name}
                                 href={link.href}
-                                onClick={() => setIsNavigating(true)}
                                 className={`
-                                    relative text-micro font-bold tracking-[0.3em] elastic-micro
-                                    block text-highlight-sweep h-4 transition-all duration-700
-                                    ${isActive ? "text-white active drop-shadow-[0_0_15px_rgba(255,255,255,0.6)] scale-110" : "text-white/10 hover:text-white/60"} 
+                                    relative text-micro font-bold tracking-[0.5em] transition-all duration-700
+                                    font-wide ${isActive ? "text-white opacity-100 scale-105" : "text-white/20 hover:text-white/60"} 
                                 `}
                             >
                                 {link.name}
+                                {isActive && (
+                                    <motion.div
+                                        layoutId="nav-pill"
+                                        className="absolute -bottom-1 left-0 w-full h-[1px] bg-white opacity-60"
+                                    />
+                                )}
                             </Link>
                         );
                     })}
@@ -106,56 +74,46 @@ export default function BrutalistNavbar() {
                 <div className="col-span-6 md:hidden flex justify-end">
                     <button
                         onClick={() => setMenuOpen(!menuOpen)}
-                        className="text-white font-bold text-[9px] tracking-[0.4em] flex items-center gap-4"
+                        className="text-white font-bold text-[9px] tracking-[0.5em] p-2 hover:opacity-60 transition-opacity"
                     >
-                        [ {menuOpen ? "CLOSE" : "SYNC"} ]
+                        {menuOpen ? "[ CLOSE ]" : "[ SYNC ]"}
                     </button>
                 </div>
             </nav>
 
+            {/* MOBILE MENU — PHASE 2 */}
             <AnimatePresence>
                 {menuOpen && (
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        transition={{ duration: 0.4, ease: GLOBAL_EASE }}
-                        className="fixed inset-0 bg-[#050505] z-[3000] flex flex-col p-12 justify-center"
+                        className="fixed inset-0 bg-[#030303] z-[3000] flex flex-col justify-center px-[10vw]"
                     >
-                        <div className="flex flex-col gap-8">
+                        <div className="flex flex-col gap-12">
                             {navLinks.map((link, idx) => (
                                 <motion.div
                                     key={link.name}
-                                    initial={{ opacity: 0, x: -20 }}
+                                    initial={{ opacity: 0, x: -30 }}
                                     animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: idx * 0.05, ease: GLOBAL_EASE }}
+                                    transition={{ delay: idx * 0.1, duration: 0.8, ease: GLOBAL_EASE }}
                                 >
                                     <Link
                                         href={link.href}
-                                        onClick={() => { setMenuOpen(false); setIsNavigating(true); }}
-                                        className="text-large text-white group block italic hover:tracking-tighter transition-all duration-500"
+                                        onClick={() => setMenuOpen(false)}
+                                        className="text-massive-mini italic text-white hover:tracking-tighter transition-all uppercase font-display"
                                     >
                                         {link.name}
                                     </Link>
                                 </motion.div>
                             ))}
                         </div>
-
-                        <div className="mt-20 border-t border-white/5 pt-10 flex flex-col gap-6">
-                            <span className="text-micro opacity-30">SCENE_MODES</span>
-                            <div className="flex gap-8">
-                                {modes.map(m => (
-                                    <button
-                                        key={m.id}
-                                        onClick={() => setMode(m.id)}
-                                        className={`text-micro ${mode === m.id ? 'text-white' : 'text-white/20'}`}
-                                    >
-                                        {m.label}
-                                    </button>
-                                ))}
-                            </div>
-                            <button onClick={() => setMenuOpen(false)} className="mt-10 text-micro text-white/40 self-start">[ DISCONNECT_SESSION ]</button>
-                        </div>
+                        <button
+                            onClick={() => setMenuOpen(false)}
+                            className="mt-20 text-micro text-white/20 self-start tracking-widest font-sans font-bold"
+                        >
+                            [ DISCONNECT_SESSION ]
+                        </button>
                     </motion.div>
                 )}
             </AnimatePresence>

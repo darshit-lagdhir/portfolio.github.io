@@ -11,25 +11,14 @@ export default function MoveXPage() {
     const { setActiveSection } = useScene();
 
     useEffect(() => {
-        setActiveSection("movex");
+        setActiveSection("projects");
     }, [setActiveSection]);
 
     return (
-        <div className="min-h-screen w-full bg-background text-foreground relative overflow-hidden">
-            <div className="grid-layout pt-40 pointer-events-none md:pl-[6%] lg:pl-[10%]">
-                <SystemBreadcrumbs current="MOVEX" />
-            </div>
+        <div className="min-h-screen w-full bg-background text-foreground relative py-32 px-[5vw]">
+            <SystemBreadcrumbs current="MOVEX" />
 
-            {/* PROJECT MOOD: MECHANICAL STRUCTURE (PHASE 4) */}
-            <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
-                <div className="grid grid-cols-24 gap-8 rotate-3 skew-x-12 h-full w-full">
-                    {Array.from({ length: 48 }).map((_, i) => (
-                        <div key={i} className="border-l border-white/5 h-full" />
-                    ))}
-                </div>
-            </div>
-
-            <div className="grid-layout py-32 lg:py-48 flex flex-col gap-y-40 md:gap-y-64 relative z-10">
+            <div className="max-w-[1200px] mx-auto flex flex-col gap-y-32">
 
                 {/* PROJECT HEADER */}
                 <motion.div

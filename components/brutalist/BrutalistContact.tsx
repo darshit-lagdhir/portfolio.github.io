@@ -1,103 +1,116 @@
 "use client";
 
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { useScene } from "@/context/SceneContext";
+import { useState } from "react";
 
-// PHASE 1: CENTRAL MOTION CONTROLLER
-const GLOBAL_EASE = [0.33, 1, 0.68, 1] as [number, number, number, number];
-
-const contactLinks = [
-    { label: "TELEGRAM", value: "@darshit_lagdhir", link: "https://t.me/ghalib_shayar" },
-    { label: "GITHUB", value: "github.com/darshit-lagdhir", link: "https://github.com/darshit-lagdhir" },
-    { label: "EMAIL", value: "darshit.lagdhir@gmail.com", link: "mailto:darshit.lagdhir@gmail.com" },
-    { label: "X / TWITTER", value: "@dl_darshit", link: "https://twitter.com/dl_darshit" }
-];
+const GLOBAL_EASE = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
 export default function BrutalistContact() {
-    const sectionRef = useRef<HTMLElement>(null);
-    const { setActiveSection, mode, activeSection } = useScene();
-    const [isHovered, setIsHovered] = useState<number | null>(null);
-    const [isMobile, setIsMobile] = useState(false);
+    const { setActiveSection } = useScene();
+    const [ripples, setRipples] = useState<{ x: number, y: number, id: number }[]>([]);
 
-    useEffect(() => {
-        const checkMobile = () => setIsMobile(window.innerWidth < 1024);
-        checkMobile();
-        window.addEventListener("resize", checkMobile);
-        return () => window.removeEventListener("resize", checkMobile);
-    }, []);
-
-    const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start end", "end start"] });
-    const rotateX = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], mode === 'depth' ? [2.5, 0, 0, -2.5] : [1, 0, 0, -1]);
+    const createRipple = (e: React.MouseEvent) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const id = Date.now();
+        setRipples(prev => [...prev, { x, y, id }]);
+        setTimeout(() => {
+            setRipples(prev => prev.filter(r => r.id !== id));
+        }, 1000);
+    };
 
     return (
         <section
-            onPointerEnter={() => setActiveSection("contact")}
-            ref={sectionRef}
-            style={{ opacity: activeSection === "contact" ? 1 : 0.94 }} // PHASE 6: ACTIVE SECTION FOCUS DIMMING
-            className="spatial-section relative flex items-center justify-center section-tone-shift tone-02 transition-opacity duration-1000"
             id="contact"
+            onPointerEnter={() => setActiveSection("contact")}
+            className="relative min-h-[60vh] flex flex-col items-center justify-center px-[5vw] py-32 bg-background border-t border-white/5"
         >
-            <motion.div
-                style={{ rotateX, transformStyle: "preserve-3d" }}
-                className="w-full relative z-10"
-            >
-                <div className="grid-poster py-24 flex flex-col lg:flex-row gap-16 items-end">
+            <div className="flex flex-col items-center text-center gap-12 max-w-[60ch]">
 
-                    {/* PHASE 3: LEFT-DOMINANT LAYOUT */}
-                    <div className="flex-1 flex flex-col items-start gap-12">
-                        <div className="flex flex-col gap-6 items-start">
-                            <span className="text-micro font-bold text-muted border-l border-white/20 pl-6 h-4 flex items-center">SECTION_ID_05</span>
-                            <h2 className="text-large text-white flex flex-col italic first-letter:not-italic select-none pointer-events-none border-b border-white/5 pb-10 w-full text-white filter drop-shadow-[0_15px_35px_rgba(0,0,0,0.5)]">
-                                SYSTEM_TERMINAL // <span className="text-white brightness-150 font-black tracking-tighter transition-all duration-1000">SYNC</span>
-                            </h2>
-                        </div>
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1, ease: GLOBAL_EASE }}
+                    className="flex flex-col items-center gap-6"
+                >
+                    <span className="text-micro font-bold tracking-[0.8em] opacity-40">04_TERMINATION</span>
+                    <h2 className="text-massive-mini text-white italic tracking-tight-title uppercase leading-none">
+                        SESSION_SYNC
+                    </h2>
+                </motion.div>
 
-                        <p className="text-small text-muted font-light tracking-wide max-w-[42ch]">
-                            Terminal session remains active for integration protocols. Select a transmission node to establish contact.
-                        </p>
-                    </div>
+                <p className="text-medium text-white/40 leading-relaxed italic max-w-[40ch]">
+                    ESTABLISH CONNECTION FOR SYSTEM INTEGRATION OR ARCHITECTURAL INQUIRIES.
+                </p>
 
-                    {/* PHASE 5: HEAVY PANEL V3 (CONTACT NODES) */}
-                    <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-8 relative z-10 w-full">
-                        {contactLinks.map((link, i) => (
-                            <motion.a
-                                key={link.label}
-                                href={link.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                onMouseEnter={() => setIsHovered(i)}
-                                onMouseLeave={() => setIsHovered(null)}
-                                initial={{ opacity: 0, y: 15 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.6 + i * 0.1, duration: 1, ease: GLOBAL_EASE }}
-                                className={`heavy-panel btn-signature signature-bracket elastic-micro light-beam-pass p-8 md:p-10 flex flex-col justify-between h-48 md:h-56 transition-all duration-500 relative group overflow-hidden ${mode === 'minimal' ? 'hover:bg-[#0c0c0c]' : 'mat-matte'} ${i % 2 !== 0 ? 'mt-4' : ''}`}
-                            >
-                                <span className="text-micro font-bold text-muted group-hover:text-white transition-all opacity-40">
-                                    {link.label}
-                                </span>
+                {/* EMAIL INTERACTION — PHASE 2 */}
+                <motion.div
+                    onClick={createRipple}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1, delay: 0.2, ease: GLOBAL_EASE }}
+                    className="relative group p-8 md:p-12 border border-white/5 bg-white/[0.02] overflow-hidden cursor-none"
+                >
+                    <a
+                        href="mailto:darshit.lagdhir@gmail.com"
+                        className="text-medium md:text-large text-white tracking-widest font-bold group-hover:tracking-tighter transition-all duration-700 relative z-10"
+                    >
+                        DARSHIT.LAGDHIR@GMAIL.COM
+                    </a>
 
-                                <span className="text-medium text-white tracking-widest italic first-letter:not-italic group-hover:tracking-tighter transition-all duration-700">
-                                    {link.value}
-                                </span>
+                    {/* RIPPLE ENGINE — PHASE 2 */}
+                    {ripples.map(ripple => (
+                        <motion.span
+                            key={ripple.id}
+                            initial={{ scale: 0, opacity: 0.5 }}
+                            animate={{ scale: 4, opacity: 0 }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            style={{ left: ripple.x, top: ripple.y }}
+                            className="absolute w-20 h-20 bg-white/20 rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2"
+                        />
+                    ))}
 
-                                {/* PHASE 9: RIM HIGHLIGHT */}
-                                <div className="absolute inset-0 z-[-1] opacity-0 group-hover:opacity-100 transition-opacity rim-highlight" />
-                            </motion.a>
-                        ))}
-                    </div>
+                    <div className="absolute inset-0 bg-white/0 group-hover:bg-white/5 transition-colors duration-500" />
+                </motion.div>
+
+                <div className="flex gap-12 mt-8">
+                    {[
+                        { label: "GH", link: "https://github.com/darshit-lagdhir" },
+                        { label: "TW", link: "https://twitter.com/dl_darshit" },
+                        { label: "TG", link: "https://t.me/ghalib_shayar" }
+                    ].map((social, i) => (
+                        <motion.a
+                            key={social.label}
+                            href={social.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 0.3 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8, delay: 0.5 + i * 0.1 }}
+                            whileHover={{ opacity: 1, y: -2 }}
+                            className="text-micro font-bold tracking-[0.4em] hover:text-white transition-all uppercase"
+                        >
+                            {social.label}
+                        </motion.a>
+                    ))}
                 </div>
-            </motion.div>
 
-            {/* PHASE 8 & 16: INTERACTIVE NEGATIVE SPACE (AMBIENT OBJECTS + EXIT CUE) */}
+            </div>
+
+            {/* EXIT CUE — PHASE 2 */}
             <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 0.2 }}
-                transition={{ delay: 1.5, duration: 2 }}
-                className="absolute bottom-12 right-12 flex flex-col gap-4"
+                transition={{ delay: 1, duration: 2 }}
+                className="absolute bottom-12 flex flex-col items-center gap-6"
             >
-                <div className="w-[1px] h-24 bg-white/20" />
-                <span className="text-micro rotate-90 origin-bottom-left absolute -bottom-10 left-4 tracking-[0.5em] font-bold text-white/40">EOT_TRANSMISSION</span>
+                <div className="w-px h-12 bg-white/20" />
+                <span className="text-micro font-bold tracking-[1em] text-white/50">EOT_TRANSMISSION</span>
             </motion.div>
         </section>
     );

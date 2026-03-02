@@ -11,22 +11,14 @@ export default function PFCVPage() {
     const { setActiveSection } = useScene();
 
     useEffect(() => {
-        setActiveSection("pfcv");
+        setActiveSection("projects");
     }, [setActiveSection]);
 
     return (
-        <div className="min-h-screen w-full bg-background text-foreground relative overflow-hidden">
-            <div className="grid-layout pt-40 pointer-events-none md:pl-[6%] lg:pl-[10%]">
-                <SystemBreadcrumbs current="PFCV" />
-            </div>
+        <div className="min-h-screen w-full bg-background text-foreground relative py-32 px-[5vw]">
+            <SystemBreadcrumbs current="PFCV" />
 
-            {/* PROJECT MOOD: SHARP/CONTRAST (PHASE 4) */}
-            <div className="absolute inset-0 z-0 pointer-events-none flex items-center justify-center opacity-30">
-                <div className="w-full h-px bg-white/20 absolute rotate-45" />
-                <div className="w-full h-px bg-white/20 absolute -rotate-45" />
-            </div>
-
-            <div className="grid-layout py-32 lg:py-48 flex flex-col gap-y-40 md:gap-y-64 relative z-10">
+            <div className="max-w-[1200px] mx-auto flex flex-col gap-y-32">
 
                 {/* PROJECT HEADER */}
                 <motion.div

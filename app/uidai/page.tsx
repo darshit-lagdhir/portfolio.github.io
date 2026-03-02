@@ -11,19 +11,14 @@ export default function UIDAIPage() {
     const { setActiveSection } = useScene();
 
     useEffect(() => {
-        setActiveSection("uidai");
+        setActiveSection("projects");
     }, [setActiveSection]);
 
     return (
-        <div className="min-h-screen w-full bg-background text-foreground relative overflow-hidden">
-            <div className="grid-layout pt-40 pointer-events-none md:pl-[6%] lg:pl-[10%]">
-                <SystemBreadcrumbs current="UIDAI" />
-            </div>
+        <div className="min-h-screen w-full bg-background text-foreground relative py-32 px-[5vw]">
+            <SystemBreadcrumbs current="UIDAI" />
 
-            {/* PROJECT MOOD: CALM/NEUTRAL (PHASE 4) */}
-            <div className="absolute inset-x-0 top-0 h-[400px] z-0 pointer-events-none opacity-10 bg-gradient-to-b from-white/10 to-transparent blur-3xl rounded-full translate-y-[-50%]" />
-
-            <div className="grid-layout py-32 lg:py-48 flex flex-col gap-y-40 md:gap-y-64 relative z-10">
+            <div className="max-w-[1200px] mx-auto flex flex-col gap-y-32">
 
                 {/* PROJECT HEADER */}
                 <motion.div

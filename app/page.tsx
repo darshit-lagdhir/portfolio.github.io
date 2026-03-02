@@ -1,19 +1,15 @@
 import BrutalistHero from "@/components/brutalist/BrutalistHero";
-import BrutalistAbout from "@/components/brutalist/BrutalistAbout";
 import BrutalistProjectsPreview from "@/components/brutalist/BrutalistProjectsPreview";
-import BrutalistFocus from "@/components/brutalist/BrutalistFocus";
+import BrutalistAbout from "@/components/brutalist/BrutalistAbout";
 import BrutalistContact from "@/components/brutalist/BrutalistContact";
-import InfiniteMarquee from "@/components/brutalist/InfiniteMarquee";
 
 export default function Home() {
   return (
-    <div className="w-full">
+    <main className="w-full">
       <BrutalistHero />
-      <BrutalistAbout />
-      <InfiniteMarquee />
       <BrutalistProjectsPreview />
-      <BrutalistFocus />
+      <BrutalistAbout />
       <BrutalistContact />
-    </div>
+    </main>
   );
 }
