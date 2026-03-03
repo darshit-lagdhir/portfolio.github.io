@@ -32,9 +32,24 @@ export default function UIDAIPage() {
                         <span className="text-micro font-bold text-white tracking-[0.8em]">
                             02_INTELLIGENCE // PATTERN_SYNC
                         </span>
-                        <h1 className="text-large md:text-massive italic text-white font-heading leading-none uppercase tracking-tight-title">
-                            UIDAI_SYSTEM
-                        </h1>
+                        <motion.h1
+                            initial={{ scaleX: 1.5, opacity: 0 }}
+                            animate={{ scaleX: 1, opacity: 1 }}
+                            transition={{ duration: 0.2, ease: "easeOut" }}
+                            className="text-large md:text-massive italic text-white font-heading leading-none uppercase tracking-tight-title origin-left glitch-safe flex overflow-hidden"
+                        >
+                            {"UIDAI_SYSTEM".split("").map((char, i) => (
+                                <motion.span
+                                    key={i}
+                                    initial={{ y: i % 2 === 0 ? -40 : 40, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    transition={{ duration: 0.3, delay: 0.1 + i * 0.02, ease: [0.33, 1, 0.68, 1] }}
+                                    className="inline-block"
+                                >
+                                    {char === "_" ? <span>&nbsp;</span> : char}
+                                </motion.span>
+                            ))}
+                        </motion.h1>
                         <p className="text-short-body text-white/40 italic">
                             Advisory intelligence system for biometric pattern detection and enrollment anomaly clustering.
                         </p>

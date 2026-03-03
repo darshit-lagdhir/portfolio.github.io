@@ -54,7 +54,7 @@ export default function BrutalistProjectsPreview() {
             ref={containerRef}
             id="projects"
             onPointerEnter={() => setActiveSection("projects")}
-            className="relative min-h-screen bg-white text-black py-40 flex flex-col items-center overflow-hidden white-section-depth preserve-3d"
+            className="relative min-h-screen bg-white text-black py-40 flex flex-col items-center overflow-hidden white-section-depth preserve-3d section-boundary-flash"
         >
             <motion.div
                 onViewportEnter={() => setInView(true)}
@@ -78,6 +78,28 @@ export default function BrutalistProjectsPreview() {
                         <ProjectRow key={project.id} project={project} index={i} />
                     ))}
                 </motion.div>
+
+                {/* PHASE 8 STEP 4: NEGATIVE VOID */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.5, ease: GLOBAL_EASE }}
+                    className="w-full flex"
+                >
+                    <div className="hidden lg:block w-1/3 negative-void" />
+                    <div className="w-full lg:w-2/3 flex flex-col items-start">
+                        <motion.p
+                            initial={{ x: 80, opacity: 0 }}
+                            whileInView={{ x: 0, opacity: 0.3 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 1.2, delay: 0.3, ease: GLOBAL_EASE }}
+                            className="text-micro font-bold tracking-[0.6em] italic"
+                        >
+                            VOID_SPACE // INTENTIONAL_EMPTINESS
+                        </motion.p>
+                    </div>
+                </motion.div>
             </motion.div>
 
             {/* EXIT CUE — PHASE 4 */}
@@ -91,6 +113,13 @@ export default function BrutalistProjectsPreview() {
 
 function ProjectRow({ project, index }: { project: any, index: number }) {
     const [isHovered, setIsHovered] = useState(false);
+    const [flickerKey, setFlickerKey] = useState(0);
+
+    // PHASE 8 STEP 2: Trigger scanline flicker on each hover entry
+    const handleEnter = () => {
+        setIsHovered(true);
+        setFlickerKey(prev => prev + 1);
+    };
 
     return (
         <motion.div
@@ -104,7 +133,7 @@ function ProjectRow({ project, index }: { project: any, index: number }) {
                 relative w-full border-b border-black group cursor-none project-row-transition origin-left
                 ${isHovered ? "flash-invert" : ""}
             `}
-            onMouseEnter={() => setIsHovered(true)}
+            onMouseEnter={handleEnter}
             onMouseLeave={() => setIsHovered(false)}
             data-project="true"
         >
@@ -119,8 +148,9 @@ function ProjectRow({ project, index }: { project: any, index: number }) {
                         {project.id}
                     </motion.span>
                     <motion.h3
+                        key={flickerKey}
                         animate={{ letterSpacing: isHovered ? "0.08em" : "0.02em", scale: isHovered ? 1.05 : 1 }}
-                        className="text-large-mini md:text-large font-heading italic uppercase transition-all duration-300 origin-left"
+                        className={`text-large-mini md:text-large font-heading italic uppercase transition-all duration-300 origin-left glitch-safe ${isHovered ? 'project-title-flicker' : ''}`}
                     >
                         {project.name}
                     </motion.h3>

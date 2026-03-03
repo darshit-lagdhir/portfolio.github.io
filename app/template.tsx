@@ -87,6 +87,15 @@ export default function Template({ children }: { children: React.ReactNode }) {
                     className="fixed inset-0 bg-white z-[2000] pointer-events-none origin-top"
                 />
 
+                {/* PHASE 8 STEP 13: 1PX FLASH LINE AT BOUNDARY */}
+                <motion.div
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 0 }}
+                    exit={{ scaleX: 1 }}
+                    transition={{ duration: 0.15, ease: "easeOut", delay: 0.05 }}
+                    className="fixed top-1/2 left-0 w-full h-[1px] bg-white z-[2001] pointer-events-none origin-left"
+                />
+
                 {/* SYSTEM PULSE ON TRANSITION (PHASE 13) */}
                 <AnimatePresence>
                     {isNavigating && (

@@ -36,9 +36,19 @@ export default function MoveXPage() {
                             initial={{ scaleX: 1.5, opacity: 0 }}
                             animate={{ scaleX: 1, opacity: 1 }}
                             transition={{ duration: 0.2, ease: "easeOut" }}
-                            className="text-large md:text-massive italic text-white font-heading leading-none uppercase tracking-tight-title origin-left"
+                            className="text-large md:text-massive italic text-white font-heading leading-none uppercase tracking-tight-title origin-left glitch-safe flex overflow-hidden"
                         >
-                            MOVEX_SYSTEM
+                            {"MOVEX_SYSTEM".split("").map((char, i) => (
+                                <motion.span
+                                    key={i}
+                                    initial={{ y: i % 2 === 0 ? -40 : 40, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    transition={{ duration: 0.3, delay: 0.1 + i * 0.02, ease: [0.33, 1, 0.68, 1] }}
+                                    className="inline-block"
+                                >
+                                    {char === "_" ? <span>&nbsp;</span> : char}
+                                </motion.span>
+                            ))}
                         </motion.h1>
                         <p className="text-short-body text-white/40 italic">
                             Modular backend infrastructure for role-isolated logistics management. Built with Node.js and PostgreSQL.
@@ -55,7 +65,7 @@ export default function MoveXPage() {
                         transition={{ duration: 1 }}
                         className="grid grid-cols-1 md:grid-cols-12 gap-20"
                     >
-                        <div className="md:col-span-4 lg:col-span-3">
+                        <div className="md:col-span-4 lg:col-span-3 md:sticky md:top-40 self-start">
                             <span className="text-micro font-bold tracking-[0.4em] text-white opacity-40">
                                 OVERVIEW
                             </span>

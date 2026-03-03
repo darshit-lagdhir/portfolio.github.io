@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 import { useScene } from "@/context/SceneContext";
 
 const GLOBAL_EASE = [0.33, 1, 0.68, 1] as [number, number, number, number];
@@ -9,6 +9,13 @@ const GLOBAL_EASE = [0.33, 1, 0.68, 1] as [number, number, number, number];
 export default function BrutalistHero() {
     const sectionRef = useRef<HTMLElement>(null);
     const { setActiveSection } = useScene();
+
+    // PHASE 8 STEP 1: ONE-SHOT GLITCH STATE
+    const [glitchFired, setGlitchFired] = useState(false);
+    useEffect(() => {
+        const timer = setTimeout(() => setGlitchFired(true), 800);
+        return () => clearTimeout(timer);
+    }, []);
 
     // MOUSE PARALLAX — PHASE 4
     const mouseX = useMotionValue(0);
@@ -95,12 +102,33 @@ export default function BrutalistHero() {
         </div>
     );
 
+    // PHASE 8 STEP 9: LETTER TRAIL
+    const [trailLetters, setTrailLetters] = useState<{ char: string, x: number, y: number, id: number }[]>([]);
+    const trailIdRef = useRef(0);
+
+    const handleHeroMouseMove = useCallback((e: React.MouseEvent) => {
+        const rect = sectionRef.current?.getBoundingClientRect();
+        if (!rect) return;
+        const relX = e.clientX - rect.left;
+        const relY = e.clientY - rect.top;
+        // Only spawn trail near the headline area (top 60%)
+        if (relY > rect.height * 0.7) return;
+        const chars = "DARSHITLAGDHIR";
+        const char = chars[Math.floor(Math.random() * chars.length)];
+        const id = trailIdRef.current++;
+        setTrailLetters(prev => [...prev.slice(-6), { char, x: relX, y: relY, id }]);
+        setTimeout(() => {
+            setTrailLetters(prev => prev.filter(t => t.id !== id));
+        }, 400);
+    }, []);
+
     return (
         <section
             ref={sectionRef}
-            className="relative h-[110vh] flex flex-col justify-center overflow-hidden bg-background px-[5vw]"
+            className="relative h-[110vh] flex flex-col justify-center overflow-hidden bg-background px-[5vw] section-boundary-flash"
             id="hero"
             onPointerEnter={() => setActiveSection("hero")}
+            onMouseMove={handleHeroMouseMove}
         >
             {/* BREATHING BACKGROUND — PHASE 4 */}
             <motion.div
@@ -115,6 +143,22 @@ export default function BrutalistHero() {
             {/* PHASE 7: ARCHITECTURAL SPINE LINE */}
             <div className="absolute top-0 left-[5vw] w-px h-full bg-white/10 z-0">
                 <motion.div style={{ height: spineHeight }} className="w-full bg-white" />
+            </div>
+
+            {/* PHASE 8 STEP 9: LETTER TRAIL LAYER */}
+            <div className="absolute inset-0 z-[5] pointer-events-none">
+                {trailLetters.map(t => (
+                    <motion.span
+                        key={t.id}
+                        initial={{ opacity: 0.15, scale: 1.2 }}
+                        animate={{ opacity: 0, scale: 0.8, y: -20 }}
+                        transition={{ duration: 0.4, ease: "easeOut" }}
+                        className="absolute text-massive italic text-white/10 pointer-events-none select-none glitch-safe"
+                        style={{ left: t.x, top: t.y, transform: "translate(-50%, -50%)" }}
+                    >
+                        {t.char}
+                    </motion.span>
+                ))}
             </div>
 
             <motion.div
@@ -140,12 +184,12 @@ export default function BrutalistHero() {
                         >
                             {textArray1.join("")}
                         </motion.span>
-                        {/* FRONT LAYER - FOREGROUND WITH MICRO MOTION & SLICES (PHASE 7) */}
+                        {/* FRONT LAYER - FOREGROUND + PHASE 8 GLITCH */}
                         <motion.h1
                             initial={{ translateZ: 50 }}
                             animate={{ translateZ: 50 }}
                             style={{ y: frontY, opacity: mainTextOpacity, fontWeight }}
-                            className="text-massive italic leading-[0.8] -ml-[0.05em] whitespace-nowrap relative z-10 perspective-tilt flex"
+                            className={`text-massive italic leading-[0.8] -ml-[0.05em] whitespace-nowrap relative z-10 perspective-tilt flex glitch-safe ${glitchFired ? 'hero-glitch-once' : ''}`}
                         >
                             <SliceReveal text={textArray1} delay={0} />
                         </motion.h1>
@@ -167,12 +211,12 @@ export default function BrutalistHero() {
                         >
                             {textArray2.join("")}
                         </motion.span>
-                        {/* FRONT LAYER */}
+                        {/* FRONT LAYER + PHASE 8 GLITCH */}
                         <motion.h1
                             initial={{ translateZ: 50 }}
                             animate={{ translateZ: 50 }}
                             style={{ y: frontY, opacity: mainTextOpacity, fontWeight }}
-                            className="text-massive text-white leading-[0.8] whitespace-nowrap relative z-10 perspective-tilt flex"
+                            className={`text-massive text-white leading-[0.8] whitespace-nowrap relative z-10 perspective-tilt flex glitch-safe ${glitchFired ? 'hero-glitch-once' : ''}`}
                         >
                             <SliceReveal text={textArray2} delay={0.1} />
                         </motion.h1>

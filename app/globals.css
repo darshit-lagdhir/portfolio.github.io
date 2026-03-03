@@ -352,3 +352,145 @@ body {
 .grid-blueprint {
   display: none !important;
 }
+
+/* ============================================= */
+/* PHASE 8 — CONTROLLED GLITCH MOMENTS           */
+/* ============================================= */
+
+/* STEP 1: MICRO GLITCH FLASH — HERO ONLY (ONE-SHOT) */
+@keyframes heroGlitch {
+  0% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+
+  20% {
+    transform: translate(-4px, 0);
+    opacity: 0.7;
+  }
+
+  40% {
+    transform: translate(6px, -2px);
+    opacity: 0.85;
+  }
+
+  60% {
+    transform: translate(-2px, 1px);
+    opacity: 0.6;
+  }
+
+  80% {
+    transform: translate(3px, 0);
+    opacity: 0.9;
+  }
+
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+
+.hero-glitch-once {
+  animation: heroGlitch 0.12s steps(4) forwards;
+  animation-iteration-count: 1;
+}
+
+/* STEP 2: PROJECT TITLE SCANLINE FLICKER (HOVER-TRIGGERED) */
+@keyframes scanlineFlicker {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  25% {
+    opacity: 0.6;
+    transform: translateX(2px);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateX(-1px);
+  }
+
+  75% {
+    opacity: 0.85;
+    transform: translateX(1px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.project-title-flicker {
+  animation: scanlineFlicker 0.08s steps(3) forwards;
+}
+
+/* STEP 11: BORDER DISTORTION FLICKER */
+@keyframes borderShift {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  50% {
+    transform: translate(1px, -1px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+.border-distort-active {
+  animation: borderShift 0.1s ease-out forwards;
+  animation-iteration-count: 1;
+}
+
+/* STEP 13: BLACK/WHITE TRANSITION FLASH LINE */
+.section-boundary-flash {
+  position: relative;
+}
+
+.section-boundary-flash::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: white;
+  opacity: 0;
+  transition: opacity 0.05s ease;
+}
+
+.section-boundary-flash.flash-active::after {
+  opacity: 1;
+}
+
+/* STEP 4: NEGATIVE VOID SPACE */
+.negative-void {
+  position: relative;
+  min-height: 20vh;
+}
+
+/* STEP 14: PERFORMANCE LOCK — no filters, no blend stacking */
+.glitch-safe {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+}
+
+/* MOBILE DISABLE (from Phase 7 Step 14 carryover) */
+@media (max-width: 768px) {
+  .hero-glitch-once {
+    animation: none;
+  }
+
+  .project-title-flicker {
+    animation: none;
+  }
+
+  .border-distort-active {
+    animation: none;
+  }
+}

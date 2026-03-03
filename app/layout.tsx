@@ -115,6 +115,9 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
   const layoutLineHeight = useTransform(scrollYProgress, [0, 1], [1.4, 1.3]);
   const layoutLetterSpacing = useTransform(scrollYProgress, [0, 1], ["0em", "-0.01em"]);
 
+  // PHASE 8 STEP 7: DYNAMIC LINE DISPLACEMENT
+  const spineDisplaceX = useTransform(smoothVelocity, [-2000, 0, 2000], [-3, 0, 3]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key.toLowerCase() === "g") setShowGrid((prev) => !prev);
@@ -141,13 +144,16 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
       {/* PHASE 7: FRAME EDGE REACTIVE SYSTEM (STEP 10) */}
       <motion.div style={{ opacity: borderOpacity }} className="fixed inset-0 border-[1px] border-white pointer-events-none z-50" />
 
-      {/* PHASE 7: ARCHITECTURAL SPINE (STEP 3 & 6) */}
-      <div className="fixed left-[4.8vw] top-0 h-full w-[1px] bg-white/5 z-[40] pointer-events-none mix-blend-difference hidden md:block">
+      {/* PHASE 7: ARCHITECTURAL SPINE (STEP 3 & 6) + PHASE 8 DISPLACEMENT (STEP 7) */}
+      <motion.div
+        style={{ x: spineDisplaceX }}
+        className="fixed left-[4.8vw] top-0 h-full w-[1px] bg-white/5 z-[40] pointer-events-none mix-blend-difference hidden md:block glitch-safe"
+      >
         <motion.div
           style={{ scaleY: scrollYProgress, transformOrigin: "top" }}
           className="w-full h-full bg-white/30"
         />
-      </div>
+      </motion.div>
 
       {/* SHARP SCROLL INDICATOR — PHASE 3 */}
       <div className="fixed right-0 top-0 h-full w-[1px] bg-white/5 z-50">
