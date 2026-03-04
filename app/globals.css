@@ -207,24 +207,6 @@ body {
   user-select: none;
 }
 
-.flash-invert {
-  animation: flash 0.15s var(--m-ease-out);
-}
-
-@keyframes flash {
-  0% {
-    filter: invert(0);
-  }
-
-  50% {
-    filter: invert(1);
-  }
-
-  100% {
-    filter: invert(0);
-  }
-}
-
 .grid-overlay {
   position: fixed;
   inset: 0;

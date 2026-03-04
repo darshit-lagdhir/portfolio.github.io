@@ -166,68 +166,71 @@ function ProjectRow({ project, index }: { project: any, index: number }) {
     const [isHovered, setIsHovered] = useState(false);
     const [flickerKey, setFlickerKey] = useState(0);
     const rowRef = useRef<HTMLDivElement>(null);
+    const { markInteraction } = useScene();
+
+    // PHASE 16 STEP 2 & 6: HOVER HISTORY MEMORY & DISCOVERY
+    const [hasHovered, setHasHovered] = useState(false);
+    const [discovered, setDiscovered] = useState(false);
 
     // PHASE 11 STEP 8: MAGNETIC TITLE DRIFT
     const magnetX = useMotionValue(0);
     const smoothMagnetX = useSpring(magnetX, { damping: 25, stiffness: 300 });
 
-    // PHASE 12 STEP 4: HOVER DEPTH TILT
-    const tiltX = useMotionValue(0);
-    const tiltY = useMotionValue(0);
-    const smoothTiltX = useSpring(tiltX, { damping: 30, stiffness: 300 });
-    const smoothTiltY = useSpring(tiltY, { damping: 30, stiffness: 300 });
-
     // PHASE 8 STEP 2: Trigger scanline flicker on each hover entry
     const handleEnter = () => {
         setIsHovered(true);
+        if (!hasHovered) setHasHovered(true);
         setFlickerKey(prev => prev + 1);
+        markInteraction();
     };
 
     const handleMouseMove = (e: React.MouseEvent) => {
         if (!rowRef.current) return;
         const rect = rowRef.current.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
         const dx = (e.clientX - centerX) / rect.width * 12;
         magnetX.set(dx);
-        // Step 4: Tilt toward cursor (max ±2 degrees)
-        tiltY.set(((e.clientX - centerX) / rect.width) * 2);
-        tiltX.set(-((e.clientY - centerY) / rect.height) * 1.5);
     };
 
     const handleLeave = () => {
         setIsHovered(false);
         magnetX.set(0);
-        tiltX.set(0);
-        tiltY.set(0);
     };
 
     return (
         <motion.div
             ref={rowRef}
-            initial={{ opacity: 0, y: 50, z: 0, skewX: 0 }}
-            whileInView={{ opacity: 1, y: 0, z: 0, skewX: 0 }}
-            whileHover={{ scale: 1.02, z: 20, skewX: -1.5 }}
+            initial={{ opacity: 0, y: 50, z: 0 }}
+            whileInView={{ opacity: 1, y: 0, z: 0 }}
+            onViewportEnter={() => setDiscovered(true)}
+            whileHover={{ scale: hasHovered ? 1.03 : 1.02 }}
             whileTap={{ scale: 0.97 }}
             viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.1 + index * 0.1, ease: GLOBAL_EASE, scale: { type: "spring", stiffness: 300, damping: 15 } }}
+            transition={{
+                duration: hasHovered ? 0.6 : 1,
+                delay: 0.1 + index * 0.1,
+                ease: GLOBAL_EASE,
+                scale: { type: "spring", stiffness: hasHovered ? 400 : 300, damping: 15 }
+            }}
             className={`
                 relative w-full border-b border-black group cursor-none project-row-transition origin-left
-                ${isHovered ? "flash-invert" : ""}
             `}
             onMouseEnter={handleEnter}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleLeave}
             data-project="true"
-            style={{
-                boxShadow: isHovered ? '0 8px 30px rgba(0,0,0,0.15)' : 'none',
-                rotateX: smoothTiltX,
-                rotateY: smoothTiltY,
-                transformStyle: "preserve-3d",
-                perspective: 1000
-            }}
         >
-            <Link href={project.href} className="flex flex-col md:flex-row md:items-center justify-between py-16 gap-8 px-4 group-hover:bg-black group-hover:text-white transition-colors duration-200">
+            {/* PHASE 16 STEP 6: PROJECT DISCOVERY HIGHLIGHT SCROLL SWEEP */}
+            <div className="absolute top-0 left-0 w-full h-[1px] bg-black pointer-events-none mix-blend-difference overflow-hidden z-10">
+                <motion.div
+                    initial={{ x: "-100%" }}
+                    animate={{ x: discovered ? "100%" : "-100%" }}
+                    transition={{ duration: 1.2, ease: "easeInOut", delay: 0.2 + index * 0.1 }}
+                    className="w-full h-full bg-white"
+                />
+            </div>
+
+            <Link href={project.href} className={`flex flex-col md:flex-row md:items-center justify-between py-16 gap-8 px-4 group-hover:bg-black group-hover:text-white transition-colors ${hasHovered ? 'duration-150' : 'duration-300'}`}>
 
                 {/* ID + TITLE — MAGNETIC DRIFT — PHASE 11 STEP 8 */}
                 <motion.div style={{ x: smoothMagnetX }} className="flex items-center gap-12 mask-reveal overflow-visible origin-left">
@@ -239,8 +242,12 @@ function ProjectRow({ project, index }: { project: any, index: number }) {
                     </motion.span>
                     <motion.h3
                         key={flickerKey}
-                        animate={{ letterSpacing: isHovered ? "0.08em" : "0.02em", scale: isHovered ? 1.05 : 1 }}
-                        className={`text-large-mini md:text-large font-heading italic uppercase transition-all duration-300 origin-left glitch-safe ${isHovered ? 'project-title-flicker' : ''}`}
+                        animate={{
+                            letterSpacing: isHovered ? "0.08em" : "0.02em",
+                            scale: isHovered ? 1.05 : 1,
+                            filter: hasHovered && isHovered ? "brightness(1.5)" : "brightness(1)"
+                        }}
+                        className={`text-large-mini md:text-large font-heading italic uppercase transition-all origin-left glitch-safe ${hasHovered ? 'duration-150' : 'duration-300'}`}
                     >
                         {project.name}
                     </motion.h3>

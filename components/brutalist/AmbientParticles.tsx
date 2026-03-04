@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useCallback } from "react";
+import { useScene } from "@/context/SceneContext";
 
 // PHASE 12 STEP 1, 2, 7, 10, 12, 13: AMBIENT PARTICLE FIELD
 // Canvas-based for maximum performance. Particles are tiny, low opacity, slow.
@@ -26,6 +27,11 @@ export default function AmbientParticles() {
     const particlesRef = useRef<Particle[]>([]);
     const rafRef = useRef<number>(0);
     const isWhiteSectionRef = useRef(false);
+
+    // PHASE 16 STEP 12 & 13: SYSTEM IDLE STATE
+    const { isIdle } = useScene();
+    const isIdleRef = useRef(isIdle);
+    useEffect(() => { isIdleRef.current = isIdle; }, [isIdle]);
 
     const initParticles = useCallback((width: number, height: number) => {
         // Step 13: Fewer particles on mobile
@@ -90,8 +96,9 @@ export default function AmbientParticles() {
             const globalFade = isWhiteSectionRef.current ? 0.15 : 1;
 
             const { x: mx, y: my } = mouseRef.current;
-            // Step 10: Scroll velocity boost
-            const scrollBoost = 1 + Math.min(scrollVelRef.current * 0.01, 2);
+            // Step 10: Scroll velocity boost + PHASE 16 STEP 12 & 13: IDLE REDUCTION
+            const idleMultiplier = isIdleRef.current ? 0.3 : 1;
+            const scrollBoost = (1 + Math.min(scrollVelRef.current * 0.01, 2)) * idleMultiplier;
             scrollVelRef.current *= 0.95; // Decay
 
             particlesRef.current.forEach((p) => {

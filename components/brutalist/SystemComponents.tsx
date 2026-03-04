@@ -4,21 +4,37 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useScene } from "@/context/SceneContext";
 
 // PHASE 14 STEP 11: PROJECT ENTRY LOADING SEQUENCE
 export function ProjectEntryLoader() {
     return (
-        <motion.div
-            initial={{ scaleX: 0, opacity: 1 }}
-            animate={{ scaleX: 1, opacity: 0 }}
-            transition={{ duration: 0.4, ease: "circIn" }}
-            className="fixed top-1/2 left-0 w-full h-[1px] bg-white z-[100] origin-left pointer-events-none"
-        />
+        <div className="fixed inset-0 z-[100] pointer-events-none">
+            <motion.div
+                initial={{ scaleX: 0, opacity: 1 }}
+                animate={{ scaleX: 1, opacity: 0 }}
+                transition={{ duration: 0.4, ease: "circIn" }}
+                className="absolute top-1/2 left-0 w-full h-[1px] bg-white origin-left"
+            />
+
+            {/* PHASE 16 STEP 10: PROJECT PAGE EXPLORATION MODE */}
+            <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: [0, 1, 1, 0], y: [10, 0, 0, -10] }}
+                transition={{ duration: 4, times: [0, 0.1, 0.8, 1], ease: "easeInOut" }}
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 mt-6 text-micro text-white/80 tracking-widest uppercase font-bold text-center"
+            >
+                PROJECT MODE ACTIVE
+            </motion.div>
+        </div>
     );
 }
 
 // PHASE 14 STEP 1 & 12: SYSTEM HEADER BAR & STATUS INDICATOR
 export function SystemHeaderBar({ current }: { current: string }) {
+    // PHASE 16 STEP 4: SYSTEM RESPONSE INDICATOR
+    const { interactionCount } = useScene();
+
     return (
         <div className="fixed top-0 left-0 w-full h-12 border-b border-white/10 bg-black/80 backdrop-blur-sm z-40 flex items-center justify-between px-6 font-ui text-[10px] tracking-widest text-white/60">
             <div className="flex items-center gap-6">
@@ -26,11 +42,13 @@ export function SystemHeaderBar({ current }: { current: string }) {
                 <span className="opacity-30">/</span>
                 <span className="text-white">{current}</span>
             </div>
-            {/* STEP 12: SYSTEM STATUS INDICATOR */}
+            {/* STEP 12 & PHASE 16 STEP 4: SYSTEM STATUS INDICATOR INTERACTIVE */}
             <div className="flex items-center gap-3">
-                <span className="uppercase opacity-50">System Active</span>
+                <span className="uppercase opacity-50">INTERFACE ACTIVE</span>
                 <motion.div
-                    animate={{ opacity: [0.3, 1, 0.3] }}
+                    key={interactionCount} // Overrides to bright standard animation briefly on interact
+                    initial={{ opacity: 1, scale: 1.5 }}
+                    animate={{ opacity: [0.3, 1, 0.3], scale: 1 }}
                     transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                     className="w-1.5 h-1.5 rounded-full bg-white"
                 />
@@ -41,8 +59,26 @@ export function SystemHeaderBar({ current }: { current: string }) {
 
 // PHASE 14 STEP 8: SYSTEM GRID OVERLAY
 export function SystemGridOverlay() {
+    // PHASE 16 STEP 8: SYSTEM GRID ACTIVATION VELOCITY
+    const ref = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+        let lastX = 0, lastY = 0;
+        const handleMove = (e: MouseEvent) => {
+            if (!ref.current) return;
+            const dist = Math.sqrt(Math.pow(e.clientX - lastX, 2) + Math.pow(e.clientY - lastY, 2));
+            if (dist > 70) {
+                ref.current.style.opacity = "0.2";
+                setTimeout(() => { if (ref.current) ref.current.style.opacity = "0.08" }, 200);
+            }
+            lastX = e.clientX;
+            lastY = e.clientY;
+        };
+        window.addEventListener("mousemove", handleMove, { passive: true });
+        return () => window.removeEventListener("mousemove", handleMove);
+    }, []);
+
     return (
-        <div className="fixed inset-0 pointer-events-none z-0 opacity-10">
+        <div ref={ref} className="fixed inset-0 pointer-events-none z-0 opacity-[0.08] transition-opacity duration-500">
             <div className="w-full h-full" style={{
                 backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
                 backgroundSize: '40px 40px'
@@ -255,6 +291,11 @@ export function ChoreographedSection({ id, children, isProject = false, classNam
     const ref = useRef<HTMLElement>(null);
     const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
 
+    // PHASE 16 STEP 11: PANEL FOCUS LOCK (IS_IDLE DIMMING)
+    const { isIdle, activeSection } = useScene();
+    const isFocusedPanel = activeSection === id;
+    const idleDimFilter = isIdle && !isFocusedPanel ? "brightness(0.3) saturate(0.5)" : "brightness(1) saturate(1)";
+
     // Step 3 & 4: Focus state rules + exit choreography
     const scale = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [0.95, 1, 1, 0.95]);
     const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.3, 1, 1, 0.3]);
@@ -268,8 +309,8 @@ export function ChoreographedSection({ id, children, isProject = false, classNam
         <motion.section
             ref={ref}
             id={id}
-            style={{ scale, opacity, borderColor, borderWidth: "1px" }}
-            className={`w-full relative transition-colors duration-[600ms] ease-out ${isProject ? '' : 'bg-white text-black'} ${className}`}
+            style={{ scale, opacity, borderColor, borderWidth: "1px", filter: idleDimFilter }}
+            className={`w-full relative transition-all duration-[800ms] ease-out ${isProject ? '' : 'bg-white text-black'} ${className}`}
         >
             {/* Step 6: Visual Transition Bridges */}
             <motion.div

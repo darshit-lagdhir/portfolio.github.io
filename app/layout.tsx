@@ -6,7 +6,7 @@ import "./globals.css";
 import SmoothScroll from "@/components/brutalist/SmoothScroll";
 import BrutalistNavbar from "@/components/brutalist/BrutalistNavbar";
 import AmbientParticles from "@/components/brutalist/AmbientParticles";
-import { SceneProvider } from "@/context/SceneContext";
+import { SceneProvider, useScene } from "@/context/SceneContext";
 import { CommandPalette, ContinuityLine } from "@/components/brutalist/SystemComponents";
 
 export function CustomCursor() {
@@ -39,6 +39,17 @@ export function CustomCursor() {
   const [isMounted, setIsMounted] = useState(false);
   const [isOnDark, setIsOnDark] = useState(true);
 
+  // PHASE 16 STEP 9: CURSOR SIGNAL RESPONSE
+  const [targetCenter, setTargetCenter] = useState<{ x: number, y: number } | null>(null);
+
+  // Define hook at the top level to avoid Rules of Hooks violation
+  const signalRotation = useTransform(() => {
+    if (!targetCenter) return "0rad";
+    const dx = targetCenter.x - dot.x.get();
+    const dy = targetCenter.y - dot.y.get();
+    return Math.atan2(dy, dx) + "rad";
+  });
+
   useEffect(() => {
     setIsMounted(true);
     const moveMouse = (e: MouseEvent) => {
@@ -56,6 +67,15 @@ export function CustomCursor() {
       else if (isLargeText) setCursorVariant("text");
       else if (isLink) setCursorVariant("link");
       else setCursorVariant("default");
+
+      // PHASE 16 STEP 9: CURSOR SIGNAL TARGET RESOLUTION
+      const isInteractable = isLink || isProject || target.closest("button");
+      if (isInteractable) {
+        const rect = isInteractable.getBoundingClientRect();
+        setTargetCenter({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
+      } else {
+        setTargetCenter(null);
+      }
 
       // SECTION DETECTION
       setIsOnDark(!isWhiteSection);
@@ -144,6 +164,24 @@ export function CustomCursor() {
         }}
       />
 
+      {/* PHASE 16 STEP 9: CURSOR SIGNAL RESPONSE (Line drawing to target center) */}
+      {targetCenter && (
+        <motion.div
+          className="fixed top-0 left-0 bg-white pointer-events-none z-[9999] mix-blend-difference origin-left"
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={{ scaleX: 1, opacity: 0.8 }}
+          exit={{ scaleX: 0, opacity: 0 }}
+          transition={{ duration: 0.15, ease: "easeOut" }}
+          style={{
+            height: 1.5,
+            width: 30, // Micro short line pointing directly towards object center
+            x: dot.x,
+            y: dot.y,
+            rotate: signalRotation
+          }}
+        />
+      )}
+
       {/* OUTER RING — trailing physics */}
       <motion.div
         className="fixed top-0 left-0 border border-white pointer-events-none z-[9998] mix-blend-difference"
@@ -161,6 +199,7 @@ export function CustomCursor() {
 function LayoutContent({ children }: { children: React.ReactNode }) {
   const { scrollY, scrollYProgress } = useScroll();
   const [showGrid, setShowGrid] = useState(false);
+  const { interactionCount } = useScene();
 
   // PHASE 5 & 7: ADVANCED SCROLL PHYSICS
   const { useVelocity, useSpring, useTransform } = require("framer-motion");
@@ -235,6 +274,14 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
         <motion.div
           style={{ scaleY: scrollYProgress, transformOrigin: "top" }}
           className="w-full h-full bg-white"
+        />
+      </div>
+
+      {/* PHASE 16 STEP 3: EXPLORATION PROGRESS LINE */}
+      <div className="fixed left-0 bottom-0 w-full h-[1px] bg-white/5 z-50">
+        <motion.div
+          style={{ scaleX: scrollYProgress, transformOrigin: "left" }}
+          className="w-full h-full bg-white/60"
         />
       </div>
 

@@ -17,6 +17,10 @@ interface SceneContextType {
     setIsFocusing: (val: boolean) => void;
     isSoundEnabled: boolean;
     setIsSoundEnabled: (val: boolean) => void;
+    // PHASE 16: SYSTEM INTELLIGENCE LAYER
+    isIdle: boolean;
+    interactionCount: number;
+    markInteraction: () => void;
 }
 
 const SceneContext = createContext<SceneContextType | undefined>(undefined);
@@ -27,7 +31,40 @@ export function SceneProvider({ children }: { children: React.ReactNode }) {
     const [isNavigating, setIsNavigating] = useState(false);
     const [isFocusing, setIsFocusing] = useState(false);
     const [isSoundEnabled, setIsSoundEnabled] = useState(false);
+
+    // PHASE 16: SYSTEM IDLE TRACKING & RE-ENGAGEMENT
+    const [isIdle, setIsIdle] = useState(false);
+    const [interactionCount, setInteractionCount] = useState(0);
     const pathname = usePathname();
+
+    const markInteraction = React.useCallback(() => {
+        setIsIdle(false);
+        setInteractionCount(prev => prev + 1);
+    }, []);
+
+    useEffect(() => {
+        let timeout: NodeJS.Timeout;
+        const resetIdle = () => {
+            setIsIdle(false);
+            clearTimeout(timeout);
+            timeout = setTimeout(() => setIsIdle(true), 4000); // 4 seconds of NO interaction = IDLE
+        };
+
+        window.addEventListener("mousemove", resetIdle);
+        window.addEventListener("scroll", resetIdle, { passive: true });
+        window.addEventListener("keydown", resetIdle);
+        window.addEventListener("touchstart", resetIdle, { passive: true });
+
+        resetIdle(); // Start timer
+
+        return () => {
+            clearTimeout(timeout);
+            window.removeEventListener("mousemove", resetIdle);
+            window.removeEventListener("scroll", resetIdle);
+            window.removeEventListener("keydown", resetIdle);
+            window.removeEventListener("touchstart", resetIdle);
+        };
+    }, []);
 
     // Reset navigating state after transitions
     useEffect(() => {
@@ -68,9 +105,10 @@ export function SceneProvider({ children }: { children: React.ReactNode }) {
             activeSection, setActiveSection,
             isNavigating, setIsNavigating,
             isFocusing, setIsFocusing,
-            isSoundEnabled, setIsSoundEnabled
+            isSoundEnabled, setIsSoundEnabled,
+            isIdle, interactionCount, markInteraction
         }}>
-            <div className={`scene-mode-${mode}`}>
+            <div className={`scene-mode-${mode} ${isIdle ? 'system-idle' : 'system-active'}`}>
                 {children}
             </div>
         </SceneContext.Provider>
