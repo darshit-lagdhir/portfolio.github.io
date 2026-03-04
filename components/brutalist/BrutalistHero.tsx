@@ -46,14 +46,19 @@ export default function BrutalistHero() {
         return () => window.removeEventListener("mousemove", handleMouseMove);
     }, []);
 
-    // DEPTH SCALES — PHASE 4
-    const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.92]);
+    // DEPTH SCALES — PHASE 4 + PHASE 9 CAMERA PULLBACK (STEP 2)
+    const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.88]);
     const mainTextOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
     const stackTextOpacity = useTransform(scrollYProgress, [0, 0.4], [0.15, 0]);
 
-    // LAYERED PARALLAX — PHASE 4
-    const frontY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
-    const backY = useTransform(scrollYProgress, [0, 1], ["0%", "-25%"]);
+    // PHASE 9 STEP 1: CAMERA SCROLL — MULTI-LAYER PARALLAX
+    const frontY = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);   // Foreground: slowest
+    const midY = useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]);    // Mid layers
+    const backY = useTransform(scrollYProgress, [0, 1], ["0%", "-35%"]);   // Background: fastest
+    const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);      // BG counter-scroll
+
+    // PHASE 9 STEP 2: FRAME EXPANSION ON PULLBACK
+    const framePadding = useTransform(scrollYProgress, [0, 0.5], ["5vw", "7vw"]);
 
     // PHASE 7: LETTER PRESSURE DISTORTION (FIXED — BOLD)
     const textArray1 = "DARSHIT".split("");
@@ -78,12 +83,13 @@ export default function BrutalistHero() {
             id="hero"
             onPointerEnter={() => setActiveSection("hero")}
         >
-            {/* BREATHING BACKGROUND — PHASE 4 */}
+            {/* BREATHING BACKGROUND — PHASE 4 + PHASE 9 COUNTER-SCROLL */}
             <motion.div
                 animate={{ scale: [1, 1.005, 1] }}
                 transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
                 className="absolute inset-0 z-0 pointer-events-none opacity-20"
                 style={{
+                    y: bgY,
                     background: "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 0%, transparent 70%)"
                 }}
             />
@@ -114,7 +120,7 @@ export default function BrutalistHero() {
                         </motion.span>
                         {/* MID LAYER - GREY SHADOW */}
                         <motion.span
-                            style={{ y: backY, opacity: stackTextOpacity, z: -25 }}
+                            style={{ y: midY, opacity: stackTextOpacity, z: -25 }}
                             className="absolute -top-2 -left-1 text-massive italic text-white/20 depth-layer select-none pointer-events-none perspective-tilt"
                         >
                             DARSHIT
@@ -145,7 +151,7 @@ export default function BrutalistHero() {
                         </motion.span>
                         {/* MID LAYER - GREY SHADOW */}
                         <motion.span
-                            style={{ y: backY, opacity: stackTextOpacity, scale: 0.98, z: -25 }}
+                            style={{ y: midY, opacity: stackTextOpacity, scale: 0.98, z: -25 }}
                             className="absolute -top-2 -left-1 text-massive text-white/20 depth-layer select-none pointer-events-none perspective-tilt"
                         >
                             LAGDHIR

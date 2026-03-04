@@ -36,22 +36,28 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
     const ease = [0.16, 1, 0.3, 1] as const;
 
-    // PHASE 6: MASK REVEAL ENTRY (STEP 2)
+    // PHASE 9 STEP 12: CAMERA ZOOM ENTRY FOR PROJECT PAGES
+    const isProjectPage = pathname !== "/";
+
+    // PHASE 6: MASK REVEAL ENTRY (STEP 2) + PHASE 9 STEP 4: VIEWPORT SHUTTER
     const variants = {
         initial: (dir: string) => ({
             clipPath: dir === "forward" ? "inset(100% 0 0 0)" : "inset(0 0 100% 0)",
             translateY: dir === "forward" ? "20%" : "-20%",
+            scale: isProjectPage ? 1.02 : 1,
             zIndex: 10,
         }),
         animate: {
             clipPath: "inset(0% 0 0 0)",
             translateY: "0%",
+            scale: 1,
             zIndex: 10,
             transition: { duration, ease, delay: 0.1 }
         },
         exit: (dir: string) => ({
             clipPath: dir === "forward" ? "inset(0 0 100% 0)" : "inset(100% 0 0 0)",
             translateY: dir === "forward" ? "-20%" : "20%",
+            scale: 0.98,
             zIndex: 0,
             transition: { duration: duration * 0.8, ease }
         }),

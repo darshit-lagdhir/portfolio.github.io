@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useScene } from "@/context/SceneContext";
 import { useState, useEffect, useRef } from "react";
 
@@ -35,89 +35,99 @@ export default function BrutalistContact() {
     const inView = useInView(containerRef, { amount: 0.1 });
     const scrambledTitle = useScramble("CONNECT_PROTOCOL", inView);
 
+    // PHASE 9 STEP 3: SECTION BREATHING
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start end", "end start"]
+    });
+    const breathPadding = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], ["8rem", "10rem", "10rem", "8rem"]);
+
     return (
         <section
             ref={containerRef}
             id="contact"
             onPointerEnter={() => setActiveSection("contact")}
-            className="relative min-h-[90vh] flex flex-col items-center justify-center px-[5vw] py-40 bg-white text-black"
+            className="relative min-h-[90vh] flex flex-col items-center justify-center px-[5vw] bg-white text-black"
         >
             {/* INSET SHADOW BOUNDARY — PHASE 4 (STEP 13) */}
             <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/5 to-transparent pointer-events-none" />
 
-            <div className="flex flex-col items-center text-center gap-12 w-full max-w-[1800px] mx-auto relative z-10">
+            <motion.div style={{ paddingTop: breathPadding, paddingBottom: breathPadding }} className="flex flex-col items-center justify-center w-full relative z-10">
 
-                {/* MASSIVE CONNECT — PHASE 4 */}
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1, ease: GLOBAL_EASE }}
-                    className="flex flex-col items-center gap-6"
-                >
-                    <span className="text-micro font-bold tracking-[1em] text-black/40">04_TERMINATION</span>
-                    <h2 className="text-massive-mini md:text-massive text-black italic tracking-tighter uppercase leading-none font-heading font-extrabold pr-4 overflow-hidden">
-                        <motion.span
-                            initial={{ y: "110%" }}
-                            whileInView={{ y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 1, delay: 0.2, ease: GLOBAL_EASE }}
-                            className="block"
-                        >
-                            {scrambledTitle.split('_')[0]}
-                        </motion.span>
-                    </h2>
-                </motion.div>
+                <div className="flex flex-col items-center text-center gap-12 w-full max-w-[1800px] mx-auto relative z-10">
 
-                {/* EMAIL INTERACTION — PHASE 3 */}
-                <motion.div
-                    onMouseEnter={() => setIsHovered(true)}
-                    onMouseLeave={() => setIsHovered(false)}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1, delay: 0.4, ease: GLOBAL_EASE }}
-                    className="relative py-12 px-6 border border-black/5 group cursor-none"
-                >
-                    <a
-                        href="mailto:darshitlagdhir@gmail.com"
-                        className={`
+                    {/* MASSIVE CONNECT — PHASE 4 */}
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1, ease: GLOBAL_EASE }}
+                        className="flex flex-col items-center gap-6"
+                    >
+                        <span className="text-micro font-bold tracking-[1em] text-black/40">04_TERMINATION</span>
+                        <h2 className="text-massive-mini md:text-massive text-black italic tracking-tighter uppercase leading-none font-heading font-extrabold pr-4 overflow-hidden">
+                            <motion.span
+                                initial={{ y: "110%" }}
+                                whileInView={{ y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 1, delay: 0.2, ease: GLOBAL_EASE }}
+                                className="block"
+                            >
+                                {scrambledTitle.split('_')[0]}
+                            </motion.span>
+                        </h2>
+                    </motion.div>
+
+                    {/* EMAIL INTERACTION — PHASE 3 */}
+                    <motion.div
+                        onMouseEnter={() => setIsHovered(true)}
+                        onMouseLeave={() => setIsHovered(false)}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1, delay: 0.4, ease: GLOBAL_EASE }}
+                        className="relative py-12 px-6 border border-black/5 group cursor-none"
+                    >
+                        <a
+                            href="mailto:darshitlagdhir@gmail.com"
+                            className={`
                             text-medium md:text-large text-black font-ui font-extrabold transition-all duration-700
                             ${isHovered ? "tracking-[0.1em]" : "tracking-tighter"}
                         `}
-                    >
-                        DARSHITLAGDHIR@GMAIL.COM
-                    </a>
-
-                    <motion.div
-                        initial={{ scaleX: 0 }}
-                        animate={{ scaleX: isHovered ? 1 : 0 }}
-                        className="absolute bottom-10 left-6 right-6 h-[4px] bg-black origin-left"
-                    />
-                </motion.div>
-
-                <div className="flex gap-16 mt-12">
-                    {[
-                        { label: "GH", link: "https://github.com/darshit-lagdhir" },
-                        { label: "LI", link: "https://www.linkedin.com/in/darshitlagdhir/" },
-                    ].map((social, i) => (
-                        <motion.a
-                            key={social.label}
-                            href={social.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8, delay: 0.8 + i * 0.1 }}
-                            className="text-micro font-bold tracking-[0.4em] hover:text-black/40 transition-all uppercase"
                         >
-                            {social.label}
-                        </motion.a>
-                    ))}
-                </div>
+                            DARSHITLAGDHIR@GMAIL.COM
+                        </a>
 
-            </div>
+                        <motion.div
+                            initial={{ scaleX: 0 }}
+                            animate={{ scaleX: isHovered ? 1 : 0 }}
+                            className="absolute bottom-10 left-6 right-6 h-[4px] bg-black origin-left"
+                        />
+                    </motion.div>
+
+                    <div className="flex gap-16 mt-12">
+                        {[
+                            { label: "GH", link: "https://github.com/darshit-lagdhir" },
+                            { label: "LI", link: "https://www.linkedin.com/in/darshitlagdhir/" },
+                        ].map((social, i) => (
+                            <motion.a
+                                key={social.label}
+                                href={social.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                initial={{ opacity: 0 }}
+                                whileInView={{ opacity: 1 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.8, delay: 0.8 + i * 0.1 }}
+                                className="text-micro font-bold tracking-[0.4em] hover:text-black/40 transition-all uppercase"
+                            >
+                                {social.label}
+                            </motion.a>
+                        ))}
+                    </div>
+
+                </div>
+            </motion.div>
 
             {/* EXIT CUE — PHASE 3 */}
             <div className="absolute bottom-12 flex flex-col items-center gap-6 w-[200px]">

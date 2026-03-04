@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useVelocity, useSpring } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { useScene } from "@/context/SceneContext";
@@ -43,6 +43,14 @@ export default function BrutalistProjectsPreview() {
     // HORIZONTAL MOTION INSERT — PHASE 4 (STEP 9)
     const xParallax = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
 
+    // PHASE 9 STEP 5: VELOCITY-BASED HORIZONTAL DRIFT
+    const scrollVelocity = useVelocity(scrollYProgress);
+    const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 });
+    const velocityDriftX = useTransform(smoothVelocity, [-0.5, 0, 0.5], [-15, 0, 15]);
+
+    // PHASE 9 STEP 9: SCROLL VELOCITY STRETCH
+    const velocityStretchY = useTransform(smoothVelocity, [-0.5, 0, 0.5], [0.995, 1, 1.005]);
+
     const projects = [
         { id: "01", name: "MOVEX_SYSTEM", type: "LOGISTICS / BACKEND", href: "/movex" },
         { id: "02", name: "UIDAI_AI", type: "PATTERN / AUTH", href: "/uidai" },
@@ -69,10 +77,10 @@ export default function BrutalistProjectsPreview() {
                     </h2>
                 </div>
 
-                {/* PROJECT ROWS — PHASE 4 */}
+                {/* PROJECT ROWS — PHASE 4 + PHASE 9 DRIFT */}
                 <motion.div
-                    style={{ x: xParallax }}
-                    className="flex flex-col w-full"
+                    style={{ x: velocityDriftX, scaleY: velocityStretchY }}
+                    className="flex flex-col w-full glitch-safe"
                 >
                     {projects.map((project, i) => (
                         <ProjectRow key={project.id} project={project} index={i} />

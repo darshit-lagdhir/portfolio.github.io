@@ -118,6 +118,12 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
   // PHASE 8 STEP 7: DYNAMIC LINE DISPLACEMENT
   const spineDisplaceX = useTransform(smoothVelocity, [-2000, 0, 2000], [-3, 0, 3]);
 
+  // PHASE 9 STEP 9: SCROLL VELOCITY STRETCH
+  const velocityStretch = useTransform(smoothVelocity, [-2000, 0, 2000], [0.998, 1, 1.002]);
+
+  // PHASE 9 STEP 11: GRID GUIDES VISIBLE ON SCROLL
+  const gridScrollOpacity = useTransform(smoothVelocity, [-800, -200, 0, 200, 800], [0.08, 0.04, 0, 0.04, 0.08]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key.toLowerCase() === "g") setShowGrid((prev) => !prev);
@@ -134,8 +140,8 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
       <SmoothScroll />
       <BrutalistNavbar />
       <motion.main
-        style={{ rotateX: scrollTiltX, lineHeight: layoutLineHeight, letterSpacing: layoutLetterSpacing }}
-        className="relative z-10 w-full perspective-root"
+        style={{ rotateX: scrollTiltX, lineHeight: layoutLineHeight, letterSpacing: layoutLetterSpacing, scaleY: velocityStretch }}
+        className="relative z-10 w-full perspective-root glitch-safe"
       >
         {children}
       </motion.main>
@@ -163,8 +169,17 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
         />
       </div>
 
-      {/* PHASE 4 — ARCHITECTURAL GRID */}
+      {/* PHASE 4 — ARCHITECTURAL GRID + PHASE 9 SCROLL-VISIBLE GUIDES */}
       <div className={`grid-overlay ${showGrid ? "visible" : ""}`} />
+      <motion.div
+        style={{ opacity: gridScrollOpacity }}
+        className="fixed inset-0 pointer-events-none z-[39]"
+      >
+        <div className="w-full h-full" style={{
+          backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px)',
+          backgroundSize: '20vw 20vh'
+        }} />
+      </motion.div>
     </>
   );
 }
