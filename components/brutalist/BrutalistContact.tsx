@@ -83,14 +83,16 @@ export default function BrutalistContact() {
                         </h2>
                     </motion.div>
 
-                    {/* EMAIL INTERACTION — PHASE 3 */}
+                    {/* EMAIL INTERACTION — PHASE 3 + PHASE 11 STEP 9: BUTTON TENSION */}
                     <motion.div
                         onMouseEnter={() => setIsHovered(true)}
                         onMouseLeave={() => setIsHovered(false)}
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
+                        whileHover={{ scaleY: 0.97 }}
+                        whileTap={{ scale: 0.95 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 1, delay: 0.4, ease: GLOBAL_EASE }}
+                        transition={{ duration: 1, delay: 0.4, ease: GLOBAL_EASE, scale: { type: "spring", stiffness: 400, damping: 15 } }}
                         className="relative py-12 px-6 border border-black/5 group cursor-none"
                     >
                         <a

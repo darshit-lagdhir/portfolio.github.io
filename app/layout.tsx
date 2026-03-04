@@ -8,24 +8,34 @@ import BrutalistNavbar from "@/components/brutalist/BrutalistNavbar";
 import { SceneProvider } from "@/context/SceneContext";
 
 export function CustomCursor() {
-  const mouseX = useMotionValue(-100);
-  const mouseY = useMotionValue(-100);
-
-  const dotX = useSpring(mouseX, { damping: 30, stiffness: 800 });
-  const dotY = useSpring(mouseY, { damping: 30, stiffness: 800 });
-  const ringX = useSpring(mouseX, { damping: 40, stiffness: 400 });
-  // PHASE 4 — REFINED CURSOR MOTION VALUES
+  // PHASE 11 STEP 1: CURSOR PHYSICS ENGINE
   const mouse = {
     x: useMotionValue(-100),
     y: useMotionValue(-100),
   };
+
+  // Core dot: FAST response (high stiffness, low damping)
+  const dot = {
+    x: useSpring(mouse.x, { damping: 25, stiffness: 900, mass: 0.2 }),
+    y: useSpring(mouse.y, { damping: 25, stiffness: 900, mass: 0.2 }),
+  };
+
+  // Outer ring: DELAYED trailing response (lower stiffness)
   const ring = {
-    x: useSpring(mouse.x, { damping: 40, stiffness: 400 }),
-    y: useSpring(mouse.y, { damping: 40, stiffness: 400 }),
+    x: useSpring(mouse.x, { damping: 35, stiffness: 250, mass: 0.5 }),
+    y: useSpring(mouse.y, { damping: 35, stiffness: 250, mass: 0.5 }),
+  };
+
+  // STEP 6: Proximity light follows cursor (even slower for ambient feel)
+  const glow = {
+    x: useSpring(mouse.x, { damping: 50, stiffness: 150, mass: 0.8 }),
+    y: useSpring(mouse.y, { damping: 50, stiffness: 150, mass: 0.8 }),
   };
 
   const [cursorVariant, setCursorVariant] = useState("default");
+  const [isPressed, setIsPressed] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [isOnDark, setIsOnDark] = useState(true);
 
   useEffect(() => {
     setIsMounted(true);
@@ -37,21 +47,35 @@ export function CustomCursor() {
       const target = e.target as HTMLElement;
       const isLink = target.closest("a, button, [role='button']");
       const isProject = target.closest("[data-project='true']");
+      const isLargeText = target.closest("h1, h2, h3, .text-massive, .text-large");
       const isWhiteSection = target.closest(".bg-white");
 
       if (isProject) setCursorVariant("project");
+      else if (isLargeText) setCursorVariant("text");
       else if (isLink) setCursorVariant("link");
       else setCursorVariant("default");
 
-      // INVERSION LOGIC
+      // SECTION DETECTION
+      setIsOnDark(!isWhiteSection);
       if (isWhiteSection) document.body.classList.add("cursor-invert");
       else document.body.classList.remove("cursor-invert");
     };
 
+    // STEP 10: PRESSURE FEEDBACK
+    const onDown = () => setIsPressed(true);
+    const onUp = () => setIsPressed(false);
+
     window.addEventListener("mousemove", moveMouse, { passive: true });
-    return () => window.removeEventListener("mousemove", moveMouse);
+    window.addEventListener("mousedown", onDown);
+    window.addEventListener("mouseup", onUp);
+    return () => {
+      window.removeEventListener("mousemove", moveMouse);
+      window.removeEventListener("mousedown", onDown);
+      window.removeEventListener("mouseup", onUp);
+    };
   }, [mouse.x, mouse.y]);
 
+  // STEP 4: CURSOR SCALE RESPONSE VARIANTS
   const variants = {
     default: {
       width: 40,
@@ -61,11 +85,11 @@ export function CustomCursor() {
       backgroundColor: "rgba(255, 255, 255, 0)",
     },
     link: {
-      width: 80,
-      height: 80,
+      width: 70,
+      height: 70,
       borderRadius: "100%",
       borderWidth: "1px",
-      backgroundColor: "rgba(255, 255, 255, 0.1)",
+      backgroundColor: "rgba(255, 255, 255, 0.08)",
     },
     project: {
       width: 100,
@@ -74,22 +98,58 @@ export function CustomCursor() {
       borderWidth: "2px",
       backgroundColor: "rgba(255, 255, 255, 0.05)",
     },
+    text: {
+      width: 60,
+      height: 60,
+      borderRadius: "100%",
+      borderWidth: "1px",
+      backgroundColor: "rgba(255, 255, 255, 0.03)",
+    },
   };
 
   if (!isMounted) return null;
 
   return (
     <>
-      {/* PHASE 4 — REFINED CURSOR */}
+      {/* STEP 6: CURSOR PROXIMITY LIGHT (dark sections only) */}
+      {isOnDark && (
+        <motion.div
+          className="fixed top-0 left-0 pointer-events-none z-[9990]"
+          style={{
+            x: glow.x,
+            y: glow.y,
+            translateX: "-50%",
+            translateY: "-50%",
+            width: 400,
+            height: 400,
+            background: "radial-gradient(circle, rgba(255,255,255,0.015) 0%, transparent 70%)",
+          }}
+        />
+      )}
+
+      {/* CORE DOT — fast physics */}
       <motion.div
-        className="fixed top-0 left-0 w-4 h-4 bg-white rounded-full pointer-events-none z-[9999] mix-blend-difference"
-        style={{ x: mouse.x, y: mouse.y, translateX: "-50%", translateY: "-50%" }}
+        className="fixed top-0 left-0 bg-white rounded-full pointer-events-none z-[9999] mix-blend-difference"
+        animate={{ scale: isPressed ? 0.6 : 1 }}
+        transition={{ type: "spring", stiffness: 500, damping: 15 }}
+        style={{
+          x: dot.x,
+          y: dot.y,
+          translateX: "-50%",
+          translateY: "-50%",
+          width: 16,
+          height: 16,
+        }}
       />
+
+      {/* OUTER RING — trailing physics */}
       <motion.div
         className="fixed top-0 left-0 border border-white pointer-events-none z-[9998] mix-blend-difference"
-        animate={cursorVariant}
-        variants={variants}
-        transition={{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }}
+        animate={{
+          ...variants[cursorVariant as keyof typeof variants],
+          scale: isPressed ? 0.85 : 1,
+        }}
+        transition={{ duration: 0.35, ease: [0.33, 1, 0.68, 1], scale: { type: "spring", stiffness: 400, damping: 12 } }}
         style={{ x: ring.x, y: ring.y, translateX: "-50%", translateY: "-50%" }}
       />
     </>

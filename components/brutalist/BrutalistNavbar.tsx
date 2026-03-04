@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState, useRef, useCallback } from "react";
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useScene } from "@/context/SceneContext";
 
 const GLOBAL_EASE = [0.25, 1, 0.5, 1] as [number, number, number, number];
@@ -43,44 +43,9 @@ export default function BrutalistNavbar() {
 
                 {/* SECTION INDEX — RIGHT ALIGNED — PHASE 4 */}
                 <div className="hidden md:flex gap-12 items-baseline">
-                    {navLinks.map((link, i) => {
-                        const isActive = activeSection === link.id;
-
-                        return (
-                            <motion.div
-                                key={link.name}
-                                whileHover={{ scale: 1.1 }}
-                                whileTap={{ scale: 0.97 }}
-                                transition={{ scale: { type: "spring", stiffness: 400, damping: 15 } }}
-                                className="relative group"
-                            >
-                                <Link
-                                    href={link.href}
-                                    className={`
-                                        flex items-baseline gap-2 text-micro font-bold tracking-[0.4em] transition-all duration-300
-                                        font-ui ${isActive ? "text-white" : "text-white/40 hover:text-white/80"} 
-                                    `}
-                                >
-                                    <motion.span
-                                        initial={false}
-                                        animate={isActive ? { rotateX: [-90, 0], opacity: 1, scale: 1.25 } : { rotateX: 0, opacity: 0.4, scale: 1 }}
-                                        transition={{ duration: 0.3, ease: GLOBAL_EASE }}
-                                        className="text-[8px] transform-gpu origin-bottom inline-block"
-                                    >
-                                        {`0${i + 1}`}
-                                    </motion.span>
-                                    {link.name.replace(/^\d+_/, '')}
-                                </Link>
-                                {isActive && (
-                                    <motion.div
-                                        layoutId="nav-line"
-                                        className="absolute -bottom-2 left-0 w-full h-[2px] bg-white translate-y-1"
-                                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                                    />
-                                )}
-                            </motion.div>
-                        );
-                    })}
+                    {navLinks.map((link, i) => (
+                        <MagneticNavItem key={link.name} link={link} index={i} isActive={activeSection === link.id} />
+                    ))}
                 </div>
 
                 {/* MOBILE TRIGGER */}
@@ -129,5 +94,68 @@ export default function BrutalistNavbar() {
                 )}
             </AnimatePresence>
         </motion.header>
+    );
+}
+
+// PHASE 11 STEP 2 & 7: MAGNETIC NAV ITEM
+function MagneticNavItem({ link, index, isActive }: { link: { name: string, href: string, id: string }, index: number, isActive: boolean }) {
+    const ref = useRef<HTMLDivElement>(null);
+    const magnetX = useMotionValue(0);
+    const magnetY = useMotionValue(0);
+    const smoothX = useSpring(magnetX, { damping: 20, stiffness: 300 });
+    const smoothY = useSpring(magnetY, { damping: 20, stiffness: 300 });
+
+    const handleMouseMove = useCallback((e: React.MouseEvent) => {
+        if (!ref.current) return;
+        const rect = ref.current.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        // Max 8px displacement toward cursor
+        const dx = (e.clientX - centerX) * 0.15;
+        const dy = (e.clientY - centerY) * 0.3;
+        magnetX.set(Math.max(-8, Math.min(8, dx)));
+        magnetY.set(Math.max(-8, Math.min(8, dy)));
+    }, [magnetX, magnetY]);
+
+    const handleMouseLeave = useCallback(() => {
+        magnetX.set(0);
+        magnetY.set(0);
+    }, [magnetX, magnetY]);
+
+    return (
+        <motion.div
+            ref={ref}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+            style={{ x: smoothX, y: smoothY }}
+            whileTap={{ scale: 0.93 }}
+            transition={{ scale: { type: "spring", stiffness: 400, damping: 15 } }}
+            className="relative group"
+        >
+            <Link
+                href={link.href}
+                className={`
+                    flex items-baseline gap-2 text-micro font-bold tracking-[0.4em] transition-all duration-300
+                    font-ui ${isActive ? "text-white" : "text-white/40 hover:text-white/80"} 
+                `}
+            >
+                <motion.span
+                    initial={false}
+                    animate={isActive ? { rotateX: [-90, 0], opacity: 1, scale: 1.25 } : { rotateX: 0, opacity: 0.4, scale: 1 }}
+                    transition={{ duration: 0.3, ease: GLOBAL_EASE }}
+                    className="text-[8px] transform-gpu origin-bottom inline-block"
+                >
+                    {`0${index + 1}`}
+                </motion.span>
+                {link.name.replace(/^\d+_/, '')}
+            </Link>
+            {isActive && (
+                <motion.div
+                    layoutId="nav-line"
+                    className="absolute -bottom-2 left-0 w-full h-[2px] bg-white translate-y-1"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                />
+            )}
+        </motion.div>
     );
 }
