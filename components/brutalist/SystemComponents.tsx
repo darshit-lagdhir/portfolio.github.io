@@ -249,3 +249,105 @@ export function CommandPalette() {
         </motion.div>
     );
 }
+
+// PHASE 15 STEP 1, 2, 3, 4: SCROLL CHOREOGRAPHY ENGINE W/ TIMELINE
+export function ChoreographedSection({ id, children, isProject = false, className = "" }: { id?: string, children: React.ReactNode, isProject?: boolean, className?: string }) {
+    const ref = useRef<HTMLElement>(null);
+    const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+
+    // Step 3 & 4: Focus state rules + exit choreography
+    const scale = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [0.95, 1, 1, 0.95]);
+    const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.3, 1, 1, 0.3]);
+
+    // Step 2: Frame Border + Midpoint focus
+    const borderColor = useTransform(scrollYProgress, [0, 0.4, 0.6, 1],
+        ["rgba(255,255,255,0)", isProject ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.1)", isProject ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.1)", "rgba(255,255,255,0)"]
+    );
+
+    return (
+        <motion.section
+            ref={ref}
+            id={id}
+            style={{ scale, opacity, borderColor, borderWidth: "1px" }}
+            className={`w-full relative transition-colors duration-[600ms] ease-out ${isProject ? '' : 'bg-white text-black'} ${className}`}
+        >
+            {/* Step 6: Visual Transition Bridges */}
+            <motion.div
+                style={{ height: useTransform(scrollYProgress, [0, 1], ["0%", "100%"]) }}
+                className={`absolute left-0 top-0 w-1 ${isProject ? 'bg-white/10' : 'bg-black/5'} origin-top`}
+            />
+            {children}
+        </motion.section>
+    );
+}
+
+// PHASE 15 STEP 7: CROSS-SECTION CONTINUITY LINE
+export function ContinuityLine() {
+    const { scrollYProgress } = useScroll();
+    const isProjectPage = usePathname() !== "/";
+    return (
+        <motion.div
+            className={`fixed top-0 left-[3vw] lg:left-[5vw] w-px ${isProjectPage ? 'bg-white/10' : 'bg-black/10'} origin-top z-10 pointer-events-none transition-colors duration-500`}
+            style={{ height: useTransform(scrollYProgress, [0, 1], ["0%", "100%"]) }}
+        />
+    );
+}
+
+// PHASE 15 STEP 11: SCROLL MOMENT EMPHASIS
+export function ScrollMoment({ children }: { children: React.ReactNode }) {
+    return (
+        <motion.div
+            initial={{ scale: 0.9, filter: "blur(10px)", opacity: 0 }}
+            whileInView={{ scale: 1, filter: "blur(0px)", opacity: 1 }}
+            viewport={{ once: false, amount: 0.5 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        >
+            {children}
+        </motion.div>
+    );
+}
+
+// PHASE 15 STEP 5, 8 & 10: STORYTELLING BLOCKS & MICRO-ANIMATION
+export function StoryBlock({ title, children }: { title: string, children: React.ReactNode }) {
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => { setIsMobile(window.innerWidth < 768); }, []);
+
+    return (
+        <div className="w-full relative py-20 group">
+            {/* Step 10: Project Page Scene Break sweep animation */}
+            <motion.div
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                viewport={{ once: true, margin: isMobile ? "0px" : "-10%" }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute top-0 left-0 w-full h-px bg-white/20 origin-left"
+            />
+
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mt-12">
+                <div className="md:col-span-1 border-l border-white/20 pl-6 h-fit overflow-hidden">
+                    {/* Step 8: Story block micro-animation (Headlines mask slide) */}
+                    <motion.span
+                        initial={{ y: "100%", opacity: 0 }}
+                        whileInView={{ y: "0%", opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.4, ease: "easeOut" }}
+                        className="block text-micro font-bold tracking-[0.4em] text-white/40 uppercase"
+                    >
+                        {title}
+                    </motion.span>
+                </div>
+                <div className="md:col-span-3 flex flex-col gap-8">
+                    {/* Step 8: Supporting text fades */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+                    >
+                        {children}
+                    </motion.div>
+                </div>
+            </div>
+        </div>
+    );
+}

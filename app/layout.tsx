@@ -7,7 +7,7 @@ import SmoothScroll from "@/components/brutalist/SmoothScroll";
 import BrutalistNavbar from "@/components/brutalist/BrutalistNavbar";
 import AmbientParticles from "@/components/brutalist/AmbientParticles";
 import { SceneProvider } from "@/context/SceneContext";
-import { CommandPalette } from "@/components/brutalist/SystemComponents";
+import { CommandPalette, ContinuityLine } from "@/components/brutalist/SystemComponents";
 
 export function CustomCursor() {
   // PHASE 11 STEP 1: CURSOR PHYSICS ENGINE
@@ -276,6 +276,9 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
 
       {/* PHASE 14 STEP 9: COMMAND PALETTE NATIVE BINDING */}
       <CommandPalette />
+
+      {/* PHASE 15 STEP 7: CROSS-SECTION CONTINUITY LINE */}
+      <ContinuityLine />
     </>
   );
 }

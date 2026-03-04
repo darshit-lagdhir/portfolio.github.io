@@ -9,7 +9,9 @@ import {
     ProjectMetadata,
     ProjectTimeline,
     ArchitectureVisual,
-    CodeBlockVisual
+    CodeBlockVisual,
+    StoryBlock,
+    ScrollMoment
 } from "@/components/brutalist/SystemComponents";
 import { useEffect } from "react";
 import Link from "next/link";
@@ -78,18 +80,18 @@ export default function MoveXPage() {
                 {/* PHASE 14 STEP 5: PROJECT FLOW TIMELINE */}
                 <ProjectTimeline steps={["Design", "Architecture", "Isolation", "Rollout"]} />
 
-                {/* PHASE 14 STEP 2 & 13: PROJECT PANELS */}
+                {/* PHASE 15 STEP 5 & 8: NARRATIVE STORY BLOCKS */}
                 <div className="flex flex-col gap-12 pointer-events-auto relative z-20 w-full pb-40">
-                    <ProjectPanel title="OVERVIEW" index={0}>
+                    <StoryBlock title="01_OVERVIEW">
                         <h2 className="text-medium text-white font-heading uppercase tracking-widest leading-tight">
                             Secure Logistics Pathway
                         </h2>
                         <p className="text-base text-white/50 leading-relaxed">
                             MoveX implements strict role-based pathway isolation, ensuring that interactions are secure and auditable. The architecture focuses on data access integrity and zero-trust reliability within supply chain operations.
                         </p>
-                    </ProjectPanel>
+                    </StoryBlock>
 
-                    <ProjectPanel title="ARCHITECTURE" index={1}>
+                    <StoryBlock title="02_ARCHITECTURE">
                         <h2 className="text-medium text-white font-heading uppercase tracking-widest leading-tight">
                             Isolated Dashboards
                         </h2>
@@ -97,28 +99,31 @@ export default function MoveXPage() {
                             UI/UX separation based on verified role signatures. Session propagation utilizes JWTs with rotating secret validation. Core components interact via type-safe abstractions.
                         </p>
 
-                        {/* PHASE 14 STEP 4: ARCHITECTURE VISUALIZATION */}
-                        <ArchitectureVisual />
-                    </ProjectPanel>
+                        {/* PHASE 15 STEP 11: SCROLL MOMENT EMPHASIS */}
+                        <ScrollMoment>
+                            <ArchitectureVisual />
+                        </ScrollMoment>
+                    </StoryBlock>
 
-                    <ProjectPanel title="IMPLEMENTATION" index={2}>
+                    <StoryBlock title="03_IMPLEMENTATION">
                         <p className="text-base text-white/50 leading-relaxed">
                             Immutable state-change ledger records all transaction activities securely across the database boundary.
                         </p>
 
-                        {/* PHASE 14 STEP 10: CODE BLOCK VISUAL */}
-                        <CodeBlockVisual code={[
-                            'async function verifyPathway(req, res) {',
-                            '  const token = req.headers["x-sys-auth"];',
-                            '  if (!token) throw new AuthError("NO_SIG");',
-                            '  ',
-                            '  const decoded = await JwtUtil.verify(token);',
-                            '  if (decoded.role !== "ADMIN") return drop();',
-                            '  ',
-                            '  return next();',
-                            '}'
-                        ]} />
-                    </ProjectPanel>
+                        <ScrollMoment>
+                            <CodeBlockVisual code={[
+                                'async function verifyPathway(req, res) {',
+                                '  const token = req.headers["x-sys-auth"];',
+                                '  if (!token) throw new AuthError("NO_SIG");',
+                                '  ',
+                                '  const decoded = await JwtUtil.verify(token);',
+                                '  if (decoded.role !== "ADMIN") return drop();',
+                                '  ',
+                                '  return next();',
+                                '}'
+                            ]} />
+                        </ScrollMoment>
+                    </StoryBlock>
                 </div>
 
                 {/* SYSTEM EXIT NAVIGATION — PHASE 3 */}

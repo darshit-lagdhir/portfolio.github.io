@@ -9,7 +9,9 @@ import {
     ProjectMetadata,
     ProjectTimeline,
     CodeBlockVisual,
-    ArchitectureVisual
+    ArchitectureVisual,
+    StoryBlock,
+    ScrollMoment
 } from "@/components/brutalist/SystemComponents";
 import { useEffect } from "react";
 import Link from "next/link";
@@ -78,18 +80,18 @@ export default function PFCVPage() {
                 {/* PHASE 14 STEP 5: PROJECT FLOW TIMELINE */}
                 <ProjectTimeline steps={["AST Parse", "IR Synthesis", "Memory Check", "Safe FFI Generation"]} />
 
-                {/* PHASE 14 STEP 2 & 13: PROJECT PANELS */}
+                {/* PHASE 15 NARRATIVE STORY BLOCKS */}
                 <div className="flex flex-col gap-12 pointer-events-auto relative z-20 w-full pb-40">
-                    <ProjectPanel title="OVERVIEW" index={0}>
+                    <StoryBlock title="01_OVERVIEW">
                         <h2 className="text-medium text-white font-heading uppercase tracking-widest leading-tight">
                             Binary Contract Enforcement
                         </h2>
                         <p className="text-base text-white/50 leading-relaxed">
                             Polyglot FFI eliminates memory layout uncertainty at the boundary between Rust, C++, and WebAssembly. By synthesizing an intermediate representation, the system validates memory alignment and calling conventions before execution.
                         </p>
-                    </ProjectPanel>
+                    </StoryBlock>
 
-                    <ProjectPanel title="PIPELINE" index={1}>
+                    <StoryBlock title="02_PIPELINE">
                         <h2 className="text-medium text-white font-heading uppercase tracking-widest leading-tight">
                             Layout Verification
                         </h2>
@@ -97,29 +99,32 @@ export default function PFCVPage() {
                             Validation of memory alignment and padding invariants ensures stack discipline. Safe adapter generation creates instrumented FFI bridges bridging architectural boundaries securely.
                         </p>
 
-                        <ArchitectureVisual />
-                    </ProjectPanel>
+                        <ScrollMoment>
+                            <ArchitectureVisual />
+                        </ScrollMoment>
+                    </StoryBlock>
 
-                    <ProjectPanel title="VERIFICATION" index={2}>
+                    <StoryBlock title="03_VERIFICATION">
                         <p className="text-base text-white/50 leading-relaxed">
                             A custom AST visitor builds type layouts to ensure C-ABI compliance across memory models.
                         </p>
 
-                        {/* PHASE 14 STEP 10: CODE BLOCK VISUAL */}
-                        <CodeBlockVisual code={[
-                            'pub fn verify_layout(ty: &Type) -> Result<(), LayoutError> {',
-                            '    let layout = ty.compute_c_abi_layout();',
-                            '    if !layout.is_aligned(ty.align) {',
-                            '        return Err(LayoutError::Misaligned);',
-                            '    }',
-                            '    ',
-                            '    if layout.has_padding_leak() {',
-                            '        return Err(LayoutError::PaddingLeak);',
-                            '    }',
-                            '    Ok(())',
-                            '}'
-                        ]} />
-                    </ProjectPanel>
+                        <ScrollMoment>
+                            <CodeBlockVisual code={[
+                                'pub fn verify_layout(ty: &Type) -> Result<(), LayoutError> {',
+                                '    let layout = ty.compute_c_abi_layout();',
+                                '    if !layout.is_aligned(ty.align) {',
+                                '        return Err(LayoutError::Misaligned);',
+                                '    }',
+                                '    ',
+                                '    if layout.has_padding_leak() {',
+                                '        return Err(LayoutError::PaddingLeak);',
+                                '    }',
+                                '    Ok(())',
+                                '}'
+                            ]} />
+                        </ScrollMoment>
+                    </StoryBlock>
                 </div>
 
                 {/* SYSTEM EXIT NAVIGATION — PHASE 3 */}

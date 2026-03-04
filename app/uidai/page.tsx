@@ -8,7 +8,9 @@ import {
     ProjectPanel,
     ProjectMetadata,
     ProjectTimeline,
-    CodeBlockVisual
+    CodeBlockVisual,
+    StoryBlock,
+    ScrollMoment
 } from "@/components/brutalist/SystemComponents";
 import { useEffect } from "react";
 import Link from "next/link";
@@ -77,41 +79,42 @@ export default function UIDAIPage() {
                 {/* PHASE 14 STEP 5: PROJECT FLOW TIMELINE */}
                 <ProjectTimeline steps={["Data Ingestion", "Pattern Match", "Cluster Generation", "Advisory Flag"]} />
 
-                {/* PHASE 14 STEP 2 & 13: PROJECT PANELS */}
+                {/* PHASE 15 NARRATIVE STORY BLOCKS */}
                 <div className="flex flex-col gap-12 pointer-events-auto relative z-20 w-full pb-40">
-                    <ProjectPanel title="OVERVIEW" index={0}>
+                    <StoryBlock title="01_OVERVIEW">
                         <h2 className="text-medium text-white font-heading uppercase tracking-widest leading-tight">
                             Pattern Recognition Framework
                         </h2>
                         <p className="text-base text-white/50 leading-relaxed">
                             A human-in-the-loop advisory tool designed to identify biometric registration drifts. It clusters anomalies into risk categories to support decision-making without autonomous determination.
                         </p>
-                    </ProjectPanel>
+                    </StoryBlock>
 
-                    <ProjectPanel title="DETECTION" index={1}>
+                    <StoryBlock title="02_DETECTION">
                         <h2 className="text-medium text-white font-heading uppercase tracking-widest leading-tight">
                             Biometric Drift
                         </h2>
                         <p className="text-base text-white/50 leading-relaxed mb-4">
                             Detection of variants in fingerprint and iris telemetry. Grouping of registration signals into risk vectors enables assisted validation scoring for manual human-in-the-loop review cycles. Raw data is safely isolated from advisory outputs.
                         </p>
-                    </ProjectPanel>
+                    </StoryBlock>
 
-                    <ProjectPanel title="INFERENCE" index={2}>
+                    <StoryBlock title="03_INFERENCE">
                         <p className="text-base text-white/50 leading-relaxed">
                             Algorithmic mapping determines standard deviation and drift without persistent storage of the biometric source.
                         </p>
 
-                        {/* PHASE 14 STEP 10: CODE BLOCK VISUAL */}
-                        <CodeBlockVisual code={[
-                            'def evaluate_drift_vector(source, target):',
-                            '    deviation = np.abs(source.matrix - target.matrix)',
-                            '    if np.mean(deviation) > THRESHOLD_ALPHA:',
-                            '        return flag_anomaly("BIOMETRIC_DRIFT")',
-                            '    ',
-                            '    return calculate_confidence(deviation)'
-                        ]} />
-                    </ProjectPanel>
+                        <ScrollMoment>
+                            <CodeBlockVisual code={[
+                                'def evaluate_drift_vector(source, target):',
+                                '    deviation = np.abs(source.matrix - target.matrix)',
+                                '    if np.mean(deviation) > THRESHOLD_ALPHA:',
+                                '        return flag_anomaly("BIOMETRIC_DRIFT")',
+                                '    ',
+                                '    return calculate_confidence(deviation)'
+                            ]} />
+                        </ScrollMoment>
+                    </StoryBlock>
                 </div>
 
                 {/* SYSTEM EXIT NAVIGATION — PHASE 3 */}
