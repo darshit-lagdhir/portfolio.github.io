@@ -232,6 +232,12 @@ function ProjectRow({ project, index }: { project: any, index: number }) {
     // PHASE 19 STEP 5: ATTENTION REFOCUS (Highlight on pause)
     const pauseBorderColor = useTransform(scrollYProgress, [0.4, 0.5, 0.6], ["rgba(0,0,0,0.1)", "rgba(0,0,0,0.4)", "rgba(0,0,0,0.1)"]);
 
+    const finalTopColor = useTransform(
+        [edgeLight, pauseBorderColor],
+        ([edge, pause]: any[]) => isIdle ? pause : edge
+    );
+    const finalSideColor = useTransform(pauseBorderColor, (pause: string) => isIdle ? pause : "rgba(0,0,0,0.1)");
+
     // PHASE 17 STEP 14: MOBILE SIMPLIFICATION
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
@@ -286,10 +292,11 @@ function ProjectRow({ project, index }: { project: any, index: number }) {
                 z: isMorphing ? 500 : activeZ,
                 rotate: isMobile ? 0 : (isHovered ? -0.2 : 0), // STEP 6 & 13
                 opacity: isMorphing ? 0 : 1,
-                borderTopColor: edgeLight, // STEP 3
+                borderTopColor: finalTopColor, // STEP 3 + PHASE 19
+                borderBottomColor: finalSideColor,
+                borderLeftColor: finalSideColor,
+                borderRightColor: finalSideColor,
                 boxShadow: shadowDepth,    // STEP 8
-                // PHASE 19 STEP 5: ATTENTION REFOCUS (Highlight on pause)
-                borderColor: isIdle ? pauseBorderColor : "rgba(0,0,0,0.1)"
             }}
             className={`
                 relative w-full border-b border-black group cursor-none project-row-transition origin-left
