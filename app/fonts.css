@@ -1,7 +1,7 @@
 /* Clash Display - Hero Headlines */
 @font-face {
     font-family: 'Clash Display';
-    src: url('/portfolio.github.io/fonts/ClashDisplay-Extralight.otf') format('opentype');
+    src: url('/fonts/ClashDisplay-Extralight.otf') format('opentype');
     font-weight: 200;
     font-style: normal;
     font-display: swap;
@@ -9,7 +9,7 @@
 
 @font-face {
     font-family: 'Clash Display';
-    src: url('/portfolio.github.io/fonts/ClashDisplay-Light.otf') format('opentype');
+    src: url('/fonts/ClashDisplay-Light.otf') format('opentype');
     font-weight: 300;
     font-style: normal;
     font-display: swap;
@@ -17,7 +17,7 @@
 
 @font-face {
     font-family: 'Clash Display';
-    src: url('/portfolio.github.io/fonts/ClashDisplay-Regular.otf') format('opentype');
+    src: url('/fonts/ClashDisplay-Regular.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -25,7 +25,7 @@
 
 @font-face {
     font-family: 'Clash Display';
-    src: url('/portfolio.github.io/fonts/ClashDisplay-Medium.otf') format('opentype');
+    src: url('/fonts/ClashDisplay-Medium.otf') format('opentype');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -33,7 +33,7 @@
 
 @font-face {
     font-family: 'Clash Display';
-    src: url('/portfolio.github.io/fonts/ClashDisplay-Semibold.otf') format('opentype');
+    src: url('/fonts/ClashDisplay-Semibold.otf') format('opentype');
     font-weight: 600;
     font-style: normal;
     font-display: swap;
@@ -41,7 +41,7 @@
 
 @font-face {
     font-family: 'Clash Display';
-    src: url('/portfolio.github.io/fonts/ClashDisplay-Bold.otf') format('opentype');
+    src: url('/fonts/ClashDisplay-Bold.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -50,7 +50,7 @@
 /* Panchang - Section Headings */
 @font-face {
     font-family: 'Panchang';
-    src: url('/portfolio.github.io/fonts/Panchang-Extralight.otf') format('opentype');
+    src: url('/fonts/Panchang-Extralight.otf') format('opentype');
     font-weight: 200;
     font-style: normal;
     font-display: swap;
@@ -58,7 +58,7 @@
 
 @font-face {
     font-family: 'Panchang';
-    src: url('/portfolio.github.io/fonts/Panchang-Light.otf') format('opentype');
+    src: url('/fonts/Panchang-Light.otf') format('opentype');
     font-weight: 300;
     font-style: normal;
     font-display: swap;
@@ -66,7 +66,7 @@
 
 @font-face {
     font-family: 'Panchang';
-    src: url('/portfolio.github.io/fonts/Panchang-Regular.otf') format('opentype');
+    src: url('/fonts/Panchang-Regular.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -74,7 +74,7 @@
 
 @font-face {
     font-family: 'Panchang';
-    src: url('/portfolio.github.io/fonts/Panchang-Medium.otf') format('opentype');
+    src: url('/fonts/Panchang-Medium.otf') format('opentype');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -82,7 +82,7 @@
 
 @font-face {
     font-family: 'Panchang';
-    src: url('/portfolio.github.io/fonts/Panchang-Semibold.otf') format('opentype');
+    src: url('/fonts/Panchang-Semibold.otf') format('opentype');
     font-weight: 600;
     font-style: normal;
     font-display: swap;
@@ -90,7 +90,7 @@
 
 @font-face {
     font-family: 'Panchang';
-    src: url('/portfolio.github.io/fonts/Panchang-Bold.otf') format('opentype');
+    src: url('/fonts/Panchang-Bold.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -98,7 +98,7 @@
 
 @font-face {
     font-family: 'Panchang';
-    src: url('/portfolio.github.io/fonts/Panchang-Extrabold.otf') format('opentype');
+    src: url('/fonts/Panchang-Extrabold.otf') format('opentype');
     font-weight: 800;
     font-style: normal;
     font-display: swap;
@@ -107,7 +107,7 @@
 /* HK Grotesk Wide - UI Labels & Navigation */
 @font-face {
     font-family: 'HK Grotesk Wide';
-    src: url('/portfolio.github.io/fonts/hkgroteskwide-light.otf') format('opentype');
+    src: url('/fonts/hkgroteskwide-light.otf') format('opentype');
     font-weight: 300;
     font-style: normal;
     font-display: swap;
@@ -115,7 +115,7 @@
 
 @font-face {
     font-family: 'HK Grotesk Wide';
-    src: url('/portfolio.github.io/fonts/hkgroteskwide-regular.otf') format('opentype');
+    src: url('/fonts/hkgroteskwide-regular.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -123,7 +123,7 @@
 
 @font-face {
     font-family: 'HK Grotesk Wide';
-    src: url('/portfolio.github.io/fonts/hkgroteskwide-medium.otf') format('opentype');
+    src: url('/fonts/hkgroteskwide-medium.otf') format('opentype');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -131,7 +131,7 @@
 
 @font-face {
     font-family: 'HK Grotesk Wide';
-    src: url('/portfolio.github.io/fonts/hkgroteskwide-semibold.otf') format('opentype');
+    src: url('/fonts/hkgroteskwide-semibold.otf') format('opentype');
     font-weight: 600;
     font-style: normal;
     font-display: swap;
@@ -139,7 +139,7 @@
 
 @font-face {
     font-family: 'HK Grotesk Wide';
-    src: url('/portfolio.github.io/fonts/hkgroteskwide-bold.otf') format('opentype');
+    src: url('/fonts/hkgroteskwide-bold.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -147,7 +147,7 @@
 
 @font-face {
     font-family: 'HK Grotesk Wide';
-    src: url('/portfolio.github.io/fonts/hkgroteskwide-extrabold.otf') format('opentype');
+    src: url('/fonts/hkgroteskwide-extrabold.otf') format('opentype');
     font-weight: 800;
     font-style: normal;
     font-display: swap;
@@ -155,7 +155,7 @@
 
 @font-face {
     font-family: 'HK Grotesk Wide';
-    src: url('/portfolio.github.io/fonts/hkgroteskwide-black.otf') format('opentype');
+    src: url('/fonts/hkgroteskwide-black.otf') format('opentype');
     font-weight: 900;
     font-style: normal;
     font-display: swap;
@@ -164,7 +164,7 @@
 /* Space Grotesk - Body Copy */
 @font-face {
     font-family: 'Space Grotesk';
-    src: url('/portfolio.github.io/fonts/SpaceGrotesk-Light.otf') format('opentype');
+    src: url('/fonts/SpaceGrotesk-Light.otf') format('opentype');
     font-weight: 300;
     font-style: normal;
     font-display: swap;
@@ -172,7 +172,7 @@
 
 @font-face {
     font-family: 'Space Grotesk';
-    src: url('/portfolio.github.io/fonts/SpaceGrotesk-Regular.otf') format('opentype');
+    src: url('/fonts/SpaceGrotesk-Regular.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -180,7 +180,7 @@
 
 @font-face {
     font-family: 'Space Grotesk';
-    src: url('/portfolio.github.io/fonts/SpaceGrotesk-Medium.otf') format('opentype');
+    src: url('/fonts/SpaceGrotesk-Medium.otf') format('opentype');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
@@ -188,7 +188,7 @@
 
 @font-face {
     font-family: 'Space Grotesk';
-    src: url('/portfolio.github.io/fonts/SpaceGrotesk-SemiBold.otf') format('opentype');
+    src: url('/fonts/SpaceGrotesk-SemiBold.otf') format('opentype');
     font-weight: 600;
     font-style: normal;
     font-display: swap;
@@ -196,7 +196,7 @@
 
 @font-face {
     font-family: 'Space Grotesk';
-    src: url('/portfolio.github.io/fonts/SpaceGrotesk-Bold.otf') format('opentype');
+    src: url('/fonts/SpaceGrotesk-Bold.otf') format('opentype');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
