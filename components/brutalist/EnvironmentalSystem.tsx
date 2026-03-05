@@ -14,16 +14,16 @@ export default function EnvironmentalSystem() {
     const mouseY = useMotionValue(-1000);
     const [isMobile, setIsMobile] = useState(false);
 
-    // Smooth spotlight coordinates
-    const lightX = useSpring(mouseX, { damping: 45, stiffness: 200, mass: 1 });
-    const lightY = useSpring(mouseY, { damping: 45, stiffness: 200, mass: 1 });
+    // Smooth spotlight coordinates (Refined for Phase 22)
+    const lightX = useSpring(mouseX, { damping: 60, stiffness: 150, mass: 1 });
+    const lightY = useSpring(mouseY, { damping: 60, stiffness: 150, mass: 1 });
 
     // PHASE 18 STEP 11: REACTIVATION LIGHT SURGE
     const [surge, setSurge] = useState(1);
     useEffect(() => {
         if (!isIdle && interactionCount > 0) {
-            setSurge(1.4);
-            const timer = setTimeout(() => setSurge(1), 1200);
+            setSurge(1.2); // Reduced surge for subtlety
+            const timer = setTimeout(() => setSurge(1), 1500);
             return () => clearTimeout(timer);
         }
     }, [isIdle, interactionCount]);
@@ -40,7 +40,8 @@ export default function EnvironmentalSystem() {
         (baseIntensityValue * (isIdle ? 0.4 : 1)) + (a * 0.04)
     );
 
-    const smoothIntensity = useSpring(useTransform(targetIntensity, v => v * surge), { damping: 30, stiffness: 100 });
+    const transformForSpring = useTransform(targetIntensity, v => v * surge);
+    const smoothIntensity = useSpring(transformForSpring, { damping: 50, stiffness: 80 });
 
     useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth < 768);

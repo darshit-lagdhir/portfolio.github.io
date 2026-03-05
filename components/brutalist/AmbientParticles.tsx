@@ -34,9 +34,9 @@ export default function AmbientParticles() {
     useEffect(() => { isIdleRef.current = isIdle; }, [isIdle]);
 
     const initParticles = useCallback((width: number, height: number) => {
-        // Step 13: Fewer particles on mobile
+        // Step 13: Fewer particles on mobile (Refined for Phase 22)
         const isMobile = width < 768;
-        const count = isMobile ? 25 : 60;
+        const count = isMobile ? 18 : 45;
         const particles: Particle[] = [];
 
         for (let i = 0; i < count; i++) {
@@ -47,10 +47,10 @@ export default function AmbientParticles() {
                 y,
                 baseX: x,
                 baseY: y,
-                vx: (Math.random() - 0.5) * 0.15,
-                vy: (Math.random() - 0.5) * 0.1 + 0.05, // Slight downward drift
-                size: Math.random() * 1.5 + 0.5,
-                opacity: Math.random() * 0.12 + 0.03, // Very low: 0.03–0.15
+                vx: (Math.random() - 0.5) * 0.1,
+                vy: (Math.random() - 0.5) * 0.08 + 0.03, // Slower drift
+                size: Math.random() * 1.2 + 0.4,
+                opacity: Math.random() * 0.08 + 0.02, // Lower opacity: 0.02–0.10
             });
         }
         particlesRef.current = particles;

@@ -11,6 +11,8 @@ import EnvironmentalSystem from "@/components/brutalist/EnvironmentalSystem";
 import { SceneProvider, useScene } from "@/context/SceneContext";
 import { CommandPalette, ContinuityLine, SystemStateIndicator } from "@/components/brutalist/SystemComponents";
 
+const MICRO_EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
+
 export function CustomCursor() {
   // PHASE 11 STEP 1: CURSOR PHYSICS ENGINE
   const mouse = {
@@ -18,22 +20,22 @@ export function CustomCursor() {
     y: useMotionValue(-100),
   };
 
-  // Core dot: FAST response (high stiffness, low damping)
+  // Core dot: FAST response (EXTREME precision)
   const dot = {
-    x: useSpring(mouse.x, { damping: 25, stiffness: 900, mass: 0.2 }),
-    y: useSpring(mouse.y, { damping: 25, stiffness: 900, mass: 0.2 }),
+    x: useSpring(mouse.x, { damping: 20, stiffness: 1200, mass: 0.1 }),
+    y: useSpring(mouse.y, { damping: 20, stiffness: 1200, mass: 0.1 }),
   };
 
-  // Outer ring: DELAYED trailing response (lower stiffness)
+  // Outer ring: SMOOTH trailing response (SILKY lag)
   const ring = {
-    x: useSpring(mouse.x, { damping: 35, stiffness: 250, mass: 0.5 }),
-    y: useSpring(mouse.y, { damping: 35, stiffness: 250, mass: 0.5 }),
+    x: useSpring(mouse.x, { damping: 50, stiffness: 200, mass: 0.4 }),
+    y: useSpring(mouse.y, { damping: 50, stiffness: 200, mass: 0.4 }),
   };
 
-  // STEP 6: Proximity light follows cursor (even slower for ambient feel)
+  // STEP 6: Proximity light follows cursor (Ultra-smooth ambient)
   const glow = {
-    x: useSpring(mouse.x, { damping: 50, stiffness: 150, mass: 0.8 }),
-    y: useSpring(mouse.y, { damping: 50, stiffness: 150, mass: 0.8 }),
+    x: useSpring(mouse.x, { damping: 60, stiffness: 100, mass: 1 }),
+    y: useSpring(mouse.y, { damping: 60, stiffness: 100, mass: 1 }),
   };
 
   const [cursorVariant, setCursorVariant] = useState("default");
@@ -268,6 +270,7 @@ function CursorSignals() {
               initial={{ pathLength: 0, opacity: 0 }}
               animate={{ pathLength: 1, opacity: 0.15 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: 0.3, ease: MICRO_EASE }}
               x1={mousePos.x}
               y1={mousePos.y}
               x2={mousePos.x + 40}
@@ -300,7 +303,7 @@ function CrossPageContinuity() {
           initial={{ scaleY: 0 }}
           animate={{ scaleY: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 1.2, ease: MICRO_EASE }}
           className="fixed top-0 left-[50%] w-px h-full bg-white/10 z-[50] origin-top pointer-events-none"
         />
       )}
@@ -312,6 +315,10 @@ function CrossPageContinuity() {
 function GlobalStructuralNetwork() {
   const { scrollYProgress } = useScroll();
   const [isMobile, setIsMobile] = useState(false);
+
+  const path1Length = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
+  const path2X = useTransform(scrollYProgress, [0, 1], [0, -20]);
+
   useEffect(() => { setIsMobile(window.innerWidth < 768); }, []);
 
   if (isMobile) return null;
@@ -327,7 +334,7 @@ function GlobalStructuralNetwork() {
           fill="none"
           initial={{ pathLength: 0, opacity: 0 }}
           animate={{ pathLength: 1, opacity: 0.1 }}
-          style={{ pathLength: useTransform(scrollYProgress, [0, 0.5], [0, 1]) }}
+          style={{ pathLength: path1Length }}
         />
         {/* Secondary Structural Grid Lines */}
         <motion.path
@@ -337,7 +344,7 @@ function GlobalStructuralNetwork() {
           fill="none"
           initial={{ pathLength: 0, opacity: 0 }}
           animate={{ pathLength: 1, opacity: 0.05 }}
-          style={{ x: useTransform(scrollYProgress, [0, 1], [0, -20]) }}
+          style={{ x: path2X }}
         />
       </svg>
     </div>
@@ -393,6 +400,11 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
   // PHASE 12 STEP 11: STRUCTURAL FLOATING GRID (SLOWER THAN SCROLL)
   const structuralGridY = useTransform(scrollYProgress, [0, 1], ["0vh", "30vh"]);
 
+  // PHASE 22: TRANSFORM CACHING (FIX HOOK VIOLATION)
+  const mainFilter = useTransform(centerContrast, (c: number) => `contrast(${c})`);
+  const gridDynamicSpacing = useTransform(gridSpacing, (s: string) => `${s} 20vh`);
+  const gridBackgroundSize = useTransform(gridSpacing, (s: string) => s ? `${s} ${s}` : '20vw 20vw');
+
   // PHASE 19 STEP 11: SYSTEM STATE INDICATOR LOGIC
   const [systemActive, setSystemActive] = useState(false);
   useEffect(() => {
@@ -433,7 +445,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
           lineHeight: layoutLineHeight,
           letterSpacing: layoutLetterSpacing,
           scaleY: velocityStretch,
-          filter: useTransform(centerContrast, (c: number) => `contrast(${c})`), // STEP 12 & 19
+          filter: mainFilter,
         }}
         className={`relative z-10 w-full perspective-root glitch-safe transition-all duration-500`}
       >
@@ -443,14 +455,14 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
 
       {/* PHASE 21 STEP 8: REINFORCED STRUCTURAL GRID */}
       <div className="fixed inset-0 pointer-events-none z-0 opacity-[0.03] transition-opacity duration-1000">
-        <div
+        <motion.div
           className="w-full h-full"
           style={{
             backgroundImage: `
               linear-gradient(rgba(255,255,255,0.05) 1.5px, transparent 1.5px), 
               linear-gradient(90deg, rgba(255,255,255,0.05) 1.5px, transparent 1.5px)
             `,
-            backgroundSize: gridSpacing.get() ? `${gridSpacing.get()} ${gridSpacing.get()}` : '20vw 20vw'
+            backgroundSize: gridBackgroundSize
           }}
         />
       </div>
@@ -501,7 +513,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
       >
         <motion.div className="w-full h-full" style={{
           backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px)',
-          backgroundSize: useTransform(gridSpacing, (s: string) => `${s} 20vh`)
+          backgroundSize: gridDynamicSpacing
         }} />
       </motion.div>
 

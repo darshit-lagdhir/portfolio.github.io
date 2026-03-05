@@ -5,6 +5,43 @@ import { useRef, useEffect, useState } from "react";
 import { useScene } from "@/context/SceneContext";
 
 const GLOBAL_EASE = [0.33, 1, 0.68, 1] as [number, number, number, number];
+const MICRO_EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
+
+const Letter = ({ char, index, total, smoothMouseX, attentionScore, rippleActive, scrollTempo }: {
+    char: string,
+    index: number,
+    total: number,
+    smoothMouseX: any,
+    attentionScore: any,
+    rippleActive: boolean,
+    scrollTempo: any
+}) => {
+    const relPos = index / total;
+    const mappedMouse = useTransform(smoothMouseX, (x: number) => x + 0.5);
+    const dist = useTransform(mappedMouse, (m: number) => Math.abs(m - relPos));
+    // STEP 1: Cluster displacement — pairs of letters move differently
+    const clusterMultiplier = index % 3 === 0 ? 1.3 : index % 3 === 1 ? 0.7 : 1;
+    // PHASE 19 STEP 1: Attention-driven pressure
+    const pressureIntensity = useTransform(attentionScore, (a: number) => 4 + (a * 4));
+    const pressureY = useTransform([dist, pressureIntensity], ([d, p]: any[]) => (index % 2 === 0 ? p : -p) * clusterMultiplier * (d < 0.15 ? (1 - d / 0.15) : 0));
+    const smoothPressureY = useSpring(pressureY, { damping: 35, stiffness: 250 });
+
+    // PHASE 20 STEP 2 & PHASE 22: DISCOVERY RIPPLE (SMOOTHED)
+    const rippleX = useTransform([dist, scrollTempo], ([d, t]: any[]) =>
+        rippleActive && t > 0.7 && d < 0.2 ? (0.2 - d) * 15 : 0
+    );
+    const smoothRippleX = useSpring(rippleX, { damping: 50, stiffness: 180 });
+
+    return (
+        <motion.span
+            className="inline-block kinetic-letter"
+            style={{ y: smoothPressureY, x: smoothRippleX }}
+            transition={{ duration: 0.2, ease: MICRO_EASE }}
+        >
+            {char}
+        </motion.span>
+    );
+};
 
 export default function BrutalistHero() {
     const sectionRef = useRef<HTMLElement>(null);
@@ -57,7 +94,7 @@ export default function BrutalistHero() {
         };
         window.addEventListener("mousemove", handleMouseMove);
         return () => window.removeEventListener("mousemove", handleMouseMove);
-    }, []);
+    }, [mouseX, mouseY]);
 
     // DEPTH SCALES — PHASE 4 + PHASE 9 CAMERA PULLBACK (STEP 2)
     const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.88]);
@@ -89,9 +126,6 @@ export default function BrutalistHero() {
         return () => clearInterval(int);
     }, [scrollTempo, attentionScore, triggerDiscovery, discoveries]);
 
-    // PHASE 9 STEP 2: FRAME EXPANSION ON PULLBACK
-    const framePadding = useTransform(scrollYProgress, [0, 0.5], ["5vw", "7vw"]);
-
     // PHASE 16 STEP 1: INTERACTION VELOCITY RESPONSE
     const { scrollY: globalY } = useScroll();
     const scrollVelocity = useVelocity(globalY as any);
@@ -101,37 +135,8 @@ export default function BrutalistHero() {
     // PHASE 19 STEP 4: Tempo-based tracking
     const heroLetterSpacing = useTransform(scrollTempo, t => hasExplored ? "-0.02em" : (0.02 + (1 - t) * 0.1) + "em");
 
-    // PHASE 7+10: LETTER PRESSURE + KINETIC CLUSTERS (BOLD)
     const textArray1 = "DARSHIT".split("");
     const textArray2 = "LAGDHIR".split("");
-
-    const Letter = ({ char, index, total }: { char: string, index: number, total: number }) => {
-        const relPos = index / total;
-        const mappedMouse = useTransform(smoothMouseX, x => x + 0.5);
-        const dist = useTransform(mappedMouse, m => Math.abs(m - relPos));
-        // STEP 1: Cluster displacement — pairs of letters move differently
-        const clusterMultiplier = index % 3 === 0 ? 1.3 : index % 3 === 1 ? 0.7 : 1;
-        // PHASE 19 STEP 1: Attention-driven pressure
-        const pressureIntensity = useTransform(attentionScore, a => 4 + (a * 4));
-        const pressureY = useTransform([dist, pressureIntensity], ([d, p]: any[]) => (index % 2 === 0 ? p : -p) * clusterMultiplier * (d < 0.15 ? (1 - d / 0.15) : 0));
-        const smoothPressureY = useSpring(pressureY, { damping: 25, stiffness: 300 });
-
-        // PHASE 20 STEP 2: DISCOVERY RIPPLE (DEPTH)
-        const rippleActive = discoveries.has("HERO_RIPPLE");
-        const rippleX = useTransform([dist, scrollTempo], ([d, t]: any[]) =>
-            rippleActive && t > 0.7 && d < 0.2 ? (0.2 - d) * 15 : 0
-        );
-        const smoothRippleX = useSpring(rippleX, { damping: 40, stiffness: 200 });
-
-        return (
-            <motion.span
-                className="inline-block kinetic-letter"
-                style={{ y: smoothPressureY, x: smoothRippleX }}
-            >
-                {char}
-            </motion.span>
-        );
-    };
 
     return (
         <motion.section
@@ -162,25 +167,21 @@ export default function BrutalistHero() {
 
             {/* PHASE 12 STEP 3: FLOATING MICRO OBJECTS */}
             <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden">
-                {/* Wireframe square — slow rotation */}
                 <motion.div
                     animate={{ y: [0, -20, 0], rotate: [0, 90, 180, 270, 360] }}
                     transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
                     className="absolute top-[15%] right-[20%] w-12 h-12 border border-white/[0.04] rotate-45"
                 />
-                {/* Thin line — vertical float */}
                 <motion.div
                     animate={{ y: [0, 30, 0], x: [0, -5, 0] }}
                     transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
                     className="absolute top-[40%] left-[12%] w-px h-20 bg-white/[0.05]"
                 />
-                {/* Small circle — drift */}
                 <motion.div
                     animate={{ y: [0, -15, 0], x: [0, 10, 0] }}
                     transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
                     className="absolute bottom-[25%] right-[35%] w-3 h-3 rounded-full border border-white/[0.04]"
                 />
-                {/* Cross — slow rotation */}
                 <motion.div
                     animate={{ rotate: [0, 360], y: [0, -10, 0] }}
                     transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
@@ -188,7 +189,6 @@ export default function BrutalistHero() {
                 >
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-px h-6 bg-white/[0.03]" />
                 </motion.div>
-                {/* Dash line — horizontal drift */}
                 <motion.div
                     animate={{ x: [0, 15, 0] }}
                     transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
@@ -225,10 +225,7 @@ export default function BrutalistHero() {
             >
                 {/* LEFT 60% — TYPOGRAPHIC STACKING — PHASE 4 */}
                 <div className="col-span-12 lg:col-span-8 flex flex-col items-start gap-0 z-10">
-
-                    {/* DARSHIT LAYER STACK */}
                     <div className="relative group overflow-visible preserve-3d">
-                        {/* GREY SHADOW LAYER — VISIBLE DEPTH */}
                         <motion.span
                             style={{
                                 y: backY,
@@ -243,14 +240,12 @@ export default function BrutalistHero() {
                                 DARSHIT
                             </span>
                         </motion.span>
-                        {/* MID LAYER - GREY SHADOW */}
                         <motion.span
                             style={{ y: midY, opacity: stackTextOpacity, z: -25 }}
                             className="absolute -top-2 -left-1 text-massive italic text-white/20 depth-layer select-none pointer-events-none perspective-tilt"
                         >
                             DARSHIT
                         </motion.span>
-                        {/* FRONT LAYER - BOLD + KINETIC + GLITCH + DRIFT */}
                         <motion.h1
                             initial={{ y: "110%", translateZ: 50 }}
                             animate={{ y: 0, translateZ: 50 }}
@@ -258,13 +253,22 @@ export default function BrutalistHero() {
                             transition={{ duration: 1.2, ease: GLOBAL_EASE }}
                             className={`text-massive italic leading-[0.8] -ml-[0.05em] whitespace-nowrap relative z-10 perspective-tilt glitch-safe word-drift ${glitchFired ? 'hero-glitch-once' : ''}`}
                         >
-                            {textArray1.map((char, i) => <Letter key={i} char={char} index={i} total={textArray1.length} />)}
+                            {textArray1.map((char, i) => (
+                                <Letter
+                                    key={i}
+                                    char={char}
+                                    index={i}
+                                    total={textArray1.length}
+                                    smoothMouseX={smoothMouseX}
+                                    attentionScore={attentionScore}
+                                    rippleActive={discoveries.has("HERO_RIPPLE")}
+                                    scrollTempo={scrollTempo}
+                                />
+                            ))}
                         </motion.h1>
                     </div>
 
-                    {/* LAGDHIR LAYER STACK */}
                     <div className="relative group overflow-visible mt-2 pl-[15vw] preserve-3d">
-                        {/* GREY SHADOW LAYER — VISIBLE DEPTH */}
                         <motion.span
                             style={{ y: backY, opacity: stackTextOpacity, scale: 0.98, z: -50 }}
                             className="absolute text-massive depth-layer select-none pointer-events-none perspective-tilt"
@@ -274,14 +278,12 @@ export default function BrutalistHero() {
                                 LAGDHIR
                             </span>
                         </motion.span>
-                        {/* MID LAYER - GREY SHADOW */}
                         <motion.span
                             style={{ y: midY, opacity: stackTextOpacity, scale: 0.98, z: -25 }}
                             className="absolute -top-2 -left-1 text-massive text-white/20 depth-layer select-none pointer-events-none perspective-tilt"
                         >
                             LAGDHIR
                         </motion.span>
-                        {/* FRONT LAYER - BOLD + KINETIC + GLITCH + DRIFT */}
                         <motion.h1
                             initial={{ y: "110%", translateZ: 50 }}
                             animate={{ y: 0, translateZ: 50 }}
@@ -289,7 +291,18 @@ export default function BrutalistHero() {
                             transition={{ duration: 1.2, delay: 0.1, ease: GLOBAL_EASE }}
                             className={`text-massive text-white leading-[0.8] whitespace-nowrap relative z-10 perspective-tilt glitch-safe word-drift-reverse ${glitchFired ? 'hero-glitch-once' : ''}`}
                         >
-                            {textArray2.map((char, i) => <Letter key={i} char={char} index={i} total={textArray2.length} />)}
+                            {textArray2.map((char, i) => (
+                                <Letter
+                                    key={i}
+                                    char={char}
+                                    index={i}
+                                    total={textArray2.length}
+                                    smoothMouseX={smoothMouseX}
+                                    attentionScore={attentionScore}
+                                    rippleActive={discoveries.has("HERO_RIPPLE")}
+                                    scrollTempo={scrollTempo}
+                                />
+                            ))}
                         </motion.h1>
                     </div>
 
@@ -316,7 +329,6 @@ export default function BrutalistHero() {
                             ARCHITECTURE.
                         </p>
                     </div>
-
                     <div className="flex flex-col gap-4">
                         <span className="text-micro font-bold tracking-[0.6em] text-white">02_SESSION</span>
                         <p className="font-ui text-[10px] text-white/20 tracking-[0.2em] leading-loose">
@@ -339,7 +351,6 @@ export default function BrutalistHero() {
                     SYSTEM
                 </span>
             </motion.div>
-
         </motion.section>
     );
 }

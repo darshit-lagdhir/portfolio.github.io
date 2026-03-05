@@ -6,6 +6,9 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useScene } from "@/context/SceneContext";
 
+const GLOBAL_EASE = [0.33, 1, 0.68, 1] as [number, number, number, number];
+const MICRO_EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
+
 // PHASE 14 STEP 11: PROJECT ENTRY LOADING SEQUENCE
 export function ProjectEntryLoader() {
     return (
@@ -230,8 +233,8 @@ export function ArchitectureVisual() {
                 </AnimatePresence>
                 <motion.path
                     initial={{ pathLength: 0, opacity: 0 }}
-                    animate={{ pathLength: isHovered ? 1 : 0, opacity: isHovered ? 0.2 : 0 }}
-                    transition={{ duration: 0.8 }}
+                    animate={{ pathLength: isHovered ? 1 : 0, opacity: isHovered ? 0.15 : 0 }}
+                    transition={{ duration: 0.8, ease: MICRO_EASE }}
                     d="M 300 120 L 500 120 M 100 200 L 0 200"
                     stroke="white"
                     strokeWidth="0.5"
@@ -382,10 +385,10 @@ export function ChoreographedSection({ id, children, isProject = false, classNam
             {/* PHASE 21 STEP 10: SECTION ENTRY SIGNAL */}
             <motion.div
                 initial={{ opacity: 0, scale: 0.98 }}
-                whileInView={{ opacity: [0, 0.4, 0], scale: [0.98, 1, 1.02] }}
+                whileInView={{ opacity: [0, 0.3, 0], scale: [0.98, 1, 1.01] }}
                 viewport={{ once: false, amount: 0.2 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                className="absolute inset-0 border border-white/10 pointer-events-none z-[-1]"
+                transition={{ duration: 0.8, ease: MICRO_EASE }}
+                className="absolute inset-0 border border-white/5 pointer-events-none z-[-1]"
             />
             {children}
         </motion.section>
@@ -397,7 +400,12 @@ export function ContinuityLine() {
     const { scrollYProgress } = useScroll();
     const isProjectPage = usePathname() !== "/";
     const height = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const connectorScale = useTransform(scrollYProgress, [0, 0.5, 1], [0, 1, 0]);
+
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+        setIsMobile(window.innerWidth < 768);
+    }, []);
 
     return (
         <>
@@ -411,7 +419,7 @@ export function ContinuityLine() {
             {!isMobile && !isProjectPage && (
                 <motion.div
                     className="fixed left-[5vw] top-[50vh] w-[2vw] h-px bg-black/10 z-10 pointer-events-none"
-                    style={{ scaleX: useTransform(scrollYProgress, [0, 0.5, 1], [0, 1, 0]) }}
+                    style={{ scaleX: connectorScale }}
                 />
             )}
         </>

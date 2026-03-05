@@ -5,7 +5,8 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useScene } from "@/context/SceneContext";
 
-const GLOBAL_EASE = [0.25, 1, 0.5, 1] as [number, number, number, number];
+const GLOBAL_EASE = [0.33, 1, 0.68, 1] as [number, number, number, number];
+const MICRO_EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
 export default function BrutalistNavbar() {
     const { activeSection, isIdle, markInteraction } = useScene();
@@ -109,8 +110,8 @@ function MagneticNavItem({ link, index, isActive }: { link: { name: string, href
     const ref = useRef<HTMLDivElement>(null);
     const magnetX = useMotionValue(0);
     const magnetY = useMotionValue(0);
-    const smoothX = useSpring(magnetX, { damping: 20, stiffness: 300 });
-    const smoothY = useSpring(magnetY, { damping: 20, stiffness: 300 });
+    const smoothX = useSpring(magnetX, { damping: 35, stiffness: 250 });
+    const smoothY = useSpring(magnetY, { damping: 35, stiffness: 250 });
     const { triggerDiscovery, discoveries } = useScene();
     const [isHovering, setIsHovering] = useState(false);
 

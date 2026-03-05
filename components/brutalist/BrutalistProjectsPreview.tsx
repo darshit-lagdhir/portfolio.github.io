@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useScene } from "@/context/SceneContext";
 
 const GLOBAL_EASE = [0.33, 1, 0.68, 1] as [number, number, number, number];
+const MICRO_EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
 // TEXT SCRAMBLE HOOK — PHASE 4 (STEP 5)
 const useScramble = (text: string, active: boolean) => {
@@ -45,11 +46,9 @@ export default function BrutalistProjectsPreview() {
 
     // PHASE 9 STEP 5: VELOCITY-BASED HORIZONTAL DRIFT
     const scrollVelocity = useVelocity(scrollYProgress);
-    const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 });
-    const velocityDriftX = useTransform(smoothVelocity, [-0.5, 0, 0.5], [-15, 0, 15]);
-
-    // PHASE 9 STEP 9: SCROLL VELOCITY STRETCH
-    const velocityStretchY = useTransform(smoothVelocity, [-0.5, 0, 0.5], [0.995, 1, 1.005]);
+    const smoothVelocity = useSpring(scrollVelocity, { damping: 100, stiffness: 200 }); // HIGH DAMPING (STEP 3)
+    const velocityDriftX = useTransform(smoothVelocity, [-0.5, 0, 0.5], [-10, 0, 10]);
+    const velocityStretchY = useTransform(smoothVelocity, [-0.5, 0, 0.5], [0.998, 1, 1.002]); // SUBTLE STRETCH
 
     // PHASE 13 STEP 14: MOBILE DETECTION FOR SIMPLIFICATIONS
     const [isMobile, setIsMobile] = useState(false);
@@ -292,10 +291,10 @@ function ProjectRow({ project, index }: { project: any, index: number }) {
             whileTap={{ scale: 0.97 }}
             viewport={{ once: true }}
             transition={{
-                duration: hasHovered ? 0.6 : 1,
-                delay: 0.1 + index * 0.1,
+                duration: 0.6,
+                delay: 0.05 + index * 0.05,
                 ease: GLOBAL_EASE,
-                scale: { type: "spring", stiffness: hasHovered ? 400 : 300, damping: 15 }
+                scale: { type: "spring", stiffness: 350, damping: 25 }
             }}
             style={{
                 scaleY: velocityScale,
@@ -349,6 +348,7 @@ function ProjectRow({ project, index }: { project: any, index: number }) {
                             opacity: isHovered ? 0.4 : 0.1,
                             backgroundColor: isHovered ? "rgba(0,0,0,0.8)" : "rgba(0,0,0,0.1)"
                         }}
+                        transition={{ duration: 0.2, ease: MICRO_EASE }}
                         className="w-full h-full origin-top"
                     />
                 </div>
