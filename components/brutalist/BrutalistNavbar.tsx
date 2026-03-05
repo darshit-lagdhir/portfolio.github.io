@@ -37,17 +37,17 @@ export default function BrutalistNavbar() {
             transition={{ duration: 1.2, ease: GLOBAL_EASE }}
             className={`
                 fixed top-0 left-0 w-full z-[2000] select-none transition-all duration-700
-                ${scrolled ? "py-4 bg-[#000000] border-b border-white" : isIdle ? "py-6" : "py-10 bg-transparent"}
+                ${scrolled ? "py-3 bg-[#000000] border-b border-white/30" : isIdle ? "py-4" : "py-5 md:py-8 bg-transparent"}
             `}
         >
             <nav className="flex justify-between items-center px-[5vw] w-full max-w-[1800px] mx-auto">
                 {/* BRAND — LEFT ALIGNED */}
-                <Link href="/" className="group flex flex-col gap-1 items-start">
-                    <span className="text-medium text-white font-ui tracking-tight italic">DARSHIT.L</span>
+                <Link href="/" className="group flex items-center shrink-0">
+                    <span className="text-[clamp(0.75rem,1.5vw,1.1rem)] text-white font-ui tracking-tight italic font-semibold">DARSHIT.L</span>
                 </Link>
 
                 {/* SECTION INDEX — RIGHT ALIGNED — PHASE 4 */}
-                <div className="hidden md:flex gap-12 items-baseline">
+                <div className="hidden md:flex gap-6 lg:gap-10 items-baseline">
                     {navLinks.map((link, i) => (
                         <MagneticNavItem key={link.name} link={link} index={i} isActive={activeSection === link.id} />
                     ))}
@@ -86,7 +86,7 @@ export default function BrutalistNavbar() {
                                 <Link
                                     href={link.href}
                                     onClick={() => setMenuOpen(false)}
-                                    className="text-large-mini italic text-white font-heading hover:tracking-tighter transition-all uppercase"
+                                    className="text-large-mini italic text-white font-heading font-bold hover:tracking-tighter transition-all uppercase"
                                 >
                                     {link.name}
                                 </Link>

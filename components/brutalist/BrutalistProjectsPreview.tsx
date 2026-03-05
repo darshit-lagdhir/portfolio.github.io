@@ -86,9 +86,9 @@ export default function BrutalistProjectsPreview() {
     const timelineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
     const projects = [
-        { id: "01", name: "MOVEX_SYSTEM", type: "LOGISTICS / BACKEND", href: "/movex" },
-        { id: "02", name: "UIDAI_AI", type: "PATTERN / AUTH", href: "/uidai" },
-        { id: "03", name: "POLYGLOT_FFI", type: "CONTRACT_VERIFIER", href: "/pfcv" }
+        { id: "01", name: "MOVEX_SYSTEM", type: "LOGISTICS / BACKEND", href: "/movex", desc: "A robust supply chain engine focusing on real-time routing and high-scale operational capacity." },
+        { id: "02", name: "UIDAI_AI", type: "PATTERN / AUTH", href: "/uidai", desc: "Advanced semantic search and retrieval architecture built for hyper-fast identity documentation." },
+        { id: "03", name: "POLYGLOT_FFI", type: "CONTRACT", href: "/pfcv", desc: "Zero-overhead foreign function interfaces bridging isolated memory spaces with absolute type safety." }
     ];
 
     return (
@@ -109,9 +109,9 @@ export default function BrutalistProjectsPreview() {
             onPointerEnter={() => setActiveSection("projects")}
             className="relative min-h-screen bg-white text-black py-40 px-[5vw] flex flex-col items-center overflow-hidden preserve-3d transition-colors duration-500 rounded-[8px]"
         >
-            {/* PHASE 10 STEP 8: GHOST TEXT BACKDROP */}
-            <span className="ghost-text text-[30vw] font-heading font-black leading-none top-[20%] right-[-5%] text-black">
-                BUILD
+            {/* PHASE 23 STEP 7: SECTION NUMBER SYSTEM */}
+            <span className="absolute top-[5%] right-[2%] text-[20vw] font-heading font-black leading-none text-black opacity-[0.02] pointer-events-none z-0 select-none">
+                02
             </span>
 
             {/* PHASE 13 STEP 10: STORYTELLING TIMELINE LINE */}
@@ -126,17 +126,17 @@ export default function BrutalistProjectsPreview() {
             >
 
                 {/* SECTION HEADING — TEXT SCRAMBLE — PHASE 4 */}
-                <div className="flex flex-col gap-6 items-start self-start">
-                    <span className="text-micro font-bold tracking-[0.8em] opacity-40">02_ARCHIVE</span>
-                    <h2 className="text-large text-black font-heading italic leading-none uppercase tracking-tighter w-full border-b border-black pb-8">
+                <div className="flex flex-col gap-4 items-start self-start w-full">
+                    <span className="text-micro font-bold tracking-[0.5em] opacity-60">02_ARCHIVE</span>
+                    <h2 className="text-[clamp(1.5rem,5vw,4rem)] text-black font-heading font-extrabold italic leading-none uppercase tracking-tighter w-full border-b border-black pb-6">
                         {scrambledTitle}
                     </h2>
                 </div>
 
-                {/* PROJECT ROWS — PHASE 4 + PHASE 9 DRIFT */}
+                {/* PHASE 23 STEP 5: PROJECT SECTION EDITORIAL SPREAD */}
                 <motion.div
                     style={{ x: velocityDriftX, scaleY: velocityStretchY }}
-                    className="flex flex-col w-full glitch-safe"
+                    className="grid grid-cols-12 gap-y-24 md:gap-y-40 gap-x-4 md:gap-x-8 w-full glitch-safe mt-16 md:mt-24"
                 >
                     {projects.map((project, i) => (
                         <ProjectRow key={project.id} project={project} index={i} />
@@ -167,9 +167,9 @@ export default function BrutalistProjectsPreview() {
             </motion.div>
 
             {/* EXIT CUE — PHASE 4 */}
-            <div className="absolute bottom-12 right-12 flex flex-col items-end gap-2 opacity-10">
-                <span className="text-micro font-bold tracking-[0.6em]">SYS_NAV_02</span>
-                <div className="w-20 h-px bg-black" />
+            <div className="absolute bottom-8 right-8 md:bottom-12 md:right-12 flex flex-col items-end gap-2 opacity-30">
+                <span className="text-micro font-bold tracking-[0.4em]">SYS_NAV_02</span>
+                <div className="w-16 h-px bg-black" />
             </div>
         </motion.section>
     );
@@ -281,6 +281,13 @@ function ProjectRow({ project, index }: { project: any, index: number }) {
         proximity.set(0);
     };
 
+    // PHASE 23 STEP 5: EDITORIAL GRID ALIGNMENT
+    const gridColsProps = index === 0
+        ? "col-span-12 lg:col-span-9"
+        : index === 1
+            ? "col-span-12 lg:col-span-9 lg:col-start-4"
+            : "col-span-12 lg:col-span-10 lg:col-start-2";
+
     return (
         <motion.div
             ref={rowRef}
@@ -304,14 +311,14 @@ function ProjectRow({ project, index }: { project: any, index: number }) {
                 rotate: isMobile ? 0 : (isHovered ? -0.2 : 0), // STEP 6 & 13
                 opacity: isMorphing ? 0 : 1,
                 borderTopColor: finalTopColor, // STEP 3 + PHASE 19
-                borderBottomColor: finalSideColor,
+                borderBottomColor: finalTopColor,
                 borderLeftColor: finalSideColor,
                 borderRightColor: finalSideColor,
                 boxShadow: shadowDepth,    // STEP 8
             }}
             className={`
-                relative w-full border-b border-black group cursor-none project-row-transition origin-left
-                ${isHovered ? "flash-invert" : ""}
+                relative ${gridColsProps} border border-black/10 group cursor-none project-row-transition origin-left py-12 px-6 md:py-16 md:px-20 min-h-[40vh] flex flex-col justify-end
+                ${isHovered ? "flash-invert bg-black" : "bg-black/[0.02]"}
             `}
             onMouseEnter={handleEnter}
             onMouseMove={handleMouseMove}
@@ -357,17 +364,11 @@ function ProjectRow({ project, index }: { project: any, index: number }) {
             <Link
                 href={project.href}
                 onClick={() => setIsMorphing(true)}
-                className={`flex flex-col md:flex-row md:items-center justify-between py-16 gap-8 px-4 group-hover:bg-black group-hover:text-white transition-all duration-500 ${hasHovered ? 'duration-150' : 'duration-300'} ${isHovered && !isMobile ? 'pl-12' : ''}`}
+                className={`flex flex-col md:flex-row md:items-end justify-between w-full gap-16 group-hover:text-white transition-all duration-500 ${hasHovered ? 'duration-150' : 'duration-300'}`}
             >
 
                 {/* ID + TITLE — MAGNETIC DRIFT — PHASE 11 STEP 8 */}
-                <motion.div style={{ x: smoothMagnetX }} className="flex items-center gap-12 mask-reveal overflow-visible origin-left">
-                    <motion.span
-                        animate={{ letterSpacing: isHovered ? "0.2em" : "0.02em", x: isHovered ? 20 : 0 }}
-                        className="text-[14px] font-bold opacity-30 group-hover:opacity-100 transition-all duration-300"
-                    >
-                        {project.id}
-                    </motion.span>
+                <motion.div style={{ x: smoothMagnetX }} className="flex flex-col items-start gap-4 mask-reveal overflow-visible origin-left">
                     <motion.h3
                         key={flickerKey}
                         animate={{
@@ -375,23 +376,27 @@ function ProjectRow({ project, index }: { project: any, index: number }) {
                             scale: isHovered ? 1.05 : 1,
                             filter: hasHovered && isHovered ? "brightness(1.5)" : "brightness(1)"
                         }}
-                        className={`text-large-mini md:text-large font-heading italic uppercase transition-all origin-left glitch-safe relative ${isHovered ? 'project-title-flicker' : ''} ${hasHovered ? 'duration-150' : 'duration-300'}`}
+                        className={`text-[clamp(1.5rem,5vw,3.5rem)] font-heading font-bold italic uppercase transition-all origin-left glitch-safe relative py-2 overflow-visible flex items-baseline gap-3 ${isHovered ? 'project-title-flicker' : ''} ${hasHovered ? 'duration-150' : 'duration-300'}`}
                     >
-                        {project.name}
+                        <span className="text-base font-bold opacity-40 shrink-0">{project.id}</span>
+                        <span>{project.name}</span>
                         {/* PHASE 20 STEP 3: PROJECT TITLE DISCOVERY UNDERLINE */}
                         {discoveries.has(`UNDERLINE_${project.id}`) && (
                             <motion.div
                                 initial={{ scaleX: 0 }}
                                 animate={{ scaleX: [0, 1, 0] }}
                                 transition={{ duration: 1.5, times: [0, 0.5, 1], ease: "easeInOut" }}
-                                className="absolute bottom-[-4px] left-0 w-full h-[1px] bg-white origin-left z-20"
+                                className="absolute bottom-1 left-0 w-full h-[1px] bg-white origin-left z-20"
                             />
                         )}
                     </motion.h3>
+                    <p className="text-short-body text-black/50 group-hover:text-white/60 tracking-wider mt-4">
+                        {project.desc}
+                    </p>
                 </motion.div>
 
-                <div className="flex flex-col md:items-end gap-2">
-                    <span className="text-micro font-bold tracking-[0.4em] opacity-40 group-hover:opacity-100 italic">
+                <div className="flex flex-col md:items-end gap-2 shrink-0 max-w-[160px]">
+                    <span className="text-micro font-bold tracking-[0.2em] md:tracking-[0.4em] opacity-40 group-hover:opacity-100 italic text-right break-words w-full">
                         {project.type}
                     </span>
                     <div className="relative overflow-hidden w-full md:w-32 h-px bg-black/20 group-hover:bg-white/40">

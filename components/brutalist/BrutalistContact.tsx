@@ -52,12 +52,9 @@ export default function BrutalistContact() {
                 onPointerEnter={() => setActiveSection("contact")}
                 className="relative min-h-[90vh] flex flex-col items-center justify-center px-[5vw] bg-white text-black"
             >
-                {/* INSET SHADOW BOUNDARY — PHASE 4 (STEP 13) */}
-                <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/5 to-transparent pointer-events-none" />
-
-                {/* PHASE 10 STEP 8: GHOST TEXT BACKDROP */}
-                <span className="ghost-text text-[25vw] font-heading font-black leading-none bottom-[10%] right-[-5%] text-black">
-                    CONNECT
+                {/* PHASE 23 STEP 7: SECTION NUMBER SYSTEM */}
+                <span className="absolute top-[10%] left-[5%] text-[20vw] font-heading font-black leading-none text-black opacity-[0.02] pointer-events-none z-0 select-none">
+                    04
                 </span>
 
                 <motion.div style={{ paddingTop: breathPadding, paddingBottom: breathPadding }} className="flex flex-col items-center justify-center w-full relative z-10">
@@ -73,8 +70,8 @@ export default function BrutalistContact() {
                                 transition={{ duration: 1, ease: GLOBAL_EASE }}
                                 className="flex flex-col items-center gap-6"
                             >
-                                <span className="text-micro font-bold tracking-[1em] text-black/40">04_TERMINATION</span>
-                                <h2 className="text-massive-mini md:text-massive text-black italic tracking-tighter uppercase leading-none font-heading font-extrabold pr-4 overflow-hidden">
+                                <span className="text-micro font-bold tracking-[0.6em] md:tracking-[1em] text-black/50">04_TERMINATION</span>
+                                <h2 className="text-[clamp(2rem,8vw,5rem)] text-black italic tracking-tighter uppercase leading-none font-heading font-extrabold overflow-hidden max-w-full">
                                     <motion.span
                                         initial={{ y: "110%" }}
                                         whileInView={{ y: 0 }}
@@ -103,8 +100,8 @@ export default function BrutalistContact() {
                             <a
                                 href="mailto:darshitlagdhir@gmail.com"
                                 className={`
-                            text-medium md:text-large text-black font-ui font-extrabold transition-all duration-700
-                            ${isHovered ? "tracking-[0.1em]" : "tracking-tighter"}
+                            text-[clamp(0.8rem,2.5vw,1.8rem)] text-black font-ui font-extrabold transition-all duration-700 uppercase
+                            ${isHovered ? "tracking-[0.05em]" : "tracking-tight"}
                         `}
                             >
                                 DARSHITLAGDHIR@GMAIL.COM
@@ -148,8 +145,7 @@ export default function BrutalistContact() {
                 </div>
 
                 {/* CORNER ACCENTS (TIER 3) — PHASE 3 */}
-                <div className="absolute top-0 right-0 w-[5vw] h-[5vw] border-l border-b border-black opacity-40 pointer-events-none" />
-                <div className="absolute bottom-0 left-0 w-32 h-32 border-r border-t border-black opacity-10 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 w-32 h-32 border-r border-t border-black/10 opacity-10 pointer-events-none" />
 
             </div>
         </ChoreographedSection>

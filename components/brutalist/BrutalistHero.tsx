@@ -165,93 +165,24 @@ export default function BrutalistHero() {
                 }}
             />
 
-            {/* PHASE 12 STEP 3: FLOATING MICRO OBJECTS */}
-            <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden">
-                <motion.div
-                    animate={{ y: [0, -20, 0], rotate: [0, 90, 180, 270, 360] }}
-                    transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                    className="absolute top-[15%] right-[20%] w-12 h-12 border border-white/[0.04] rotate-45"
-                />
-                <motion.div
-                    animate={{ y: [0, 30, 0], x: [0, -5, 0] }}
-                    transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute top-[40%] left-[12%] w-px h-20 bg-white/[0.05]"
-                />
-                <motion.div
-                    animate={{ y: [0, -15, 0], x: [0, 10, 0] }}
-                    transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute bottom-[25%] right-[35%] w-3 h-3 rounded-full border border-white/[0.04]"
-                />
-                <motion.div
-                    animate={{ rotate: [0, 360], y: [0, -10, 0] }}
-                    transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                    className="absolute top-[60%] left-[75%] w-6 h-px bg-white/[0.03]"
-                >
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-px h-6 bg-white/[0.03]" />
-                </motion.div>
-                <motion.div
-                    animate={{ x: [0, 15, 0] }}
-                    transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute top-[30%] right-[55%] w-16 h-px bg-white/[0.03]"
-                />
-            </div>
-
-            {/* PHASE 7: ARCHITECTURAL SPINE LINE */}
-            <div className="absolute top-0 left-[5vw] w-px h-full bg-white/10 z-0">
-                <motion.div style={{ height: spineHeight }} className="w-full bg-white" />
-            </div>
-
-            {/* PHASE 10 STEP 8: GHOST TEXT BACKDROP */}
-            <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.02 }}
-                transition={{ duration: 3, delay: 1.5 }}
-                className="ghost-text text-[25vw] font-heading font-bold leading-none top-[10%] left-[-5%]"
-            >
-                SYSTEM
-            </motion.span>
-            <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.015 }}
-                transition={{ duration: 3, delay: 2 }}
-                className="ghost-text text-[20vw] font-heading font-bold leading-none bottom-[5%] right-[-10%]"
-            >
-                ARCHITECT
-            </motion.span>
+            {/* PHASE 23 STEP 7: SECTION NUMBER SYSTEM (FIXED: reduced size, centered) */}
+            <span className="absolute top-[10%] left-[5%] text-[20vw] font-heading font-black leading-none text-white opacity-[0.02] pointer-events-none z-0 select-none">
+                01
+            </span>
 
             <motion.div
                 style={{ scale: heroScale, rotateX, rotateY, perspective: 1000 }}
-                className="grid grid-cols-12 gap-10 items-end w-full max-w-[1800px] mx-auto pt-32"
+                className="grid grid-cols-12 gap-6 md:gap-10 items-center w-full max-w-[1800px] mx-auto px-[5vw] pt-32 z-10"
             >
-                {/* LEFT 60% — TYPOGRAPHIC STACKING — PHASE 4 */}
-                <div className="col-span-12 lg:col-span-8 flex flex-col items-start gap-0 z-10">
+                {/* PHASE 23 STEP 3 & 4: SPLIT HERO - TYPOGRAPHY DOMINANCE */}
+                <div className="col-span-12 lg:col-span-7 flex flex-col items-start gap-0 z-10">
                     <div className="relative group overflow-visible preserve-3d">
-                        <motion.span
-                            style={{
-                                y: backY,
-                                opacity: stackTextOpacity,
-                                z: -50,
-                                letterSpacing: trackingCompress as any
-                            }}
-                            className="absolute text-massive italic depth-layer select-none pointer-events-none perspective-tilt"
-                            aria-hidden
-                        >
-                            <span style={{ color: 'transparent', textShadow: '0 0 80px rgba(255,255,255,0.15), 0 0 40px rgba(255,255,255,0.08)' }}>
-                                DARSHIT
-                            </span>
-                        </motion.span>
-                        <motion.span
-                            style={{ y: midY, opacity: stackTextOpacity, z: -25 }}
-                            className="absolute -top-2 -left-1 text-massive italic text-white/20 depth-layer select-none pointer-events-none perspective-tilt"
-                        >
-                            DARSHIT
-                        </motion.span>
                         <motion.h1
                             initial={{ y: "110%", translateZ: 50 }}
                             animate={{ y: 0, translateZ: 50 }}
                             style={{ y: frontY, opacity: mainTextOpacity, textShadow: '4px 4px 30px rgba(150,150,150,0.25), 0 0 60px rgba(200,200,200,0.1)' }}
                             transition={{ duration: 1.2, ease: GLOBAL_EASE }}
-                            className={`text-massive italic leading-[0.8] -ml-[0.05em] whitespace-nowrap relative z-10 perspective-tilt glitch-safe word-drift ${glitchFired ? 'hero-glitch-once' : ''}`}
+                            className={`text-massive italic relative z-10 perspective-tilt glitch-safe word-drift ${glitchFired ? 'hero-glitch-once' : ''}`}
                         >
                             {textArray1.map((char, i) => (
                                 <Letter
@@ -268,28 +199,13 @@ export default function BrutalistHero() {
                         </motion.h1>
                     </div>
 
-                    <div className="relative group overflow-visible mt-2 pl-[15vw] preserve-3d">
-                        <motion.span
-                            style={{ y: backY, opacity: stackTextOpacity, scale: 0.98, z: -50 }}
-                            className="absolute text-massive depth-layer select-none pointer-events-none perspective-tilt"
-                            aria-hidden
-                        >
-                            <span style={{ color: 'transparent', textShadow: '0 0 80px rgba(255,255,255,0.15), 0 0 40px rgba(255,255,255,0.08)' }}>
-                                LAGDHIR
-                            </span>
-                        </motion.span>
-                        <motion.span
-                            style={{ y: midY, opacity: stackTextOpacity, scale: 0.98, z: -25 }}
-                            className="absolute -top-2 -left-1 text-massive text-white/20 depth-layer select-none pointer-events-none perspective-tilt"
-                        >
-                            LAGDHIR
-                        </motion.span>
+                    <div className="relative group overflow-visible mt-2 md:pl-[10vw] preserve-3d">
                         <motion.h1
                             initial={{ y: "110%", translateZ: 50 }}
                             animate={{ y: 0, translateZ: 50 }}
                             style={{ y: frontY, opacity: mainTextOpacity, textShadow: '4px 4px 30px rgba(150,150,150,0.25), 0 0 60px rgba(200,200,200,0.1)' }}
                             transition={{ duration: 1.2, delay: 0.1, ease: GLOBAL_EASE }}
-                            className={`text-massive text-white leading-[0.8] whitespace-nowrap relative z-10 perspective-tilt glitch-safe word-drift-reverse ${glitchFired ? 'hero-glitch-once' : ''}`}
+                            className={`text-massive text-white relative z-10 perspective-tilt glitch-safe word-drift-reverse ${glitchFired ? 'hero-glitch-once' : ''}`}
                         >
                             {textArray2.map((char, i) => (
                                 <Letter
@@ -306,50 +222,58 @@ export default function BrutalistHero() {
                         </motion.h1>
                     </div>
 
+                    <div className="mt-12 md:mt-16 flex flex-col gap-3">
+                        <motion.span
+                            initial={{ opacity: 0 }} animate={{ opacity: 0.7 }} transition={{ delay: 1.5, duration: 1 }}
+                            className="text-medium font-bold tracking-[0.3em] md:tracking-[0.6em]"
+                        >
+                            SYSTEMS ARCHITECT //
+                        </motion.span>
+                        <motion.span
+                            initial={{ opacity: 0 }} animate={{ opacity: 0.7 }} transition={{ delay: 1.7, duration: 1 }}
+                            className="text-medium font-bold tracking-[0.3em] md:tracking-[0.6em]"
+                        >
+                            INTERFACE ENGINEER
+                        </motion.span>
+                    </div>
+
                     <motion.div
                         initial={{ scaleX: 0 }}
                         animate={{ scaleX: 1 }}
                         transition={{ duration: 1.5, delay: 1, ease: GLOBAL_EASE }}
-                        className="divider-h mt-20 opacity-30"
+                        className="divider-h mt-12 md:mt-16 opacity-10 w-full max-w-full"
                     />
                 </div>
 
-                {/* RIGHT 40% — ARCHITECTURAL TENSION */}
+                {/* PHASE 23 STEP 4: RIGHT 5-COLS — INTERACTIVE VISUAL ELEMENT */}
                 <motion.div
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 1.2, delay: 0.8, ease: GLOBAL_EASE }}
-                    className="hidden lg:flex col-span-4 flex-col gap-12 pb-10"
+                    className="hidden lg:flex col-span-5 flex-col justify-center items-center h-[50vh] relative border-l border-white/5 pl-10"
                 >
-                    <div className="flex flex-col gap-4">
-                        <span className="text-micro font-bold tracking-[0.6em] text-white">01_CORE</span>
-                        <p className="text-short-body text-white/40 italic">
-                            SCULPTING DIGITAL SYSTEMS <br />
-                            THROUGH LOGIC-FIRST <br />
-                            ARCHITECTURE.
-                        </p>
-                    </div>
-                    <div className="flex flex-col gap-4">
-                        <span className="text-micro font-bold tracking-[0.6em] text-white">02_SESSION</span>
-                        <p className="font-ui text-[10px] text-white/20 tracking-[0.2em] leading-loose">
-                            LOC_INDIA // 2024.VER <br />
-                            SYS_ACTIVE: TRUE <br />
-                            MEM_SYNC: STABLE
-                        </p>
+                    <div className="relative w-[30vh] h-[30vh] flex items-center justify-center opacity-40">
+                        {/* Minimal architectural motion element */}
+                        <motion.div
+                            style={{
+                                rotateX: rotateX as any,
+                                rotateY: rotateY as any,
+                            }}
+                            className="w-full h-full border border-white/20 absolute z-10 pointer-events-none"
+                        />
+                        <motion.div
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+                            className="w-[120%] h-[120%] border border-white/[0.05] rounded-full absolute pointer-events-none"
+                        />
+                        <motion.div
+                            animate={{ rotate: -360 }}
+                            transition={{ duration: 90, repeat: Infinity, ease: "linear" }}
+                            className="w-[80%] h-[80%] border border-white/[0.05] rounded-full absolute pointer-events-none"
+                        />
+                        <div className="absolute w-1 h-1 bg-white/50 rounded-full" />
                     </div>
                 </motion.div>
-            </motion.div>
-
-            {/* ASYMMETRIC OVERFLOW DECOR (TIER 3) */}
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.03 }}
-                transition={{ duration: 2, delay: 1 }}
-                className="absolute -right-20 top-1/2 -translate-y-1/2 select-none pointer-events-none"
-            >
-                <span className="text-[30vw] leading-none rotate-90 inline-block font-heading">
-                    SYSTEM
-                </span>
             </motion.div>
         </motion.section>
     );

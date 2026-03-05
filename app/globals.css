@@ -9,12 +9,12 @@
   --muted: #888888;
   --border: #ffffff;
 
-  /* TYPE SCALE — PHASE 3 POWER */
-  --fs-hero: clamp(5rem, 15vw, 14rem);
-  --fs-section: clamp(3rem, 10vw, 8rem);
-  --fs-sub: clamp(1rem, 2vw, 1.5rem);
-  --fs-body: 1.125rem;
-  --fs-micro: 0.7rem;
+  /* TYPE SCALE — PHASE 3 POWER (FIXED: capped max to prevent overflow) */
+  --fs-hero: clamp(3rem, 12vw, 10rem);
+  --fs-section: clamp(2rem, 7vw, 5rem);
+  --fs-sub: clamp(0.85rem, 1.8vw, 1.35rem);
+  --fs-body: 1rem;
+  --fs-micro: 0.75rem;
   --white-bg: #ffffff;
   --black-bg: #000000;
 
@@ -65,16 +65,18 @@ body {
   color: var(--foreground);
   font-family: var(--font-body);
   overflow-x: hidden;
+  max-width: 100vw;
   line-height: 1.4;
   -ms-overflow-style: none;
-  /* Keep cleaner */
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 /* SECTION CHOREOGRAPHY — PHASE 6 */
 .section-frame-outer {
   position: relative;
   background-color: var(--black-bg);
-  width: 100vw;
+  width: 100%;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -255,34 +257,41 @@ body {
 .text-massive {
   font-size: var(--fs-hero);
   font-family: var(--font-hero);
-  line-height: 0.8;
+  line-height: 1;
   text-transform: uppercase;
   font-weight: 700;
-  letter-spacing: -0.04em;
+  letter-spacing: 0.03em;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
 }
 
 .text-massive-mini {
-  font-size: clamp(3rem, 8vw, 6rem);
+  font-size: clamp(2rem, 6vw, 4.5rem);
   font-family: var(--font-hero);
   line-height: 0.85;
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: -0.04em;
+  max-width: 100%;
 }
 
 .text-large {
   font-size: var(--fs-section);
   font-family: var(--font-heading);
-  line-height: 0.9;
+  line-height: 0.95;
   text-transform: uppercase;
   font-weight: 800;
   letter-spacing: -0.02em;
+  max-width: 100%;
+  overflow-wrap: break-word;
 }
 
 .text-large-mini {
-  font-size: clamp(2rem, 5vw, 4rem);
+  font-size: clamp(1.5rem, 4vw, 3rem);
   font-family: var(--font-heading);
-  line-height: 0.9;
+  line-height: 0.95;
   text-transform: uppercase;
   font-weight: 800;
   letter-spacing: -0.02em;
@@ -299,7 +308,7 @@ body {
 .text-micro {
   font-size: var(--fs-micro);
   font-family: var(--font-ui);
-  letter-spacing: 0.4em;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
   font-weight: 700;
 }
@@ -496,6 +505,24 @@ body {
 
   .kinetic-letter {
     transform: none !important;
+  }
+
+  /* FIX #30: Mobile text wrap — safe padding globally */
+  .text-massive {
+    font-size: clamp(2.5rem, 10vw, 5rem);
+    white-space: normal;
+  }
+
+  .text-massive-mini {
+    font-size: clamp(2rem, 8vw, 3.5rem);
+  }
+
+  .text-large {
+    font-size: clamp(1.5rem, 6vw, 3rem);
+  }
+
+  .text-short-body {
+    max-width: 100%;
   }
 }
 

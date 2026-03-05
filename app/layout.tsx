@@ -490,10 +490,10 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
       </motion.div>
 
       {/* SHARP SCROLL INDICATOR — PHASE 3 */}
-      <div className="fixed right-0 top-0 h-full w-[1px] bg-white/5 z-50">
+      <div className="fixed right-0 top-0 h-full w-[1px] bg-white/5 z-50 overflow-hidden">
         <motion.div
           style={{ scaleY: scrollYProgress, transformOrigin: "top" }}
-          className="w-full h-full bg-white"
+          className="w-full h-full bg-white/40"
         />
       </div>
 
@@ -517,10 +517,10 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
         }} />
       </motion.div>
 
-      {/* PHASE 12 STEP 11: STRUCTURAL FLOATING GRID */}
+      {/* PHASE 12 STEP 11: STRUCTURAL FLOATING GRID (FIXED: removed -inset-[100%] overflow) */}
       <motion.div
         style={{ y: structuralGridY }}
-        className="fixed -inset-[100%] pointer-events-none z-[38]"
+        className="fixed inset-0 pointer-events-none z-[38] overflow-hidden"
       >
         <div className="w-full h-full opacity-[0.015]" style={{
           backgroundImage: 'linear-gradient(to right, white 1px, transparent 1px), linear-gradient(to bottom, white 1px, transparent 1px)',

@@ -33,7 +33,7 @@ export default function BrutalistAbout() {
     const { setActiveSection } = useScene();
     const containerRef = useRef<HTMLDivElement>(null);
     const inView = useInView(containerRef, { once: false, amount: 0.1 });
-    const scrambledTitle = useScramble("CORE_SYSTEM_LOGIC", inView);
+    const scrambledTitle = useScramble("IDENTITY_SYSTEM", inView);
 
     // PHASE 9 STEP 3: SECTION BREATHING
     const { scrollYProgress } = useScroll({
@@ -41,92 +41,92 @@ export default function BrutalistAbout() {
         offset: ["start end", "end start"]
     });
     const breathPadding = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], ["8rem", "10rem", "10rem", "8rem"]);
-    const editorialX = useTransform(scrollYProgress, [0, 1], ["-120px", "20px"]);
 
     return (
-        <ChoreographedSection
-            id="about"
-        >
+        <ChoreographedSection id="about">
             <div
                 ref={containerRef}
                 onPointerEnter={() => setActiveSection("about")}
-                className="relative min-h-screen overflow-hidden bg-black"
+                className="relative min-h-screen overflow-hidden bg-black text-white"
             >
-                {/* PHASE 10 STEP 8: GHOST TEXT BACKDROP */}
-                <span className="ghost-text text-[28vw] font-heading font-black leading-none top-[15%] left-[-8%] text-white">
-                    ENGINEERING
+                {/* PHASE 23 STEP 7: SECTION NUMBER SYSTEM */}
+                <span className="absolute top-[10%] left-[5%] text-[20vw] font-heading font-black leading-none text-white opacity-[0.02] pointer-events-none z-0 select-none">
+                    03
                 </span>
-                {/* WHITE WIPE TRANSITION — PHASE 4 (STEP 3) */}
-                <div className={`absolute inset-0 z-0 bg-white transition-all duration-1000 ease-out clip-path-wipe ${inView ? "clip-path-full" : "clip-path-empty"}`}
-                    style={{
-                        clipPath: inView ? "inset(0 0 0 0)" : "inset(100% 0 0 0)",
-                        transition: "clip-path 1.2s cubic-bezier(0.33, 1, 0.68, 1)"
-                    }}
-                />
 
                 {/* PHASE 9: BREATHING WRAPPER */}
                 <motion.div style={{ paddingTop: breathPadding, paddingBottom: breathPadding }} className="relative z-10">
-                    <div className="relative z-10 w-full max-w-[1800px] mx-auto px-[5vw] flex flex-col gap-32">
+                    <div className="w-full max-w-[1800px] mx-auto px-[5vw] flex flex-col gap-32">
 
-                        {/* SECTION HEADING — TEXT SCRAMBLE — PHASE 4 */}
-                        <div className="flex flex-col gap-6 items-start self-start text-black">
-                            <span className="text-micro font-bold tracking-[0.8em] opacity-40">03_IDENTITY</span>
-                            <h2 className={`text-large font-heading italic leading-none uppercase tracking-tighter w-full border-b border-black/10 pb-8 transition-opacity duration-1000 ${inView ? "opacity-100" : "opacity-0"}`}>
+                        {/* SECTION HEADING */}
+                        <div className="flex flex-col gap-6 items-start self-start">
+                            <span className="text-micro font-bold tracking-[0.8em] opacity-70">03_IDENTITY</span>
+                            <h2 className={`text-[clamp(1.5rem,8vw,6rem)] break-words font-heading font-extrabold italic leading-none uppercase tracking-tighter w-full border-b border-white/20 pb-8 transition-opacity duration-1000 ${inView ? "opacity-100" : "opacity-0"}`}>
                                 {scrambledTitle}
                             </h2>
                         </div>
 
-                        {/* EDITORIAL OVERFLOW TYPOGRAPHY — PHASE 4 (STEP 12) */}
-                        <div className="grid grid-cols-12 gap-10 items-start">
-                            <div className="col-span-12 lg:col-span-11 relative">
-                                <motion.h3
-                                    initial={{ x: -100, opacity: 0 }}
-                                    whileInView={{ x: -20, opacity: 1 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 1.2, ease: GLOBAL_EASE }}
-                                    style={{ x: editorialX }}
-                                    className="text-[12vw] md:text-[8vw] font-heading font-black text-black leading-[0.85] uppercase -ml-[10vw] whitespace-nowrap"
-                                >
-                                    ENGINEERED <br />
-                                    <span className="pl-[20vw]">EMOTION.</span>
-                                </motion.h3>
+                        {/* PHASE 23 STEP 8: EDITORIAL STATEMENT BLOCKS */}
+                        <div className="grid grid-cols-12 gap-y-32 gap-x-8 items-start mt-20">
 
-                                <div className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-20">
-                                    <motion.p
-                                        initial={{ opacity: 0, y: 20 }}
-                                        whileInView={{ opacity: 1, y: 0 }}
-                                        viewport={{ once: true }}
-                                        transition={{ duration: 1, delay: 0.4 }}
-                                        className="text-short-body text-black/60 italic leading-relaxed"
-                                    >
-                                        I build systems that live at the intersection of architectural precision and digital expression.
-                                        My work is focused on the tension between pure logic and human interaction.
-                                    </motion.p>
-                                    <motion.p
-                                        initial={{ opacity: 0, y: 20 }}
-                                        whileInView={{ opacity: 1, y: 0 }}
-                                        viewport={{ once: true }}
-                                        transition={{ duration: 1, delay: 0.6 }}
-                                        className="text-short-body text-black/60 italic leading-relaxed"
-                                    >
-                                        Based in Bangalore, I specialize in systems-focused development, creating
-                                        robust backends and expressive frontends that prioritize smoothness and authority.
-                                    </motion.p>
-                                </div>
-                            </div>
+                            {/* BLOCK 1 - SYSTEMS THINKING */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1, ease: GLOBAL_EASE }}
+                                className="col-span-12 lg:col-span-6 lg:col-start-1"
+                            >
+                                <h3 className="text-[clamp(1.5rem,4vw,3rem)] font-heading font-bold leading-tight uppercase mb-8">
+                                    Systems <br /> <span className="text-white/40 italic">Thinking.</span>
+                                </h3>
+                                <p className="text-short-body text-white/70 tracking-wide bg-white/[0.08] p-6 md:p-8 border-l-2 border-white/30">
+                                    I don't just write code; I design systems. Every component, from UI interactions to database queries, is treated as a node in a larger architectural network. Precision and scalability are non-negotiable.
+                                </p>
+                            </motion.div>
+
+                            {/* BLOCK 2 - BACKEND ENGINEERING */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.2, ease: GLOBAL_EASE }}
+                                className="col-span-12 lg:col-span-5 lg:col-start-8"
+                            >
+                                <h3 className="text-[clamp(1.5rem,4vw,3rem)] font-heading font-bold leading-tight uppercase mb-8">
+                                    Backend <br /> <span className="text-white/40 italic">Authority.</span>
+                                </h3>
+                                <p className="text-short-body text-white/70 tracking-wide bg-white/[0.08] p-6 md:p-8 border-l-2 border-white/30">
+                                    Building rigid, secure, and highly performant data pipelines. I specialize in crafting backend infrastructure that withstands high concurrency and complex logic without exposing complexity to the frontend.
+                                </p>
+                            </motion.div>
+
+                            {/* BLOCK 3 - LEARNING MINDSET */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.4, ease: GLOBAL_EASE }}
+                                className="col-span-12 lg:col-span-7 lg:col-start-3"
+                            >
+                                <h3 className="text-[clamp(1.5rem,4vw,3rem)] font-heading font-bold leading-tight uppercase mb-8">
+                                    Dynamic <br /> <span className="text-white/40 italic">Evolution.</span>
+                                </h3>
+                                <p className="text-short-body text-white/70 tracking-wide bg-white/[0.08] p-6 md:p-8 border-l-2 border-white/30">
+                                    Technology is a shifting landscape. My core skill is not a single language, but the ability to rapidly assimilate new paradigms, dissect unfamiliar architectures, and build production-ready software efficiently.
+                                </p>
+                            </motion.div>
                         </div>
+
+                        <motion.div
+                            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 1.5, delay: 0.8 }}
+                            className="mt-20 md:mt-32 grid grid-cols-12 gap-4 md:gap-8 border-t border-white/20 pt-12 md:pt-16"
+                        >
+                            <div className="col-span-12 lg:col-span-3">
+                                <span className="text-micro font-bold tracking-[0.3em] opacity-70">CURRENT_SYNC</span>
+                            </div>
+                            <div className="col-span-12 lg:col-span-9 flex flex-wrap gap-4 md:gap-6">
+                                {["Low-Level Memory Mgt", "Distributed Databases", "Advanced WebGL", "Security Protocols"].map((item, idx) => (
+                                    <div key={idx} className="border border-white/15 px-5 py-3 text-micro font-bold tracking-[0.15em] bg-white/[0.04] hover:bg-white/[0.08] transition-colors">
+                                        {item}
+                                    </div>
+                                ))}
+                            </div>
+                        </motion.div>
+
                     </div>
                 </motion.div>
-
-                {/* DECORATIVE TERMINAL BLOCK (TIER 3) */}
-                <div className="absolute bottom-20 left-[5vw] flex items-end gap-12 opacity-5 text-black">
-                    <span className="text-[15vw] leading-none font-hero font-bold">INFO</span>
-                    <div className="flex flex-col gap-2 pb-10">
-                        <span className="text-micro font-bold tracking-widest whitespace-nowrap">STATUS: ARCHITECT_ACTIVE</span>
-                        <span className="text-micro font-bold tracking-widest whitespace-nowrap">LAST_BUILD: MARCH_2024</span>
-                    </div>
-                </div>
-
             </div>
         </ChoreographedSection>
     );
