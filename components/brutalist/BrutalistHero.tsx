@@ -83,6 +83,9 @@ export default function BrutalistHero() {
     const smoothVelocity = useSpring(scrollVelocity, { damping: 60, stiffness: 400 });
     const trackingCompress = useTransform(smoothVelocity, [-2000, 0, 2000], ["0.1em", "-0.04em", "0.1em"]);
 
+    // PHASE 19 STEP 4: Tempo-based tracking
+    const heroLetterSpacing = useTransform(scrollTempo, t => hasExplored ? "-0.02em" : (0.02 + (1 - t) * 0.1) + "em");
+
     // PHASE 7+10: LETTER PRESSURE + KINETIC CLUSTERS (BOLD)
     const textArray1 = "DARSHIT".split("");
     const textArray2 = "LAGDHIR".split("");
@@ -110,7 +113,7 @@ export default function BrutalistHero() {
             id="hero"
             onPointerEnter={() => setActiveSection("hero")}
             style={{
-                letterSpacing: useTransform(scrollTempo, t => hasExplored ? "-0.02em" : (0.02 + (1 - t) * 0.1) + "em"), // PHASE 19 STEP 4: Tempo-based tracking
+                letterSpacing: heroLetterSpacing,
                 scaleX: morphScaleX,
                 scaleY: morphScaleY,
                 rotate: morphRotate,

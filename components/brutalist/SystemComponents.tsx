@@ -328,10 +328,11 @@ export function ChoreographedSection({ id, children, isProject = false, classNam
 export function ContinuityLine() {
     const { scrollYProgress } = useScroll();
     const isProjectPage = usePathname() !== "/";
+    const height = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
     return (
         <motion.div
             className={`fixed top-0 left-[3vw] lg:left-[5vw] w-px ${isProjectPage ? 'bg-white/10' : 'bg-black/10'} origin-top z-10 pointer-events-none transition-colors duration-500`}
-            style={{ height: useTransform(scrollYProgress, [0, 1], ["0%", "100%"]) }}
+            style={{ height }}
         />
     );
 }

@@ -84,6 +84,8 @@ export default function BrutalistProjectsPreview() {
     );
     const panelMorphScale = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0.98, 1, 1, 0.98]);
 
+    const timelineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
     const projects = [
         { id: "01", name: "MOVEX_SYSTEM", type: "LOGISTICS / BACKEND", href: "/movex" },
         { id: "02", name: "UIDAI_AI", type: "PATTERN / AUTH", href: "/uidai" },
@@ -116,7 +118,7 @@ export default function BrutalistProjectsPreview() {
             {/* PHASE 13 STEP 10: STORYTELLING TIMELINE LINE */}
             <motion.div
                 className="absolute left-[8vw] top-0 w-px bg-black/10 origin-top z-0"
-                style={{ height: useTransform(scrollYProgress, [0, 1], ["0%", "100%"]) }}
+                style={{ height: timelineHeight }}
             />
 
             <motion.div
