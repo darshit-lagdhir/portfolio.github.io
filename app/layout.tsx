@@ -6,6 +6,7 @@ import "./globals.css";
 import SmoothScroll from "@/components/brutalist/SmoothScroll";
 import BrutalistNavbar from "@/components/brutalist/BrutalistNavbar";
 import AmbientParticles from "@/components/brutalist/AmbientParticles";
+import EnvironmentalSystem from "@/components/brutalist/EnvironmentalSystem";
 import { SceneProvider, useScene } from "@/context/SceneContext";
 import { CommandPalette, ContinuityLine } from "@/components/brutalist/SystemComponents";
 
@@ -304,6 +305,9 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
           backgroundSize: '10vw 10vh'
         }} />
       </motion.div>
+
+      {/* PHASE 18 STEP 1: GLOBAL LIGHT FIELD SYSTEM */}
+      <EnvironmentalSystem />
 
       {/* PHASE 12 STEP 1: AMBIENT PARTICLE FIELD */}
       <AmbientParticles />

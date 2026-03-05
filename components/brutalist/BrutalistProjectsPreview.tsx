@@ -180,6 +180,12 @@ function ProjectRow({ project, index }: { project: any, index: number }) {
     const magnetX = useMotionValue(0);
     const smoothMagnetX = useSpring(magnetX, { damping: 25, stiffness: 300 });
 
+    // PHASE 18 STEP 3 & 4: CURSOR PROXIMITY LIGHTING
+    const proximity = useMotionValue(0);
+    const smoothProximity = useSpring(proximity, { damping: 40, stiffness: 200 });
+    const edgeLight = useTransform(smoothProximity, [0, 1], ["rgba(0,0,0,0.1)", "rgba(0,0,0,0.4)"]);
+    const shadowDepth = useTransform(smoothProximity, [0, 1], ["0px 0px 0px rgba(0,0,0,0)", "0px 20px 40px rgba(0,0,0,0.1)"]);
+
     // PHASE 16 STEP 1: INTERACTION VELOCITY RESPONSE
     const { scrollY, scrollYProgress } = useScroll({
         target: rowRef,
@@ -211,11 +217,17 @@ function ProjectRow({ project, index }: { project: any, index: number }) {
         const centerX = rect.left + rect.width / 2;
         const dx = (e.clientX - centerX) / rect.width * 12;
         magnetX.set(dx);
+
+        // PHASE 18: CALCULATE PROXIMITY
+        const distY = Math.abs(e.clientY - (rect.top + rect.height / 2));
+        const prox = Math.max(0, 1 - (distY / (rect.height * 1.5)));
+        proximity.set(prox);
     };
 
     const handleLeave = () => {
         setIsHovered(false);
         magnetX.set(0);
+        proximity.set(0);
     };
 
     return (
@@ -240,6 +252,8 @@ function ProjectRow({ project, index }: { project: any, index: number }) {
                 z: isMorphing ? 500 : activeZ,
                 rotate: isMobile ? 0 : (isHovered ? -0.2 : 0), // STEP 6 & 13
                 opacity: isMorphing ? 0 : 1,
+                borderTopColor: edgeLight, // STEP 3
+                boxShadow: shadowDepth,    // STEP 8
             }}
             className={`
                 relative w-full border-b border-black group cursor-none project-row-transition origin-left
@@ -250,6 +264,16 @@ function ProjectRow({ project, index }: { project: any, index: number }) {
             onMouseLeave={handleLeave}
             data-project="true"
         >
+            {/* PHASE 18 STEP 9: PROJECT SURFACE LIGHT RESPONSE (SHEEN) */}
+            <motion.div
+                style={{
+                    opacity: useTransform(smoothProximity, [0, 1], [0, 0.05]),
+                    background: `linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.2) 50%, transparent 100%)`,
+                    x: useTransform(magnetX, x => x * 10)
+                }}
+                className="absolute inset-0 pointer-events-none z-0"
+            />
+
             {/* PHASE 16 STEP 6: PROJECT DISCOVERY HIGHLIGHT SCROLL SWEEP */}
             <div className="absolute top-0 left-0 w-full h-[1px] bg-black pointer-events-none mix-blend-difference overflow-hidden z-10">
                 <motion.div

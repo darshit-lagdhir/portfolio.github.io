@@ -122,10 +122,14 @@ export default function AmbientParticles() {
                 if (p.y < -10) p.y = canvas.height + 10;
                 if (p.y > canvas.height + 10) p.y = -10;
 
+                // PHASE 18 STEP 5: PARTICLE LIGHT RESPONSE
+                const lightDist = Math.sqrt(dx * dx + dy * dy);
+                const lightBoost = lightDist < 300 ? (1 - lightDist / 300) * 0.4 : 0;
+
                 // Draw
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity * globalFade})`;
+                ctx.fillStyle = `rgba(255, 255, 255, ${(p.opacity + lightBoost) * globalFade})`;
                 ctx.fill();
             });
 
