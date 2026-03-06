@@ -35,9 +35,9 @@ export default function AmbientParticles() {
     useEffect(() => { isIdleRef.current = isIdle; }, [isIdle]);
 
     const initParticles = useCallback((width: number, height: number) => {
-        // Step 13: Fewer particles on mobile (Refined for Phase 22)
+        // PHASE 28 STEP 6: PARTICLE ATMOSPHERE REFINEMENT (Ambient Dust)
         const isMobile = width < 768;
-        const count = isMobile ? 18 : 45;
+        const count = isMobile ? 12 : 30; // Reduced count
         const particles: Particle[] = [];
 
         for (let i = 0; i < count; i++) {
@@ -51,10 +51,12 @@ export default function AmbientParticles() {
                 y,
                 baseX: x,
                 baseY: y,
-                vx: (Math.random() - 0.5) * 0.1 * depth,
-                vy: ((Math.random() - 0.5) * 0.08 + 0.03) * (depth * 0.8), // Slower drift, scaled by depth
+                // PHASE 28 STEP 6: Extremely slow ambient drift
+                vx: (Math.random() - 0.5) * 0.05 * depth,
+                vy: ((Math.random() - 0.5) * 0.04 + 0.01) * (depth * 0.5),
                 size: (Math.random() * 0.8 + 0.2) * depth,
-                opacity: (Math.random() * 0.04 + 0.01) * depth, // Foreground brighter
+                // PHASE 28 STEP 6: Drastically lowered opacity for cinematic feel
+                opacity: (Math.random() * 0.02 + 0.005) * depth,
                 depth
             });
         }

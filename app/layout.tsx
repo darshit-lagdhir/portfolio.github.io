@@ -396,10 +396,15 @@ function CrossPageContinuity() {
   );
 }
 
-// PHASE 21 STEP 1: GLOBAL STRUCTURAL NETWORK
+// PHASE 21 STEP 1 & PHASE 28 STEP 8: GLOBAL STRUCTURAL NETWORK & GLOW
 function GlobalStructuralNetwork() {
-  const { scrollYProgress } = useScroll();
+  const { scrollYProgress, scrollY } = useScroll();
+  const { attentionScore, scrollTempo } = useScene();
   const [isMobile, setIsMobile] = useState(false);
+
+  // PHASE 28 STEP 8 & 11: CONNECTION GLOW + TRANSITION ATMOSPHERE
+  const lineGlowOpacity = useTransform(attentionScore, [0, 1], [0.1, 0.4]);
+  const lineGlowWidth = useTransform(scrollTempo, [0, 1], [0.5, 1.5]);
 
   const path1Length = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
   const path2X = useTransform(scrollYProgress, [0, 1], [0, -20]);
@@ -415,11 +420,11 @@ function GlobalStructuralNetwork() {
         <motion.path
           d="M 50 100 L 50 400 L 150 400"
           stroke="white"
-          strokeWidth="0.5"
+          strokeWidth={lineGlowWidth}
           fill="none"
           initial={{ pathLength: 0, opacity: 0 }}
-          animate={{ pathLength: 1, opacity: 0.1 }}
-          style={{ pathLength: path1Length }}
+          style={{ pathLength: path1Length, opacity: lineGlowOpacity }}
+          className="transition-all duration-300 drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]"
         />
         {/* Secondary Structural Grid Lines */}
         <motion.path
@@ -435,6 +440,7 @@ function GlobalStructuralNetwork() {
     </div>
   );
 }
+
 
 
 
@@ -600,12 +606,11 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
       <div className={`grid-overlay ${showGrid ? "visible" : ""}`} />
       <motion.div
         style={{ opacity: gridScrollOpacity }}
-        className="fixed inset-0 pointer-events-none z-[39]"
+        className="fixed inset-0 pointer-events-none z-10 w-full h-full mix-blend-difference"
       >
-        <motion.div className="w-full h-full" style={{
-          backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px)',
-          backgroundSize: gridDynamicSpacing
-        }} />
+        <div className="w-full h-full border-l border-r border-white/20 mx-[20vw]" />
+        <div className="absolute top-[30vh] w-full h-px bg-white/10" />
+        <div className="absolute top-[80vh] w-full h-px bg-white/10" />
       </motion.div>
 
       {/* PHASE 12 STEP 11: STRUCTURAL FLOATING GRID (FIXED: removed -inset-[100%] overflow) */}

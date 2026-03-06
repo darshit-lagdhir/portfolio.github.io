@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform, useMotionValue, useSpring, useVelocity } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValue, useSpring, useVelocity, useMotionTemplate } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import { useScene } from "@/context/SceneContext";
 
@@ -144,6 +144,11 @@ export default function BrutalistHero() {
     // PHASE 19 STEP 4: Tempo-based tracking
     const heroLetterSpacing = useTransform(scrollTempo, t => hasExplored ? "-0.02em" : (0.02 + (1 - t) * 0.1) + "em");
 
+    // PHASE 28 STEP 9: CURSOR LIGHT INTERACTION (Dynamic Atmosphere)
+    const bgLightX = useTransform(smoothMouseX, [-0.5, 0.5], ["20%", "80%"]);
+    const bgLightY = useTransform(smoothMouseY, [-0.5, 0.5], ["20%", "80%"]);
+    const atmosphericGradient = useMotionTemplate`radial-gradient(circle at ${bgLightX} ${bgLightY}, rgba(255,255,255,0.04) 0%, transparent 60%)`;
+
     const textArray1 = "DARSHIT".split("");
     const textArray2 = "LAGDHIR".split("");
 
@@ -163,14 +168,14 @@ export default function BrutalistHero() {
                 transformPerspective: 1200
             }}
         >
-            {/* BREATHING BACKGROUND — PHASE 4 + PHASE 9 COUNTER-SCROLL */}
+            {/* BREATHING BACKGROUND — PHASE 4 + PHASE 9 + PHASE 28 STEP 9: ATMOSPHERIC LIGHTING OVERLAY */}
             <motion.div
                 animate={{ scale: [1, 1.005, 1] }}
                 transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 z-0 pointer-events-none opacity-20"
+                className="absolute inset-0 z-0 pointer-events-none opacity-30 mix-blend-screen"
                 style={{
                     y: bgY,
-                    background: "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 0%, transparent 70%)"
+                    background: atmosphericGradient
                 }}
             />
 
@@ -189,7 +194,7 @@ export default function BrutalistHero() {
                     <motion.div
                         animate={{ rotateX: [360, 0], rotateZ: [0, 360] }}
                         transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-                        className="absolute w-[35vh] h-[35vh] border border-white/15 rounded-sm"
+                        className="absolute w-[35vh] h-[35vh] border border-white/10 rounded-sm"
                     />
                 </div>
             </motion.div>
@@ -209,9 +214,10 @@ export default function BrutalistHero() {
                 {/* PHASE 23 STEP 3 & 4: SPLIT HERO - TYPOGRAPHY DOMINANCE */}
                 <div className="col-span-12 lg:col-span-7 flex flex-col items-start gap-0 z-10">
                     <div className="relative group overflow-visible preserve-3d">
-                        {/* GREY SHADOW LAYER — offset behind main text, interactive */}
+                        {/* PHASE 28 STEP 4: TYPOGRAPHY CONTRAST REFINEMENT */}
+                        {/* GREY SHADOW LAYER — softened for depth */}
                         <motion.span
-                            style={{ y: backY, opacity: 0.15 }}
+                            style={{ y: backY, opacity: 0.08 }} // Reduced opacity for stronger hierarchy
                             className="absolute top-[4px] left-[4px] text-massive italic text-white/30 select-none pointer-events-none perspective-tilt z-0"
                             aria-hidden
                         >
@@ -228,12 +234,13 @@ export default function BrutalistHero() {
                                 />
                             ))}
                         </motion.span>
+                        {/* MAIN TEXT LAYER — crisp, direct focus */}
                         <motion.h1
                             initial={{ y: "110%", translateZ: 50 }}
                             animate={{ y: 0, translateZ: 50 }}
                             style={{ y: frontY, opacity: mainTextOpacity }}
                             transition={{ duration: 1.2, ease: GLOBAL_EASE }}
-                            className={`text-massive italic relative z-10 perspective-tilt glitch-safe word-drift ${glitchFired ? 'hero-glitch-once' : ''}`}
+                            className={`text-massive italic relative z-10 perspective-tilt glitch-safe word-drift drop-shadow-[0_0_20px_rgba(255,255,255,0.06)] ${glitchFired ? 'hero-glitch-once' : ''}`}
                         >
                             {textArray1.map((char, i) => (
                                 <Letter

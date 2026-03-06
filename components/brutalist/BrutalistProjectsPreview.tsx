@@ -329,13 +329,16 @@ function ProjectRow({
             }}
             className={`
                 relative shrink-0 w-[80vw] md:w-[60vw] lg:w-[45vw] h-full border border-black/10 group cursor-none project-row-transition origin-left py-12 px-6 md:py-16 md:px-12 flex flex-col justify-end
-                ${isHovered ? "flash-invert bg-black" : "bg-black/[0.02]"}
+                ${isHovered ? "flash-invert bg-black drop-shadow-[0_0_40px_rgba(255,255,255,0.05)]" : "bg-black/[0.02]"}
             `}
             onMouseEnter={handleEnter}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleLeave}
             data-project="true"
         >
+            {/* PHASE 28 STEP 3: MICRO SURFACE TEXTURE */}
+            <div className="absolute inset-0 pointer-events-none z-0 bg-gradient-to-b from-black/[0.01] to-transparent opacity-50 mix-blend-multiply" />
+
             {/* PHASE 18 STEP 9: PROJECT SURFACE LIGHT RESPONSE (SHEEN) */}
             <motion.div
                 style={{
@@ -343,7 +346,7 @@ function ProjectRow({
                     background: `linear-gradient(90deg, transparent 0%, rgba(0,0,0,0.2) 50%, transparent 100%)`,
                     x: surfaceMagnetX
                 }}
-                className="absolute inset-0 pointer-events-none z-0"
+                className="absolute inset-0 pointer-events-none z-0 mix-blend-overlay"
             />
 
             {/* PHASE 16 STEP 6: PROJECT DISCOVERY HIGHLIGHT SCROLL SWEEP */}
