@@ -207,14 +207,15 @@ export function CustomCursor() {
         />
       )}
 
-      {/* OUTER RING — trailing physics */}
+      {/* OUTER RING — trailing physics (PHASE 27 STEP 4: CURSOR CONFIRMATION) */}
       <motion.div
         className="fixed top-0 left-0 border pointer-events-none z-[9998] mix-blend-difference flex items-center justify-center"
         animate={{
           ...variants[cursorVariant as keyof typeof variants],
-          scale: isPressed ? 0.85 : 1,
+          scale: isPressed ? (cursorVariant === "project" || cursorVariant === "nav" ? 1.15 : 0.85) : 1,
+          borderWidth: isPressed && (cursorVariant === "project" || cursorVariant === "nav") ? "2px" : variants[cursorVariant as keyof typeof variants].borderWidth
         }}
-        transition={{ duration: 0.35, ease: [0.33, 1, 0.68, 1], scale: { type: "spring", stiffness: 400, damping: 12 } }}
+        transition={{ duration: 0.35, ease: [0.33, 1, 0.68, 1], scale: { type: "spring", stiffness: 600, damping: 20 } }}
         style={{ x: ring.x, y: ring.y, translateX: "-50%", translateY: "-50%" }}
       >
         {/* PHASE 25 STEP 9: PROJECT ARROW INDICATOR */}
@@ -270,13 +271,23 @@ function DiscoveryFeedbackDot() {
   if (!lastDiscoveryTime || Date.now() - lastDiscoveryTime > 2000) return null;
 
   return (
-    <motion.div
-      initial={{ scale: 0, opacity: 0 }}
-      animate={{ scale: [0, 4, 0], opacity: [0, 0.8, 0] }}
-      transition={{ duration: 1.2, ease: "circOut" }}
-      className="fixed pointer-events-none z-[300] w-2 h-2 rounded-full bg-white blur-[2px]"
-      style={{ left: mousePos.x, top: mousePos.y, x: "-50%", y: "-50%" }}
-    />
+    <>
+      <motion.div
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: [0, 4, 0], opacity: [0, 0.8, 0] }}
+        transition={{ duration: 1.2, ease: "circOut" }}
+        className="fixed pointer-events-none z-[300] w-2 h-2 rounded-full bg-white blur-[2px]"
+        style={{ left: mousePos.x, top: mousePos.y, x: "-50%", y: "-50%" }}
+      />
+      {/* PHASE 27 STEP 10: RAPID TACTILE SENSOR BURST */}
+      <motion.div
+        initial={{ scale: 0, opacity: 1, borderWidth: "2px" }}
+        animate={{ scale: 6, opacity: 0, borderWidth: "0px" }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="fixed pointer-events-none z-[299] w-4 h-4 rounded-full border-white"
+        style={{ left: mousePos.x, top: mousePos.y, x: "-50%", y: "-50%" }}
+      />
+    </>
   );
 }
 
@@ -479,6 +490,9 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
   const gridDynamicSpacing = useTransform(gridSpacing, (s: string) => `${s} 20vh`);
   const gridBackgroundSize = useTransform(gridSpacing, (s: string) => s ? `${s} ${s}` : '20vw 20vw');
 
+  // PHASE 27 STEP 9: GRID TEXTURE REFINEMENT
+  const gridFocusOpacity = useTransform(attentionScore, [0, 1], [0.03, 0.07]);
+
   // PHASE 19 STEP 11: SYSTEM STATE INDICATOR LOGIC
   const [systemActive, setSystemActive] = useState(false);
   useEffect(() => {
@@ -527,8 +541,11 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
       </motion.main>
       <CustomCursor />
 
-      {/* PHASE 21 STEP 8: REINFORCED STRUCTURAL GRID */}
-      <div className="fixed inset-0 pointer-events-none z-0 opacity-[0.03] transition-opacity duration-1000">
+      {/* PHASE 21 STEP 8 & PHASE 27 STEP 9: REINFORCED STRUCTURAL GRID (Reactive Texture) */}
+      <motion.div
+        style={{ opacity: gridFocusOpacity }}
+        className="fixed inset-0 pointer-events-none z-0 transition-opacity duration-300"
+      >
         <motion.div
           className="w-full h-full"
           style={{
@@ -539,7 +556,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
             backgroundSize: gridBackgroundSize
           }}
         />
-      </div>
+      </motion.div>
 
       {/* PHASE 7: FRAME EDGE REACTIVE SYSTEM (STEP 10) + PHASE 17 STEP 4 */}
       <motion.div

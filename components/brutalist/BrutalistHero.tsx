@@ -34,7 +34,7 @@ const Letter = ({ char, index, total, smoothMouseX, attentionScore, rippleActive
 
     return (
         <motion.span
-            className="inline-block kinetic-letter"
+            className="inline-block kinetic-letter txt-micro-react"
             style={{ y: smoothPressureY, x: smoothRippleX }}
             transition={{ duration: 0.2, ease: MICRO_EASE }}
         >

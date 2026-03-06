@@ -137,7 +137,7 @@ function MagneticNavItem({
             onMouseLeave={handleMouseLeave}
             whileTap={{ scale: 0.93 }}
             transition={{ scale: { type: "spring", stiffness: 400, damping: 15 } }}
-            className={`relative group magnetic-btn`}
+            className={`relative group magnetic-btn tactile-btn`}
         >
             <Link
                 href={link.href}

@@ -95,7 +95,7 @@ export default function BrutalistContact() {
                             whileTap={{ scale: 0.95 }}
                             viewport={{ once: true }}
                             transition={{ duration: 1, delay: 0.4, ease: GLOBAL_EASE, scale: { type: "spring", stiffness: 400, damping: 15 } }}
-                            className="relative py-12 px-6 border border-black/5 group cursor-none magnetic-btn"
+                            className="relative py-12 px-6 border border-black/5 group cursor-none magnetic-btn tactile-btn"
                         >
                             <a
                                 href="mailto:darshitlagdhir@gmail.com"
@@ -128,7 +128,7 @@ export default function BrutalistContact() {
                                     whileInView={{ opacity: 1 }}
                                     viewport={{ once: true }}
                                     transition={{ duration: 0.8, delay: 0.8 + i * 0.1 }}
-                                    className="text-micro font-bold tracking-[0.4em] hover:text-black/40 transition-all uppercase magnetic-btn"
+                                    className="text-micro font-bold tracking-[0.4em] hover:text-black/40 transition-all uppercase magnetic-btn tactile-btn"
                                 >
                                     {social.label}
                                 </motion.a>

@@ -609,3 +609,33 @@ body {
 .mask-reveal-up.revealed {
   clip-path: inset(0 0 0 0);
 }
+
+/* PHASE 27 STEP 1, 2, 7: GLOBAL TACTILE RESPONSES & BUTTON COMPRESSION */
+.tactile-btn {
+  transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1), background-color 200ms ease, opacity 200ms ease, box-shadow 200ms ease;
+  will-change: transform, opacity, background-color;
+}
+
+.tactile-btn:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.tactile-btn:active {
+  transform: translateY(1px) scale(0.96);
+  transition-duration: 50ms;
+  /* Snappy compression */
+}
+
+/* PHASE 27 STEP 5: TYPOGRAPHY MICRO-REACTIVITY */
+.txt-micro-react {
+  transition: opacity 150ms cubic-bezier(0.16, 1, 0.3, 1), transform 150ms cubic-bezier(0.16, 1, 0.3, 1), filter 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
+}
+
+.txt-micro-react:hover {
+  opacity: 1 !important;
+  transform: scale(1.05);
+  /* Slight expansion of individual letter/word on hover */
+  z-index: 10;
+  filter: brightness(1.2);
+}
