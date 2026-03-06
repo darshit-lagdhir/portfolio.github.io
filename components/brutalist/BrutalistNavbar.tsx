@@ -106,12 +106,16 @@ export default function BrutalistNavbar() {
 }
 
 // PHASE 11 STEP 2 & 7: MAGNETIC NAV ITEM
-function MagneticNavItem({ link, index, isActive }: { link: { name: string, href: string, id: string }, index: number, isActive: boolean }) {
+function MagneticNavItem({
+    link,
+    index,
+    isActive
+}: {
+    link: { name: string, href: string, id: string };
+    index: number;
+    isActive: boolean;
+}) {
     const ref = useRef<HTMLDivElement>(null);
-    const magnetX = useMotionValue(0);
-    const magnetY = useMotionValue(0);
-    const smoothX = useSpring(magnetX, { damping: 35, stiffness: 250 });
-    const smoothY = useSpring(magnetY, { damping: 35, stiffness: 250 });
     const { triggerDiscovery, discoveries } = useScene();
     const [isHovering, setIsHovering] = useState(false);
 
@@ -123,36 +127,17 @@ function MagneticNavItem({ link, index, isActive }: { link: { name: string, href
         return () => clearTimeout(timer);
     }, [isHovering, index, triggerDiscovery, discoveries]);
 
-    const handleMouseMove = useCallback((e: React.MouseEvent) => {
-        if (!ref.current) return;
-        const rect = ref.current.getBoundingClientRect();
-        const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
-        // Max 8px displacement toward cursor
-        const dx = (e.clientX - centerX) * 0.15;
-        const dy = (e.clientY - centerY) * 0.3;
-        magnetX.set(Math.max(-8, Math.min(8, dx)));
-        magnetY.set(Math.max(-8, Math.min(8, dy)));
-    }, [magnetX, magnetY]);
-
-    const handleMouseLeave = useCallback(() => {
-        magnetX.set(0);
-        magnetY.set(0);
-        setIsHovering(false);
-    }, [magnetX, magnetY]);
-
     const handleMouseEnter = () => setIsHovering(true);
+    const handleMouseLeave = () => setIsHovering(false);
 
     return (
         <motion.div
             ref={ref}
             onMouseEnter={handleMouseEnter}
-            onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            style={{ x: smoothX, y: smoothY }}
             whileTap={{ scale: 0.93 }}
             transition={{ scale: { type: "spring", stiffness: 400, damping: 15 } }}
-            className="relative group"
+            className={`relative group magnetic-btn`}
         >
             <Link
                 href={link.href}

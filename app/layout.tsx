@@ -22,20 +22,20 @@ export function CustomCursor() {
 
   // Core dot: FAST response (EXTREME precision)
   const dot = {
-    x: useSpring(mouse.x, { damping: 20, stiffness: 1200, mass: 0.1 }),
-    y: useSpring(mouse.y, { damping: 20, stiffness: 1200, mass: 0.1 }),
+    x: useSpring(mouse.x, { damping: 20, stiffness: 1000, mass: 0.1 }),
+    y: useSpring(mouse.y, { damping: 20, stiffness: 1000, mass: 0.1 }),
   };
 
-  // Outer ring: SMOOTH trailing response (SILKY lag)
+  // Outer ring: SMOOTH trailing response (PHASE 25 STEP 2: SILKY lag)
   const ring = {
-    x: useSpring(mouse.x, { damping: 50, stiffness: 200, mass: 0.4 }),
-    y: useSpring(mouse.y, { damping: 50, stiffness: 200, mass: 0.4 }),
+    x: useSpring(mouse.x, { damping: 35, stiffness: 150, mass: 0.6 }),
+    y: useSpring(mouse.y, { damping: 35, stiffness: 150, mass: 0.6 }),
   };
 
   // STEP 6: Proximity light follows cursor (Ultra-smooth ambient)
   const glow = {
-    x: useSpring(mouse.x, { damping: 60, stiffness: 100, mass: 1 }),
-    y: useSpring(mouse.y, { damping: 60, stiffness: 100, mass: 1 }),
+    x: useSpring(mouse.x, { damping: 60, stiffness: 80, mass: 1 }),
+    y: useSpring(mouse.y, { damping: 60, stiffness: 80, mass: 1 }),
   };
 
   const [cursorVariant, setCursorVariant] = useState("default");
@@ -55,10 +55,38 @@ export function CustomCursor() {
   });
 
   useEffect(() => {
+    // PHASE 25 STEP 13: MOBILE TOUCH BYPASS
+    if (window.matchMedia("(hover: none)").matches || window.innerWidth < 768) {
+      setIsMounted(true);
+      return;
+    }
+
     setIsMounted(true);
+
     const moveMouse = (e: MouseEvent) => {
       mouse.x.set(e.clientX);
       mouse.y.set(e.clientY);
+
+      // PHASE 25 STEP 4: MAGNETIC BUTTON RESPONSE (NATIVE CSS DOM FOR PERFORMANCE)
+      const magneticBtns = document.querySelectorAll(".magnetic-btn");
+      magneticBtns.forEach(btn => {
+        const rect = btn.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dist = Math.sqrt(Math.pow(e.clientX - cx, 2) + Math.pow(e.clientY - cy, 2));
+
+        const htmlBtn = btn as HTMLElement;
+        if (dist < 150) { // Detection radius
+          const pull = 0.15; // Gravity strength
+          const dx = (e.clientX - cx) * pull;
+          const dy = (e.clientY - cy) * pull;
+          htmlBtn.style.setProperty('--magnet-x', `${dx}px`);
+          htmlBtn.style.setProperty('--magnet-y', `${dy}px`);
+        } else {
+          htmlBtn.style.setProperty('--magnet-x', `0px`);
+          htmlBtn.style.setProperty('--magnet-y', `0px`);
+        }
+      });
 
       // STATE DETECTION
       const target = e.target as HTMLElement;
@@ -69,7 +97,7 @@ export function CustomCursor() {
 
       if (isProject) setCursorVariant("project");
       else if (isLargeText) setCursorVariant("text");
-      else if (isLink) setCursorVariant("link");
+      else if (isLink) setCursorVariant("nav");
       else setCursorVariant("default");
 
       // PHASE 16 STEP 9: CURSOR SIGNAL TARGET RESOLUTION
@@ -101,46 +129,55 @@ export function CustomCursor() {
     };
   }, [mouse.x, mouse.y]);
 
-  // STEP 4: CURSOR SCALE RESPONSE VARIANTS
+  // PHASE 25 STEP 1, 7, 9: CURSOR SCALE REACTION & STATES
   const variants = {
     default: {
-      width: 40,
-      height: 40,
+      width: 32,
+      height: 32,
       borderRadius: "100%",
       borderWidth: "1px",
       backgroundColor: "rgba(255, 255, 255, 0)",
+      borderColor: "rgba(255, 255, 255, 1)",
     },
-    link: {
-      width: 70,
-      height: 70,
+    nav: {
+      width: 48,
+      height: 48,
       borderRadius: "100%",
       borderWidth: "1px",
-      backgroundColor: "rgba(255, 255, 255, 0.08)",
+      backgroundColor: "rgba(255, 255, 255, 0.05)",
+      borderColor: "rgba(255, 255, 255, 1)",
     },
     project: {
-      width: 100,
-      height: 100,
-      borderRadius: "4px",
-      borderWidth: "2px",
-      backgroundColor: "rgba(255, 255, 255, 0.05)",
-    },
-    text: {
-      width: 60,
-      height: 60,
+      width: 80,
+      height: 80,
       borderRadius: "100%",
       borderWidth: "1px",
-      backgroundColor: "rgba(255, 255, 255, 0.03)",
+      backgroundColor: "rgba(255, 255, 255, 0)",
+      borderColor: "rgba(255, 255, 255, 0.4)",
+    },
+    text: {
+      width: 4,
+      height: 40,
+      borderRadius: "2px",
+      borderWidth: "0px",
+      backgroundColor: "rgba(255, 255, 255, 0.5)",
+      borderColor: "rgba(255, 255, 255, 0)",
     },
   };
 
   if (!isMounted) return null;
+  // Bypass completely on mobile
+  if (typeof window !== 'undefined' && (window.matchMedia("(hover: none)").matches || window.innerWidth < 768)) return null;
 
   return (
     <>
       {/* CORE DOT — fast physics */}
       <motion.div
         className="fixed top-0 left-0 bg-white rounded-full pointer-events-none z-[9999] mix-blend-difference"
-        animate={{ scale: isPressed ? 0.6 : 1 }}
+        animate={{
+          scale: isPressed ? 0.6 : 1,
+          opacity: cursorVariant === "text" ? 0 : 1 // Hide dot on text
+        }}
         transition={{ type: "spring", stiffness: 500, damping: 15 }}
         style={{
           x: dot.x,
@@ -172,13 +209,48 @@ export function CustomCursor() {
 
       {/* OUTER RING — trailing physics */}
       <motion.div
-        className="fixed top-0 left-0 border border-white pointer-events-none z-[9998] mix-blend-difference"
+        className="fixed top-0 left-0 border pointer-events-none z-[9998] mix-blend-difference flex items-center justify-center"
         animate={{
           ...variants[cursorVariant as keyof typeof variants],
           scale: isPressed ? 0.85 : 1,
         }}
         transition={{ duration: 0.35, ease: [0.33, 1, 0.68, 1], scale: { type: "spring", stiffness: 400, damping: 12 } }}
         style={{ x: ring.x, y: ring.y, translateX: "-50%", translateY: "-50%" }}
+      >
+        {/* PHASE 25 STEP 9: PROJECT ARROW INDICATOR */}
+        <motion.svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="white"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="w-8 h-8 opacity-0"
+          animate={{ opacity: cursorVariant === "project" ? 1 : 0, x: cursorVariant === "project" ? 0 : -10 }}
+          transition={{ duration: 0.3 }}
+        >
+          <path d="M5 12h14M12 5l7 7-7 7" />
+        </motion.svg>
+      </motion.div>
+
+      {/* PHASE 25 STEP 6: CURSOR HOVER LIGHT (Spotlight) */}
+      <motion.div
+        className="fixed top-0 left-0 pointer-events-none z-[9000] mix-blend-screen rounded-full"
+        animate={{
+          opacity: (cursorVariant === "project" || cursorVariant === "text" || cursorVariant === "nav") ? 0.15 : 0,
+          scale: cursorVariant === "project" ? 1.5 : 1,
+        }}
+        transition={{ duration: 0.5 }}
+        style={{
+          width: 300,
+          height: 300,
+          x: glow.x,
+          y: glow.y,
+          translateX: "-50%",
+          translateY: "-50%",
+          background: "radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%)"
+        }}
       />
     </>
   );
@@ -220,7 +292,8 @@ function CursorDiscoveryTrail() {
       setMousePos({ x: e.clientX, y: e.clientY });
       // Only leave trail if moving slowly (high tempo MotionValue)
       if (scrollTempo.get() > 0.6) {
-        setTrail(prev => [...prev.slice(-10), { x: e.clientX, y: e.clientY, id: id++ }]);
+        // PHASE 25 STEP 11: CURSOR TRAIL REDUCTION (Reduced to 5 very subtle dots)
+        setTrail(prev => [...prev.slice(-3), { x: e.clientX, y: e.clientY, id: id++ }]);
       }
     };
     window.addEventListener("mousemove", handleMove, { passive: true });
@@ -232,8 +305,9 @@ function CursorDiscoveryTrail() {
       {trail.map(t => (
         <motion.div
           key={t.id}
-          initial={{ opacity: 0.3, scale: 1 }}
-          animate={{ opacity: 0, scale: 0.5 }}
+          initial={{ opacity: 0.15, scale: 0.8 }}
+          animate={{ opacity: 0, scale: 0.2 }}
+          transition={{ duration: 0.4 }}
           className="absolute w-1 h-1 bg-white rounded-full"
           style={{ left: t.x, top: t.y }}
         />
