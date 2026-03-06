@@ -9,7 +9,7 @@ import BrutalistNavbar from "@/components/brutalist/BrutalistNavbar";
 import AmbientParticles from "@/components/brutalist/AmbientParticles";
 import EnvironmentalSystem from "@/components/brutalist/EnvironmentalSystem";
 import { SceneProvider, useScene } from "@/context/SceneContext";
-import { CommandPalette, ContinuityLine, SystemStateIndicator } from "@/components/brutalist/SystemComponents";
+import { CommandPalette, ContinuityLine, SystemStateIndicator, ScrollProgressIndicator, SectionGridShift } from "@/components/brutalist/SystemComponents";
 
 const MICRO_EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
@@ -593,6 +593,8 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
 
       {/* PHASE 20 & 21: INTERFACE NETWORK LAYERS */}
       <TapRipple />
+      <ScrollProgressIndicator />
+      <SectionGridShift />
       <DiscoveryFeedbackDot key={lastDiscoveryTime} />
       <CursorDiscoveryTrail />
       <CursorSignals />

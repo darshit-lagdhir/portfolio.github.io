@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, useVelocity, AnimatePresence } from "framer-motion";
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -370,12 +370,28 @@ export function ChoreographedSection({ id, children, isProject = false, classNam
 
     const bridgeHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
+    const { scrollY } = useScroll();
+    const scrollVelocity = useVelocity(scrollY as any);
+    const [duration, setDuration] = useState(0.8);
+
+    useEffect(() => {
+        const unsubscribe = scrollVelocity.on("change", (v) => {
+            const speed = Math.abs(v);
+            // Higher speed = shorter duration (snappier)
+            // Range: [0.4, 1.2]
+            const nextDuration = Math.max(0.4, Math.min(1.2, 1.2 - (speed / 10000)));
+            setDuration(nextDuration);
+        });
+        return () => unsubscribe();
+    }, [scrollVelocity]);
+
     return (
         <motion.section
             ref={ref}
             id={id}
             style={{ scale, opacity, filter: idleDimFilter }}
             className={`w-full relative transition-all duration-[800ms] ease-out ${isProject ? '' : 'bg-white text-black'} ${className}`}
+            transition={{ duration, ease: GLOBAL_EASE }}
         >
             {/* Step 6: Visual Transition Bridges REMOVED */}
             {/* PHASE 21 STEP 10: SECTION ENTRY SIGNAL */}
@@ -454,6 +470,57 @@ export function StoryBlock({ title, children }: { title: string, children: React
         </div>
     );
 }
+// PHASE 26 STEP 12: SCROLL PROGRESS INDICATOR
+export function ScrollProgressIndicator() {
+    const { scrollYProgress } = useScroll();
+    const scaleY = useSpring(scrollYProgress, { damping: 30, stiffness: 100 });
+
+    return (
+        <motion.div
+            style={{ scaleY }}
+            className="fixed top-0 right-8 w-px h-1/4 bg-white/20 origin-top z-[2001] pointer-events-none"
+        >
+            <div className="absolute top-0 right-0 w-4 h-px bg-white/40" />
+            <div className="absolute bottom-0 right-0 w-4 h-px bg-white/40" />
+        </motion.div>
+    );
+}
+
+// PHASE 26 STEP 10: STRUCTURAL GRID SHIFT
+export function SectionGridShift() {
+    const { scrollYProgress } = useScroll();
+    const x = useTransform(scrollYProgress, [0, 1], ["0%", "5%"]);
+    const y = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
+
+    return (
+        <motion.div
+            style={{ x, y }}
+            className="fixed inset-0 pointer-events-none z-0 opacity-[0.03]"
+        >
+            <div className="w-[120%] h-[120%] -translate-x-[5%] -translate-y-[5%]" style={{
+                backgroundImage: 'linear-gradient(rgba(255,255,255,0.05) 1.5px, transparent 1.5px), linear-gradient(90deg, rgba(255,255,255,0.05) 1.5px, transparent 1.5px)',
+                backgroundSize: '100px 100px'
+            }} />
+        </motion.div>
+    );
+}
+
+// PHASE 26 STEP 9: MASK REVEAL FOR TYPOGRAPHY
+export function MaskReveal({ children, delay = 0 }: { children: React.ReactNode, delay?: number }) {
+    return (
+        <div className="relative overflow-hidden">
+            <motion.div
+                initial={{ y: "100%" }}
+                whileInView={{ y: "0%" }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 1.2, delay, ease: GLOBAL_EASE }}
+            >
+                {children}
+            </motion.div>
+        </div>
+    );
+}
+
 // PHASE 19 STEP 11: SYSTEM STATE INDICATOR
 export function SystemStateIndicator({ active }: { active: boolean }) {
     return (

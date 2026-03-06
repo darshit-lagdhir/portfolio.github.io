@@ -105,25 +105,25 @@ export default function BrutalistHero() {
     }, [mouseX, mouseY]);
 
     // PHASE 26 STEP 3 & 4: HERO SCROLL REACTION & EXIT TRANSITION
-    const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.05]); // Typography scales slightly
-    const geomZ = useTransform(scrollYProgress, [0, 1], [-200, -800]);  // Geometry deep plunge
-    const geomOpacity = useTransform(scrollYProgress, [0, 0.5], [0.2, 0]); // Fade geom
+    const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
+    const geomZ = useTransform(scrollYProgress, [0, 1], [-200, -1200]);
+    const geomOpacity = useTransform(scrollYProgress, [0, 0.4], [0.2, 0]);
 
-    const mainTextOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]); // Quick typography fade
-    const stackTextOpacity = useTransform(scrollYProgress, [0, 0.2], [0.15, 0]);
+    const mainTextOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+    const stackTextOpacity = useTransform(scrollYProgress, [0, 0.3], [0.15, 0]);
 
     // PHASE 9 STEP 1: CAMERA SCROLL — MULTI-LAYER PARALLAX
-    const frontY = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);   // Foreground: slowest
-    const midY = useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]);    // Mid layers
-    const backY = useTransform(scrollYProgress, [0, 1], ["0%", "-35%"]);   // Background: fastest
-    const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);      // BG counter-scroll
+    const frontY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
+    const midY = useTransform(scrollYProgress, [0, 1], ["0%", "-25%"]);
+    const backY = useTransform(scrollYProgress, [0, 1], ["0%", "-45%"]);
+    const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
 
-    // PHASE 17 STEP 1, 6, 11, 12, 14: SECTION MORPH ENGINE
-    const morphScaleX = useTransform(scrollYProgress, [0, 0.4, 0.8, 1], [1, 1, 0.98, 0.98]);
-    const morphScaleY = useTransform(scrollYProgress, [0, 0.4, 0.8, 1], [1, 1, 0.98, 0.96]); // VERTICAL COLLAPSE (STEP 11)
-    const morphRotate = useTransform(scrollYProgress, [0.8, 1], [0, -0.4]); // MICRO ROTATION (STEP 6)
-    const morphZ = useTransform(scrollYProgress, [0.8, 1], [0, -40]); // DEPTH SHIFT (STEP 12)
-    const morphOpacity = useTransform(scrollYProgress, [0.8, 1], [1, 0.3]);
+    // PHASE 26 STEP 4: SECTION EXIT MORPH
+    const morphScaleX = useTransform(scrollYProgress, [0.7, 1], [1, 0.95]);
+    const morphScaleY = useTransform(scrollYProgress, [0.7, 1], [1, 0.92]);
+    const morphRotate = useTransform(scrollYProgress, [0.7, 1], [0, -0.8]);
+    const morphZ = useTransform(scrollYProgress, [0.7, 1], [0, -100]);
+    const morphOpacity = useTransform(scrollYProgress, [0.8, 1], [1, 0]);
 
     // PHASE 20 STEP 1 & 2: HERO DISCOVERY TRIGGER
     useEffect(() => {
