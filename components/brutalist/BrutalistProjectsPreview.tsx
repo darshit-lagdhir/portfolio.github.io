@@ -148,13 +148,20 @@ export default function BrutalistProjectsPreview() {
                                                             </h3>
                                                         </div>
                                                         <div className="flex flex-col gap-6 max-w-xl">
-                                                            <p className="text-short-body text-black/70 tracking-wide bg-black/[0.04] p-4 md:p-6 border-l-2 border-black/30 group-hover:bg-black/5 group-hover:border-black transition-all duration-300 shadow-sm group-hover:shadow-[0_10px_30px_rgba(0,0,0,0.05)]">
+                                                            {/* PHASE 28 STEP 3: PANEL SURFACE TEXTURE REFINEMENT */}
+                                                            <p className="text-short-body text-black/70 tracking-wide bg-black/[0.03] p-4 md:p-6 border-l-2 border-black/20 group-hover:bg-black/5 group-hover:border-black transition-all duration-500 shadow-sm group-hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] backdrop-blur-sm">
                                                                 {project.desc}
                                                             </p>
-                                                            <div className="flex justify-between items-center border-t border-black/10 pt-4">
-                                                                <span className="text-micro font-bold tracking-[0.4em] opacity-40 group-hover:opacity-100 transition-opacity">
+                                                            {/* PHASE 28 STEP 7: SURFACE DIFFUSION INDICATOR */}
+                                                            <div className="flex justify-between items-center border-t border-black/5 pt-4">
+                                                                <span className="text-micro font-bold tracking-[0.4em] opacity-30 group-hover:opacity-100 group-hover:text-black transition-all duration-500">
                                                                     {project.type}
                                                                 </span>
+                                                                <motion.div
+                                                                    initial={{ width: 0 }}
+                                                                    whileHover={{ width: "2rem" }}
+                                                                    className="h-[1px] bg-black/40"
+                                                                />
                                                             </div>
                                                         </div>
                                                     </motion.div>

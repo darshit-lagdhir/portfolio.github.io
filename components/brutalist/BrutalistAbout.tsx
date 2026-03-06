@@ -59,7 +59,7 @@ export default function BrutalistAbout() {
 
                         {/* SECTION HEADING — MASK REVEAL (STEP 9) */}
                         <div className="flex flex-col gap-6 items-start self-start">
-                            <span className="text-micro font-bold tracking-[0.8em] opacity-70">03_IDENTITY</span>
+                            <span className="text-micro font-bold tracking-[0.8em] opacity-30">03_IDENTITY</span>
                             <MaskReveal>
                                 <motion.h2
                                     className={`text-[clamp(1.5rem,8vw,6rem)] break-words font-heading font-extrabold italic leading-none uppercase tracking-tighter w-full border-b border-white/20 pb-8 type-react-hover text-white`}
@@ -85,7 +85,7 @@ export default function BrutalistAbout() {
                                         Systems <br /> <span className="text-white/40 italic">Thinking.</span>
                                     </h3>
                                 </MaskReveal>
-                                <p className="text-short-body text-white/70 tracking-wide bg-white/[0.08] p-6 md:p-8 border-l-2 border-white/30">
+                                <p className="text-short-body text-white/50 tracking-wide bg-white/[0.04] p-6 md:p-8 border-l-2 border-white/20">
                                     I don't just write code; I design systems. Every component, from UI interactions to database queries, is treated as a node in a larger architectural network. Precision and scalability are non-negotiable.
                                 </p>
                             </motion.div>
@@ -103,7 +103,7 @@ export default function BrutalistAbout() {
                                         Backend <br /> <span className="text-white/40 italic">Authority.</span>
                                     </h3>
                                 </MaskReveal>
-                                <p className="text-short-body text-white/70 tracking-wide bg-white/[0.08] p-6 md:p-8 border-l-2 border-white/30">
+                                <p className="text-short-body text-white/50 tracking-wide bg-white/[0.04] p-6 md:p-8 border-l-2 border-white/20">
                                     Building rigid, secure, and highly performant data pipelines. I specialize in crafting backend infrastructure that withstands high concurrency and complex logic without exposing complexity to the frontend.
                                 </p>
                             </motion.div>
@@ -121,7 +121,7 @@ export default function BrutalistAbout() {
                                         Dynamic <br /> <span className="text-white/40 italic">Evolution.</span>
                                     </h3>
                                 </MaskReveal>
-                                <p className="text-short-body text-white/70 tracking-wide bg-white/[0.08] p-6 md:p-8 border-l-2 border-white/30">
+                                <p className="text-short-body text-white/50 tracking-wide bg-white/[0.04] p-6 md:p-8 border-l-2 border-white/20">
                                     Technology is a shifting landscape. My core skill is not a single language, but the ability to rapidly assimilate new paradigms, dissect unfamiliar architectures, and build production-ready software efficiently.
                                 </p>
                             </motion.div>

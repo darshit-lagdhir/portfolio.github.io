@@ -151,10 +151,10 @@ export default function BrutalistHero() {
     // PHASE 19 STEP 4: Tempo-based tracking
     const heroLetterSpacing = useTransform(scrollTempo, t => hasExplored ? "-0.02em" : (0.02 + (1 - t) * 0.1) + "em");
 
-    // PHASE 28 STEP 9: CURSOR LIGHT INTERACTION (Dynamic Atmosphere)
-    const bgLightX = useTransform(smoothMouseX, [-0.5, 0.5], ["20%", "80%"]);
-    const bgLightY = useTransform(smoothMouseY, [-0.5, 0.5], ["20%", "80%"]);
-    const atmosphericGradient = useMotionTemplate`radial-gradient(circle at ${bgLightX} ${bgLightY}, rgba(255,255,255,0.04) 0%, transparent 60%)`;
+    // PHASE 28 STEP 9 & 10: CURSOR LIGHT INTERACTION & DEPTH (Refined)
+    const bgLightX = useTransform(smoothMouseX, [-0.5, 0.5], ["30%", "70%"]);
+    const bgLightY = useTransform(smoothMouseY, [-0.5, 0.5], ["30%", "70%"]);
+    const atmosphericGradient = useMotionTemplate`radial-gradient(circle at ${bgLightX} ${bgLightY}, rgba(255,255,255,0.05) 0%, transparent 50%)`;
 
     const textArray1 = "DARSHIT".split("");
     const textArray2 = "LAGDHIR".split("");
@@ -175,15 +175,20 @@ export default function BrutalistHero() {
                 transformPerspective: 1200
             }}
         >
-            {/* BREATHING BACKGROUND — PHASE 4 + PHASE 9 + PHASE 28 STEP 9: ATMOSPHERIC LIGHTING OVERLAY */}
+            {/* PHASE 28 STEP 10: ATMOSPHERIC DEPTH OVERLAY */}
             <motion.div
-                animate={{ scale: [1, 1.005, 1] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 z-0 pointer-events-none opacity-30 mix-blend-screen"
+                className="absolute inset-0 z-0 pointer-events-none opacity-40 mix-blend-screen"
                 style={{
                     y: bgY,
                     background: atmosphericGradient
                 }}
+            />
+            {/* PHASE 28 STEP 11: SECTION BOUNDARY SIGNAL */}
+            <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: [0, 0.2, 0] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="absolute top-0 left-0 w-full h-[1px] bg-white/20 z-50 pointer-events-none"
             />
 
             {/* PHASE 24 STEP 2 & PHASE 26 STEP 3: FLOATING GEOMETRIC OBJECT DEEP PULLBACK */}

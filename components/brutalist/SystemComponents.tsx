@@ -399,21 +399,12 @@ export function ChoreographedSection({ id, children, isProject = false, classNam
             className={`w-full relative transition-all duration-[800ms] ease-out ${isProject ? '' : 'bg-white text-black'} ${className}`}
             transition={{ duration, ease: GLOBAL_EASE }}
         >
-            {/* Step 6: Visual Transition Bridges REMOVED */}
-            {/* PHASE 21 STEP 10 & PHASE 27 STEP 6: SECTION ENTRY SIGNAL (REFINED) */}
+            {/* PHASE 28 STEP 11: SECTION ATMOSPHERIC SHIFT */}
             <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: [0, 0.6, 0], scale: [0.95, 1, 1.05] }}
-                viewport={{ once: false, amount: 0.1 }}
-                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute top-0 left-0 w-full h-[1px] bg-current pointer-events-none z-[50]"
-            />
-            <motion.div
-                initial={{ opacity: 0, scale: 0.98 }}
-                whileInView={{ opacity: [0, 0.2, 0], scale: [0.98, 1, 1.02] }}
-                viewport={{ once: false, amount: 0.1 }}
-                transition={{ duration: 1, ease: MICRO_EASE }}
-                className="absolute inset-0 border-[0.5px] border-current opacity-10 pointer-events-none z-[-1]"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: [0, 0.05, 0] }}
+                viewport={{ amount: 0.5 }}
+                className="absolute inset-0 bg-white pointer-events-none z-0"
             />
             {children}
         </motion.section>

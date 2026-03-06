@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform, useScroll, useVelocity, AnimatePresence } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform, useScroll, useVelocity, AnimatePresence, useMotionTemplate } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import "./globals.css";
@@ -265,22 +265,22 @@ export function CustomCursor() {
         </motion.svg>
       </motion.div>
 
-      {/* PHASE 25 STEP 6: CURSOR HOVER LIGHT (Spotlight) */}
+      {/* PHASE 25 STEP 6 & PHASE 28 STEP 9: CURSOR HOVER LIGHT (Atmospheric Spotlight) */}
       <motion.div
         className="fixed top-0 left-0 pointer-events-none z-[9000] mix-blend-screen rounded-full"
         animate={{
-          opacity: (cursorVariant === "project" || cursorVariant === "text" || cursorVariant === "nav") ? 0.15 : 0,
-          scale: cursorVariant === "project" ? 1.5 : 1,
+          opacity: (cursorVariant === "project" || cursorVariant === "text" || cursorVariant === "nav") ? 0.25 : 0.05,
+          scale: cursorVariant === "project" ? 1.8 : 1.2,
         }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.5, ease: "easeOut" }}
         style={{
-          width: 300,
-          height: 300,
+          width: 400,
+          height: 400,
           x: glow.x,
           y: glow.y,
           translateX: "-50%",
           translateY: "-50%",
-          background: "radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%)"
+          background: "radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%)"
         }}
       />
     </>
@@ -491,24 +491,28 @@ function GlobalStructuralNetwork() {
   return (
     <div className="fixed inset-0 pointer-events-none z-[5]">
       <svg width="100%" height="100%">
-        {/* Connection Hero -> Projects */}
+        {/* PHASE 28 STEP 8: CONNECTION GLOW REFINEMENT */}
         <motion.path
           d="M 50 100 L 50 400 L 150 400"
           stroke="white"
           strokeWidth={lineGlowWidth}
           fill="none"
           initial={{ pathLength: 0, opacity: 0 }}
-          style={{ pathLength: path1Length, opacity: lineGlowOpacity }}
-          className="transition-all duration-300 drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]"
+          style={{
+            pathLength: path1Length,
+            opacity: lineGlowOpacity,
+            filter: useMotionTemplate`drop-shadow(0 0 ${useTransform(attentionScore, [0, 1], [0, 4])}px rgba(255,255,255,0.4))`
+          }}
+          className="transition-all duration-500"
         />
-        {/* Secondary Structural Grid Lines */}
+        {/* Secondary Structural Grid Lines (Atmospheric) */}
         <motion.path
           d="M 90vw 20vh L 90vw 80vh L 80vw 80vh"
           stroke="white"
           strokeWidth="0.5"
           fill="none"
           initial={{ pathLength: 0, opacity: 0 }}
-          animate={{ pathLength: 1, opacity: 0.05 }}
+          animate={{ pathLength: 1, opacity: 0.03 }}
           style={{ x: path2X }}
         />
       </svg>
@@ -571,8 +575,8 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
   const gridDynamicSpacing = useTransform(gridSpacing, (s: string) => `${s} 20vh`);
   const gridBackgroundSize = useTransform(gridSpacing, (s: string) => s ? `${s} ${s}` : '20vw 20vw');
 
-  // PHASE 27 STEP 9: GRID TEXTURE REFINEMENT
-  const gridFocusOpacity = useTransform(attentionScore, [0, 1], [0.03, 0.07]);
+  // PHASE 27 STEP 9 & PHASE 28 STEP 5: GRID TEXTURE CALIBRATION
+  const gridFocusOpacity = useTransform(attentionScore, [0, 1], [0.015, 0.04]);
 
   // PHASE 19 STEP 11: SYSTEM STATE INDICATOR LOGIC
   const [systemActive, setSystemActive] = useState(false);
@@ -600,6 +604,10 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
       <SmoothScroll />
       <BrutalistNavbar />
       <SystemStateIndicator active={systemActive} />
+
+      {/* PHASE 28 STEP 1 & 2: GLOBAL ATMOSPHERIC LAYERS */}
+      <div className="film-grain-overlay" />
+      <div className="cinematic-light-layer" />
 
       {/* PHASE 20 & 21: INTERFACE NETWORK LAYERS */}
       <TapRipple />
