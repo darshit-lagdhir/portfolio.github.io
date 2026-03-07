@@ -611,7 +611,6 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
 
       {/* PHASE 20 & 21: INTERFACE NETWORK LAYERS */}
       <TapRipple />
-      <ScrollProgressIndicator />
       <SectionGridShift />
       <DiscoveryFeedbackDot key={lastDiscoveryTime} />
       <CursorDiscoveryTrail />
