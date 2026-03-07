@@ -5,6 +5,7 @@ import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { useScene } from "@/context/SceneContext";
 import { ChoreographedSection } from "@/components/brutalist/SystemComponents";
+import { fetchGitHubData } from "@/lib/github-service";
 
 const GLOBAL_EASE = [0.33, 1, 0.68, 1] as [number, number, number, number];
 
@@ -49,6 +50,7 @@ export default function BrutalistProjectsPreview() {
         {
             id: "01",
             name: "MOVEX_SYSTEM",
+            repoName: "movex",
             type: "LOGISTICS / BACKEND",
             href: "/movex",
             desc: "A robust supply chain engine focusing on real-time routing and high-scale operational capacity. Engineered for precision and transparency in global movement.",
@@ -57,6 +59,7 @@ export default function BrutalistProjectsPreview() {
         {
             id: "02",
             name: "UIDAI_AI",
+            repoName: "uidai-advisory-system",
             type: "PATTERN / AUTH",
             href: "/uidai",
             desc: "Advanced semantic search and retrieval architecture built for hyper-fast identity documentation. Integrating neural patterns into structural databases.",
@@ -65,6 +68,7 @@ export default function BrutalistProjectsPreview() {
         {
             id: "03",
             name: "POLYGLOT_FFI",
+            repoName: "polyglot-ffi-verifier",
             type: "CONTRACT / SECURITY",
             href: "/pfcv",
             desc: "Zero-overhead foreign function interfaces bridging isolated memory spaces with absolute type safety. Secured through rigorous algorithmic validation.",
@@ -157,9 +161,12 @@ export default function BrutalistProjectsPreview() {
                                                             </p>
                                                             {/* PHASE 28 STEP 7: SURFACE DIFFUSION INDICATOR */}
                                                             <div className="flex justify-between items-center border-t border-black/5 pt-4">
-                                                                <span className="text-caption opacity-30 group-hover:opacity-100 group-hover:text-black transition-all duration-500">
-                                                                    {project.type}
-                                                                </span>
+                                                                <div className="flex flex-col gap-1">
+                                                                    <span className="text-caption opacity-30 group-hover:opacity-100 group-hover:text-black transition-all duration-500">
+                                                                        {project.type}
+                                                                    </span>
+                                                                    <ProjectPreviewSignal repoName={project.repoName} />
+                                                                </div>
                                                                 <motion.div
                                                                     initial={{ width: 0 }}
                                                                     whileHover={{ width: "2rem" }}
@@ -191,5 +198,31 @@ export default function BrutalistProjectsPreview() {
                 </div>
             </div>
         </ChoreographedSection>
+    );
+}
+
+import { GitHubRepoData } from "@/lib/github-service";
+
+function ProjectPreviewSignal({ repoName }: { repoName: string }) {
+    const [data, setData] = useState<GitHubRepoData | null>(null);
+
+    useEffect(() => {
+        fetchGitHubData(repoName).then(setData);
+    }, [repoName]);
+
+    if (!data) return null;
+
+    const date = new Date(data.updated_at).toLocaleDateString("en-US", { month: "short", year: "numeric" });
+
+    return (
+        <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex items-center gap-3 text-[9px] uppercase tracking-wider text-black/40"
+        >
+            <span>UPDATED: {date}</span>
+            <span className="hidden sm:inline w-1 h-1 bg-black/20 rounded-full" />
+            <span className="hidden sm:inline">{data.language}</span>
+        </motion.div>
     );
 }

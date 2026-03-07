@@ -16,6 +16,7 @@ import {
 import { useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import ProjectCredibility from "@/components/brutalist/ProjectCredibility";
 
 const GLOBAL_EASE = [0.25, 1, 0.5, 1] as [number, number, number, number];
 
@@ -76,6 +77,7 @@ export default function MoveXPage() {
                     arch="Modular Monolith"
                     tech={["Node.js", "Express", "PostgreSQL", "React"]}
                 />
+                <ProjectCredibility repoName="movex" githubUrl="https://github.com/darshit-lagdhir/movex" status="Production" />
 
                 {/* PHASE 14 STEP 5: PROJECT FLOW TIMELINE */}
                 <ProjectTimeline steps={["Design", "Architecture", "Isolation", "Rollout"]} />

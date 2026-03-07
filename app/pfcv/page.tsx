@@ -16,6 +16,7 @@ import {
 import { useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import ProjectCredibility from "@/components/brutalist/ProjectCredibility";
 
 const GLOBAL_EASE = [0.25, 1, 0.5, 1] as [number, number, number, number];
 
@@ -76,6 +77,7 @@ export default function PFCVPage() {
                     arch="Intermediate Representation Compiler"
                     tech={["Rust", "LLVM IR", "C++", "WebAssembly"]}
                 />
+                <ProjectCredibility repoName="polyglot-ffi-verifier" githubUrl="https://github.com/darshit-lagdhir/polyglot-ffi-verifier" status="Experimental" />
 
                 {/* PHASE 14 STEP 5: PROJECT FLOW TIMELINE */}
                 <ProjectTimeline steps={["AST Parse", "IR Synthesis", "Memory Check", "Safe FFI Generation"]} />

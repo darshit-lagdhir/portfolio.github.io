@@ -15,6 +15,7 @@ import {
 import { useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import ProjectCredibility from "@/components/brutalist/ProjectCredibility";
 
 const GLOBAL_EASE = [0.25, 1, 0.5, 1] as [number, number, number, number];
 
@@ -75,6 +76,7 @@ export default function UIDAIPage() {
                     arch="Anomaly Detection Model"
                     tech={["OpenCV", "Scikit", "Biometric Math", "NumPy"]}
                 />
+                <ProjectCredibility repoName="uidai-advisory-system" githubUrl="https://github.com/darshit-lagdhir/uidai-advisory-system" status="Research" />
 
                 {/* PHASE 14 STEP 5: PROJECT FLOW TIMELINE */}
                 <ProjectTimeline steps={["Data Ingestion", "Pattern Match", "Cluster Generation", "Advisory Flag"]} />
