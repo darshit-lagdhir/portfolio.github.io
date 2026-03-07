@@ -9,7 +9,7 @@ const GLOBAL_EASE = [0.33, 1, 0.68, 1] as [number, number, number, number];
 const MICRO_EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
 export default function BrutalistNavbar() {
-    const { activeSection, isIdle, markInteraction } = useScene();
+    const { activeSection, isIdle, markInteraction, setIsCommandPaletteOpen } = useScene();
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -54,16 +54,31 @@ export default function BrutalistNavbar() {
                 </div>
 
                 {/* MOBILE TRIGGER */}
-                <div className="md:hidden flex">
+                <div className="flex items-center gap-4">
+                    {/* COMMAND PALETTE ICON — STEP 12 */}
                     <button
-                        onClick={() => {
-                            setMenuOpen(!menuOpen);
-                            markInteraction();
-                        }}
-                        className="text-white font-bold text-[10px] tracking-[0.4em] p-2"
+                        onClick={() => setIsCommandPaletteOpen(true)}
+                        className="p-2 border border-white/10 hover:border-white/40 transition-colors group"
+                        title="Command Palette (Ctrl+K)"
                     >
-                        {menuOpen ? "[ CLOSE ]" : "[ MENU ]"}
+                        <div className="flex flex-col gap-0.5">
+                            <div className="w-4 h-0.5 bg-white group-hover:scale-x-110 origin-left transition-transform" />
+                            <div className="w-2 h-0.5 bg-white group-hover:scale-x-150 origin-left transition-transform" />
+                            <div className="w-3 h-0.5 bg-white group-hover:scale-x-125 origin-left transition-transform" />
+                        </div>
                     </button>
+
+                    <div className="md:hidden flex">
+                        <button
+                            onClick={() => {
+                                setMenuOpen(!menuOpen);
+                                markInteraction();
+                            }}
+                            className="text-white font-bold text-[10px] tracking-[0.4em] p-2"
+                        >
+                            {menuOpen ? "[ CLOSE ]" : "[ MENU ]"}
+                        </button>
+                    </div>
                 </div>
             </nav>
 

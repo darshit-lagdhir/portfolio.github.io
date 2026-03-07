@@ -32,6 +32,9 @@ interface SceneContextType {
     discoveries: Set<string>;
     triggerDiscovery: (id: string) => void;
     lastDiscoveryTime: number;
+    // PHASE 32: COMMAND INTERFACE STATE
+    isCommandPaletteOpen: boolean;
+    setIsCommandPaletteOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SceneContext = createContext<SceneContextType | undefined>(undefined);
@@ -53,9 +56,11 @@ export function SceneProvider({ children }: { children: React.ReactNode }) {
     const [focusZone, setFocusZone] = useState<"top" | "center" | "bottom">("center");
     const [projectInterests, setProjectInterests] = useState<Record<string, number>>({});
 
-    // PHASE 20: DISCOVERY STATE (Step 6: Reset on reload)
     const [discoveries, setDiscoveries] = useState<Set<string>>(new Set());
     const [lastDiscoveryTime, setLastDiscoveryTime] = useState(0);
+
+    // PHASE 32: COMMAND INTERFACE
+    const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
 
     const triggerDiscovery = React.useCallback((id: string) => {
         setDiscoveries(prev => {
@@ -190,7 +195,8 @@ export function SceneProvider({ children }: { children: React.ReactNode }) {
             isSoundEnabled, setIsSoundEnabled,
             isIdle, interactionCount, markInteraction,
             scrollTempo, attentionScore, focusZone, projectInterests, markProjectInterest,
-            discoveries, triggerDiscovery, lastDiscoveryTime
+            discoveries, triggerDiscovery, lastDiscoveryTime,
+            isCommandPaletteOpen, setIsCommandPaletteOpen
         }}>
             <div className={`scene-mode-${mode} ${isIdle ? 'system-idle' : 'system-active'} focus-zone-${focusZone}`}>
                 {children}

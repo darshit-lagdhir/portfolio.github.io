@@ -302,68 +302,159 @@ export function CodeBlockVisual({ code }: { code: string[] }) {
     );
 }
 
-// PHASE 14 STEP 9 & 14: COMMAND-LIKE NAVIGATION
+// PHASE 32: COMMAND INTERFACE (DEVELOPER NAVIGATION INTELLIGENCE)
 export function CommandPalette() {
-    const [open, setOpen] = useState(false);
+    const { isCommandPaletteOpen: open, setIsCommandPaletteOpen: setOpen } = useScene();
+    const [query, setQuery] = useState("");
+    const [selectedIndex, setSelectedIndex] = useState(0);
     const router = useRouter();
+    const pathname = usePathname();
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    const commands = [
+        { id: 'hero', label: 'GO_TO_HERO', section: 'hero' },
+        { id: 'projects', label: 'GO_TO_PROJECTS', section: 'projects' },
+        { id: 'about', label: 'GO_TO_ABOUT', section: 'about' },
+        { id: 'contact', label: 'GO_TO_CONTACT', section: 'contact' },
+        { id: 'movex', label: 'OPEN_MOVEX_SYSTEM', href: '/movex' },
+        { id: 'uidai', label: 'OPEN_UIDAI_AI', href: '/uidai' },
+        { id: 'pfcv', label: 'OPEN_POLYGLOT_FFI', href: '/pfcv' },
+    ];
+
+    const filtered = commands.filter(c => 
+        c.label.toLowerCase().includes(query.toLowerCase())
+    );
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
                 e.preventDefault();
-                // Step 14: Disable command palette on mobile
-                if (window.innerWidth >= 768) {
-                    setOpen(o => !o);
-                }
+                setOpen(o => !o);
             }
             if (e.key === "Escape") setOpen(false);
+
+            if (open) {
+                if (e.key === "ArrowDown") {
+                    e.preventDefault();
+                    setSelectedIndex(i => (i + 1) % filtered.length);
+                }
+                if (e.key === "ArrowUp") {
+                    e.preventDefault();
+                    setSelectedIndex(i => (i - 1 + filtered.length) % filtered.length);
+                }
+                if (e.key === "Enter" && filtered[selectedIndex]) {
+                    e.preventDefault();
+                    executeCommand(filtered[selectedIndex]);
+                }
+            }
         };
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, []);
+    }, [open, filtered, selectedIndex]);
 
-    if (!open) return null;
+    useEffect(() => {
+        if (open) {
+            setQuery("");
+            setSelectedIndex(0);
+            setTimeout(() => inputRef.current?.focus(), 50);
+        }
+    }, [open]);
+
+    const executeCommand = (cmd: any) => {
+        setOpen(false);
+        if (cmd.section) {
+            if (pathname !== "/") {
+                router.push(`/#${cmd.section}`);
+            } else {
+                const el = document.getElementById(cmd.section);
+                el?.scrollIntoView({ behavior: "smooth" });
+            }
+        } else if (cmd.href) {
+            router.push(cmd.href);
+        }
+    };
 
     return (
-        <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-md z-[200] flex items-center justify-center p-4"
-            onClick={() => setOpen(false)}
-        >
-            <motion.div
-                initial={{ scale: 0.95, y: 20 }}
-                animate={{ scale: 1, y: 0 }}
-                onClick={(e) => e.stopPropagation()}
-                className="w-full max-w-lg border border-white/10 bg-black shadow-2xl overflow-hidden"
-            >
-                <div className="px-4 py-3 border-b border-white/10 text-[10px] tracking-widest text-white/40 uppercase">
-                    System Command Palette
-                </div>
-                <div className="p-2 flex flex-col gap-1">
-                    {[
-                        { label: "SYS_HOME", href: "/" },
-                        { label: "MOD_MOVEX", href: "/movex" },
-                        { label: "MOD_UIDAI", href: "/uidai" },
-                        { label: "MOD_PFCV", href: "/pfcv" },
-                    ].map(cmd => (
-                        <button
-                            key={cmd.label}
-                            onClick={() => {
-                                router.push(cmd.href);
-                                setOpen(false);
-                            }}
-                            className="w-full text-left px-4 py-3 text-sm font-ui tracking-wider text-white/70 hover:text-white hover:bg-white/10 transition-colors"
-                        >
-                            {cmd.label}
-                        </button>
-                    ))}
-                </div>
-            </motion.div>
-        </motion.div>
+        <AnimatePresence>
+            {open && (
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 bg-black/90 backdrop-blur-xl z-[9000] flex items-center justify-center p-4 cursor-none"
+                    onClick={() => setOpen(false)}
+                >
+                    <motion.div
+                        initial={{ scale: 0.98, opacity: 0, y: 10 }}
+                        animate={{ scale: 1, opacity: 1, y: 0 }}
+                        exit={{ scale: 0.98, opacity: 0, y: 10 }}
+                        transition={{ duration: 0.2, ease: RHYTHM.EASE }}
+                        onClick={(e) => e.stopPropagation()}
+                        className="w-full max-w-xl border border-white/20 bg-[#050505] shadow-[0_30px_60px_rgba(0,0,0,0.8)] overflow-hidden"
+                    >
+                        {/* SEARCH INPUT — STEP 2 & 10 */}
+                        <div className="flex items-center gap-4 px-6 border-b border-white/10 h-16">
+                            <span className="text-micro font-bold text-white/40 tracking-[0.4em]">SYS_NAV</span>
+                            <input
+                                ref={inputRef}
+                                type="text"
+                                value={query}
+                                onChange={(e) => setQuery(e.target.value)}
+                                placeholder="EXECUTE_COMMAND..."
+                                className="flex-1 bg-transparent border-none outline-none text-white text-sm font-ui tracking-wider placeholder:text-white/20 uppercase"
+                            />
+                            <div className="flex items-center gap-2">
+                                <span className="bg-white/5 px-2 py-1 border border-white/10 text-[8px] text-white/40">ESC_CLOSE</span>
+                            </div>
+                        </div>
+
+                        {/* COMMAND LIST — STEP 3 & 4 */}
+                        <div className="p-2 max-h-[60vh] overflow-y-auto">
+                            {filtered.length > 0 ? filtered.map((cmd, idx) => (
+                                <motion.button
+                                    key={cmd.id}
+                                    onMouseMove={() => setSelectedIndex(idx)}
+                                    onClick={() => executeCommand(cmd)}
+                                    className={`
+                                        group w-full text-left px-5 py-4 flex items-center justify-between transition-all duration-200
+                                        ${idx === selectedIndex ? 'bg-white text-black' : 'text-white/60 hover:text-white hover:bg-white/5'}
+                                    `}
+                                >
+                                    <div className="flex items-center gap-4">
+                                        <span className={`text-[10px] opacity-40 ${idx === selectedIndex ? 'text-black' : 'text-white'}`}>
+                                            {String(idx + 1).padStart(2, '0')}
+                                        </span>
+                                        <span className="text-xs font-bold font-heading tracking-widest uppercase">
+                                            {cmd.label}
+                                        </span>
+                                    </div>
+                                    <div className={`flex items-center gap-4 transition-all ${idx === selectedIndex ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'}`}>
+                                        <span className="text-[10px] font-ui italic">CONFIRM_EXECUTION</span>
+                                        <div className={`w-2 h-2 rounded-full ${idx === selectedIndex ? 'bg-black' : 'bg-white'}`} />
+                                    </div>
+                                </motion.button>
+                            )) : (
+                                <div className="px-6 py-12 text-center text-micro text-white/20 tracking-[0.4em]">
+                                    NO_COMMANDS_MATCHED_QUERY
+                                </div>
+                            )}
+                        </div>
+
+                        {/* FOOTER BAR */}
+                        <div className="px-6 py-3 bg-white/5 border-t border-white/10 flex justify-between items-center text-[8px] text-white/30 tracking-[0.4em] font-bold">
+                            <span>PRECISION_NAV_V.3.2</span>
+                            <div className="flex gap-4">
+                                <span>↑↓_SELECT</span>
+                                <span>ENTER_EXEC</span>
+                            </div>
+                        </div>
+                    </motion.div>
+                </motion.div>
+            )}
+        </AnimatePresence>
     );
 }
+
 
 // PHASE 15 STEP 1, 2, 3, 4: SCROLL CHOREOGRAPHY ENGINE W/ TIMELINE
 export function ChoreographedSection({ id, children, isProject = false, className = "" }: { id?: string, children: React.ReactNode, isProject?: boolean, className?: string }) {
