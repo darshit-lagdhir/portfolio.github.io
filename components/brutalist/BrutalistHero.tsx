@@ -25,8 +25,8 @@ const Letter = ({ char, index, total, smoothMouseX, attentionScore, rippleActive
     const pressureY = useTransform(dist, (d: number) => (index % 2 === 0 ? 1 : -1) * (d < 0.08 ? (1 - d / 0.08) * 10 : 0));
     const smoothPressureY = useSpring(pressureY, { damping: 40, stiffness: 300 });
 
-    // PHASE 29 STEP 2: KINETIC MASK REVEAL
-    const revealDelay = index * 0.03 + 0.6;
+    // PHASE 31: MEDIUM ENERGY REVEAL — GRADUAL & CINEMATIC
+    const revealDelay = index * 0.04 + 0.8;
 
     return (
         <motion.span
@@ -39,7 +39,7 @@ const Letter = ({ char, index, total, smoothMouseX, attentionScore, rippleActive
                 transition: { duration: 0.2, ease: [0.16, 1, 0.3, 1] }
             }}
             transition={{
-                duration: isMobile ? 0.6 : 1.5,
+                duration: isMobile ? 0.6 : 1.8,
                 delay: isMobile ? index * 0.02 : revealDelay,
                 ease: [0.33, 1, 0.68, 1]
             }}

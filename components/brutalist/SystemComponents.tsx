@@ -9,6 +9,16 @@ import { useScene } from "@/context/SceneContext";
 const GLOBAL_EASE = [0.33, 1, 0.68, 1] as [number, number, number, number];
 const MICRO_EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
+// PHASE 31: INTERFACE RHYTHM TOKENS
+export const RHYTHM = {
+    PRIMARY: 0.6,
+    HOVER: 0.2,
+    CURSOR: 0.12,
+    MICRO: 0.08,
+    EASE: GLOBAL_EASE,
+    SNAP: [0.16, 1, 0.3, 1]
+};
+
 // PHASE 14 STEP 11: PROJECT ENTRY LOADING SEQUENCE
 export function ProjectEntryLoader() {
     return (

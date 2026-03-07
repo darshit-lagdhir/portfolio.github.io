@@ -72,11 +72,11 @@ export default function BrutalistContact() {
                             >
                                 <span className="text-caption">04_TERMINATION</span>
                                 <div className="relative overflow-visible pb-4">
-                                    <motion.h2 
+                                    <motion.h2
                                         initial={{ opacity: 0, y: 30 }}
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true }}
-                                        transition={{ duration: 1.2, delay: 0.4, ease: GLOBAL_EASE }}
+                                        transition={{ duration: 1.6, delay: 0.6, ease: GLOBAL_EASE }}
                                         className="text-large text-black type-react-hover"
                                     >
                                         {scrambledTitle}
@@ -95,10 +95,10 @@ export default function BrutalistContact() {
                             whileTap={{ scale: 0.96 }}
                             viewport={{ once: true }}
                             transition={{
-                                duration: 0.6,
+                                duration: 0.8,
                                 ease: GLOBAL_EASE,
-                                scale: { type: "spring", stiffness: 600, damping: 20, mass: 0.5 },
-                                y: { type: "spring", stiffness: 400, damping: 25 }
+                                scale: { type: "spring", stiffness: 300, damping: 30, mass: 1 },
+                                y: { type: "spring", stiffness: 200, damping: 30 }
                             }}
                             className="relative py-12 px-8 border border-black/10 group cursor-none magnetic-btn tactile-btn shadow-sm hover:shadow-xl transition-shadow"
                         >

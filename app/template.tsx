@@ -21,7 +21,8 @@ export default function Template({ children }: { children: React.ReactNode }) {
     }, []);
 
     // PHASE 12: CINEMATIC TIMING (SUB-600MS)
-    const [duration, setDuration] = useState(0.55);
+    // PHASE 31: RHYTHM HARMONIZATION (PRIMARY: 600MS)
+    const [duration, setDuration] = useState(0.65);
 
     useEffect(() => {
         const now = Date.now();
@@ -74,7 +75,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
             scale: 1,
             opacity: 1,
             zIndex: 10,
-            transition: { duration: duration * 1.5, ease, delay: 0.1 }
+            transition: { duration: duration * 1.2, ease, delay: 0.2 } // PHASE 31 STEP 8: INTERACTION BREATHING SPACE
         },
         exit: (dir: string) => {
             if (isProjectPage && !isMobile) {

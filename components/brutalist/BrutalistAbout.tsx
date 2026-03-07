@@ -73,8 +73,11 @@ export default function BrutalistAbout() {
                             </div>
                         </div>
 
+                        {/* PHASE 31 STEP 13: VISUAL PAUSE ZONE — EDITORIAL STILLNESS */}
+                        <div className="h-[20vh] md:h-[32vh]" />
+
                         {/* EDITORIAL STATEMENT BLOCKS — STAGGERED REVEAL (STEP 8) */}
-                        <div className="grid grid-cols-12 gap-y-24 md:gap-y-32 gap-x-8 items-start mt-10">
+                        <div className="grid grid-cols-12 gap-y-24 md:gap-y-32 gap-x-8 items-start">
 
                             {/* BLOCK 1 - SYSTEMS THINKING */}
                             <motion.div
@@ -84,7 +87,7 @@ export default function BrutalistAbout() {
                                 transition={{ duration: 1, ease: GLOBAL_EASE }}
                                 className="col-span-12 lg:col-span-6 lg:col-start-1"
                             >
-                                <MaskReveal delay={0.2} direction="up" duration={1.2}>
+                                <MaskReveal delay={0.3} direction="up" duration={1.4}>
                                     <h3 className="text-medium mb-8 type-react-hover">
                                         Systems <br /> <span className="text-white/40 italic">Thinking.</span>
                                     </h3>
@@ -93,7 +96,7 @@ export default function BrutalistAbout() {
                                     initial={{ opacity: 0, y: 30 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
-                                    transition={{ duration: 1, delay: 0.3, ease: GLOBAL_EASE }}
+                                    transition={{ duration: 1.2, delay: 0.5, ease: GLOBAL_EASE }}
                                     className="text-body text-white/50 bg-white/[0.04] p-6 md:p-8 border-l-2 border-white/20"
                                 >
                                     I don't just write code; I design systems. Every component, from UI interactions to database queries, is treated as a node in a larger architectural network. Precision and scalability are non-negotiable.
@@ -108,7 +111,7 @@ export default function BrutalistAbout() {
                                 transition={{ duration: 1, delay: 0.3, ease: GLOBAL_EASE }}
                                 className="col-span-12 lg:col-span-5 lg:col-start-8"
                             >
-                                <MaskReveal delay={0.4} direction="up" duration={1.2}>
+                                <MaskReveal delay={0.6} direction="up" duration={1.4}>
                                     <h3 className="text-medium mb-8 type-react-hover">
                                         Backend <br /> <span className="text-white/40 italic">Authority.</span>
                                     </h3>
@@ -117,7 +120,7 @@ export default function BrutalistAbout() {
                                     initial={{ opacity: 0, y: 30 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
-                                    transition={{ duration: 1, delay: 0.5, ease: GLOBAL_EASE }}
+                                    transition={{ duration: 1.2, delay: 0.8, ease: GLOBAL_EASE }}
                                     className="text-body text-white/50 bg-white/[0.04] p-6 md:p-8 border-l-2 border-white/20"
                                 >
                                     Building rigid, secure, and highly performant data pipelines. I specialize in crafting backend infrastructure that withstands high concurrency and complex logic without exposing complexity to the frontend.
@@ -132,7 +135,7 @@ export default function BrutalistAbout() {
                                 transition={{ duration: 1, delay: 0.5, ease: GLOBAL_EASE }}
                                 className="col-span-12 lg:col-span-7 lg:col-start-3"
                             >
-                                <MaskReveal delay={0.6} direction="up" duration={1.0}>
+                                <MaskReveal delay={1.2} direction="up" duration={1.6}>
                                     <h3 className="text-medium mb-8 type-react-hover">
                                         Dynamic <br /> <span className="text-white/40 italic">Evolution.</span>
                                     </h3>
