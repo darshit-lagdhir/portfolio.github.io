@@ -236,7 +236,7 @@ export function CustomCursor() {
           ...variants[cursorVariant as keyof typeof variants],
           scale: isPressed
             ? (cursorVariant === "project" || cursorVariant === "nav" ? 1.25 : 0.8)
-            : (Date.now() - (lastDiscoveryTime || 0) < 1000 ? [1, 1.4, 1] : 1),
+            : (Date.now() - (lastDiscoveryTime || 0) < 1000 ? 1.4 : 1),
           borderWidth: isPressed ? "2px" : variants[cursorVariant as keyof typeof variants].borderWidth,
           opacity: isPressed ? 1 : 0.8,
           borderColor: (Date.now() - (lastDiscoveryTime || 0) < 1000) ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.4)"
