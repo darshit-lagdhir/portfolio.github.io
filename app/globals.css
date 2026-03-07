@@ -309,20 +309,7 @@ body {
   font-weight: 600;
 }
 
-.text-micro {
-  font-size: var(--fs-micro);
-  font-family: var(--font-ui);
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  font-weight: 700;
-}
-
-.text-short-body {
-  font-size: var(--fs-body);
-  font-family: var(--font-body);
-  line-height: 1.6;
-  max-width: 45ch;
-}
+/* FINISHED HIERARCHY LOCK — PHASE 29 COMPLETE */
 
 /* GRID & DIVIDERS — PHASE 3 */
 .divider-h {

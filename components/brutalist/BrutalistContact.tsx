@@ -70,7 +70,7 @@ export default function BrutalistContact() {
                                 transition={{ duration: 1, ease: GLOBAL_EASE }}
                                 className="flex flex-col items-center gap-6"
                             >
-                                <span className="text-micro font-bold tracking-[0.6em] md:tracking-[1em] text-black/50">04_TERMINATION</span>
+                                <span className="text-caption">04_TERMINATION</span>
                                 <div className="relative overflow-visible pb-4">
                                     <motion.h2 
                                         initial={{ opacity: 0, y: 30 }}
@@ -129,7 +129,7 @@ export default function BrutalistContact() {
                                     whileInView={{ opacity: 1 }}
                                     viewport={{ once: true }}
                                     transition={{ duration: 0.8, delay: 0.8 + i * 0.1 }}
-                                    className="text-micro font-bold tracking-[0.4em] hover:text-black/40 transition-all uppercase magnetic-btn tactile-btn"
+                                    className="text-caption hover:text-black/40 transition-all magnetic-btn tactile-btn"
                                 >
                                     {social.label}
                                 </motion.a>
@@ -141,7 +141,7 @@ export default function BrutalistContact() {
 
                 {/* EXIT CUE — PHASE 3 */}
                 <div className="absolute bottom-12 flex flex-col items-center gap-6 w-[200px]">
-                    <span className="text-micro font-bold tracking-[1.2em] text-black">EOT</span>
+                    <span className="text-caption">EOT</span>
                 </div>
 
                 {/* CORNER ACCENTS REMOVED */}

@@ -96,7 +96,7 @@ export default function BrutalistProjectsPreview() {
 
                             {/* SECTION HEADING */}
                             <div className="flex flex-col gap-4 items-start self-start w-full">
-                                <span className="text-micro font-bold tracking-[0.8em] opacity-40">02_ARCHIVE</span>
+                                <span className="text-caption">02_ARCHIVE</span>
                                 <motion.h2
                                     className="text-[clamp(1.2rem,6vw,4.2rem)] font-heading font-extrabold uppercase tracking-tighter whitespace-nowrap w-full border-b border-black/20 pb-4 type-react-hover"
                                 >
@@ -138,7 +138,7 @@ export default function BrutalistProjectsPreview() {
                                                         className="flex flex-col gap-6 w-full"
                                                     >
                                                         <div className="flex items-baseline gap-4 relative">
-                                                            <span className="text-micro font-bold opacity-30">{project.id}</span>
+                                                            <span className="text-caption">{project.id}</span>
                                                             <div className="relative">
                                                                 <h3 className="text-medium type-react-hover group-hover:tracking-wider transition-all duration-500">
                                                                     {project.name.replace('_', '\u00A0')}
@@ -152,12 +152,12 @@ export default function BrutalistProjectsPreview() {
                                                         </div>
                                                         <div className="flex flex-col gap-6 max-w-xl">
                                                             {/* PHASE 28 STEP 3: PANEL SURFACE TEXTURE REFINEMENT */}
-                                                            <p className="text-short-body text-black/70 tracking-wide bg-black/[0.03] p-4 md:p-6 border-l-2 border-black/20 group-hover:bg-black/5 group-hover:border-black transition-all duration-500 shadow-sm group-hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] backdrop-blur-sm">
+                                                            <p className="text-body text-black/70 bg-black/[0.03] p-4 md:p-6 border-l-2 border-black/20 group-hover:bg-black/5 group-hover:border-black transition-all duration-500 shadow-sm group-hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] backdrop-blur-sm">
                                                                 {project.desc}
                                                             </p>
                                                             {/* PHASE 28 STEP 7: SURFACE DIFFUSION INDICATOR */}
                                                             <div className="flex justify-between items-center border-t border-black/5 pt-4">
-                                                                <span className="text-micro font-bold tracking-[0.4em] opacity-30 group-hover:opacity-100 group-hover:text-black transition-all duration-500">
+                                                                <span className="text-caption opacity-30 group-hover:opacity-100 group-hover:text-black transition-all duration-500">
                                                                     {project.type}
                                                                 </span>
                                                                 <motion.div

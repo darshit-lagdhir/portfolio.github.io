@@ -59,13 +59,13 @@ export default function BrutalistAbout() {
 
                         {/* SECTION HEADING — MASK REVEAL (STEP 9) */}
                         <div className="flex flex-col gap-6 items-start self-start">
-                            <span className="text-micro font-bold tracking-[0.8em] opacity-30">03_IDENTITY</span>
+                            <span className="text-caption">03_IDENTITY</span>
                             <div className="relative overflow-hidden py-2 px-1 -m-2">
                                 <motion.h2
                                     initial={{ opacity: 0, y: 40 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
-                                    transition={{ duration: 1.5, delay: 0.2, ease: GLOBAL_EASE }}
+                                    transition={{ duration: 1.2, delay: 0.2, ease: GLOBAL_EASE }}
                                     className="text-large break-words w-full border-b border-white/20 pb-8 type-react-hover text-white"
                                 >
                                     {scrambledTitle}
@@ -84,12 +84,12 @@ export default function BrutalistAbout() {
                                 transition={{ duration: 1, ease: GLOBAL_EASE }}
                                 className="col-span-12 lg:col-span-6 lg:col-start-1"
                             >
-                                <MaskReveal delay={0.2} direction="left">
+                                <MaskReveal delay={0.2} direction="left" duration={1.0}>
                                     <h3 className="text-medium mb-8 type-react-hover">
                                         Systems <br /> <span className="text-white/40 italic">Thinking.</span>
                                     </h3>
                                 </MaskReveal>
-                                <p className="text-short-body text-white/50 bg-white/[0.04] p-6 md:p-8 border-l-2 border-white/20">
+                                <p className="text-body text-white/50 bg-white/[0.04] p-6 md:p-8 border-l-2 border-white/20">
                                     I don't just write code; I design systems. Every component, from UI interactions to database queries, is treated as a node in a larger architectural network. Precision and scalability are non-negotiable.
                                 </p>
                             </motion.div>
@@ -102,12 +102,12 @@ export default function BrutalistAbout() {
                                 transition={{ duration: 1, delay: 0.3, ease: GLOBAL_EASE }}
                                 className="col-span-12 lg:col-span-5 lg:col-start-8"
                             >
-                                <MaskReveal delay={0.4} direction="right">
+                                <MaskReveal delay={0.4} direction="right" duration={1.0}>
                                     <h3 className="text-medium mb-8 type-react-hover">
                                         Backend <br /> <span className="text-white/40 italic">Authority.</span>
                                     </h3>
                                 </MaskReveal>
-                                <p className="text-short-body text-white/50 bg-white/[0.04] p-6 md:p-8 border-l-2 border-white/20">
+                                <p className="text-body text-white/50 bg-white/[0.04] p-6 md:p-8 border-l-2 border-white/20">
                                     Building rigid, secure, and highly performant data pipelines. I specialize in crafting backend infrastructure that withstands high concurrency and complex logic without exposing complexity to the frontend.
                                 </p>
                             </motion.div>
@@ -120,12 +120,12 @@ export default function BrutalistAbout() {
                                 transition={{ duration: 1, delay: 0.5, ease: GLOBAL_EASE }}
                                 className="col-span-12 lg:col-span-7 lg:col-start-3"
                             >
-                                <MaskReveal delay={0.6} direction="up">
+                                <MaskReveal delay={0.6} direction="up" duration={1.0}>
                                     <h3 className="text-medium mb-8 type-react-hover">
                                         Dynamic <br /> <span className="text-white/40 italic">Evolution.</span>
                                     </h3>
                                 </MaskReveal>
-                                <p className="text-short-body text-white/50 bg-white/[0.04] p-6 md:p-8 border-l-2 border-white/20">
+                                <p className="text-body text-white/50 bg-white/[0.04] p-6 md:p-8 border-l-2 border-white/20">
                                     Technology is a shifting landscape. My core skill is not a single language, but the ability to rapidly assimilate new paradigms, dissect unfamiliar architectures, and build production-ready software efficiently.
                                 </p>
                             </motion.div>
@@ -140,14 +140,14 @@ export default function BrutalistAbout() {
                             className="mt-12 md:mt-20 grid grid-cols-12 gap-4 md:gap-8 border-t border-white/20 pt-12 md:pt-16"
                         >
                             <div className="col-span-12 lg:col-span-3">
-                                <span className="text-micro font-bold tracking-[0.3em] opacity-70">CURRENT_SYNC</span>
+                                <span className="text-caption">CURRENT_SYNC</span>
                             </div>
                             <div className="col-span-12 lg:col-span-9 flex flex-wrap gap-4 md:gap-6">
                                 {["Low-Level Memory Mgt", "Distributed Databases", "Advanced WebGL", "Security Protocols"].map((item, idx) => (
                                     <motion.div
                                         key={idx}
                                         whileHover={{ backgroundColor: "rgba(255,255,255,0.12)", y: -2 }}
-                                        className="border border-white/15 px-5 py-3 text-micro font-bold tracking-[0.15em] bg-white/[0.04] cursor-none transition-colors"
+                                        className="border border-white/15 px-5 py-3 text-caption bg-white/[0.04] cursor-none transition-colors"
                                     >
                                         {item}
                                     </motion.div>
