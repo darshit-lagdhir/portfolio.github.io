@@ -122,9 +122,10 @@ export default function BrutalistHero() {
     const stackTextOpacity = useTransform(scrollYProgress, [0, 0.3], [0.15, 0]);
 
     // PHASE 9 STEP 1: CAMERA SCROLL — MULTI-LAYER PARALLAX
+    // PHASE 9 STEP 1: CAMERA SCROLL — LOCKED HIERARCHY FOR STABILITY
     const frontY = useTransform(scrollYProgress, [0, 1], ["0%", "-10%"]);
-    const midY = useTransform(scrollYProgress, [0, 1], ["0%", "-25%"]);
-    const backY = useTransform(scrollYProgress, [0, 1], ["0%", "-45%"]);
+    const midY = useTransform(scrollYProgress, [0, 1], ["0%", "-10.5%"]); // Minimal drift for depth
+    const backY = useTransform(scrollYProgress, [0, 1], ["0%", "-11%"]);   // Tight synchronization
     const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
 
     // PHASE 26 STEP 4: SECTION EXIT MORPH
@@ -238,7 +239,7 @@ export default function BrutalistHero() {
                         {/* GREY SHADOW LAYER — softened for depth */}
                         <motion.span
                             style={{ y: backY, opacity: 0.08 }} // Reduced opacity for stronger hierarchy
-                            className="absolute top-[4px] left-[4px] text-massive italic text-white/30 select-none pointer-events-none perspective-tilt z-0"
+                            className="absolute top-[4px] left-[4px] text-massive italic text-white/30 select-none pointer-events-none perspective-tilt z-0 whitespace-nowrap"
                             aria-hidden
                         >
                             {textArray1.map((char, i) => (
@@ -283,7 +284,7 @@ export default function BrutalistHero() {
                         {/* GREY SHADOW LAYER — offset behind main text, interactive */}
                         <motion.span
                             style={{ y: backY, opacity: 0.15 }}
-                            className="absolute top-[4px] left-[4px] text-massive italic text-white/30 select-none pointer-events-none perspective-tilt z-0"
+                            className="absolute top-[4px] left-[4px] text-massive italic text-white/30 select-none pointer-events-none perspective-tilt z-0 whitespace-nowrap"
                             aria-hidden
                         >
                             {textArray2.map((char, i) => (
