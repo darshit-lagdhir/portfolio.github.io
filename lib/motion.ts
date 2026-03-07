@@ -39,3 +39,22 @@ export const staggerItem = {
     whileInView: { opacity: 1, y: 0 },
     transition: { duration: motionConfig.medium, ease: motionConfig.cinematic },
 };
+// PHASE 34: INTERACTION PHYSICS TOKENS
+export const PHYSICS = {
+    PRESSURE: { type: "spring", stiffness: 600, damping: 30, mass: 0.5 } as const,
+    ELEVATION: { type: "spring", stiffness: 400, damping: 25, mass: 1 } as const,
+    MAGNETIC: { type: "spring", stiffness: 150, damping: 15, mass: 0.1 } as const,
+    RELAX: { type: "spring", stiffness: 100, damping: 20 } as const,
+    TENSION: { type: "spring", stiffness: 200, damping: 15, mass: 1 } as const
+};
+
+export const pressureFeedback = {
+    whileHover: { scale: 1.02, y: -2 },
+    whileTap: { scale: 0.98, y: 1 },
+    transition: PHYSICS.PRESSURE
+};
+
+export const elevationFeedback = {
+    whileHover: { y: -8, scale: 1.01, boxShadow: "0 20px 40px rgba(0,0,0,0.4)" },
+    transition: PHYSICS.ELEVATION
+};

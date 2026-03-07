@@ -20,6 +20,13 @@ export function CustomCursor() {
     y: useMotionValue(-100),
   };
 
+  const { lastDiscoveryTime } = useScene();
+  const [cursorVariant, setCursorVariant] = useState("default");
+
+  // PHASE 34: INTERACTION RESISTANCE ARBITER
+  const isResistant = cursorVariant === "nav" || cursorVariant === "project";
+  const resistanceSpring = { damping: isResistant ? 80 : 35, stiffness: isResistant ? 80 : 250 };
+
   // Core dot: FAST response (EXTREME precision)
   const dot = {
     x: useSpring(mouse.x, { damping: 20, stiffness: 1000, mass: 0.1 }),
@@ -27,9 +34,10 @@ export function CustomCursor() {
   };
 
   // Outer ring: SMOOTH trailing response (PHASE 25 STEP 2: SILKY lag)
+  // PHASE 34: Coupled to resistanceSpring for tactile friction
   const ring = {
-    x: useSpring(mouse.x, { damping: 45, stiffness: 120, mass: 0.8 }),
-    y: useSpring(mouse.y, { damping: 45, stiffness: 120, mass: 0.8 }),
+    x: useSpring(mouse.x, resistanceSpring),
+    y: useSpring(mouse.y, resistanceSpring),
   };
 
   // STEP 6: Proximity light follows cursor (Ultra-smooth ambient)
@@ -38,8 +46,6 @@ export function CustomCursor() {
     y: useSpring(mouse.y, { damping: 60, stiffness: 80, mass: 1 }),
   };
 
-  const { lastDiscoveryTime } = useScene();
-  const [cursorVariant, setCursorVariant] = useState("default");
   const [isPressed, setIsPressed] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
@@ -67,7 +73,7 @@ export function CustomCursor() {
       mouse.x.set(e.clientX);
       mouse.y.set(e.clientY);
 
-      // STEP 4 & 5: MAGNETIC RESPONSE ENGINE
+      // STEP 3 & 4: ADVANCED MAGNETIC & TENSION RESPONSIVENESS
       const interactables = document.querySelectorAll(".magnetic-btn, [data-project='true']");
       interactables.forEach(el => {
         const rect = el.getBoundingClientRect();
@@ -77,21 +83,29 @@ export function CustomCursor() {
 
         const htmlEl = el as HTMLElement;
         const isProject = htmlEl.getAttribute('data-project') === 'true';
-        const radius = isProject ? 300 : 150;
+        const isMagnetic = htmlEl.classList.contains('magnetic-btn');
+        const radius = isProject ? 400 : 150;
 
         if (dist < radius) {
-          const pull = isProject ? 0.05 : 0.15; // Panels are heavier
+          // STEP 3: Magnetic Attraction
+          const pull = isMagnetic ? 0.35 : (isProject ? 0.08 : 0.15);
           const dx = (e.clientX - cx) * pull;
           const dy = (e.clientY - cy) * pull;
           htmlEl.style.setProperty('--magnet-x', `${dx}px`);
           htmlEl.style.setProperty('--magnet-y', `${dy}px`);
 
-          // STEP 5: Perspective shift for panels
+          // STEP 4: Panel Tilt/Tension
           if (isProject) {
-            const rotX = -(e.clientY - cy) / radius * 5;
-            const rotY = (e.clientX - cx) / radius * 5;
+            const rotX = -(e.clientY - cy) / radius * 8;
+            const rotY = (e.clientX - cx) / radius * 8;
             htmlEl.style.setProperty('--tilt-x', `${rotX}deg`);
             htmlEl.style.setProperty('--tilt-y', `${rotY}deg`);
+            
+            // STEP 7: Panel Edge Light Response
+            const edgeX = (e.clientX - rect.left) / rect.width * 100;
+            const edgeY = (e.clientY - rect.top) / rect.height * 100;
+            htmlEl.style.setProperty('--edge-light-x', `${edgeX}%`);
+            htmlEl.style.setProperty('--edge-light-y', `${edgeY}%`);
           }
         } else {
           htmlEl.style.setProperty('--magnet-x', `0px`);
@@ -105,9 +119,9 @@ export function CustomCursor() {
 
       // STATE DETECTION REFINEMENT
       const target = e.target as HTMLElement;
-      const isLink = target.closest("a, button, [role='button'], .nav-item");
+      const isLink = target.closest("a, button, [role='button'], .nav-item, .magnetic-btn");
       const isProject = target.closest("[data-project='true']");
-      const isLargeText = target.closest("h1, h2, h3, .text-massive, .text-large");
+      const isLargeText = target.closest("h1, h2, h3, .text-massive, .text-large, .kinetic-letter");
       const isWhiteSection = target.closest(".bg-white");
 
       if (isDragging) setCursorVariant("drag");
@@ -140,7 +154,7 @@ export function CustomCursor() {
       window.removeEventListener("mousedown", onDown);
       window.removeEventListener("mouseup", onUp);
     };
-  }, [mouse.x, mouse.y, isDragging]);
+  }, [mouse.x, mouse.y, isDragging, cursorVariant]);
 
   // PHASE 25 STEP 1, 7, 9: CURSOR SCALE REACTION & STATES
   const variants = {
@@ -153,20 +167,20 @@ export function CustomCursor() {
       borderColor: "rgba(255, 255, 255, 1)",
     },
     nav: {
-      width: 48,
-      height: 48,
+      width: 64,
+      height: 64,
       borderRadius: "100%",
-      borderWidth: "1px",
-      backgroundColor: "rgba(255, 255, 255, 0.05)",
+      borderWidth: "1.5px",
+      backgroundColor: "rgba(255, 255, 255, 0.08)",
       borderColor: "rgba(255, 255, 255, 1)",
     },
     project: {
-      width: 80,
-      height: 80,
+      width: 120,
+      height: 120,
       borderRadius: "100%",
       borderWidth: "1px",
       backgroundColor: "rgba(255, 255, 255, 0)",
-      borderColor: "rgba(255, 255, 255, 0.4)",
+      borderColor: "rgba(255, 255, 255, 0.6)",
     },
     text: {
       width: 4,

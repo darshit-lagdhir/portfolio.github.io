@@ -3,7 +3,7 @@
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useScene } from "@/context/SceneContext";
 import { useState, useEffect, useRef } from "react";
-import { ScrollMoment, ChoreographedSection, MaskReveal } from "@/components/brutalist/SystemComponents";
+import { ScrollMoment, ChoreographedSection, MaskReveal, MagneticButton } from "@/components/brutalist/SystemComponents";
 
 const GLOBAL_EASE = [0.33, 1, 0.68, 1] as [number, number, number, number];
 
@@ -85,54 +85,53 @@ export default function BrutalistContact() {
                             </motion.div>
                         </ScrollMoment>
 
-                        {/* EMAIL INTERACTION — PHASE 3 + PHASE 11 STEP 9: BUTTON TENSION */}
-                        <motion.div
-                            onMouseEnter={() => setIsHovered(true)}
-                            onMouseLeave={() => setIsHovered(false)}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            whileHover={{ scale: 1.02, y: -5 }}
-                            whileTap={{ scale: 0.96 }}
-                            viewport={{ once: true }}
-                            transition={{
-                                duration: 0.8,
-                                ease: GLOBAL_EASE,
-                                scale: { type: "spring", stiffness: 300, damping: 30, mass: 1 },
-                                y: { type: "spring", stiffness: 200, damping: 30 }
-                            }}
-                            className="relative py-12 px-8 border border-black/10 group cursor-none magnetic-btn tactile-btn shadow-sm hover:shadow-xl transition-shadow"
-                        >
-                            <a
-                                href="mailto:darshitlagdhir@gmail.com"
-                                className="text-base md:text-lg font-heading font-bold italic text-black hover:opacity-70 transition-opacity uppercase tracking-tight"
-                            >
-                                DARSHITLAGDHIR@GMAIL.COM
-                            </a>
+                        {/* EMAIL INTERACTION — PHASE 34: MAGNETIC & PRESSURE FEEDBACK */}
+                        <div className="flex flex-col items-center">
                             <motion.div
-                                initial={{ scaleX: 0 }}
-                                animate={{ scaleX: isHovered ? 1 : 0 }}
-                                className="absolute bottom-10 left-6 right-6 h-[4px] bg-black origin-left"
-                            />
-                        </motion.div>
+                                onMouseEnter={() => setIsHovered(true)}
+                                onMouseLeave={() => setIsHovered(false)}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.8 }}
+                            >
+                                <MagneticButton
+                                    className="relative py-12 px-8 border border-black/10 group shadow-sm hover:shadow-xl transition-all"
+                                >
+                                    <a
+                                        href="mailto:darshitlagdhir@gmail.com"
+                                        className="text-base md:text-lg font-heading font-bold italic text-black uppercase tracking-tight"
+                                    >
+                                        DARSHITLAGDHIR@GMAIL.COM
+                                    </a>
+                                    <motion.div
+                                        initial={{ scaleX: 0 }}
+                                        animate={{ scaleX: isHovered ? 1 : 0 }}
+                                        className="absolute bottom-10 left-6 right-6 h-[4px] bg-black origin-left"
+                                    />
+                                </MagneticButton>
+                            </motion.div>
+                        </div>
 
                         <div className="flex gap-16 mt-12">
                             {[
                                 { label: "GH", link: "https://github.com/darshit-lagdhir" },
                                 { label: "LI", link: "https://www.linkedin.com/in/darshitlagdhir/" },
                             ].map((social, i) => (
-                                <motion.a
-                                    key={social.label}
-                                    href={social.link}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    initial={{ opacity: 0 }}
-                                    whileInView={{ opacity: 1 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 0.8, delay: 0.8 + i * 0.1 }}
-                                    className="text-caption hover:text-black/40 transition-all magnetic-btn tactile-btn"
-                                >
-                                    {social.label}
-                                </motion.a>
+                                <MagneticButton key={social.label}>
+                                    <motion.a
+                                        href={social.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        initial={{ opacity: 0 }}
+                                        whileInView={{ opacity: 1 }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.8, delay: 0.8 + i * 0.1 }}
+                                        className="text-caption hover:text-black/40 transition-all font-ui font-bold tracking-widest"
+                                    >
+                                        {social.label}
+                                    </motion.a>
+                                </MagneticButton>
                             ))}
                         </div>
 

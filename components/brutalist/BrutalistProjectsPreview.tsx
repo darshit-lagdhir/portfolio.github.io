@@ -44,7 +44,7 @@ export default function BrutalistProjectsPreview() {
     });
 
     // Pinned reveal transforms
-    const breathPadding = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], ["4rem", "8rem", "8rem", "4rem"]);
+    const breathPadding = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], ["1rem", "6rem", "6rem", "1rem"]);
 
     const projects = [
         {
@@ -84,8 +84,8 @@ export default function BrutalistProjectsPreview() {
                 onPointerEnter={() => setActiveSection("projects")}
                 className="relative h-[300vh] bg-white text-black"
             >
-                {/* STICKY WRAPPER */}
-                <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center">
+                {/* STICKY WRAPPER — PHASE 34: ARCHITECTURAL ANCHOR */}
+                <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col">
                     {/* SECTION NUMBER SYSTEM — PHASE 30 VISIBILITY FIX */}
                     <motion.span
                         style={{ opacity: useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.04, 0.08, 0.08, 0.04]) }}
@@ -94,22 +94,23 @@ export default function BrutalistProjectsPreview() {
                         02
                     </motion.span>
 
-                    {/* BREATHING WRAPPER */}
-                    <motion.div style={{ paddingTop: breathPadding, paddingBottom: breathPadding }} className="relative z-10 w-full">
-                        <div className="w-full max-w-[1800px] mx-auto px-[5vw] flex flex-col gap-12 md:gap-24">
+                    {/* FIXED HEADER SYSTEM */}
+                    <div className="w-full max-w-[1800px] mx-auto px-[5vw] pt-12 md:pt-20 z-20 shrink-0">
+                        <div className="flex flex-col gap-4 items-start self-start w-full">
+                            <span className="text-caption text-black/60">02_ARCHIVE</span>
+                            <motion.h2
+                                className="text-[clamp(1.2rem,6vw,4.2rem)] font-heading font-extrabold uppercase tracking-tighter whitespace-nowrap w-full border-b border-black/20 pb-4 type-react-hover text-black"
+                            >
+                                {scrambledTitle}
+                            </motion.h2>
+                        </div>
+                    </div>
 
-                            {/* SECTION HEADING — PHASE 30 REFINED */}
-                            <div className="flex flex-col gap-4 items-start self-start w-full">
-                                <span className="text-caption text-black/60">02_ARCHIVE</span>
-                                <motion.h2
-                                    className="text-[clamp(1.2rem,6vw,4.2rem)] font-heading font-extrabold uppercase tracking-tighter whitespace-nowrap w-full border-b border-black/20 pb-4 type-react-hover text-black"
-                                >
-                                    {scrambledTitle}
-                                </motion.h2>
-                            </div>
-
+                    {/* BREATHING PROJECT ZONE — PHASE 34: KINETIC CONTENT ONLY */}
+                    <motion.div style={{ paddingBottom: breathPadding }} className="relative z-10 w-full flex-grow overflow-hidden mt-12 md:mt-24">
+                        <div className="w-full max-w-[1800px] mx-auto px-[5vw] relative h-full">
                             {/* STEP 6 & 7: EDITORIAL PROJECT BLOCKS (PINNED REVEAL) */}
-                            <div className="grid grid-cols-12 gap-y-12 gap-x-8 items-start relative h-[50vh]">
+                            <div className="grid grid-cols-12 gap-y-12 gap-x-8 items-start relative h-full">
                                 {projects.map((project, idx) => {
                                     // PHASE 30 STEP 3: SEQUENTIAL REVEAL ENGINE — STAGGERED SYSTEM ENTRY
                                     const start = idx * 0.28; // Increased delay gap
@@ -128,19 +129,32 @@ export default function BrutalistProjectsPreview() {
                                                 y: pY,
                                                 x: pX,
                                                 filter: useTransform(pBlur, b => `blur(${b})`),
-                                                pointerEvents: useTransform(pOpacity, o => o > 0.5 ? "auto" : "none") as any
+                                                pointerEvents: useTransform(pOpacity, (o: number) => o > 0.5 ? "auto" : ("none" as any))
                                             }}
                                             className={`absolute inset-0 grid grid-cols-12 items-center ${project.span}`}
                                             data-project="true"
                                         >
                                             <div className="col-span-12">
-                                                <Link href={project.href} className="group block w-full">
+                                                <Link href={project.href} className="group block w-full relative preserve-3d">
                                                     <motion.div
-                                                        whileHover={{ y: -10, filter: "brightness(1.1)" }}
-                                                        whileTap={{ scale: 0.98 }}
+                                                        whileHover={{ z: 50 }}
+                                                        whileTap={{ scale: 0.98, y: 2 }}
                                                         transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                                                        className="flex flex-col gap-6 w-full"
+                                                        className="flex flex-col gap-6 w-full relative z-10"
+                                                        style={{
+                                                            rotateX: "var(--tilt-x, 0deg)",
+                                                            rotateY: "var(--tilt-y, 0deg)",
+                                                            x: "var(--magnet-x, 0px)",
+                                                            y: "var(--magnet-y, 0px)",
+                                                        }}
                                                     >
+                                                        {/* STEP 7: Panel Edge Light Response */}
+                                                        <div
+                                                            className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"
+                                                            style={{
+                                                                background: `radial-gradient(circle at var(--edge-light-x, 50%) var(--edge-light-y, 50%), rgba(0,0,0,0.05) 0%, transparent 60%)`
+                                                            }}
+                                                        />
                                                         <div className="flex items-baseline gap-4 relative">
                                                             <span className="text-caption text-black/40">{project.id}</span>
                                                             <div className="relative">
@@ -183,15 +197,7 @@ export default function BrutalistProjectsPreview() {
                             </div>
 
                             {/* EXIT CUE */}
-                            <motion.div
-                                style={{ opacity: useTransform(scrollYProgress, [0.8, 0.9], [0, 0.3]) }}
-                                className="mt-8 border-t border-black/10 pt-8 flex justify-end"
-                            >
-                                <div className="flex flex-col items-end gap-2">
-                                    <span className="text-micro font-bold tracking-[0.4em]">SYS_NAV_02 / EOT</span>
-                                    <div className="w-16 h-px bg-black" />
-                                </div>
-                            </motion.div>
+                            {/* EXIT CUE REMOVED AS REQUESTED */}
 
                         </div>
                     </motion.div>
@@ -215,7 +221,7 @@ function ProjectPreviewSignal({ repoName }: { repoName: string }) {
     const date = new Date(data.updated_at).toLocaleDateString("en-US", { month: "short", year: "numeric" });
 
     return (
-        <motion.div 
+        <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="flex items-center gap-3 text-[9px] uppercase tracking-wider text-black/40"

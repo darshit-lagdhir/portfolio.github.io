@@ -94,7 +94,23 @@ body {
   width: 100%;
 }
 
-/* COMPOSITION UTILITIES */
+/* PHASE 34: INTERACTION PHYSICS UTILITIES */
+.magnetic-btn, .project-panel, [data-project='true'] {
+  --magnet-x: 0px;
+  --magnet-y: 0px;
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --edge-light-x: 50%;
+  --edge-light-y: 50%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.kinetic-letter {
+  display: inline-block;
+  transition: letter-spacing 0.3s var(--m-ease-out);
+}
+
 .bg-inverse {
   background-color: #ffffff !important;
   color: #000000 !important;

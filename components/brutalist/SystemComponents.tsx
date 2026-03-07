@@ -111,33 +111,88 @@ export function SystemGridOverlay() {
     );
 }
 
-// PHASE 14 STEP 2, 7 & 13: PROJECT INFORMATION PANELS
+// PHASE 34 STEP 3 & 4: PROJECT INFORMATION PANELS WITH TENSION & TILT
 export function ProjectPanel({ title, index, children }: { title: string, index: number, children: React.ReactNode }) {
     const ref = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "center center"] });
-    // Step 13: Panel stack depth (active panel comes forward)
+    const scrollVelocity = useVelocity(scrollYProgress);
+    const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 });
+
+    // Step 10: Scroll Interaction Tension (Stretch based on velocity)
+    const scaleY = useTransform(smoothVelocity, [-1, 0, 1], [1.02, 1, 1.02]);
     const scale = useTransform(scrollYProgress, [0, 1], [0.95, 1]);
     const opacity = useTransform(scrollYProgress, [0, 1], [0.3, 1]);
 
     return (
         <motion.div
             ref={ref}
-            style={{ scale, opacity }}
-            whileHover={{ scale: 1.01, boxShadow: "0 10px 40px rgba(0,0,0,0.5)", borderColor: "rgba(255,255,255,0.2)" }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="w-full border border-white/5 bg-black/40 p-8 md:p-12 transition-colors origin-bottom"
+            style={{ 
+                scale, 
+                opacity,
+                scaleY,
+                transformStyle: "preserve-3d",
+                perspective: "1200px"
+            }}
+            whileHover={{ 
+                zIndex: 20,
+                transition: { duration: 0.2 }
+            }}
+            className="w-full border border-white/5 bg-black/40 p-8 md:p-12 transition-all duration-300 origin-center relative group/panel overflow-hidden"
+            data-project="true"
         >
-            <div className="flex flex-col md:flex-row gap-6 md:gap-16">
+            {/* STEP 7: Panel Edge Light Response (Dynamic Highlight) */}
+            <div 
+                className="absolute inset-0 pointer-events-none opacity-0 group-hover/panel:opacity-100 transition-opacity duration-500 z-0"
+                style={{
+                    background: `radial-gradient(circle at var(--edge-light-x, 50%) var(--edge-light-y, 50%), rgba(255,255,255,0.08) 0%, transparent 60%)`
+                }}
+            />
+
+            <motion.div 
+                className="relative z-10 flex flex-col md:flex-row gap-6 md:gap-16"
+                style={{
+                    rotateX: "var(--tilt-x, 0deg)",
+                    rotateY: "var(--tilt-y, 0deg)",
+                    x: "var(--magnet-x, 0px)",
+                    y: "var(--magnet-y, 0px)",
+                }}
+            >
                 <div className="md:w-1/4">
-                    <span className="text-micro font-bold tracking-[0.4em] text-white/40 uppercase">
+                    <span className="text-micro font-bold tracking-[0.4em] text-white/40 uppercase group-hover/panel:text-white transition-colors">
                         {`0${index + 1}_${title}`}
                     </span>
                 </div>
                 <div className="md:w-3/4 flex flex-col gap-6">
                     {children}
                 </div>
-            </div>
+            </motion.div>
         </motion.div>
+    );
+}
+
+// PHASE 34 STEP 3: MAGNETIC BUTTON SYSTEM
+export function MagneticButton({ 
+    children, 
+    className = "", 
+    onClick 
+}: { 
+    children: React.ReactNode, 
+    className?: string,
+    onClick?: () => void 
+}) {
+    return (
+        <motion.button
+            onClick={onClick}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9, y: 2 }}
+            className={`magnetic-btn relative flex items-center justify-center transition-all duration-200 ${className}`}
+            style={{
+                x: "var(--magnet-x, 0px)",
+                y: "var(--magnet-y, 0px)",
+            }}
+        >
+            {children}
+        </motion.button>
     );
 }
 

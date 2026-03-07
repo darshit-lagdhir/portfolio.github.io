@@ -57,8 +57,8 @@ export async function fetchGitHubData(repoName: string): Promise<GitHubRepoData 
       license: repoData.license,
       language: repoData.language,
       languages: languages,
-      commitCount_approx: Array.isArray(activity) ? activity.reduce((acc: number, week: any) => acc + week.total, 0) : 0,
-      weeklyActivity: Array.isArray(activity) ? activity.slice(-12).map((w: any) => w.total) : [] // Last 12 weeks
+      commitCount_approx: Array.isArray(activity) ? activity.reduce((acc: number, week: { total: number }) => acc + week.total, 0) : 0,
+      weeklyActivity: Array.isArray(activity) ? activity.slice(-12).map((w: { total: number }) => w.total) : [] // Last 12 weeks
     };
 
     if (typeof window !== "undefined") {

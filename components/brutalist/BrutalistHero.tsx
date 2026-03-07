@@ -34,14 +34,15 @@ const Letter = ({ char, index, total, smoothMouseX, attentionScore, rippleActive
             initial={{ clipPath: isMobile ? "inset(0% 0% 0% 0%)" : "inset(0% 0% 100% 0%)", y: isMobile ? 0 : 30, opacity: 0 }}
             animate={{ clipPath: "inset(-20% -20% -20% -20%)", y: 0, opacity: 1 }}
             whileHover={isMobile ? {} : {
-                scale: 1.1,
-                filter: "brightness(1.5)",
-                transition: { duration: 0.2, ease: [0.16, 1, 0.3, 1] }
+                scale: 1.15,
+                filter: "brightness(2)",
+                transition: { type: "spring", stiffness: 400, damping: 10 }
             }}
             transition={{
                 duration: isMobile ? 0.6 : 1.8,
                 delay: isMobile ? index * 0.02 : revealDelay,
-                ease: [0.33, 1, 0.68, 1]
+                ease: [0.33, 1, 0.68, 1],
+                scale: { type: "spring", stiffness: 400, damping: 15 }
             }}
             style={{
                 y: isMobile ? 0 : smoothPressureY,
