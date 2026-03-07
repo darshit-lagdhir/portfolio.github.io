@@ -373,11 +373,11 @@ export function ChoreographedSection({ id, children, isProject = false, classNam
     // PHASE 16 STEP 11: PANEL FOCUS LOCK (IS_IDLE DIMMING)
     const { isIdle, activeSection } = useScene();
     const isFocusedPanel = activeSection === id;
-    const idleDimFilter = isIdle && !isFocusedPanel ? "brightness(0.3) saturate(0.5)" : "brightness(1) saturate(1)";
+    const idleDimFilter = isIdle && !isFocusedPanel ? "brightness(0.7) saturate(0.8)" : "brightness(1) saturate(1)";
 
-    // Step 3 & 4: Focus state rules + exit choreography
+    // PHASE 30 STEP 1: SECTION ENTRY MORPHING (0 -> 1 Fade)
     const scale = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [0.95, 1, 1, 0.95]);
-    const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.3, 1, 1, 0.3]);
+    const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
 
     // Step 2: Frame Border + Midpoint focus
     const borderColor = useTransform(scrollYProgress, [0, 0.4, 0.6, 1],

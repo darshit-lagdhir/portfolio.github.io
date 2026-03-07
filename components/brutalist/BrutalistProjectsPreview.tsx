@@ -82,9 +82,9 @@ export default function BrutalistProjectsPreview() {
             >
                 {/* STICKY WRAPPER */}
                 <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-center">
-                    {/* SECTION NUMBER SYSTEM */}
+                    {/* SECTION NUMBER SYSTEM — PHASE 30 VISIBILITY FIX */}
                     <motion.span
-                        style={{ opacity: useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.02, 0.04, 0.04, 0.02]) }}
+                        style={{ opacity: useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.04, 0.08, 0.08, 0.04]) }}
                         className="absolute top-[10%] left-[5%] text-[20vw] font-heading font-black leading-none text-black pointer-events-none z-0 select-none"
                     >
                         02
@@ -94,11 +94,11 @@ export default function BrutalistProjectsPreview() {
                     <motion.div style={{ paddingTop: breathPadding, paddingBottom: breathPadding }} className="relative z-10 w-full">
                         <div className="w-full max-w-[1800px] mx-auto px-[5vw] flex flex-col gap-12 md:gap-24">
 
-                            {/* SECTION HEADING */}
+                            {/* SECTION HEADING — PHASE 30 REFINED */}
                             <div className="flex flex-col gap-4 items-start self-start w-full">
-                                <span className="text-caption">02_ARCHIVE</span>
+                                <span className="text-caption text-black/60">02_ARCHIVE</span>
                                 <motion.h2
-                                    className="text-[clamp(1.2rem,6vw,4.2rem)] font-heading font-extrabold uppercase tracking-tighter whitespace-nowrap w-full border-b border-black/20 pb-4 type-react-hover"
+                                    className="text-[clamp(1.2rem,6vw,4.2rem)] font-heading font-extrabold uppercase tracking-tighter whitespace-nowrap w-full border-b border-black/20 pb-4 type-react-hover text-black"
                                 >
                                     {scrambledTitle}
                                 </motion.h2>
@@ -138,9 +138,9 @@ export default function BrutalistProjectsPreview() {
                                                         className="flex flex-col gap-6 w-full"
                                                     >
                                                         <div className="flex items-baseline gap-4 relative">
-                                                            <span className="text-caption">{project.id}</span>
+                                                            <span className="text-caption text-black/40">{project.id}</span>
                                                             <div className="relative">
-                                                                <h3 className="text-medium type-react-hover group-hover:tracking-wider transition-all duration-500">
+                                                                <h3 className="text-medium text-black type-react-hover group-hover:tracking-wider transition-all duration-500">
                                                                     {project.name.replace('_', '\u00A0')}
                                                                 </h3>
                                                                 <motion.div

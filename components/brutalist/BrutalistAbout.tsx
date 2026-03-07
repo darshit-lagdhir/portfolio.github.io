@@ -73,8 +73,7 @@ export default function BrutalistAbout() {
                             </div>
                         </div>
 
-                        {/* PHASE 31 STEP 13: VISUAL PAUSE ZONE — EDITORIAL STILLNESS */}
-                        <div className="h-[20vh] md:h-[32vh]" />
+                        {/* PHASE 31: SPACING TIGHTENED (REDUNDANT ZONE REMOVED) */}
 
                         {/* EDITORIAL STATEMENT BLOCKS — STAGGERED REVEAL (STEP 8) */}
                         <div className="grid grid-cols-12 gap-y-24 md:gap-y-32 gap-x-8 items-start">
