@@ -68,17 +68,36 @@ export default function UIDAIPage() {
                     </div>
                 </motion.div>
 
-                {/* PHASE 14 STEP 6: PROJECT METADATA */}
-                <ProjectMetadata
-                    type="Advisory Inference Tool"
-                    language="Python / PyTorch"
-                    arch="Anomaly Detection Model"
-                    tech={["OpenCV", "Scikit", "Biometric Math", "NumPy"]}
-                />
-                <ProjectCredibility repoName="uidai-advisory-system" githubUrl="https://github.com/darshit-lagdhir/uidai-advisory-system" status="Research" />
+                {/* PHASE 38 STEP 3: CHOREOGRAPHED ENTRY SEQUENCING */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.8, ease: GLOBAL_EASE }}
+                >
+                    <ProjectMetadata
+                        type="Advisory Inference Tool"
+                        language="Python / PyTorch"
+                        arch="Anomaly Detection Model"
+                        tech={["OpenCV", "Scikit", "Biometric Math", "NumPy"]}
+                    />
+                </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 1.2, ease: GLOBAL_EASE }}
+                >
+                    <ProjectCredibility repoName="uidai-advisory-system" githubUrl="https://github.com/darshit-lagdhir/uidai-advisory-system" status="Research" />
+                </motion.div>
 
                 {/* PHASE 14 STEP 5: PROJECT FLOW TIMELINE */}
-                <ProjectTimeline steps={["Data Ingestion", "Pattern Match", "Cluster Generation", "Advisory Flag"]} />
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 1.5, ease: GLOBAL_EASE }}
+                >
+                    <ProjectTimeline steps={["Data Ingestion", "Pattern Match", "Cluster Generation", "Advisory Flag"]} />
+                </motion.div>
 
                 {/* PHASE 15 NARRATIVE STORY BLOCKS */}
                 <div className="flex flex-col gap-12 pointer-events-auto relative z-20 w-full pb-40">

@@ -3,6 +3,7 @@
 import { motion, useSpring, useMotionValue, useTransform, useScroll } from "framer-motion";
 import { useEffect, useState, useMemo } from "react";
 import { useScene } from "@/context/SceneContext";
+import { usePathname } from "next/navigation";
 
 // PHASE 18: ENVIRONMENTAL VISUAL FEEDBACK + DYNAMIC LIGHT FIELD
 // Provides a subtle visual environment that reacts to user presence.
@@ -13,6 +14,8 @@ export default function EnvironmentalSystem() {
     const mouseX = useMotionValue(-1000);
     const mouseY = useMotionValue(-1000);
     const [isMobile, setIsMobile] = useState(false);
+    const pathname = usePathname();
+    const isProjectPage = pathname !== "/" && pathname !== "";
 
     // Smooth spotlight coordinates (Step 2)
     const lightX = useSpring(mouseX, { damping: 60, stiffness: 120, mass: 1 });
@@ -29,7 +32,9 @@ export default function EnvironmentalSystem() {
     }, [isIdle, interactionCount]);
 
     // PHASE 37 STEP 1 & 9: SECTION-AWARE AMBIENT & SCROLL DEPTH SHADING
+    // PHASE 38 STEP 7: PROJECT PAGE BACKGROUND SHIFT
     const baseIntensityValue = useMemo(() => {
+        if (isProjectPage) return 0.04; // Focused dark mode for projects
         switch (activeSection) {
             case "hero": return 0.12; 
             case "projects": return 0.08;
@@ -37,7 +42,7 @@ export default function EnvironmentalSystem() {
             case "contact": return 0.06;
             default: return 0.05;
         }
-    }, [activeSection]);
+    }, [activeSection, isProjectPage]);
 
     // Attention-driven intensity calculation
     const targetIntensity = useTransform(attentionScore, (a: number) =>

@@ -56,30 +56,35 @@ export default function Template({ children }: { children: React.ReactNode }) {
         return () => cancelAnimationFrame(frame);
     }, [pathname]);
 
-    const ease = [0.16, 1, 0.3, 1] as const;
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            window.scrollTo(0, 0);
+        }
+    }, [pathname]);
 
-    // PHASE 13 STEP 9 & 2: PROJECT ENTRY MORPH & PANEL TRANSITIONS
-    const isProjectPage = pathname !== "/";
+    const ease: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
+    // PHASE 38 STEP 1 & 4: PROJECT PANEL EXPANSION/COLLAPSE
+    const isProjectPage = pathname !== "/" && pathname !== "";
 
     const variants = {
         initial: (dir: string) => {
             if (isProjectPage && !isMobile) {
-                // Morph from panel shape (Phase 30 Step 10)
                 return {
-                    clipPath: "inset(30% 10vw 30% 10vw)",
-                    scale: 0.9,
-                    y: "5%",
+                    clipPath: "inset(20% 5vw 20% 5vw)", 
+                    scale: 0.85,
+                    y: "10%",
                     opacity: 0,
-                    transformPerspective: 1200,
-                    zIndex: 10,
+                    transformPerspective: 1500,
+                    zIndex: 50,
                 };
             }
             return {
                 clipPath: isMobile ? "inset(0% 0% 0% 0%)" : (dir === "forward" ? "inset(100% 0 0 0)" : "inset(0 0 100% 0)"),
-                y: dir === "forward" ? "15%" : "-15%",
-                scale: 0.95,
+                y: dir === "forward" ? "20%" : "-20%",
+                scale: 0.9,
                 opacity: 0,
-                zIndex: 10,
+                zIndex: 50,
             };
         },
         animate: {
@@ -87,16 +92,19 @@ export default function Template({ children }: { children: React.ReactNode }) {
             y: "0%",
             scale: 1,
             opacity: 1,
-            zIndex: 10,
-            transition: { duration: duration * 1.2, ease, delay: 0.2 } // PHASE 31 STEP 8: INTERACTION BREATHING SPACE
+            zIndex: 50,
+            transition: { 
+                duration: duration * 1.5, // Slower expansion for cinematic feel
+                ease: [0.19, 1, 0.22, 1] as [number, number, number, number], 
+                delay: 0.1 
+            }
         },
         exit: (dir: string) => {
             if (isProjectPage && !isMobile) {
-                // Collapse into panel shape (Phase 30 Step 12)
                 return {
-                    clipPath: "inset(30% 10vw 30% 10vw)",
-                    scale: 0.9,
-                    y: "5%",
+                    clipPath: "inset(20% 5vw 20% 5vw)",
+                    scale: 0.85,
+                    y: "10%",
                     opacity: 0,
                     zIndex: 0,
                     transition: { duration: duration, ease }
@@ -104,8 +112,8 @@ export default function Template({ children }: { children: React.ReactNode }) {
             }
             return {
                 clipPath: isMobile ? "inset(0% 0% 0% 0%)" : (dir === "forward" ? "inset(0 0 100% 0)" : "inset(100% 0 0 0)"),
-                y: dir === "forward" ? "-15%" : "15%",
-                scale: 0.95,
+                y: dir === "forward" ? "-20%" : "20%",
+                scale: 0.9,
                 opacity: 0,
                 zIndex: 0,
                 transition: { duration: duration, ease }
@@ -122,16 +130,26 @@ export default function Template({ children }: { children: React.ReactNode }) {
                 initial="initial"
                 animate="animate"
                 exit="exit"
-                transition={{ duration, ease }}
                 className="page-fade"
-                style={{ transformStyle: "preserve-3d" }}
+                style={{ 
+                    transformStyle: "preserve-3d",
+                    pointerEvents: isNavigating ? "none" : "auto" // PHASE 38 STEP 13: INTERACTION LOCK
+                }}
             >
-                {/* PHASE 8/13: ADVANCED PAGE TRANSITION FEEDBACK */}
+                {/* PHASE 38 STEP 2: BACKGROUND DIMMING DURING TRANSITION */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: isNavigating ? 0.4 : 0 }}
+                    className="fixed inset-0 bg-black z-[100] pointer-events-none"
+                    transition={{ duration: 0.4 }}
+                />
+
+                {/* PHASE 38 STEP 6: ROUTE TRANSITION OVERLAY */}
                 <motion.div
                     initial={{ scaleY: 0 }}
                     animate={{ scaleY: 0 }}
                     exit={{ scaleY: 1 }}
-                    transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1] }}
+                    transition={{ duration: 0.45, ease: [0.77, 0, 0.175, 1] }}
                     className="fixed inset-0 bg-white z-[2000] pointer-events-none origin-bottom"
                 />
 
@@ -139,7 +157,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
                     initial={{ scaleY: 1 }}
                     animate={{ scaleY: 0 }}
                     exit={{ scaleY: 0 }}
-                    transition={{ duration: 0.4, ease: [0.76, 0, 0.24, 1], delay: 0.1 }}
+                    transition={{ duration: 0.45, ease: [0.77, 0, 0.175, 1], delay: 0.05 }}
                     className="fixed inset-0 bg-white z-[2000] pointer-events-none origin-top"
                 />
 

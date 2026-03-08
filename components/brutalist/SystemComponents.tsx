@@ -366,7 +366,7 @@ interface Command {
 
 // PHASE 32: COMMAND INTERFACE (DEVELOPER NAVIGATION INTELLIGENCE)
 export function CommandPalette() {
-    const { isCommandPaletteOpen: open, setIsCommandPaletteOpen: setOpen } = useScene();
+    const { isCommandPaletteOpen: open, setIsCommandPaletteOpen: setOpen, setIsNavigating } = useScene();
     const [query, setQuery] = useState("");
     const [selectedIndex, setSelectedIndex] = useState(0);
     const router = useRouter();
@@ -391,15 +391,17 @@ export function CommandPalette() {
         setOpen(false);
         if (cmd.section) {
             if (pathname !== "/") {
+                setIsNavigating(true);
                 router.push(`/#${cmd.section}`);
             } else {
                 const el = document.getElementById(cmd.section);
                 el?.scrollIntoView({ behavior: "smooth" });
             }
         } else if (cmd.href) {
+            setIsNavigating(true);
             router.push(cmd.href);
         }
-    }, [pathname, router, setOpen]);
+    }, [pathname, router, setOpen, setIsNavigating]);
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {

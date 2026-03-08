@@ -64,6 +64,7 @@ function ProjectPreviewSignal({ repoName }: { repoName: string }) {
 }
 
 function ProjectItem({ project, idx, scrollYProgress }: { project: Project, idx: number, scrollYProgress: MotionValue<number> }) {
+    const { setIsNavigating } = useScene();
     // PHASE 30 STEP 3: SEQUENTIAL REVEAL ENGINE — STAGGERED SYSTEM ENTRY
     // PHASE 36 STEP 4 & 9: STAGGERED ENTRY + HORIZONTAL MICRO-SCROLL
     const start = idx * 0.22 + 0.15; // Delay entry until after the section title reveal
@@ -90,7 +91,11 @@ function ProjectItem({ project, idx, scrollYProgress }: { project: Project, idx:
             data-project="true"
         >
             <div className="col-span-12">
-                <Link href={project.href} className="group block w-full relative preserve-3d">
+                <Link 
+                    href={project.href} 
+                    className="group block w-full relative preserve-3d"
+                    onClick={() => setIsNavigating(true)}
+                >
                     <motion.div
                         whileHover={{ z: 80 }}
                         whileTap={{ scale: 0.98, y: 2 }}

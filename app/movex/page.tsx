@@ -69,17 +69,36 @@ export default function MoveXPage() {
                     </div>
                 </motion.div>
 
-                {/* PHASE 14 STEP 6: PROJECT METADATA */}
-                <ProjectMetadata
-                    type="Backend / UI Integration"
-                    language="TypeScript"
-                    arch="Modular Monolith"
-                    tech={["Node.js", "Express", "PostgreSQL", "React"]}
-                />
-                <ProjectCredibility repoName="movex" githubUrl="https://github.com/darshit-lagdhir/movex" status="Production" />
+                {/* PHASE 38 STEP 3: CHOREOGRAPHED ENTRY SEQUENCING */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.8, ease: GLOBAL_EASE }}
+                >
+                    <ProjectMetadata
+                        type="Backend / UI Integration"
+                        language="TypeScript"
+                        arch="Modular Monolith"
+                        tech={["Node.js", "Express", "PostgreSQL", "React"]}
+                    />
+                </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 1.2, ease: GLOBAL_EASE }}
+                >
+                    <ProjectCredibility repoName="movex" githubUrl="https://github.com/darshit-lagdhir/movex" status="Production" />
+                </motion.div>
 
                 {/* PHASE 14 STEP 5: PROJECT FLOW TIMELINE */}
-                <ProjectTimeline steps={["Design", "Architecture", "Isolation", "Rollout"]} />
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 1.5, ease: GLOBAL_EASE }}
+                >
+                    <ProjectTimeline steps={["Design", "Architecture", "Isolation", "Rollout"]} />
+                </motion.div>
 
                 {/* PHASE 15 STEP 5 & 8: NARRATIVE STORY BLOCKS */}
                 <div className="flex flex-col gap-12 pointer-events-auto relative z-20 w-full pb-40">

@@ -69,17 +69,36 @@ export default function PFCVPage() {
                     </div>
                 </motion.div>
 
-                {/* PHASE 14 STEP 6: PROJECT METADATA */}
-                <ProjectMetadata
-                    type="Memory Verification Pipeline"
-                    language="Rust"
-                    arch="Intermediate Representation Compiler"
-                    tech={["Rust", "LLVM IR", "C++", "WebAssembly"]}
-                />
-                <ProjectCredibility repoName="polyglot-ffi-verifier" githubUrl="https://github.com/darshit-lagdhir/polyglot-ffi-verifier" status="Experimental" />
+                {/* PHASE 38 STEP 3: CHOREOGRAPHED ENTRY SEQUENCING */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.8, ease: GLOBAL_EASE }}
+                >
+                    <ProjectMetadata
+                        type="Memory Verification Pipeline"
+                        language="Rust"
+                        arch="Intermediate Representation Compiler"
+                        tech={["Rust", "LLVM IR", "C++", "WebAssembly"]}
+                    />
+                </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 1.2, ease: GLOBAL_EASE }}
+                >
+                    <ProjectCredibility repoName="polyglot-ffi-verifier" githubUrl="https://github.com/darshit-lagdhir/polyglot-ffi-verifier" status="Experimental" />
+                </motion.div>
 
                 {/* PHASE 14 STEP 5: PROJECT FLOW TIMELINE */}
-                <ProjectTimeline steps={["AST Parse", "IR Synthesis", "Memory Check", "Safe FFI Generation"]} />
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 1.5, ease: GLOBAL_EASE }}
+                >
+                    <ProjectTimeline steps={["AST Parse", "IR Synthesis", "Memory Check", "Safe FFI Generation"]} />
+                </motion.div>
 
                 {/* PHASE 15 NARRATIVE STORY BLOCKS */}
                 <div className="flex flex-col gap-12 pointer-events-auto relative z-20 w-full pb-40">
