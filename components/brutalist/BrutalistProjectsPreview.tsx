@@ -147,7 +147,7 @@ const ProjectItem = memo(({ project, idx, scrollYProgress }: { project: Project,
                                 </div>
                                 <div className="discovery-reveal-hint flex flex-col items-end text-right">
                                     <span className="text-[10px] font-ui font-black text-black/40">STATUS: DEPLOYED</span>
-                                    <span className="text-[8px] font-ui text-black/20">LAST_UPDATE: {new Date().toLocaleDateString()}</span>
+                                    <span className="text-[8px] font-ui text-black/20">LAST_UPDATE: RECENT</span>
                                 </div>
                                 <motion.div
                                     initial={{ width: 0 }}
