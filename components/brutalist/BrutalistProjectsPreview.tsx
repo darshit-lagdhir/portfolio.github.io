@@ -92,24 +92,25 @@ function ProjectItem({ project, idx, scrollYProgress }: { project: Project, idx:
             <div className="col-span-12">
                 <Link href={project.href} className="group block w-full relative preserve-3d">
                     <motion.div
-                        whileHover={{ z: 50 }}
+                        whileHover={{ z: 80 }}
                         whileTap={{ scale: 0.98, y: 2 }}
                         transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                        className="flex flex-col gap-6 w-full relative z-10"
+                        className="flex flex-col gap-6 w-full relative z-10 p-4 md:p-8"
                         style={{
                             rotateX: "var(--tilt-x, 0deg)",
                             rotateY: "var(--tilt-y, 0deg)",
                             x: "var(--magnet-x, 0px)",
                             y: "var(--magnet-y, 0px)",
+                            // PHASE 37 STEP 4: DEPTH SHADOW SYSTEM
+                            boxShadow: "0 30px 60px rgba(0,0,0,0.15), 0 0 1px rgba(0,0,0,0.05)",
                         }}
                     >
-                        {/* STEP 7: Panel Edge Light Response */}
+                        {/* PHASE 37 STEP 3, 8 & 10: EDGE ILLUMINATION & SPOTLIGHT */}
                         <div
-                            className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"
-                            style={{
-                                background: `radial-gradient(circle at var(--edge-light-x, 50%) var(--edge-light-y, 50%), rgba(0,0,0,0.05) 0%, transparent 60%)`
-                            }}
+                            className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-0 bg-[radial-gradient(circle_at_var(--edge-light-x,50%)_var(--edge-light-y,50%),rgba(0,0,0,0.03)_0%,transparent_60%)]"
                         />
+                        <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-5 transition-opacity duration-1000 bg-[radial-gradient(circle_at_center,rgba(0,0,0,1)_0%,transparent_80%)]" />
+                        
                         <div className="flex items-baseline gap-4 relative">
                             <span className="text-caption text-black/40">{project.id}</span>
                             <div className="relative">

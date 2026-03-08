@@ -14,43 +14,37 @@ export default function EnvironmentalSystem() {
     const mouseY = useMotionValue(-1000);
     const [isMobile, setIsMobile] = useState(false);
 
-    // Smooth spotlight coordinates (Refined for Phase 22)
-    const lightX = useSpring(mouseX, { damping: 60, stiffness: 150, mass: 1 });
-    const lightY = useSpring(mouseY, { damping: 60, stiffness: 150, mass: 1 });
+    // Smooth spotlight coordinates (Step 2)
+    const lightX = useSpring(mouseX, { damping: 60, stiffness: 120, mass: 1 });
+    const lightY = useSpring(mouseY, { damping: 60, stiffness: 120, mass: 1 });
 
     // PHASE 18 STEP 11: REACTIVATION LIGHT SURGE
     const [surge, setSurge] = useState(1);
     useEffect(() => {
         if (!isIdle && interactionCount > 0) {
-            const frame = requestAnimationFrame(() => setSurge(1.2));
-            const timer = setTimeout(() => {
-                requestAnimationFrame(() => setSurge(1));
-            }, 1500);
-            return () => {
-                cancelAnimationFrame(frame);
-                clearTimeout(timer);
-            };
+            setSurge(1.15);
+            const timer = setTimeout(() => setSurge(1), 1000);
+            return () => clearTimeout(timer);
         }
     }, [isIdle, interactionCount]);
 
-    // PHASE 18 STEP 2 & PHASE 19 STEP 1, 10: SECTION AWARE & ATTENTION-DRIVEN LIGHT
+    // PHASE 37 STEP 1 & 9: SECTION-AWARE AMBIENT & SCROLL DEPTH SHADING
     const baseIntensityValue = useMemo(() => {
         switch (activeSection) {
-            case "hero": return 0.08;
-            case "projects": return 0.05;
-            case "about":
-            case "contact": return 0;
-            default: return 0.03;
+            case "hero": return 0.12; 
+            case "projects": return 0.08;
+            case "about": return 0.04;
+            case "contact": return 0.06;
+            default: return 0.05;
         }
     }, [activeSection]);
 
-    // STEP 10: Stability Mode (dimmer on idle) + STEP 1: Attention Boost
+    // Attention-driven intensity calculation
     const targetIntensity = useTransform(attentionScore, (a: number) =>
-        (baseIntensityValue * (isIdle ? 0.4 : 1)) + (a * 0.04)
+        (baseIntensityValue * (isIdle ? 0.3 : 1)) + (a * 0.05)
     );
 
-    const transformForSpring = useTransform(targetIntensity, v => v * surge);
-    const smoothIntensity = useSpring(transformForSpring, { damping: 50, stiffness: 80 });
+    const smoothIntensity = useSpring(useTransform(targetIntensity, v => v * surge), { damping: 50, stiffness: 80 });
 
     useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -72,42 +66,42 @@ export default function EnvironmentalSystem() {
         };
     }, [isMobile, mouseX, mouseY]);
 
-    // PHASE 18 STEP 6 & 12: SCROLL-BASED LIGHT SHIFT & MOBILE FALLBACK
     const { scrollYProgress } = useScroll();
 
-    const mobileBackground = useTransform(
+    // PHASE 37 STEP 1: GLOBAL AMBIENT LIGHT LAYER
+    const ambientBackground = useTransform(
         scrollYProgress,
-        [0, 0.5, 1],
+        [0, 1],
         [
-            "radial-gradient(circle at 50% 20%, rgba(255,255,255,0.02) 0%, transparent 60%)",
-            "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, transparent 60%)",
-            "radial-gradient(circle at 50% 80%, rgba(255,255,255,0.02) 0%, transparent 60%)"
+            "radial-gradient(circle at 50% 30%, rgba(255,255,255,0.02) 0%, transparent 70%)",
+            "radial-gradient(circle at 50% 70%, rgba(255,255,255,0.02) 0%, transparent 70%)"
         ]
     );
 
-    const desktopBackground = useTransform(
+    // PHASE 37 STEP 2 & 13: CURSOR LIGHT SOURCE (Spotlight)
+    const cursorLightBackground = useTransform(
         [lightX, lightY, smoothIntensity],
-        ([x, y, op]) => `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,${op}) 0%, transparent 70%)`
+        ([x, y, op]) => `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,${op}) 0%, transparent 60%)`
     );
 
-    if (isMobile) {
-        // MOBILE LIGHT SYSTEM (STEP 12)
-        return (
-            <motion.div
-                className="fixed inset-0 pointer-events-none z-[40]"
-                style={{ background: mobileBackground }}
-            />
-        );
-    }
-
     return (
-        <motion.div
-            className="fixed inset-0 pointer-events-none z-[40] transition-opacity duration-1000"
-            style={{
-                opacity: activeSection === "about" || activeSection === "contact" ? 0 : 1,
-                // GLOBAL LIGHT FIELD (STEP 1)
-                background: desktopBackground
-            }}
-        />
+        <div className="fixed inset-0 pointer-events-none z-[40]">
+            {/* GLOBAL AMBIENT LAYER (STEP 1) */}
+            <motion.div 
+                className="absolute inset-0"
+                style={{ background: ambientBackground, opacity: isMobile ? 0.3 : 1 }}
+            />
+            
+            {/* INTERACTIVE CURSOR LIGHT (STEP 2, DISABLE ON MOBILE STEP 12) */}
+            {!isMobile && (
+                <motion.div
+                    className="absolute inset-0"
+                    style={{ background: cursorLightBackground }}
+                />
+            )}
+            
+            {/* ATMOSPHERIC DENSITY OVERLAY (STEP 11) */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.01)_0%,transparent_80%)]" />
+        </div>
     );
 }

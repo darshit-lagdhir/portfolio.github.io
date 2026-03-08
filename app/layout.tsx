@@ -128,6 +128,13 @@ export function CustomCursor() {
           const elPull = htmlEl.classList.contains('magnetic-btn') ? 0.35 : 0.08;
           htmlEl.style.setProperty('--magnet-x', `${(e.clientX - cx) * elPull}px`);
           htmlEl.style.setProperty('--magnet-y', `${(e.clientY - cy) * elPull}px`);
+
+          // PHASE 37 STEP 3: EDGE LIGHT SOURCE TRACKING
+          const rx = ((e.clientX - rect.left) / rect.width) * 100;
+          const ry = ((e.clientY - rect.top) / rect.height) * 100;
+          htmlEl.style.setProperty('--edge-light-x', `${rx}%`);
+          htmlEl.style.setProperty('--edge-light-y', `${ry}%`);
+
           if (isProject) {
             htmlEl.style.setProperty('--tilt-x', `${-(e.clientY - cy) / radius * 8}deg`);
             htmlEl.style.setProperty('--tilt-y', `${(e.clientX - cx) / radius * 8}deg`);
@@ -135,6 +142,8 @@ export function CustomCursor() {
         } else {
           htmlEl.style.setProperty('--magnet-x', '0px');
           htmlEl.style.setProperty('--magnet-y', '0px');
+          htmlEl.style.setProperty('--edge-light-x', '50%');
+          htmlEl.style.setProperty('--edge-light-y', '50%');
           if (isProject) {
             htmlEl.style.setProperty('--tilt-x', '0deg');
             htmlEl.style.setProperty('--tilt-y', '0deg');

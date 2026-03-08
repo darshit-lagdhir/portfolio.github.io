@@ -24,6 +24,10 @@ const Letter = ({ char, index, total, smoothMouseX, isMobile }: {
     // PHASE 31: MEDIUM ENERGY REVEAL — GRADUAL & CINEMATIC
     const revealDelay = index * 0.04 + 0.8;
 
+    // PHASE 37 STEP 6: TYPOGRAPHY LIGHT REACTION
+    const charBrightness = useTransform(dist, [0, 0.15], [2, 1]);
+    const smoothBrightness = useSpring(charBrightness, { damping: 50, stiffness: 200 });
+
     return (
         <motion.span
             className="inline-block relative kinetic-letter"
@@ -31,7 +35,6 @@ const Letter = ({ char, index, total, smoothMouseX, isMobile }: {
             animate={{ clipPath: "inset(-20% -20% -20% -20%)", y: 0, opacity: 1 }}
             whileHover={isMobile ? {} : {
                 scale: 1.15,
-                filter: "brightness(2)",
                 transition: { type: "spring", stiffness: 400, damping: 10 }
             }}
             transition={{
@@ -42,6 +45,7 @@ const Letter = ({ char, index, total, smoothMouseX, isMobile }: {
             }}
             style={{
                 y: isMobile ? 0 : smoothPressureY,
+                filter: isMobile ? "none" : useMotionTemplate`brightness(${smoothBrightness})`,
                 display: "inline-block",
                 padding: "0.05em 0.02em" // Breathing room for italicized characters
             }}

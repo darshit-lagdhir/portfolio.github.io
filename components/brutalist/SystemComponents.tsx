@@ -77,7 +77,7 @@ export function SystemHeaderBar({ current }: { current: string }) {
 
 // PHASE 14 STEP 8: SYSTEM GRID OVERLAY
 export function SystemGridOverlay() {
-    // PHASE 16 STEP 8: SYSTEM GRID ACTIVATION VELOCITY
+    // PHASE 37 STEP 7: GRID REFLECTION RESPONSE
     const ref = useRef<HTMLDivElement>(null);
     useEffect(() => {
         let lastX = 0, lastY = 0;
@@ -86,8 +86,10 @@ export function SystemGridOverlay() {
             const dist = Math.sqrt(Math.pow(e.clientX - lastX, 2) + Math.pow(e.clientY - lastY, 2));
             if (dist > 70) {
                 ref.current.style.opacity = "0.2";
-                setTimeout(() => { if (ref.current) ref.current.style.opacity = "0.08" }, 200);
+                setTimeout(() => { if (ref.current) ref.current.style.opacity = "0.1" }, 300);
             }
+            ref.current.style.setProperty('--grid-light-x', `${e.clientX}px`);
+            ref.current.style.setProperty('--grid-light-y', `${e.clientY}px`);
             lastX = e.clientX;
             lastY = e.clientY;
         };
@@ -96,17 +98,13 @@ export function SystemGridOverlay() {
     }, []);
 
     return (
-        <div ref={ref} className="fixed inset-0 pointer-events-none z-0 opacity-[0.05] transition-all duration-700 ease-out">
+        <div ref={ref} className="fixed inset-0 pointer-events-none z-0 opacity-[0.05] transition-all duration-700 ease-out grid-reflection-root">
             <div className="w-full h-full" style={{
-                backgroundImage: 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)',
-                backgroundSize: '40px 40px'
+                backgroundImage: 'linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px)',
+                backgroundSize: '40px 40px',
+                maskImage: 'radial-gradient(circle at var(--grid-light-x, 50%) var(--grid-light-y, 50%), black 0%, transparent 60%)',
+                WebkitMaskImage: 'radial-gradient(circle at var(--grid-light-x, 50%) var(--grid-light-y, 50%), black 0%, transparent 60%)'
             }} />
-            {/* PHASE 27 STEP 9: INTERACTIVE GRID HIGHLIGHT */}
-            <motion.div
-                className="absolute inset-0 bg-white/[0.02]"
-                animate={{ opacity: [0, 0.05, 0] }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            />
         </div>
     );
 }
@@ -135,18 +133,20 @@ export function ProjectPanel({ title, index, children }: { title: string, index:
             }}
             whileHover={{ 
                 zIndex: 20,
-                transition: { duration: 0.2 }
+                // PHASE 37 STEP 4: DEPTH SHADOW SYSTEM
+                boxShadow: "0 40px 100px rgba(0,0,0,0.8), 0 0 1px rgba(255,255,255,0.1)",
+                transition: { duration: 0.3 }
             }}
-            className="w-full border border-white/5 bg-black/40 p-8 md:p-12 transition-all duration-300 origin-center relative group/panel overflow-hidden"
+            className="w-full border border-white/5 bg-black/40 p-8 md:p-12 transition-all duration-500 shadow-2xl group/panel overflow-hidden"
             data-project="true"
         >
-            {/* STEP 7: Panel Edge Light Response (Dynamic Highlight) */}
+            {/* PHASE 37 STEP 3 & 10: EDGE ILLUMINATION & HOVER REFLECTION */}
             <div 
-                className="absolute inset-0 pointer-events-none opacity-0 group-hover/panel:opacity-100 transition-opacity duration-500 z-0"
-                style={{
-                    background: `radial-gradient(circle at var(--edge-light-x, 50%) var(--edge-light-y, 50%), rgba(255,255,255,0.08) 0%, transparent 60%)`
-                }}
+                className="absolute inset-0 pointer-events-none opacity-0 group-hover/panel:opacity-100 transition-opacity duration-700 z-0 bg-[radial-gradient(circle_at_var(--edge-light-x,50%)_var(--edge-light-y,50%),rgba(255,255,255,0.06)_0%,transparent_60%)]"
             />
+            
+            {/* PHASE 37 STEP 8: PANEL SPOTLIGHT */}
+            <div className="absolute inset-0 pointer-events-none opacity-0 group-hover/panel:opacity-30 transition-opacity duration-1000 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_0%,transparent_80%)]" />
 
             <motion.div 
                 className="relative z-10 flex flex-col md:flex-row gap-6 md:gap-16"
