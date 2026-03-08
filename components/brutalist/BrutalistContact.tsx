@@ -3,7 +3,7 @@
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useScene } from "@/context/SceneContext";
 import { useState, useEffect, useRef } from "react";
-import { ScrollMoment, ChoreographedSection, MagneticButton } from "@/components/brutalist/SystemComponents";
+import { ScrollMoment, ChoreographedSection, MagneticButton, LAYOUT } from "@/components/brutalist/SystemComponents";
 
 const GLOBAL_EASE = [0.33, 1, 0.68, 1] as [number, number, number, number];
 
@@ -50,16 +50,18 @@ export default function BrutalistContact() {
             <div
                 ref={containerRef}
                 onPointerEnter={() => setActiveSection("contact")}
-                className="relative min-h-[90vh] flex flex-col items-center justify-center px-[5vw] bg-white text-black"
+                className="relative min-h-[90vh] flex flex-col items-center justify-center bg-white text-black"
             >
-                {/* PHASE 23 STEP 7: SECTION NUMBER SYSTEM */}
-                <span className="absolute top-[10%] left-[5%] text-[20vw] font-heading font-black leading-none text-black opacity-[0.02] pointer-events-none z-0 select-none">
-                    04
-                </span>
+                {/* PHASE 39 STEP 4: GRID ALIGNMENT CORRECTION (Section Number) */}
+                <div className={`${LAYOUT.CONTAINER} absolute inset-0 flex flex-col justify-center pointer-events-none z-0`}>
+                    <span className="text-[20vw] font-heading font-black leading-none text-black opacity-[0.02] select-none translate-y-[-10%]">
+                        04
+                    </span>
+                </div>
 
                 <motion.div style={{ paddingTop: breathPadding, paddingBottom: breathPadding }} className="flex flex-col items-center justify-center w-full relative z-10">
 
-                    <div className="flex flex-col items-center text-center gap-12 w-full max-w-[1800px] mx-auto relative z-10">
+                    <div className={`${LAYOUT.CONTAINER} flex flex-col items-center text-center gap-12 relative z-10`}>
 
                         {/* MASSIVE CONNECT — PHASE 4 + PHASE 15 EMPHASIS */}
                         <ScrollMoment>
@@ -70,7 +72,7 @@ export default function BrutalistContact() {
                                 transition={{ duration: 1, ease: GLOBAL_EASE }}
                                 className="flex flex-col items-center gap-6"
                             >
-                                <span className="text-caption">04_TERMINATION</span>
+                                <span className="text-caption text-black/40">04_TERMINATION</span>
                                 <div className="relative overflow-visible pb-4">
                                     <motion.h2
                                         initial={{ opacity: 0, y: 30 }}

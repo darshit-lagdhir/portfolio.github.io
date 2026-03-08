@@ -10,7 +10,8 @@ import {
     CodeBlockVisual,
     ArchitectureVisual,
     StoryBlock,
-    ScrollMoment
+    ScrollMoment,
+    LAYOUT
 } from "@/components/brutalist/SystemComponents";
 import { useEffect } from "react";
 import Link from "next/link";
@@ -32,7 +33,7 @@ export default function PFCVPage() {
             <SystemHeaderBar current="MOD_PFCV" />
             <SystemGridOverlay />
 
-            <div className="max-w-[1800px] mx-auto flex flex-col gap-y-40">
+            <div className={`${LAYOUT.CONTAINER} flex flex-col gap-y-40`}>
 
                 {/* PROJECT HEADER — PHASE 3 */}
                 <motion.div
@@ -42,8 +43,8 @@ export default function PFCVPage() {
                     className="grid grid-cols-12 gap-10"
                 >
                     <div className="col-span-12 lg:col-span-8 flex flex-col gap-12">
-                        <span className="text-micro font-bold text-white tracking-[0.8em]">
-                            03_SECURITY // MEMORY_SYNC
+                        <span className="text-micro font-bold text-white/40 tracking-[0.8em]">
+                            03_POLYGLOT // INTEROP_SYNC
                         </span>
                         <motion.h1
                             initial={{ opacity: 0 }}
@@ -51,7 +52,7 @@ export default function PFCVPage() {
                             transition={{ duration: 1.5, ease: GLOBAL_EASE }}
                             className="text-large md:text-massive italic text-white font-heading leading-[0.85] uppercase tracking-tight-title origin-left glitch-safe flex flex-wrap"
                         >
-                            {"POLYGLOT_FFI".split("").map((char, i) => (
+                            {"PFCV_FFI_SYSTEM".split("").map((char, i) => (
                                 <motion.span
                                     key={i}
                                     initial={{ y: 60, opacity: 0 }}
@@ -63,8 +64,8 @@ export default function PFCVPage() {
                                 </motion.span>
                             ))}
                         </motion.h1>
-                        <p className="text-short-body text-white/40 italic">
-                            Cross-language contract verification pipeline for memory-safe FFI boundaries.
+                        <p className="text-short-body text-white/35 italic">
+                            Universal Foreign Function Interface (FFI) for native polyglot component validation and message passing.
                         </p>
                     </div>
                 </motion.div>

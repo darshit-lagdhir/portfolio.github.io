@@ -9,7 +9,8 @@ import {
     ProjectTimeline,
     CodeBlockVisual,
     StoryBlock,
-    ScrollMoment
+    ScrollMoment,
+    LAYOUT
 } from "@/components/brutalist/SystemComponents";
 import { useEffect } from "react";
 import Link from "next/link";
@@ -31,7 +32,7 @@ export default function UIDAIPage() {
             <SystemHeaderBar current="MOD_UIDAI" />
             <SystemGridOverlay />
 
-            <div className="max-w-[1800px] mx-auto flex flex-col gap-y-40">
+            <div className={`${LAYOUT.CONTAINER} flex flex-col gap-y-40`}>
 
                 {/* PROJECT HEADER — PHASE 3 */}
                 <motion.div
@@ -41,7 +42,7 @@ export default function UIDAIPage() {
                     className="grid grid-cols-12 gap-10"
                 >
                     <div className="col-span-12 lg:col-span-8 flex flex-col gap-12">
-                        <span className="text-micro font-bold text-white tracking-[0.8em]">
+                        <span className="text-micro font-bold text-white/40 tracking-[0.8em]">
                             02_INTELLIGENCE // PATTERN_SYNC
                         </span>
                         <motion.h1
@@ -62,7 +63,7 @@ export default function UIDAIPage() {
                                 </motion.span>
                             ))}
                         </motion.h1>
-                        <p className="text-short-body text-white/40 italic">
+                        <p className="text-short-body text-white/35 italic">
                             Advisory intelligence system for biometric pattern detection and enrollment anomaly clustering.
                         </p>
                     </div>

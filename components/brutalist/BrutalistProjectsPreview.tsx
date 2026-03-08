@@ -4,7 +4,7 @@ import { motion, useInView, useScroll, useTransform, MotionValue } from "framer-
 import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { useScene } from "@/context/SceneContext";
-import { ChoreographedSection } from "@/components/brutalist/SystemComponents";
+import { ChoreographedSection, LAYOUT } from "@/components/brutalist/SystemComponents";
 import { fetchGitHubData, GitHubRepoData } from "@/lib/github-service";
 
 // TEXT SCRAMBLE HOOK — PHASE 4
@@ -117,7 +117,7 @@ function ProjectItem({ project, idx, scrollYProgress }: { project: Project, idx:
                         <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-5 transition-opacity duration-1000 bg-[radial-gradient(circle_at_center,rgba(0,0,0,1)_0%,transparent_80%)]" />
                         
                         <div className="flex items-baseline gap-4 relative">
-                            <span className="text-caption text-black/40">{project.id}</span>
+                            <span className="text-caption text-black/20">{project.id}</span>
                             <div className="relative">
                                 <h3 className="text-medium text-black type-react-hover group-hover:tracking-wider transition-all duration-500">
                                     {project.name.replace('_', '\u00A0')}
@@ -131,13 +131,13 @@ function ProjectItem({ project, idx, scrollYProgress }: { project: Project, idx:
                         </div>
                         <div className="flex flex-col gap-6 max-w-xl">
                             {/* PHASE 28 STEP 3: PANEL SURFACE TEXTURE REFINEMENT */}
-                            <p className="text-body text-black/70 bg-black/[0.03] p-4 md:p-6 border-l-2 border-black/20 group-hover:bg-black/5 group-hover:border-black transition-all duration-500 shadow-sm group-hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] backdrop-blur-sm">
+                            <p className="text-body text-black/60 bg-black/[0.02] p-4 md:p-6 border-l-2 border-black/10 group-hover:bg-black/[0.04] group-hover:border-black transition-all duration-500 shadow-sm group-hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] backdrop-blur-sm">
                                 {project.desc}
                             </p>
                             {/* PHASE 28 STEP 7: SURFACE DIFFUSION INDICATOR */}
-                            <div className="flex justify-between items-center border-t border-black/5 pt-4">
+                            <div className="flex justify-between items-center border-t border-black/[0.05] pt-4">
                                 <div className="flex flex-col gap-1">
-                                    <span className="text-caption opacity-30 group-hover:opacity-100 group-hover:text-black transition-all duration-500">
+                                    <span className="text-caption opacity-20 group-hover:opacity-100 group-hover:text-black transition-all duration-500">
                                         {project.type}
                                     </span>
                                     <ProjectPreviewSignal repoName={project.repoName} />
@@ -145,7 +145,7 @@ function ProjectItem({ project, idx, scrollYProgress }: { project: Project, idx:
                                 <motion.div
                                     initial={{ width: 0 }}
                                     whileHover={{ width: "2rem" }}
-                                    className="h-[1px] bg-black/40"
+                                    className="h-[1px] bg-black/20"
                                 />
                             </div>
                         </div>
@@ -219,13 +219,16 @@ export default function BrutalistProjectsPreview() {
             >
                 {/* STICKY WRAPPER — PHASE 34: ARCHITECTURAL ANCHOR */}
                 <div className={`${isMobile ? 'relative' : 'sticky top-0 h-screen'} w-full overflow-hidden flex flex-col`}>
-                    {/* SECTION NUMBER SYSTEM — PHASE 30 VISIBILITY FIX */}
-                    <motion.span
-                        style={{ opacity: isMobile ? 0.04 : useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.04, 0.08, 0.08, 0.04]) }}
-                        className="absolute top-[10%] left-[5%] text-[20vw] font-heading font-black leading-none text-black pointer-events-none z-0 select-none"
-                    >
-                        02
-                    </motion.span>
+                    
+                    {/* PHASE 39 STEP 4: GRID ALIGNMENT CORRECTION (Section Number) */}
+                    <div className={`${LAYOUT.CONTAINER} absolute inset-0 flex flex-col justify-center pointer-events-none z-0`}>
+                        <motion.span
+                            style={{ opacity: isMobile ? 0.04 : useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.04, 0.08, 0.08, 0.04]) }}
+                            className="text-[20vw] font-heading font-black leading-none text-black select-none translate-y-[-10%]"
+                        >
+                            02
+                        </motion.span>
+                    </div>
 
                     {/* FIXED HEADER SYSTEM — PHASE 36 STEP 3: REVEAL SEQUENCE */}
                     <motion.div 
@@ -233,12 +236,12 @@ export default function BrutalistProjectsPreview() {
                             opacity: useTransform(scrollYProgress, [0, 0.1, 0.8, 0.95], [0, 1, 1, 0]),
                             y: useTransform(scrollYProgress, [0, 0.1], [30, 0])
                         }}
-                        className="w-full max-w-[1800px] mx-auto px-[5vw] pt-12 md:pt-20 z-20 shrink-0"
+                        className={`${LAYOUT.CONTAINER} pt-12 md:pt-20 z-20 shrink-0`}
                     >
                         <div className="flex flex-col gap-4 items-start self-start w-full">
-                            <span className="text-caption text-black/60">02_ARCHIVE</span>
+                            <span className="text-caption text-black/40">02_ARCHIVE</span>
                             <motion.h2
-                                className="text-[clamp(1.2rem,6vw,4.2rem)] font-heading font-extrabold uppercase tracking-tighter whitespace-nowrap w-full border-b border-black/20 pb-4 type-react-hover text-black"
+                                className="text-[clamp(1.2rem,6vw,4.2rem)] font-heading font-extrabold uppercase tracking-tighter whitespace-nowrap w-full border-b border-black/10 pb-4 type-react-hover text-black"
                             >
                                 {scrambledTitle}
                             </motion.h2>
@@ -247,15 +250,13 @@ export default function BrutalistProjectsPreview() {
 
                     {/* BREATHING PROJECT ZONE — PHASE 34: KINETIC CONTENT ONLY */}
                     <motion.div style={{ paddingBottom: breathPadding }} className="relative z-10 w-full flex-grow overflow-hidden mt-12 md:mt-24">
-                        <div className="w-full max-w-[1800px] mx-auto px-[5vw] relative h-full">
+                        <div className={`${LAYOUT.CONTAINER} relative h-full`}>
                             {/* STEP 6 & 7: EDITORIAL PROJECT BLOCKS (PINNED REVEAL) */}
                             <div className="grid grid-cols-12 gap-y-12 gap-x-8 items-start relative h-full">
                                 {projects.map((project, idx) => (
                                     <ProjectItem key={project.id} project={project} idx={idx} scrollYProgress={scrollYProgress} />
                                 ))}
                             </div>
-
-                            {/* EXIT CUE REMOVED AS REQUESTED */}
                         </div>
                     </motion.div>
                 </div>

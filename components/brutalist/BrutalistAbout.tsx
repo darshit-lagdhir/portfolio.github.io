@@ -3,7 +3,7 @@
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { useScene } from "@/context/SceneContext";
-import { ChoreographedSection, MaskReveal } from "@/components/brutalist/SystemComponents";
+import { ChoreographedSection, MaskReveal, LAYOUT } from "@/components/brutalist/SystemComponents";
 
 const GLOBAL_EASE = [0.33, 1, 0.68, 1] as [number, number, number, number];
 
@@ -51,10 +51,12 @@ export default function BrutalistAbout() {
                 onPointerEnter={() => setActiveSection("about")}
                 className="relative overflow-hidden bg-black text-white"
             >
-                {/* SECTION NUMBER SYSTEM */}
-                <span className="absolute top-[10%] left-[5%] text-[20vw] font-heading font-black leading-none text-white opacity-[0.02] pointer-events-none z-0 select-none">
-                    03
-                </span>
+                {/* PHASE 39 STEP 4: GRID ALIGNMENT CORRECTION (Section Number) */}
+                <div className={`${LAYOUT.CONTAINER} absolute inset-0 flex flex-col justify-center pointer-events-none z-0`}>
+                    <span className="text-[20vw] font-heading font-black leading-none text-white opacity-[0.02] select-none translate-y-[-10%]">
+                        03
+                    </span>
+                </div>
 
                 <motion.div 
                     style={{ 
@@ -65,18 +67,18 @@ export default function BrutalistAbout() {
                     }} 
                     className="relative z-10"
                 >
-                    <div className="w-full max-w-[1800px] mx-auto px-[5vw] flex flex-col gap-6 md:gap-10">
+                    <div className={`${LAYOUT.CONTAINER} flex flex-col gap-6 md:gap-10`}>
 
                         {/* SECTION HEADING — MASK REVEAL (STEP 9) */}
                         <div className="flex flex-col gap-6 items-start self-start">
-                            <span className="text-caption">03_IDENTITY</span>
-                            <div className="relative overflow-hidden py-2 px-1 -m-2">
+                            <span className="text-caption text-white/40">03_IDENTITY</span>
+                            <div className="relative overflow-hidden py-2 px-1 -m-2 w-full">
                                 <motion.h2
                                     initial={{ opacity: 0, y: 40 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ duration: 1.2, delay: 0.2, ease: GLOBAL_EASE }}
-                                    className="text-large break-words w-full border-b border-white/20 pb-8 type-react-hover text-white"
+                                    className="text-large break-words w-full border-b border-white/10 pb-8 type-react-hover text-white"
                                 >
                                     {scrambledTitle}
                                 </motion.h2>
@@ -104,7 +106,7 @@ export default function BrutalistAbout() {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ duration: 1.2, delay: 0.5, ease: GLOBAL_EASE }}
-                                    className="text-body text-white/50 bg-white/[0.04] p-6 md:p-8 border-l-2 border-white/20"
+                                    className="text-body text-white/50 bg-white/[0.02] p-6 md:p-8 border-l-2 border-white/10"
                                 >
                                     I don&apos;t just write code; I design systems. Every component, from UI interactions to database queries, is treated as a node in a larger architectural network. Precision and scalability are non-negotiable.
                                 </motion.p>
@@ -128,7 +130,7 @@ export default function BrutalistAbout() {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ duration: 1.2, delay: 0.8, ease: GLOBAL_EASE }}
-                                    className="text-body text-white/50 bg-white/[0.04] p-6 md:p-8 border-l-2 border-white/20"
+                                    className="text-body text-white/50 bg-white/[0.02] p-6 md:p-8 border-l-2 border-white/10"
                                 >
                                     Building rigid, secure, and highly performant data pipelines. I specialize in crafting backend infrastructure that withstands high concurrency and complex logic without exposing complexity to the frontend.
                                 </motion.p>
@@ -147,7 +149,7 @@ export default function BrutalistAbout() {
                                         Dynamic <br /> <span className="text-white/40 italic">Evolution.</span>
                                     </h3>
                                 </MaskReveal>
-                                <p className="text-body text-white/50 bg-white/[0.04] p-6 md:p-8 border-l-2 border-white/20">
+                                <p className="text-body text-white/50 bg-white/[0.02] p-6 md:p-8 border-l-2 border-white/10">
                                     Technology is a shifting landscape. My core skill is not a single language, but the ability to rapidly assimilate new paradigms, dissect unfamiliar architectures, and build production-ready software efficiently.
                                 </p>
                             </motion.div>
@@ -159,17 +161,17 @@ export default function BrutalistAbout() {
                             whileInView={{ opacity: 1, scaleX: 1 }}
                             viewport={{ once: true }}
                             transition={{ duration: 1.5, delay: 0.8, ease: GLOBAL_EASE }}
-                            className="mt-12 md:mt-20 grid grid-cols-12 gap-4 md:gap-8 border-t border-white/20 pt-12 md:pt-16"
+                            className="mt-12 md:mt-20 grid grid-cols-12 gap-4 md:gap-8 border-t border-white/10 pt-12 md:pt-16"
                         >
                             <div className="col-span-12 lg:col-span-3">
-                                <span className="text-caption">CURRENT_SYNC</span>
+                                <span className="text-caption text-white/40">CURRENT_SYNC</span>
                             </div>
                             <div className="col-span-12 lg:col-span-9 flex flex-wrap gap-4 md:gap-6">
                                 {["Low-Level Memory Mgt", "Distributed Databases", "Advanced WebGL", "Security Protocols"].map((item, idx) => (
                                     <motion.div
                                         key={idx}
-                                        whileHover={{ backgroundColor: "rgba(255,255,255,0.12)", y: -2 }}
-                                        className="border border-white/15 px-5 py-3 text-caption bg-white/[0.04] cursor-none transition-colors"
+                                        whileHover={{ backgroundColor: "rgba(255,255,255,0.08)", y: -2 }}
+                                        className="border border-white/10 px-5 py-3 text-caption bg-white/[0.02] cursor-none transition-colors"
                                     >
                                         {item}
                                     </motion.div>

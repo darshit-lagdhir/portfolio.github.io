@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform, useMotionValue, useSpring, useMotionTemplate, MotionValue } from "framer-motion";
 import { useRef, useEffect, useState } from "react";
 import { useScene } from "@/context/SceneContext";
+import { LAYOUT } from "@/components/brutalist/SystemComponents";
 
 const GLOBAL_EASE = [0.33, 1, 0.68, 1] as [number, number, number, number];
 
@@ -184,181 +185,183 @@ export default function BrutalistHero() {
             }}
         >
             <div className={`${isMobile ? 'relative' : 'sticky top-0'} h-screen w-full flex flex-col justify-center overflow-hidden`}>
-            {/* BREATHING BACKGROUND — PHASE 4 + PHASE 9 + PHASE 28 STEP 9: ATMOSPHERIC LIGHTING OVERLAY */}
-            <motion.div
-                animate={{ scale: [1, 1.005, 1] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-0 z-0 pointer-events-none opacity-30 mix-blend-screen"
-                style={{
-                    y: bgY,
-                    background: atmosphericGradient
-                }}
-            />
-
-            {/* PHASE 24 STEP 2 & PHASE 26 STEP 3: FLOATING GEOMETRIC OBJECT DEEP PULLBACK */}
-            <motion.div
-                style={{ x: bgTransX, y: bgTransY, translateZ: geomZ, opacity: geomOpacity }}
-                className="absolute inset-0 pointer-events-none flex justify-center items-center"
-            >
-                <div className="relative w-full h-full max-w-[1200px] flex justify-center items-center perspective-root">
-                    {/* Slow tumbling geometric rings */}
-                    <motion.div
-                        animate={{ rotateX: [0, 360], rotateY: [0, 360] }}
-                        transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-                        className="absolute w-[50vh] h-[50vh] border border-white/10 rounded-full"
-                    />
-                    <motion.div
-                        animate={{ rotateX: [360, 0], rotateZ: [0, 360] }}
-                        transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-                        className="absolute w-[35vh] h-[35vh] border border-white/10 rounded-sm"
-                    />
-                </div>
-            </motion.div>
-
-            {/* SECTION NUMBER SYSTEM */}
-            <motion.span
-                style={{ x: bgTransX, y: bgTransY, opacity: useTransform(scrollYProgress, [0, 0.3], [0.02, 0]) }}
-                className="absolute top-[10%] left-[5%] text-[20vw] font-heading font-black leading-none text-white pointer-events-none z-0 select-none"
-            >
-                01
-            </motion.span>
-
-            <motion.div
-                style={{ 
-                    scale: heroScale, 
-                    rotateX: useTransform([rotateX, heroRotateX], ([rX, hX]) => (rX as number) + (hX as number)) as MotionValue<number>, 
-                    rotateY: rotateY as MotionValue<number>, 
-                    perspective: 1000, 
-                    x: fgTransX, 
-                    y: fgTransY 
-                }}
-                className="grid grid-cols-12 gap-6 md:gap-10 items-center w-full max-w-[1800px] mx-auto px-[5vw] pt-32 z-10"
-            >
-                {/* PHASE 23 STEP 3 & 4: SPLIT HERO - TYPOGRAPHY DOMINANCE */}
-                <div className="col-span-12 lg:col-span-7 flex flex-col items-start gap-0 z-10">
-                    <div className="relative group overflow-visible preserve-3d">
-                        {/* PHASE 28 STEP 4: TYPOGRAPHY CONTRAST REFINEMENT */}
-                        <motion.span
-                            style={{ y: backY, opacity: 0.08 }} // Reduced opacity for stronger hierarchy
-                            className="absolute top-[4px] left-[4px] text-massive italic text-white/30 select-none pointer-events-none perspective-tilt z-0 whitespace-nowrap"
-                            aria-hidden
-                        >
-                            {textArray1.map((char, i) => (
-                                <Letter
-                                    key={`shadow1-${i}`}
-                                    char={char}
-                                    index={i}
-                                    total={textArray1.length}
-                                    smoothMouseX={smoothMouseX}
-                                    isMobile={isMobile}
-                                />
-                            ))}
-                        </motion.span>
-                        {/* MAIN TEXT LAYER — crisp, direct focus */}
-                        <motion.h1
-                            initial={{ y: "110%", translateZ: 50 }}
-                            animate={{ y: 0, translateZ: 50 }}
-                            style={{ y: frontY, opacity: mainTextOpacity }}
-                            transition={{ duration: 1.2, ease: GLOBAL_EASE }}
-                            className={`text-massive italic relative z-10 perspective-tilt glitch-safe word-drift drop-shadow-[0_0_20px_rgba(255,255,255,0.06)] ${glitchFired ? 'hero-glitch-once' : ''} whitespace-nowrap md:whitespace-nowrap`}
-                        >
-                            {textArray1.map((char, i) => (
-                                <Letter
-                                    key={i}
-                                    char={char}
-                                    index={i}
-                                    total={textArray1.length}
-                                    smoothMouseX={smoothMouseX}
-                                    isMobile={isMobile}
-                                />
-                            ))}
-                        </motion.h1>
-                    </div>
-
-                    <div className="relative group overflow-visible -mt-6 md:-mt-10 md:pl-[10vw] preserve-3d">
-                        {/* GREY SHADOW LAYER — offset behind main text, interactive */}
-                        <motion.span
-                            style={{ y: backY, opacity: 0.15 }}
-                            className="absolute top-[4px] left-[4px] text-massive italic text-white/30 select-none pointer-events-none perspective-tilt z-0 whitespace-nowrap"
-                            aria-hidden
-                        >
-                            {textArray2.map((char, i) => (
-                                <Letter
-                                    key={`shadow2-${i}`}
-                                    char={char}
-                                    index={i}
-                                    total={textArray2.length}
-                                    smoothMouseX={smoothMouseX}
-                                    isMobile={isMobile}
-                                />
-                            ))}
-                        </motion.span>
-                        <motion.h1
-                            initial={{ y: "110%", translateZ: 50 }}
-                            animate={{ y: 0, translateZ: 50 }}
-                            style={{ y: frontY, opacity: mainTextOpacity }}
-                            transition={{ duration: 1.2, delay: 0.1, ease: GLOBAL_EASE }}
-                            className={`text-massive italic text-white relative z-10 perspective-tilt glitch-safe word-drift-reverse ${glitchFired ? 'hero-glitch-once' : ''} whitespace-nowrap md:whitespace-nowrap`}
-                        >
-                            {textArray2.map((char, i) => (
-                                <Letter
-                                    key={i}
-                                    char={char}
-                                    index={i}
-                                    total={textArray2.length}
-                                    smoothMouseX={smoothMouseX}
-                                    isMobile={isMobile}
-                                />
-                            ))}
-                        </motion.h1>
-                    </div>
-
-                    <motion.div style={{ opacity: subTextOpacity }} className="mt-12 md:mt-16 flex flex-col gap-4">
-                        <motion.span
-                            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.5, duration: 1, ease: GLOBAL_EASE }}
-                            className="text-medium text-white/70"
-                        >
-                            SYSTEMS ARCHITECT //
-                        </motion.span>
-                        <motion.span
-                            initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.7, duration: 1, ease: GLOBAL_EASE }}
-                            className="text-medium text-white/70"
-                        >
-                            INTERFACE ENGINEER
-                        </motion.span>
-                    </motion.div>
-                </div>
-
-                {/* PHASE 23 STEP 4: RIGHT 5-COLS — INTERACTIVE VISUAL ELEMENT */}
+                {/* BREATHING BACKGROUND — PHASE 4 + PHASE 9 + PHASE 28 STEP 9: ATMOSPHERIC LIGHTING OVERLAY */}
                 <motion.div
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    style={{ opacity: subTextOpacity }}
-                    transition={{ duration: 1.2, delay: 0.8, ease: GLOBAL_EASE }}
-                    className="hidden lg:flex col-span-5 flex-col justify-center items-center h-[50vh] relative pl-10"
+                    animate={{ scale: [1, 1.005, 1] }}
+                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                    className="absolute inset-0 z-0 pointer-events-none opacity-30 mix-blend-screen"
+                    style={{
+                        y: bgY,
+                        background: atmosphericGradient
+                    }}
+                />
+
+                {/* PHASE 24 STEP 2 & PHASE 26 STEP 3: FLOATING GEOMETRIC OBJECT DEEP PULLBACK */}
+                <motion.div
+                    style={{ x: bgTransX, y: bgTransY, translateZ: geomZ, opacity: geomOpacity }}
+                    className="absolute inset-0 pointer-events-none flex justify-center items-center"
                 >
-                    <div className="relative w-[30vh] h-[30vh] flex items-center justify-center opacity-40">
+                    <div className="relative w-full h-full max-w-[1200px] flex justify-center items-center perspective-root">
+                        {/* Slow tumbling geometric rings */}
                         <motion.div
-                            style={{
-                                rotateX: rotateX as MotionValue<number>,
-                                rotateY: rotateY as MotionValue<number>,
-                            }}
-                            className="w-full h-full border border-white/20 absolute z-10 pointer-events-none"
-                        />
-                        <motion.div
-                            animate={{ rotate: 360 }}
+                            animate={{ rotateX: [0, 360], rotateY: [0, 360] }}
                             transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-                            className="w-[120%] h-[120%] border border-white/[0.05] rounded-full absolute pointer-events-none"
+                            className="absolute w-[50vh] h-[50vh] border border-white/10 rounded-full"
                         />
                         <motion.div
-                            animate={{ rotate: -360 }}
-                            transition={{ duration: 90, repeat: Infinity, ease: "linear" }}
-                            className="w-[80%] h-[80%] border border-white/[0.05] rounded-full absolute pointer-events-none"
+                            animate={{ rotateX: [360, 0], rotateZ: [0, 360] }}
+                            transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+                            className="absolute w-[35vh] h-[35vh] border border-white/10 rounded-sm"
                         />
-                        <div className="absolute w-1 h-1 bg-white/50 rounded-full" />
                     </div>
                 </motion.div>
-            </motion.div>
+
+                {/* PHASE 39 STEP 4: GRID ALIGNMENT CORRECTION (Section Number) */}
+                <div className={`${LAYOUT.CONTAINER} absolute inset-0 flex flex-col justify-center pointer-events-none z-0`}>
+                    <motion.span
+                        style={{ x: bgTransX, y: bgTransY, opacity: useTransform(scrollYProgress, [0, 0.3], [0.02, 0]) }}
+                        className="text-[20vw] font-heading font-black leading-none text-white select-none translate-y-[-10%]"
+                    >
+                        01
+                    </motion.span>
+                </div>
+
+                <motion.div
+                    style={{ 
+                        scale: heroScale, 
+                        rotateX: useTransform([rotateX, heroRotateX], ([rX, hX]) => (rX as number) + (hX as number)) as MotionValue<number>, 
+                        rotateY: rotateY as MotionValue<number>, 
+                        perspective: 1000, 
+                        x: fgTransX, 
+                        y: fgTransY 
+                    }}
+                    className={`${LAYOUT.CONTAINER} pt-32 z-10 grid grid-cols-12 gap-6 md:gap-10 items-center`}
+                >
+                    {/* PHASE 23 STEP 3 & 4: SPLIT HERO - TYPOGRAPHY DOMINANCE */}
+                    <div className="col-span-12 lg:col-span-7 flex flex-col items-start gap-0 z-10">
+                        <div className="relative group overflow-visible preserve-3d">
+                            {/* PHASE 28 STEP 4: TYPOGRAPHY CONTRAST REFINEMENT */}
+                            <motion.span
+                                style={{ y: backY, opacity: 0.05 }} // PHASE 39 STEP 7: REDUCED FOR HIERARCHY
+                                className="absolute top-[4px] left-[4px] text-massive italic text-white select-none pointer-events-none perspective-tilt z-0 whitespace-nowrap"
+                                aria-hidden
+                            >
+                                {textArray1.map((char, i) => (
+                                    <Letter
+                                        key={`shadow1-${i}`}
+                                        char={char}
+                                        index={i}
+                                        total={textArray1.length}
+                                        smoothMouseX={smoothMouseX}
+                                        isMobile={isMobile}
+                                    />
+                                ))}
+                            </motion.span>
+                            {/* MAIN TEXT LAYER — crisp, direct focus */}
+                            <motion.h1
+                                initial={{ y: "110%", translateZ: 50 }}
+                                animate={{ y: 0, translateZ: 50 }}
+                                style={{ y: frontY, opacity: mainTextOpacity }}
+                                transition={{ duration: 1.2, ease: GLOBAL_EASE }}
+                                className={`text-massive italic relative z-10 perspective-tilt glitch-safe word-drift drop-shadow-[0_0_20px_rgba(255,255,255,0.06)] ${glitchFired ? 'hero-glitch-once' : ''} whitespace-nowrap md:whitespace-nowrap`}
+                            >
+                                {textArray1.map((char, i) => (
+                                    <Letter
+                                        key={i}
+                                        char={char}
+                                        index={i}
+                                        total={textArray1.length}
+                                        smoothMouseX={smoothMouseX}
+                                        isMobile={isMobile}
+                                    />
+                                ))}
+                            </motion.h1>
+                        </div>
+
+                        <div className="relative group overflow-visible -mt-6 md:-mt-10 md:pl-[10vw] preserve-3d">
+                            {/* GREY SHADOW LAYER — offset behind main text, interactive */}
+                            <motion.span
+                                style={{ y: backY, opacity: 0.1 }} // PHASE 39 STEP 7: REDUCED FOR HIERARCHY
+                                className="absolute top-[4px] left-[4px] text-massive italic text-white select-none pointer-events-none perspective-tilt z-0 whitespace-nowrap"
+                                aria-hidden
+                            >
+                                {textArray2.map((char, i) => (
+                                    <Letter
+                                        key={`shadow2-${i}`}
+                                        char={char}
+                                        index={i}
+                                        total={textArray2.length}
+                                        smoothMouseX={smoothMouseX}
+                                        isMobile={isMobile}
+                                    />
+                                ))}
+                            </motion.span>
+                            <motion.h1
+                                initial={{ y: "110%", translateZ: 50 }}
+                                animate={{ y: 0, translateZ: 50 }}
+                                style={{ y: frontY, opacity: mainTextOpacity }}
+                                transition={{ duration: 1.2, delay: 0.1, ease: GLOBAL_EASE }}
+                                className={`text-massive italic text-white relative z-10 perspective-tilt glitch-safe word-drift-reverse ${glitchFired ? 'hero-glitch-once' : ''} whitespace-nowrap md:whitespace-nowrap`}
+                            >
+                                {textArray2.map((char, i) => (
+                                    <Letter
+                                        key={i}
+                                        char={char}
+                                        index={i}
+                                        total={textArray2.length}
+                                        smoothMouseX={smoothMouseX}
+                                        isMobile={isMobile}
+                                    />
+                                ))}
+                            </motion.h1>
+                        </div>
+
+                        <motion.div style={{ opacity: subTextOpacity }} className="mt-12 md:mt-16 flex flex-col gap-4">
+                            <motion.span
+                                initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.5, duration: 1, ease: GLOBAL_EASE }}
+                                className="text-medium text-white/40" // PHASE 39 STEP 7: SUBTLE CONTRAST
+                            >
+                                SYSTEMS ARCHITECT //
+                            </motion.span>
+                            <motion.span
+                                initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.7, duration: 1, ease: GLOBAL_EASE }}
+                                className="text-medium text-white/40" // PHASE 39 STEP 7: SUBTLE CONTRAST
+                            >
+                                INTERFACE ENGINEER
+                            </motion.span>
+                        </motion.div>
+                    </div>
+
+                    {/* PHASE 23 STEP 4: RIGHT 5-COLS — INTERACTIVE VISUAL ELEMENT */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        style={{ opacity: subTextOpacity }}
+                        transition={{ duration: 1.2, delay: 0.8, ease: GLOBAL_EASE }}
+                        className="hidden lg:flex col-span-5 flex-col justify-center items-center h-[50vh] relative pl-10"
+                    >
+                        <div className="relative w-[30vh] h-[30vh] flex items-center justify-center opacity-40">
+                            <motion.div
+                                style={{
+                                    rotateX: rotateX as MotionValue<number>,
+                                    rotateY: rotateY as MotionValue<number>,
+                                }}
+                                className="w-full h-full border border-white/20 absolute z-10 pointer-events-none"
+                            />
+                            <motion.div
+                                animate={{ rotate: 360 }}
+                                transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
+                                className="w-[120%] h-[120%] border border-white/[0.05] rounded-full absolute pointer-events-none"
+                            />
+                            <motion.div
+                                animate={{ rotate: -360 }}
+                                transition={{ duration: 90, repeat: Infinity, ease: "linear" }}
+                                className="w-[80%] h-[80%] border border-white/[0.05] rounded-full absolute pointer-events-none"
+                            />
+                            <div className="absolute w-1 h-1 bg-white/50 rounded-full" />
+                        </div>
+                    </motion.div>
+                </motion.div>
           </div>
         </motion.section>
     );

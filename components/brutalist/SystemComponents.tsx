@@ -19,6 +19,15 @@ export const RHYTHM = {
     SNAP: [0.16, 1, 0.3, 1]
 };
 
+// PHASE 39: GRID DISCIPLINE TOKENS
+export const LAYOUT = {
+    MAX_WIDTH: "max-w-[1800px]",
+    PADDING_X: "px-[5vw]",
+    MARGIN_X: "mx-auto",
+    CONTAINER: "w-full max-w-[1800px] mx-auto px-[5vw]",
+    SECTION_PADDING: "py-32 md:py-48",
+};
+
 // PHASE 14 STEP 11: PROJECT ENTRY LOADING SEQUENCE
 export function ProjectEntryLoader() {
     return (
