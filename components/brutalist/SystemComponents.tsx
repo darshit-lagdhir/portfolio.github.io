@@ -6,17 +6,30 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useScene } from "@/context/SceneContext";
 
-const GLOBAL_EASE = [0.33, 1, 0.68, 1] as [number, number, number, number];
-const MICRO_EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
+export const EASE = {
+    ENTRY: [0.16, 1, 0.3, 1] as [number, number, number, number],
+    EXIT: [0.33, 1, 0.68, 1] as [number, number, number, number],
+    CALM: [0.65, 0, 0.35, 1] as [number, number, number, number]
+};
 
-// PHASE 31: INTERFACE RHYTHM TOKENS
+export const DUR = {
+    FAST: 0.15,
+    MEDIUM: 0.4,
+    SLOW: 0.7,
+    PAGE: 1.2
+};
+
+export const GLOBAL_EASE = EASE.EXIT;
+export const MICRO_EASE = EASE.ENTRY;
+
+// PHASE 31: INTERFACE RHYTHM TOKENS (Updated for Phase 41 Coherence)
 export const RHYTHM = {
-    PRIMARY: 0.6,
-    HOVER: 0.2,
+    PRIMARY: DUR.MEDIUM,
+    HOVER: DUR.FAST,
     CURSOR: 0.12,
     MICRO: 0.08,
-    EASE: GLOBAL_EASE,
-    SNAP: [0.16, 1, 0.3, 1]
+    EASE: EASE.ENTRY,
+    SNAP: EASE.ENTRY
 };
 
 // PHASE 39: GRID DISCIPLINE TOKENS
@@ -577,8 +590,8 @@ export function ChoreographedSection({ id, children, isProject = false, classNam
             ref={ref}
             id={id}
             style={{ scale, opacity, filter: idleDimFilter }}
-            className={`w-full relative transition-all duration-[800ms] ease-out ${isProject ? '' : 'bg-white text-black'} ${className} transform-gpu`}
-            transition={{ duration, ease: GLOBAL_EASE }}
+            className={`w-full relative transition-all duration-[var(--m-dur-slow)] ease-out ${isProject ? '' : 'bg-white text-black'} ${className} transform-gpu`}
+            transition={{ duration, ease: EASE.CALM }}
         >
             {/* PHASE 28 STEP 11: SECTION ATMOSPHERIC SHIFT */}
             <motion.div

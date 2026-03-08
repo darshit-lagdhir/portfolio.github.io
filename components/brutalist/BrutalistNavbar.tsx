@@ -4,8 +4,9 @@ import Link from "next/link";
 import { useEffect, useState, useRef, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useScene } from "@/context/SceneContext";
+import { EASE, DUR } from "@/components/brutalist/SystemComponents";
 
-const GLOBAL_EASE = [0.33, 1, 0.68, 1] as [number, number, number, number];
+
 
 export default function BrutalistNavbar() {
     const { activeSection, isIdle, markInteraction, setIsCommandPaletteOpen } = useScene();
@@ -37,7 +38,7 @@ export default function BrutalistNavbar() {
                 y: isIdle ? -10 : 0,
                 filter: isIdle ? "blur(2px)" : "blur(0px)"
             }}
-            transition={{ duration: 1.2, ease: GLOBAL_EASE }}
+            transition={{ duration: DUR.PAGE, ease: EASE.CALM }}
             className={`
                 fixed top-0 left-0 w-full z-[2000] select-none transition-all duration-700
                 ${scrolled ? "py-8 bg-[#000000] border-b border-white/30" : isIdle ? "py-12" : "py-14 md:py-24 bg-transparent"}
@@ -99,7 +100,7 @@ export default function BrutalistNavbar() {
                                 key={link.name}
                                 initial={{ opacity: 0, x: -50 }}
                                 animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: idx * 0.1, duration: 0.6, ease: GLOBAL_EASE }}
+                                transition={{ delay: idx * 0.1, duration: DUR.MEDIUM, ease: EASE.ENTRY }}
                             >
                                 <Link
                                     href={link.href}
@@ -155,11 +156,9 @@ const MagneticNavItem = memo(({
             onMouseLeave={handleMouseLeave}
             whileHover={{ y: -2 }}
             whileTap={{ scale: 0.94 }}
-            transition={{
-                type: "spring",
-                stiffness: 600,
-                damping: 20,
-                mass: 0.5
+            transition={{ 
+                duration: isHovering ? DUR.MEDIUM : DUR.SLOW,
+                ease: isHovering ? EASE.ENTRY : EASE.EXIT
             }}
             className="relative group magnetic-btn tactile-btn transform-gpu"
         >

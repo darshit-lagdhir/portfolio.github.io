@@ -4,7 +4,7 @@ import { motion, useInView, useScroll, useTransform, MotionValue } from "framer-
 import { useRef, useState, useEffect, memo } from "react";
 import Link from "next/link";
 import { useScene } from "@/context/SceneContext";
-import { ChoreographedSection, LAYOUT } from "@/components/brutalist/SystemComponents";
+import { ChoreographedSection, LAYOUT, EASE, DUR } from "@/components/brutalist/SystemComponents";
 import { fetchGitHubData, GitHubRepoData } from "@/lib/github-service";
 
 // TEXT SCRAMBLE HOOK — PHASE 4
@@ -99,9 +99,8 @@ const ProjectItem = memo(({ project, idx, scrollYProgress }: { project: Project,
                     onClick={() => setIsNavigating(true)}
                 >
                     <motion.div
-                        whileHover={{ z: 80 }}
                         whileTap={{ scale: 0.98, y: 2 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                        transition={{ duration: DUR.MEDIUM, ease: EASE.ENTRY }}
                         className="flex flex-col gap-6 w-full relative z-10 p-4 md:p-8 transform-gpu"
                         style={{
                             rotateX: "var(--tilt-x, 0deg)",
@@ -121,7 +120,7 @@ const ProjectItem = memo(({ project, idx, scrollYProgress }: { project: Project,
                         <div className="flex items-baseline gap-4 relative">
                             <span className="text-caption text-black/20">{project.id}</span>
                             <div className="relative">
-                                <h3 className="text-medium text-black type-react-hover group-hover:tracking-wider transition-all duration-500">
+                                <h3 className="text-medium text-black type-react-hover group-hover:tracking-wider">
                                     {project.name.replace('_', '\u00A0')}
                                 </h3>
                                 <motion.div
@@ -139,7 +138,7 @@ const ProjectItem = memo(({ project, idx, scrollYProgress }: { project: Project,
                             {/* PHASE 28 STEP 7: SURFACE DIFFUSION INDICATOR */}
                             <div className="flex justify-between items-center border-t border-black/[0.05] pt-4">
                                 <div className="flex flex-col gap-1">
-                                    <span className="text-caption opacity-20 group-hover:opacity-100 group-hover:text-black transition-all duration-500">
+                                    <span className="text-caption opacity-20 group-hover:opacity-100 group-hover:text-black">
                                         {project.type}
                                     </span>
                                     <ProjectPreviewSignal repoName={project.repoName} />
@@ -242,6 +241,7 @@ export default function BrutalistProjectsPreview() {
                             y: useTransform(scrollYProgress, [0, 0.1], [30, 0])
                         }}
                         className={`${LAYOUT.CONTAINER} pt-12 md:pt-20 z-20 shrink-0`}
+                        transition={{ duration: DUR.MEDIUM, ease: EASE.ENTRY }}
                     >
                         <div className="flex flex-col gap-4 items-start self-start w-full">
                             <span className="text-caption text-black/40">02_ARCHIVE</span>

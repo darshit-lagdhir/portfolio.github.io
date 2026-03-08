@@ -4,6 +4,7 @@ import { motion, useSpring, useMotionValue, useTransform, useScroll } from "fram
 import { useEffect, useState, useMemo } from "react";
 import { useScene } from "@/context/SceneContext";
 import { usePathname } from "next/navigation";
+import { DUR } from "@/components/brutalist/SystemComponents";
 
 // PHASE 18: ENVIRONMENTAL VISUAL FEEDBACK + DYNAMIC LIGHT FIELD
 // Provides a subtle visual environment that reacts to user presence.
@@ -26,7 +27,7 @@ export default function EnvironmentalSystem() {
     useEffect(() => {
         if (!isIdle && interactionCount > 0) {
             requestAnimationFrame(() => setSurge(1.15));
-            const timer = setTimeout(() => requestAnimationFrame(() => setSurge(1)), 1000);
+            const timer = setTimeout(() => requestAnimationFrame(() => setSurge(1)), DUR.PAGE * 1000);
             return () => clearTimeout(timer);
         }
     }, [isIdle, interactionCount]);
@@ -49,7 +50,10 @@ export default function EnvironmentalSystem() {
         (baseIntensityValue * (isIdle ? 0.3 : 1)) + (a * 0.05)
     );
 
-    const smoothIntensity = useSpring(useTransform(targetIntensity, v => v * surge), { damping: 50, stiffness: 80 });
+    const smoothIntensity = useSpring(useTransform(targetIntensity, v => v * surge), { 
+        damping: 50, 
+        stiffness: 80,
+    });
 
     useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth < 768);

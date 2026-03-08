@@ -3,9 +3,9 @@
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useScene } from "@/context/SceneContext";
 import { useState, useEffect, useRef } from "react";
-import { ScrollMoment, ChoreographedSection, MagneticButton, LAYOUT } from "@/components/brutalist/SystemComponents";
+import { ScrollMoment, ChoreographedSection, MagneticButton, LAYOUT, EASE, DUR } from "@/components/brutalist/SystemComponents";
 
-const GLOBAL_EASE = [0.33, 1, 0.68, 1] as [number, number, number, number];
+
 
 // TEXT SCRAMBLE HOOK — PHASE 4
 const useScramble = (text: string, active: boolean) => {
@@ -20,11 +20,12 @@ const useScramble = (text: string, active: boolean) => {
                 if (i < iteration) return text[i];
                 return chars[Math.floor(Math.random() * chars.length)];
             }).join(""));
+
             if (iteration >= text.length) clearInterval(interval);
             iteration += 1 / 3;
-        }, 30);
+        }, 20); // Maintain fast rhythm for scramble
         return () => clearInterval(interval);
-    }, [active, text]);
+    }, [active, text, chars]);
 
     return display;
 };
@@ -69,7 +70,7 @@ export default function BrutalistContact() {
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 viewport={{ once: true }}
-                                transition={{ duration: 1, ease: GLOBAL_EASE }}
+                                transition={{ duration: DUR.SLOW, ease: EASE.CALM }}
                                 className="flex flex-col items-center gap-6"
                             >
                                 <span className="text-caption text-black/40">04_TERMINATION</span>
@@ -78,7 +79,7 @@ export default function BrutalistContact() {
                                         initial={{ opacity: 0, y: 30 }}
                                         whileInView={{ opacity: 1, y: 0 }}
                                         viewport={{ once: true }}
-                                        transition={{ duration: 1.6, delay: 0.6, ease: GLOBAL_EASE }}
+                                        transition={{ duration: DUR.PAGE * 1.5, delay: 0.6, ease: EASE.CALM }}
                                         className="text-large text-black type-react-hover"
                                     >
                                         {scrambledTitle}

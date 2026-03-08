@@ -3,9 +3,9 @@
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { useScene } from "@/context/SceneContext";
-import { ChoreographedSection, MaskReveal, LAYOUT } from "@/components/brutalist/SystemComponents";
+import { ChoreographedSection, MaskReveal, LAYOUT, EASE, DUR } from "@/components/brutalist/SystemComponents";
 
-const GLOBAL_EASE = [0.33, 1, 0.68, 1] as [number, number, number, number];
+
 
 // TEXT SCRAMBLE HOOK — PHASE 4
 const useScramble = (text: string, active: boolean) => {
@@ -77,7 +77,7 @@ export default function BrutalistAbout() {
                                     initial={{ opacity: 0, y: 40 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
-                                    transition={{ duration: 1.2, delay: 0.2, ease: GLOBAL_EASE }}
+                                    transition={{ duration: DUR.SLOW, delay: 0.2, ease: EASE.CALM }}
                                     className="text-large break-words w-full border-b border-white/10 pb-8 type-react-hover text-white"
                                 >
                                     {scrambledTitle}
@@ -90,10 +90,10 @@ export default function BrutalistAbout() {
 
                             {/* BLOCK 1 - SYSTEMS THINKING */}
                             <motion.div
-                                initial={{ opacity: 0, x: -20 }}
+                                initial={{ opacity: 0, x: -30 }}
                                 whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true, amount: 0.3 }}
-                                transition={{ duration: 1, ease: GLOBAL_EASE }}
+                                viewport={{ once: true }}
+                                transition={{ duration: DUR.MEDIUM, ease: EASE.ENTRY }}
                                 className="col-span-12 lg:col-span-6 lg:col-start-1"
                             >
                                 <MaskReveal delay={0.3} direction="up" duration={1.4}>
@@ -105,7 +105,7 @@ export default function BrutalistAbout() {
                                     initial={{ opacity: 0, y: 30 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
-                                    transition={{ duration: 1.2, delay: 0.5, ease: GLOBAL_EASE }}
+                                    transition={{ duration: DUR.SLOW, delay: 0.5, ease: EASE.EXIT }}
                                     className="text-body text-white/50 bg-white/[0.02] p-6 md:p-8 border-l-2 border-white/10"
                                 >
                                     I don&apos;t just write code; I design systems. Every component, from UI interactions to database queries, is treated as a node in a larger architectural network. Precision and scalability are non-negotiable.
@@ -117,7 +117,7 @@ export default function BrutalistAbout() {
                                 initial={{ opacity: 0, x: 20 }}
                                 whileInView={{ opacity: 1, x: 0 }}
                                 viewport={{ once: true, amount: 0.3 }}
-                                transition={{ duration: 1, delay: 0.3, ease: GLOBAL_EASE }}
+                                transition={{ duration: DUR.MEDIUM, delay: 0.3, ease: EASE.ENTRY }}
                                 className="col-span-12 lg:col-span-5 lg:col-start-8"
                             >
                                 <MaskReveal delay={0.6} direction="up" duration={1.4}>
@@ -129,7 +129,7 @@ export default function BrutalistAbout() {
                                     initial={{ opacity: 0, y: 30 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
-                                    transition={{ duration: 1.2, delay: 0.8, ease: GLOBAL_EASE }}
+                                    transition={{ duration: DUR.SLOW, delay: 0.8, ease: EASE.EXIT }}
                                     className="text-body text-white/50 bg-white/[0.02] p-6 md:p-8 border-l-2 border-white/10"
                                 >
                                     Building rigid, secure, and highly performant data pipelines. I specialize in crafting backend infrastructure that withstands high concurrency and complex logic without exposing complexity to the frontend.
@@ -141,7 +141,7 @@ export default function BrutalistAbout() {
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, amount: 0.3 }}
-                                transition={{ duration: 1, delay: 0.5, ease: GLOBAL_EASE }}
+                                transition={{ duration: DUR.MEDIUM, delay: 0.5, ease: EASE.ENTRY }}
                                 className="col-span-12 lg:col-span-7 lg:col-start-3"
                             >
                                 <MaskReveal delay={1.2} direction="up" duration={1.6}>
@@ -160,7 +160,7 @@ export default function BrutalistAbout() {
                             initial={{ opacity: 0, scaleX: 0 }}
                             whileInView={{ opacity: 1, scaleX: 1 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 1.5, delay: 0.8, ease: GLOBAL_EASE }}
+                            transition={{ duration: DUR.SLOW * 2, delay: 0.8, ease: EASE.CALM }}
                             className="mt-12 md:mt-20 grid grid-cols-12 gap-4 md:gap-8 border-t border-white/10 pt-12 md:pt-16"
                         >
                             <div className="col-span-12 lg:col-span-3">

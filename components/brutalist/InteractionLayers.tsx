@@ -4,8 +4,9 @@ import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { useScene } from "@/context/SceneContext";
+import { EASE, DUR } from "@/components/brutalist/SystemComponents";
 
-const MICRO_EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
+
 
 // PHASE 25 STEP 13: MOBILE TOUCH FEEDBACK
 export function TapRipple() {
@@ -108,7 +109,7 @@ export function CrossPageContinuity() {
 
     useEffect(() => {
         requestAnimationFrame(() => setIsVisible(true));
-        const timer = setTimeout(() => requestAnimationFrame(() => setIsVisible(false)), 2000);
+        const timer = setTimeout(() => requestAnimationFrame(() => setIsVisible(false)), DUR.PAGE * 1000);
         return () => clearTimeout(timer);
     }, [pathname]);
 
@@ -118,8 +119,8 @@ export function CrossPageContinuity() {
                 <motion.div
                     initial={{ scaleY: 0 }}
                     animate={{ scaleY: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 1.2, ease: MICRO_EASE }}
+                    exit={{ opacity: 0, transition: { duration: DUR.MEDIUM, ease: EASE.ENTRY } }}
+                    transition={{ duration: 1.2, ease: EASE.ENTRY }}
                     className="fixed top-0 left-[50%] w-px h-full bg-white/10 z-[50] origin-top pointer-events-none"
                 />
             )}

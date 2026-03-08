@@ -4,6 +4,7 @@ import { motion, useMotionValue, useSpring, useTransform, useScroll, useVelocity
 import { useRef, useEffect, useState, useMemo, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import { useScene } from "@/context/SceneContext";
+import { EASE, DUR } from "@/components/brutalist/SystemComponents";
 
 
 export default function CustomCursor() {
@@ -68,7 +69,7 @@ export default function CustomCursor() {
             return;
         }
         requestAnimationFrame(() => setIsRecentDiscovery(true));
-        const timer = setTimeout(() => requestAnimationFrame(() => setIsRecentDiscovery(false)), 1000);
+        const timer = setTimeout(() => requestAnimationFrame(() => setIsRecentDiscovery(false)), DUR.PAGE * 1000);
         return () => clearTimeout(timer);
     }, [lastDiscoveryTime]);
 
@@ -209,7 +210,7 @@ export default function CustomCursor() {
     useEffect(() => {
         const timer = setInterval(() => {
             setTrails(prev => prev.length > 0 ? prev.slice(0, -1) : prev);
-        }, 150);
+        }, 120); // Faster rhythm than standard exit for trails
         return () => clearInterval(timer);
     }, []);
 
@@ -252,6 +253,10 @@ export default function CustomCursor() {
                     ...variants[cursorVariant as keyof typeof variants],
                     scale: (isPressed ? 0.85 : (isRecentDiscovery ? 1.4 : 1)) * depthScale,
                     opacity: cursorOpacity,
+                }}
+                transition={{
+                    duration: DUR.MEDIUM,
+                    ease: EASE.ENTRY
                 }}
                 style={{ 
                     x: ring.x, 
