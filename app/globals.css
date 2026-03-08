@@ -17,9 +17,9 @@
   --white-bg: #ffffff;
   --black-bg: #000000;
 
-  /* MOTION TOKENS — PHASE 41 INTERACTION COHERENCE */
+  /* MOTION TOKENS — PHASE 41 & 44 INTERACTION COHERENCE */
   --m-ease-entry: cubic-bezier(0.16, 1, 0.3, 1);
-  --m-ease-exit: cubic-bezier(0.33, 1, 0.68, 1);
+  --m-ease-exit: cubic-bezier(0.25, 1, 0.5, 1);
   --m-ease-calm: cubic-bezier(0.65, 0, 0.35, 1);
   
   --m-dur-fast: 150ms;
@@ -43,7 +43,7 @@
   --dna-line-thick: 2px;
   --dna-pad: clamp(4rem, 10vw, 12rem);
   --dna-gap: clamp(2rem, 5vw, 4rem);
-  --dna-radius: 2px;
+  --dna-radius: 0px;
   --dna-border-opacity: 0.12;
   --dna-accent-line: rgba(255, 255, 255, var(--dna-border-opacity));
 }
@@ -389,6 +389,7 @@ body {
   text-transform: uppercase;
   font-weight: 700;
   letter-spacing: -0.04em;
+  padding-top: 0.05em; /* Added for baseline consistency */
   max-width: 100%;
 }
 
@@ -709,11 +710,11 @@ body {
 }
 
 .tactile-btn:hover {
-  transform: translateY(-2px) scale(1.02);
+  transform: translateY(-1px) scale(1.01);
 }
 
 .tactile-btn:active {
-  transform: translateY(1px) scale(0.96);
+  transform: translateY(1px) scale(0.97);
   transition-duration: var(--m-dur-fast);
   /* Snappy compression */
 }

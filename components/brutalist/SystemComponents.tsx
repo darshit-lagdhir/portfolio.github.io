@@ -208,7 +208,7 @@ export const ProjectPanel = memo(({ title, index, children }: { title: string, i
                 boxShadow: "0 40px 100px rgba(0,0,0,0.8), 0 0 1px rgba(255,255,255,0.1)",
                 transition: { duration: 0.3 }
             }}
-            className="w-full border border-white/5 bg-black/40 p-8 md:p-12 transition-all duration-500 shadow-2xl group/panel overflow-hidden transform-gpu"
+            className="w-full border border-white/10 bg-black/40 p-10 md:p-16 transition-all duration-500 shadow-2xl group/panel overflow-hidden transform-gpu"
             data-project="true"
         >
             {/* PHASE 37 STEP 3 & 10: EDGE ILLUMINATION & HOVER REFLECTION */}

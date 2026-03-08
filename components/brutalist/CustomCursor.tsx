@@ -76,14 +76,14 @@ export default function CustomCursor() {
     // Interaction Resistance
     const isResistant = cursorVariant === "nav" || cursorVariant === "project";
     const resistanceSpring = useMemo(() => ({ 
-        damping: isResistant ? 80 : 35, 
-        stiffness: isResistant ? 80 : 250 
+        damping: isResistant ? 50 : 35, 
+        stiffness: isResistant ? 150 : 400 
     }), [isResistant]);
 
-    // Core dot: FAST response
+    // Core dot: EXACT instant tracking response (no lag)
     const dot = {
-        x: useSpring(mouse.x, { damping: 20, stiffness: 1000, mass: 0.1 }),
-        y: useSpring(mouse.y, { damping: 20, stiffness: 1000, mass: 0.1 }),
+        x: useSpring(mouse.x, { damping: 30, stiffness: 2000, mass: 0.05 }),
+        y: useSpring(mouse.y, { damping: 30, stiffness: 2000, mass: 0.05 }),
     };
 
     // Outer ring: SMOOTH trailing response
