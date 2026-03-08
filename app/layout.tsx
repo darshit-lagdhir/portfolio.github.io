@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValue, useSpring, useTransform, useScroll, useVelocity, AnimatePresence } from "framer-motion";
+import { motion, useMotionValue, useSpring, useTransform, useScroll, useVelocity, AnimatePresence, MotionValue } from "framer-motion";
 import { useRef, useEffect, useState, useMemo } from "react";
 import { usePathname } from "next/navigation";
 import "./globals.css";
@@ -14,17 +14,40 @@ import AmbientParticles from "@/components/brutalist/AmbientParticles";
 const MICRO_EASE = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
 export function CustomCursor() {
-  // PHASE 11 STEP 1: CURSOR PHYSICS ENGINE
   const mouse = {
     x: useMotionValue(-100),
     y: useMotionValue(-100),
   };
 
+  const { scrollY } = useScroll();
+  const scrollVelocity = useVelocity(scrollY as MotionValue<number>);
+  const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 });
+
+  // PHASE 35: KINETIC STRETCH (Step 11)
+  const stretchY = useTransform(smoothVelocity, [-2000, 0, 2000], [0.6, 1, 0.6]);
+  const stretchX = useTransform(smoothVelocity, [-2000, 0, 2000], [1.4, 1, 1.4]);
+
   const { lastDiscoveryTime } = useScene();
   const [cursorVariant, setCursorVariant] = useState("default");
-  
-  // PHASE 34: PURITY FIX — Reactive discovery state
   const [isRecentDiscovery, setIsRecentDiscovery] = useState(false);
+  const [depthScale, setDepthScale] = useState(1);
+  const [cursorLabel, setCursorLabel] = useState("");
+  const [cursorOpacity, setCursorOpacity] = useState(1);
+
+  // PHASE 35: INACTIVITY FADE (Step 12)
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    const handleMove = () => {
+      setCursorOpacity(1);
+      clearTimeout(timeout);
+      timeout = setTimeout(() => setCursorOpacity(0.35), 3000);
+    };
+    window.addEventListener("mousemove", handleMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMove);
+      clearTimeout(timeout);
+    };
+  }, []);
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => {
@@ -52,251 +75,184 @@ export function CustomCursor() {
     stiffness: isResistant ? 80 : 250 
   }), [isResistant]);
 
-  // Core dot: FAST response (EXTREME precision)
+  // Core dot: FAST response
   const dot = {
     x: useSpring(mouse.x, { damping: 20, stiffness: 1000, mass: 0.1 }),
     y: useSpring(mouse.y, { damping: 20, stiffness: 1000, mass: 0.1 }),
   };
 
-  // Outer ring: SMOOTH trailing response (PHASE 25 STEP 2: SILKY lag)
-  // PHASE 34: Coupled to resistanceSpring for tactile friction
+  // Outer ring: SMOOTH trailing response
   const ring = {
     x: useSpring(mouse.x, resistanceSpring),
     y: useSpring(mouse.y, resistanceSpring),
   };
 
-  // STEP 6: Proximity light follows cursor (Ultra-smooth ambient)
-  const glow = {
-    x: useSpring(mouse.x, { damping: 60, stiffness: 80, mass: 1 }),
-    y: useSpring(mouse.y, { damping: 60, stiffness: 80, mass: 1 }),
-  };
-
   const [isPressed, setIsPressed] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
-  // PHASE 25 STEP 4 & 5: MAGNETIC REACTION ARBITER
-  const [, setTargetCenter] = useState<{ x: number, y: number } | null>(null);
+  // PHASE 35: TRAIL PARTICLES (Step 9)
+  const [trails, setTrails] = useState<{ x: number, y: number, id: number }[]>([]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
     requestAnimationFrame(() => setIsMounted(true));
-
-    if (window.matchMedia("(hover: none)").matches || window.innerWidth < 768) {
-      return;
-    }
+    if (window.matchMedia("(hover: none)").matches || window.innerWidth < 768) return;
 
     const moveMouse = (e: MouseEvent) => {
-      mouse.x.set(e.clientX);
-      mouse.y.set(e.clientY);
+      let targetX = e.clientX;
+      let targetY = e.clientY;
 
-      // STEP 3 & 4: ADVANCED MAGNETIC & TENSION RESPONSIVENESS
+      // STATE DETECTION REFINEMENT
+      const target = e.target as HTMLElement;
+      const isNav = !!target.closest("a, button, [role='button'], .nav-item, .magnetic-btn");
+      const isProject = !!target.closest("[data-project='true']");
+      const isText = !!target.closest("h1, h2, h3, p, .text-massive, .text-large, .kinetic-letter");
+      const isWhite = !!target.closest(".bg-white");
+
+      // Magnetic Convergence (Step 7)
       const interactables = document.querySelectorAll(".magnetic-btn, [data-project='true']");
       interactables.forEach(el => {
-        const rect = el.getBoundingClientRect();
+        const htmlEl = el as HTMLElement;
+        const rect = htmlEl.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
         const cy = rect.top + rect.height / 2;
         const dist = Math.sqrt(Math.pow(e.clientX - cx, 2) + Math.pow(e.clientY - cy, 2));
-
-        const htmlEl = el as HTMLElement;
-        const isProject = htmlEl.getAttribute('data-project') === 'true';
-        const isMagnetic = htmlEl.classList.contains('magnetic-btn');
-        const radius = isProject ? 400 : 150;
+        const radius = htmlEl.getAttribute('data-project') === 'true' ? 400 : 150;
 
         if (dist < radius) {
-          // STEP 3: Magnetic Attraction
-          const pull = isMagnetic ? 0.35 : (isProject ? 0.08 : 0.15);
-          const dx = (e.clientX - cx) * pull;
-          const dy = (e.clientY - cy) * pull;
-          htmlEl.style.setProperty('--magnet-x', `${dx}px`);
-          htmlEl.style.setProperty('--magnet-y', `${dy}px`);
+          // GENTLE DRIFT (Step 7)
+          const cursorPull = htmlEl.classList.contains('magnetic-btn') ? 0.15 : 0.03;
+          targetX += (cx - e.clientX) * cursorPull;
+          targetY += (cy - e.clientY) * cursorPull;
 
-          // STEP 4: Panel Tilt/Tension
+          const elPull = htmlEl.classList.contains('magnetic-btn') ? 0.35 : 0.08;
+          htmlEl.style.setProperty('--magnet-x', `${(e.clientX - cx) * elPull}px`);
+          htmlEl.style.setProperty('--magnet-y', `${(e.clientY - cy) * elPull}px`);
           if (isProject) {
-            const rotX = -(e.clientY - cy) / radius * 8;
-            const rotY = (e.clientX - cx) / radius * 8;
-            htmlEl.style.setProperty('--tilt-x', `${rotX}deg`);
-            htmlEl.style.setProperty('--tilt-y', `${rotY}deg`);
-            
-            // STEP 7: Panel Edge Light Response
-            const edgeX = (e.clientX - rect.left) / rect.width * 100;
-            const edgeY = (e.clientY - rect.top) / rect.height * 100;
-            htmlEl.style.setProperty('--edge-light-x', `${edgeX}%`);
-            htmlEl.style.setProperty('--edge-light-y', `${edgeY}%`);
+            htmlEl.style.setProperty('--tilt-x', `${-(e.clientY - cy) / radius * 8}deg`);
+            htmlEl.style.setProperty('--tilt-y', `${(e.clientX - cx) / radius * 8}deg`);
           }
         } else {
-          htmlEl.style.setProperty('--magnet-x', `0px`);
-          htmlEl.style.setProperty('--magnet-y', `0px`);
+          htmlEl.style.setProperty('--magnet-x', '0px');
+          htmlEl.style.setProperty('--magnet-y', '0px');
           if (isProject) {
-            htmlEl.style.setProperty('--tilt-x', `0deg`);
-            htmlEl.style.setProperty('--tilt-y', `0deg`);
+            htmlEl.style.setProperty('--tilt-x', '0deg');
+            htmlEl.style.setProperty('--tilt-y', '0deg');
           }
         }
       });
 
-      // STATE DETECTION REFINEMENT
-      const target = e.target as HTMLElement;
-      const isLink = target.closest("a, button, [role='button'], .nav-item, .magnetic-btn");
-      const isProject = target.closest("[data-project='true']");
-      const isLargeText = target.closest("h1, h2, h3, .text-massive, .text-large, .kinetic-letter");
-      const isWhiteSection = target.closest(".bg-white");
+      mouse.x.set(targetX);
+      mouse.y.set(targetY);
 
-      if (isDragging) setCursorVariant("drag");
-      else if (isProject) setCursorVariant("project");
-      else if (isLargeText) setCursorVariant("text");
-      else if (isLink) setCursorVariant("nav");
-      else setCursorVariant("default");
-
-      const isInteractable = isLink || isProject || target.closest("button");
-      if (isInteractable) {
-        const rect = isInteractable.getBoundingClientRect();
-        setTargetCenter({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
-      } else {
-        setTargetCenter(null);
+      // Trail generation on fast movement
+      if (Math.abs(scrollVelocity.get()) > 100) {
+        setTrails(prev => [{ x: e.clientX, y: e.clientY, id: Date.now() }, ...prev].slice(0, 8));
       }
 
-      if (isWhiteSection) document.body.classList.add("cursor-invert");
+      // Depth Mapping (Step 10)
+      if (target.closest(".z-depth-front")) setDepthScale(1.4);
+      else if (target.closest(".z-depth-far")) setDepthScale(0.7);
+      else setDepthScale(1);
+
+      if (isProject) {
+        setCursorVariant("project");
+        setCursorLabel("VIEW_ARCHIVE");
+      } else if (isNav) {
+        setCursorVariant("nav");
+        setCursorLabel("");
+      } else if (isText) {
+        setCursorVariant("text");
+        setCursorLabel("");
+      } else {
+        setCursorVariant("default");
+        setCursorLabel("");
+      }
+
+      if (isWhite) document.body.classList.add("cursor-invert");
       else document.body.classList.remove("cursor-invert");
     };
 
-    const onDown = () => { setIsPressed(true); setIsDragging(true); };
-    const onUp = () => { setIsPressed(false); setIsDragging(false); };
-
     window.addEventListener("mousemove", moveMouse, { passive: true });
-    window.addEventListener("mousedown", onDown);
-    window.addEventListener("mouseup", onUp);
+    window.addEventListener("mousedown", () => setIsPressed(true));
+    window.addEventListener("mouseup", () => setIsPressed(false));
     return () => {
       window.removeEventListener("mousemove", moveMouse);
-      window.removeEventListener("mousedown", onDown);
-      window.removeEventListener("mouseup", onUp);
+      window.removeEventListener("mousedown", () => setIsPressed(true));
+      window.removeEventListener("mouseup", () => setIsPressed(false));
     };
-  }, [mouse.x, mouse.y, isDragging]);
+  }, [mouse.x, mouse.y, scrollVelocity]);
 
-  // PHASE 25 STEP 1, 7, 9: CURSOR SCALE REACTION & STATES
+  // Trail cleanup
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTrails(prev => prev.slice(0, -1));
+    }, 150);
+    return () => clearInterval(timer);
+  }, []);
+
   const variants = {
-    default: {
-      width: 32,
-      height: 32,
-      borderRadius: "100%",
-      borderWidth: "1px",
-      backgroundColor: "rgba(255, 255, 255, 0)",
-      borderColor: "rgba(255, 255, 255, 1)",
-    },
-    nav: {
-      width: 64,
-      height: 64,
-      borderRadius: "100%",
-      borderWidth: "1.5px",
-      backgroundColor: "rgba(255, 255, 255, 0.08)",
-      borderColor: "rgba(255, 255, 255, 1)",
-    },
-    project: {
-      width: 120,
-      height: 120,
-      borderRadius: "100%",
-      borderWidth: "1px",
-      backgroundColor: "rgba(255, 255, 255, 0)",
-      borderColor: "rgba(255, 255, 255, 0.6)",
-    },
-    text: {
-      width: 4,
-      height: 40,
-      borderRadius: "2px",
-      borderWidth: "0px",
-      backgroundColor: "rgba(255, 255, 255, 0.5)",
-      borderColor: "rgba(255, 255, 255, 0)",
-    },
-    drag: {
-      width: 60,
-      height: 60,
-      borderRadius: "100%",
-      borderWidth: "1px",
-      backgroundColor: "rgba(255, 255, 255, 0.1)",
-      borderColor: "rgba(255, 255, 255, 1)",
-    }
+    default: { width: 32, height: 32, borderWidth: "1px", backgroundColor: "transparent", borderColor: "white" },
+    nav: { width: 64, height: 64, borderWidth: "2px", backgroundColor: "rgba(255,255,255,0.08)", borderColor: "white" },
+    project: { width: 120, height: 120, borderWidth: "1px", backgroundColor: "transparent", borderColor: "rgba(255,255,255,0.4)" },
+    text: { width: 2, height: 40, borderWidth: "0px", backgroundColor: "white", borderColor: "transparent" },
   };
 
   if (!isMounted) return null;
-  // Bypass completely on mobile
   if (typeof window !== 'undefined' && (window.matchMedia("(hover: none)").matches || window.innerWidth < 768)) return null;
 
   return (
     <>
-      {/* CORE DOT — fast physics */}
+      <AnimatePresence>
+        {trails.map(t => (
+          <motion.div
+            key={t.id}
+            initial={{ opacity: 0.2, scale: 0.5 }}
+            animate={{ opacity: 0, scale: 0 }}
+            className="fixed top-0 left-0 w-8 h-8 border border-white/20 rounded-full pointer-events-none z-[9997]"
+            style={{ x: t.x, y: t.y, translateX: "-50%", translateY: "-50%" }}
+          />
+        ))}
+      </AnimatePresence>
+
       <motion.div
         className="fixed top-0 left-0 bg-white rounded-full pointer-events-none z-[9999] mix-blend-difference"
         animate={{
-          scale: isPressed ? 0.6 : 1,
-          opacity: cursorVariant === "text" ? 0 : 1 // Hide dot on text
+          scale: (isPressed ? 0.6 : 1) * depthScale,
+          opacity: (cursorVariant === "text" || cursorVariant === "project") ? 0 : cursorOpacity
         }}
-        transition={{ type: "spring", stiffness: 500, damping: 15 }}
-        style={{
-          x: dot.x,
-          y: dot.y,
-          translateX: "-50%",
-          translateY: "-50%",
-          width: 16,
-          height: 16,
-        }}
+        style={{ x: dot.x, y: dot.y, translateX: "-50%", translateY: "-50%", width: 14, height: 14 }}
       />
 
-
-
-      {/* OUTER RING — trailing physics */}
       <motion.div
-        className="fixed top-0 left-0 border pointer-events-none z-[9998] mix-blend-difference flex items-center justify-center"
-        key={lastDiscoveryTime}
+        className="fixed top-0 left-0 border pointer-events-none z-[9998] mix-blend-difference flex items-center justify-center overflow-hidden"
         animate={{
           ...variants[cursorVariant as keyof typeof variants],
-          scale: isPressed
-            ? (cursorVariant === "project" || cursorVariant === "nav" ? 1.25 : 0.8)
-            : (isRecentDiscovery ? 1.4 : 1),
-          borderWidth: isPressed ? "2px" : variants[cursorVariant as keyof typeof variants].borderWidth,
-          opacity: isPressed ? 1 : 0.8,
-          borderColor: isRecentDiscovery ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.4)"
+          scale: (isPressed ? 0.85 : (isRecentDiscovery ? 1.4 : 1)) * depthScale,
+          opacity: cursorOpacity,
         }}
-        transition={{
-          duration: 0.2,
-          ease: [0.16, 1, 0.3, 1],
-          scale: { type: "spring", stiffness: 800, damping: 25, mass: 0.5 }
-        }}
-        style={{ x: ring.x, y: ring.y, translateX: "-50%", translateY: "-50%" }}
-      >
-        {/* PHASE 25 STEP 9: PROJECT ARROW INDICATOR */}
-        <motion.svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="white"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="w-8 h-8 opacity-0"
-          animate={{ opacity: cursorVariant === "project" ? 1 : 0, x: cursorVariant === "project" ? 0 : -10 }}
-          transition={{ duration: 0.3 }}
-        >
-          <path d="M5 12h14M12 5l7 7-7 7" />
-        </motion.svg>
-      </motion.div>
-
-      {/* PHASE 25 STEP 6 & PHASE 28 STEP 9: CURSOR HOVER LIGHT (Atmospheric Spotlight) */}
-      <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9000] mix-blend-screen rounded-full"
-        animate={{
-          opacity: (cursorVariant === "project" || cursorVariant === "text" || cursorVariant === "nav") ? 0.25 : 0.05,
-          scale: cursorVariant === "project" ? 1.8 : 1.2,
-        }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        style={{
-          width: 400,
-          height: 400,
-          x: glow.x,
-          y: glow.y,
-          translateX: "-50%",
+        style={{ 
+          x: ring.x, 
+          y: ring.y, 
+          translateX: "-50%", 
           translateY: "-50%",
-          background: "radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%)"
+          scaleX: cursorVariant === "default" ? stretchX : 1,
+          scaleY: cursorVariant === "default" ? stretchY : 1
         }}
-      />
+      >
+        <AnimatePresence>
+          {cursorLabel && (
+            <motion.span
+              initial={{ opacity: 0, scale: 0.8, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: -10 }}
+              className="text-[10px] font-ui font-black tracking-[0.4em] text-white pt-1"
+            >
+              {cursorLabel}
+            </motion.span>
+          )}
+        </AnimatePresence>
+      </motion.div>
     </>
   );
 }
