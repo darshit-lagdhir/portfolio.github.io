@@ -65,13 +65,15 @@ function ProjectPreviewSignal({ repoName }: { repoName: string }) {
 
 function ProjectItem({ project, idx, scrollYProgress }: { project: Project, idx: number, scrollYProgress: MotionValue<number> }) {
     // PHASE 30 STEP 3: SEQUENTIAL REVEAL ENGINE — STAGGERED SYSTEM ENTRY
-    const start = idx * 0.28; // Increased delay gap
-    const end = start + 0.38; // Slightly longer presence window
+    // PHASE 36 STEP 4 & 9: STAGGERED ENTRY + HORIZONTAL MICRO-SCROLL
+    const start = idx * 0.22 + 0.15; // Delay entry until after the section title reveal
+    const end = start + 0.35;
 
     const pOpacity = useTransform(scrollYProgress, [start, start + 0.1, end - 0.1, end], [0, 1, 1, 0]);
-    const pY = useTransform(scrollYProgress, [start, start + 0.12], [80, 0]); // Increased upward slide for cinematic feel
-    const pX = useTransform(scrollYProgress, [start, end], [idx % 2 === 0 ? "2vw" : "-2vw", idx % 2 === 0 ? "-2vw" : "2vw"]);
-    const pBlur = useTransform(scrollYProgress, [start, start + 0.1, end - 0.1, end], ["12px", "0px", "0px", "12px"]);
+    const pY = useTransform(scrollYProgress, [start, start + 0.15], [120, 0]); 
+    // PHASE 36 STEP 9: SPATIAL VARIATION (Horizontal shift)
+    const pX = useTransform(scrollYProgress, [start, end], [idx % 2 === 0 ? "5vw" : "-5vw", idx % 2 === 0 ? "-5vw" : "5vw"]);
+    const pBlur = useTransform(scrollYProgress, [start, start + 0.08, end - 0.08, end], ["15px", "0px", "0px", "15px"]);
     const filterStr = useTransform(pBlur, b => `blur(${b})`);
     const pointerEventsVal = useTransform(pOpacity, (o: number) => o > 0.5 ? "auto" : "none") as MotionValue<"auto" | "none">;
 
@@ -193,26 +195,40 @@ export default function BrutalistProjectsPreview() {
         }
     ];
 
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+        const check = () => setIsMobile(window.innerWidth < 768);
+        check();
+        window.addEventListener("resize", check);
+        return () => window.removeEventListener("resize", check);
+    }, []);
+
     return (
         <ChoreographedSection id="projects" className="bg-white text-black">
             {/* STEP 5: Scroll Container (Pinned Sequence) */}
             <div
                 ref={containerRef}
                 onPointerEnter={() => setActiveSection("projects")}
-                className="relative h-[300vh] bg-white text-black"
+                className={`relative ${isMobile ? 'h-auto py-24' : 'h-[300vh]'} bg-white text-black`}
             >
                 {/* STICKY WRAPPER — PHASE 34: ARCHITECTURAL ANCHOR */}
-                <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col">
+                <div className={`${isMobile ? 'relative' : 'sticky top-0 h-screen'} w-full overflow-hidden flex flex-col`}>
                     {/* SECTION NUMBER SYSTEM — PHASE 30 VISIBILITY FIX */}
                     <motion.span
-                        style={{ opacity: useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.04, 0.08, 0.08, 0.04]) }}
+                        style={{ opacity: isMobile ? 0.04 : useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.04, 0.08, 0.08, 0.04]) }}
                         className="absolute top-[10%] left-[5%] text-[20vw] font-heading font-black leading-none text-black pointer-events-none z-0 select-none"
                     >
                         02
                     </motion.span>
 
-                    {/* FIXED HEADER SYSTEM */}
-                    <div className="w-full max-w-[1800px] mx-auto px-[5vw] pt-12 md:pt-20 z-20 shrink-0">
+                    {/* FIXED HEADER SYSTEM — PHASE 36 STEP 3: REVEAL SEQUENCE */}
+                    <motion.div 
+                        style={{ 
+                            opacity: useTransform(scrollYProgress, [0, 0.1, 0.8, 0.95], [0, 1, 1, 0]),
+                            y: useTransform(scrollYProgress, [0, 0.1], [30, 0])
+                        }}
+                        className="w-full max-w-[1800px] mx-auto px-[5vw] pt-12 md:pt-20 z-20 shrink-0"
+                    >
                         <div className="flex flex-col gap-4 items-start self-start w-full">
                             <span className="text-caption text-black/60">02_ARCHIVE</span>
                             <motion.h2
@@ -221,7 +237,7 @@ export default function BrutalistProjectsPreview() {
                                 {scrambledTitle}
                             </motion.h2>
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* BREATHING PROJECT ZONE — PHASE 34: KINETIC CONTENT ONLY */}
                     <motion.div style={{ paddingBottom: breathPadding }} className="relative z-10 w-full flex-grow overflow-hidden mt-12 md:mt-24">

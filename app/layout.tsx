@@ -394,6 +394,21 @@ function CrossPageContinuity() {
   );
 }
 
+// PHASE 36 STEP 7: MINIMAL SCROLL PROGRESS INDICATOR
+function ScrollProgressIndicator() {
+  const { scrollYProgress } = useScroll();
+  const scaleY = useSpring(scrollYProgress, { damping: 50, stiffness: 300 });
+
+  return (
+    <div className="fixed right-6 top-1/2 -translate-y-1/2 w-[1px] h-[30vh] bg-white/10 z-[100] origin-center hidden md:block overflow-hidden">
+      <motion.div 
+        className="absolute top-0 left-0 w-full h-full bg-white origin-top"
+        style={{ scaleY }}
+      />
+    </div>
+  );
+}
+
 function LayoutContent({ children }: { children: React.ReactNode }) {
   const { scrollY, scrollYProgress } = useScroll();
   const { interactionCount, lastDiscoveryTime } = useScene();
@@ -516,6 +531,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
 
       <CommandPalette />
       <ContinuityLine />
+      <ScrollProgressIndicator />
     </>
   );
 }

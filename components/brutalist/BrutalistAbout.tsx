@@ -35,11 +35,13 @@ export default function BrutalistAbout() {
     const inView = useInView(containerRef, { once: false, amount: 0.1 });
     const scrambledTitle = useScramble("IDENTITY_SYSTEM", inView);
 
-    // PHASE 26 STEP 8: ABOUT SECTION SCROLL REVEAL
+    // PHASE 36 STEP 6: ABOUT SECTION SOFT ENTRY
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start end", "end start"]
     });
+    const aboutOpacity = useTransform(scrollYProgress, [0, 0.15], [0, 1]);
+    const aboutY = useTransform(scrollYProgress, [0, 0.15], [60, 0]);
     const breathPadding = useTransform(scrollYProgress, [0.4, 0.5, 0.6], ["2rem", "0rem", "2rem"]);
 
     return (
@@ -54,7 +56,15 @@ export default function BrutalistAbout() {
                     03
                 </span>
 
-                <motion.div style={{ paddingTop: breathPadding, paddingBottom: breathPadding }} className="relative z-10">
+                <motion.div 
+                    style={{ 
+                        paddingTop: breathPadding, 
+                        paddingBottom: breathPadding,
+                        opacity: aboutOpacity,
+                        y: aboutY
+                    }} 
+                    className="relative z-10"
+                >
                     <div className="w-full max-w-[1800px] mx-auto px-[5vw] flex flex-col gap-6 md:gap-10">
 
                         {/* SECTION HEADING — MASK REVEAL (STEP 9) */}

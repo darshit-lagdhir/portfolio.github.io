@@ -90,10 +90,10 @@ export default function BrutalistHero() {
     const fgTransX = useTransform(smoothMouseX, [-0.5, 0.5], [-10, 10]);
     const fgTransY = useTransform(smoothMouseY, [-0.5, 0.5], [-10, 10]);
 
-    // PHASE 7: VARIABLE TYPOGRAPHY MOTION
+    // PHASE 36 STEP 1: SECTION PINNING SYSTEM
     const { scrollYProgress } = useScroll({
         target: sectionRef,
-        offset: ["start start", "end start"]
+        offset: ["start start", "end end"]
     });
 
     useEffect(() => {
@@ -107,24 +107,26 @@ export default function BrutalistHero() {
         return () => window.removeEventListener("mousemove", handleMouseMove);
     }, [mouseX, mouseY]);
 
-    // PHASE 26 STEP 3 & 4: HERO SCROLL REACTION & EXIT TRANSITION
-    const heroScale = useTransform(scrollYProgress, [0, 1], [1, 1.15]);
-    const geomZ = useTransform(scrollYProgress, [0, 1], [-200, -1200]);
-    const geomOpacity = useTransform(scrollYProgress, [0, 0.4], [0.2, 0]);
+    // PHASE 36 STEP 2: HERO SCROLL TRANSFORMATION
+    const heroScale = useTransform(scrollYProgress, [0, 0.4, 0.8], [1, 0.8, 0.7]);
+    const heroRotateX = useTransform(scrollYProgress, [0, 0.6], [0, 10]);
+    const geomZ = useTransform(scrollYProgress, [0, 0.8], [-200, -2500]);
+    const geomOpacity = useTransform(scrollYProgress, [0, 0.4, 0.7], [0.2, 0.1, 0]);
 
-    const mainTextOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+    const mainTextOpacity = useTransform(scrollYProgress, [0, 0.4, 0.6], [1, 1, 0]);
+    const subTextOpacity = useTransform(scrollYProgress, [0, 0.3, 0.5], [1, 0.8, 0]);
 
-    // PHASE 30 STEP 2: CINEMATIC EXIT CHOREOGRAPHY — GUIDED CAMERA MOTION
-    const frontY = useTransform(scrollYProgress, [0, 1], ["0%", "-30%"]);
-    const backY = useTransform(scrollYProgress, [0, 1], ["0%", "-40%"]);
-    const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+    // PHASE 30 STEP 2: CINEMATIC EXIT CHOREOGRAPHY
+    const frontY = useTransform(scrollYProgress, [0, 0.5, 1], ["0%", "0%", "-60%"]);
+    const backY = useTransform(scrollYProgress, [0, 0.5, 1], ["0%", "0%", "-90%"]);
+    const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
 
     // PHASE 26 STEP 4: SECTION EXIT MORPH
-    const morphScaleX = useTransform(scrollYProgress, [0.7, 1], [1, 0.95]);
-    const morphScaleY = useTransform(scrollYProgress, [0.7, 1], [1, 0.92]);
-    const morphRotate = useTransform(scrollYProgress, [0.7, 1], [0, -0.8]);
-    const morphZ = useTransform(scrollYProgress, [0.7, 1], [0, -100]);
-    const morphOpacity = useTransform(scrollYProgress, [0.8, 1], [1, 0]);
+    const morphScaleX = useTransform(scrollYProgress, [0.8, 1], [1, 0.92]);
+    const morphScaleY = useTransform(scrollYProgress, [0.8, 1], [1, 0.88]);
+    const morphRotate = useTransform(scrollYProgress, [0.8, 1], [0, -1.5]);
+    const morphZ = useTransform(scrollYProgress, [0.8, 1], [0, -200]);
+    const morphOpacity = useTransform(scrollYProgress, [0.9, 1], [1, 0]);
 
     // PHASE 20 STEP 1 & 2: HERO DISCOVERY TRIGGER
     useEffect(() => {
@@ -164,7 +166,7 @@ export default function BrutalistHero() {
     return (
         <motion.section
             ref={sectionRef}
-            className={`relative h-[110vh] flex flex-col justify-center overflow-hidden transition-all duration-1000 ease-in-out section-boundary-flash ${isIdle ? 'brightness-50' : 'brightness-100'}`}
+            className={`relative ${isMobile ? 'h-[120vh]' : 'h-[200vh]'} flex flex-col items-center section-boundary-flash ${isIdle ? 'brightness-50' : 'brightness-100'}`}
             id="hero"
             onPointerEnter={() => setActiveSection("hero")}
             style={{
@@ -177,6 +179,7 @@ export default function BrutalistHero() {
                 transformPerspective: 1200
             }}
         >
+            <div className={`${isMobile ? 'relative' : 'sticky top-0'} h-screen w-full flex flex-col justify-center overflow-hidden`}>
             {/* BREATHING BACKGROUND — PHASE 4 + PHASE 9 + PHASE 28 STEP 9: ATMOSPHERIC LIGHTING OVERLAY */}
             <motion.div
                 animate={{ scale: [1, 1.005, 1] }}
@@ -208,16 +211,23 @@ export default function BrutalistHero() {
                 </div>
             </motion.div>
 
-            {/* PHASE 23 STEP 7: SECTION NUMBER SYSTEM */}
+            {/* SECTION NUMBER SYSTEM */}
             <motion.span
-                style={{ x: bgTransX, y: bgTransY }}
-                className="absolute top-[10%] left-[5%] text-[20vw] font-heading font-black leading-none text-white opacity-[0.02] pointer-events-none z-0 select-none"
+                style={{ x: bgTransX, y: bgTransY, opacity: useTransform(scrollYProgress, [0, 0.3], [0.02, 0]) }}
+                className="absolute top-[10%] left-[5%] text-[20vw] font-heading font-black leading-none text-white pointer-events-none z-0 select-none"
             >
                 01
             </motion.span>
 
             <motion.div
-                style={{ scale: heroScale, rotateX: rotateX as MotionValue<number>, rotateY: rotateY as MotionValue<number>, perspective: 1000, x: fgTransX, y: fgTransY }}
+                style={{ 
+                    scale: heroScale, 
+                    rotateX: useTransform([rotateX, heroRotateX], ([rX, hX]) => (rX as number) + (hX as number)) as MotionValue<number>, 
+                    rotateY: rotateY as MotionValue<number>, 
+                    perspective: 1000, 
+                    x: fgTransX, 
+                    y: fgTransY 
+                }}
                 className="grid grid-cols-12 gap-6 md:gap-10 items-center w-full max-w-[1800px] mx-auto px-[5vw] pt-32 z-10"
             >
                 {/* PHASE 23 STEP 3 & 4: SPLIT HERO - TYPOGRAPHY DOMINANCE */}
@@ -299,7 +309,7 @@ export default function BrutalistHero() {
                         </motion.h1>
                     </div>
 
-                    <div className="mt-12 md:mt-16 flex flex-col gap-4">
+                    <motion.div style={{ opacity: subTextOpacity }} className="mt-12 md:mt-16 flex flex-col gap-4">
                         <motion.span
                             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.5, duration: 1, ease: GLOBAL_EASE }}
                             className="text-medium text-white/70"
@@ -312,18 +322,18 @@ export default function BrutalistHero() {
                         >
                             INTERFACE ENGINEER
                         </motion.span>
-                    </div>
+                    </motion.div>
                 </div>
 
                 {/* PHASE 23 STEP 4: RIGHT 5-COLS — INTERACTIVE VISUAL ELEMENT */}
                 <motion.div
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
+                    style={{ opacity: subTextOpacity }}
                     transition={{ duration: 1.2, delay: 0.8, ease: GLOBAL_EASE }}
                     className="hidden lg:flex col-span-5 flex-col justify-center items-center h-[50vh] relative pl-10"
                 >
                     <div className="relative w-[30vh] h-[30vh] flex items-center justify-center opacity-40">
-                        {/* Minimal architectural motion element */}
                         <motion.div
                             style={{
                                 rotateX: rotateX as MotionValue<number>,
@@ -345,6 +355,7 @@ export default function BrutalistHero() {
                     </div>
                 </motion.div>
             </motion.div>
+          </div>
         </motion.section>
     );
 }
