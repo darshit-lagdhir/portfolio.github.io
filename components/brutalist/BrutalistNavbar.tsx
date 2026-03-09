@@ -49,6 +49,7 @@ export default function BrutalistNavbar() {
                 </div>
 
                 {/* MOBILE TRIGGER */}
+                {/* MOBILE TRIGGER */}
                 <div className="flex items-center gap-4">
                     {/* COMMAND PALETTE ICON — STEP 12 */}
                     <button
@@ -69,7 +70,7 @@ export default function BrutalistNavbar() {
                                 setMenuOpen(!menuOpen);
                                 markInteraction();
                             }}
-                            className="text-white font-bold text-[10px] tracking-[0.4em] p-2"
+                            className="text-white font-bold text-[10px] tracking-[0.4em] p-6 -mr-4"
                         >
                             {menuOpen ? "[ CLOSE ]" : "[ MENU ]"}
                         </button>
@@ -84,7 +85,7 @@ export default function BrutalistNavbar() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="fixed inset-0 bg-[#000000] z-[3000] flex flex-col justify-center px-[10vw] gap-16"
+                        className="fixed inset-0 bg-[#000000] z-[3000] flex flex-col justify-center px-[10vw] gap-12"
                     >
                         {navLinks.map((link, idx) => (
                             <motion.div
@@ -97,19 +98,24 @@ export default function BrutalistNavbar() {
                                     <Link
                                         href={link.href}
                                         onClick={() => setMenuOpen(false)}
-                                        className="text-medium font-bold hover:opacity-70 transition-opacity"
                                     >
-                                        {link.name}
+                                        <motion.span
+                                            whileTap={{ scale: 0.9, x: 10, color: "#fff" }}
+                                            className="text-medium font-bold hover:opacity-70 transition-opacity inline-block py-2"
+                                        >
+                                            {link.name}
+                                        </motion.span>
                                     </Link>
                                 </div>
                             </motion.div>
                         ))}
-                        <button
+                        <motion.button
                             onClick={() => setMenuOpen(false)}
-                            className="mt-10 text-micro text-white/40 self-start tracking-widest font-ui font-bold underline"
+                            whileTap={{ opacity: 0.5 }}
+                            className="mt-6 text-micro text-white/40 self-start tracking-widest font-ui font-bold underline p-4 -ml-4"
                         >
                             CLOSE_SESSION
-                        </button>
+                        </motion.button>
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -128,7 +134,7 @@ const MagneticNavItem = memo(({
     isActive: boolean;
 }) => {
     const ref = useRef<HTMLDivElement>(null);
-    const { triggerDiscovery, discoveries } = useScene();
+    const { triggerDiscovery, discoveries, isMobile } = useScene();
     const [isHovering, setIsHovering] = useState(false);
 
     useEffect(() => {
@@ -139,7 +145,7 @@ const MagneticNavItem = memo(({
         return () => clearTimeout(timer);
     }, [isHovering, index, triggerDiscovery, discoveries]);
 
-    const handleMouseEnter = () => setIsHovering(true);
+    const handleMouseEnter = () => !isMobile && setIsHovering(true);
     const handleMouseLeave = () => setIsHovering(false);
 
     return (
@@ -147,7 +153,7 @@ const MagneticNavItem = memo(({
             ref={ref}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            whileHover={{ y: -2 }}
+            whileHover={!isMobile ? { y: -2 } : {}}
             whileTap={{ scale: 0.94 }}
             transition={{ 
                 duration: isHovering ? DUR.MEDIUM : DUR.SLOW,
@@ -160,9 +166,10 @@ const MagneticNavItem = memo(({
                 className={`
                     flex items-baseline gap-2 text-micro font-bold transition-all duration-300
                     font-ui ${isActive ? "text-white" : "text-white/40 group-hover:text-white"} 
+                    ${isMobile ? "p-4" : ""}
                 `}
                 style={{
-                    letterSpacing: isHovering ? "0.6em" : "0.4em"
+                    letterSpacing: (isHovering && !isMobile) ? "0.6em" : "0.4em"
                 }}
             >
                 <motion.span

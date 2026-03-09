@@ -63,7 +63,7 @@ export default function BrutalistHero() {
     const sectionRef = useRef<HTMLElement>(null);
     const {
         setActiveSection, isIdle, scrollTempo, attentionScore,
-        triggerDiscovery, discoveries, interactionCount, mouseXProgress, mouseYProgress
+        triggerDiscovery, discoveries, interactionCount, mouseXProgress, mouseYProgress, isMobile
     } = useScene();
 
     // PHASE 16 STEP 2: INTERACTION MEMORY (Sticky state on return)
@@ -86,14 +86,14 @@ export default function BrutalistHero() {
     const smoothMouseX = useSpring(mouseXProgress, { damping: 50, stiffness: 400 });
     const smoothMouseY = useSpring(mouseYProgress, { damping: 50, stiffness: 400 });
 
-    const rotateX = useTransform(smoothMouseY, [-0.5, 0.5], [2, -2]); // MAX TILT: 2 DEGREES
-    const rotateY = useTransform(smoothMouseX, [-0.5, 0.5], [-2, 2]); // COMPLEMENTARY TILT
+    const rotateX = useTransform(smoothMouseY, [-0.5, 0.5], isMobile ? [0, 0] : [2, -2]); 
+    const rotateY = useTransform(smoothMouseX, [-0.5, 0.5], isMobile ? [0, 0] : [-2, 2]);
 
     // PHASE 24 STEP 8: HERO CAMERA PARALLAX (Spatial Layers)
-    const bgTransX = useTransform(smoothMouseX, [-0.5, 0.5], [15, -15]);
-    const bgTransY = useTransform(smoothMouseY, [-0.5, 0.5], [15, -15]);
-    const fgTransX = useTransform(smoothMouseX, [-0.5, 0.5], [-10, 10]);
-    const fgTransY = useTransform(smoothMouseY, [-0.5, 0.5], [-10, 10]);
+    const bgTransX = useTransform(smoothMouseX, [-0.5, 0.5], isMobile ? [0, 0] : [15, -15]);
+    const bgTransY = useTransform(smoothMouseY, [-0.5, 0.5], isMobile ? [0, 0] : [15, -15]);
+    const fgTransX = useTransform(smoothMouseX, [-0.5, 0.5], isMobile ? [0, 0] : [-10, 10]);
+    const fgTransY = useTransform(smoothMouseY, [-0.5, 0.5], isMobile ? [0, 0] : [-10, 10]);
 
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -101,24 +101,24 @@ export default function BrutalistHero() {
     const { scrollY, scrollYProgress } = useScroll();
 
     // PHASE 36 STEP 2: HERO SCROLL TRANSFORMATION
-    const heroScale = useTransform(scrollYProgress, [0, 0.4, 0.8], [1, 0.8, 0.7]);
-    const heroRotateX = useTransform(scrollYProgress, [0, 0.6], [0, 10]);
-    const geomZ = useTransform(scrollYProgress, [0, 0.8], [-200, -2500]);
+    const heroScale = useTransform(scrollYProgress, [0, 0.4, 0.8], isMobile ? [1, 0.95, 0.95] : [1, 0.8, 0.7]);
+    const heroRotateX = useTransform(scrollYProgress, [0, 0.6], [0, isMobile ? 5 : 10]);
+    const geomZ = useTransform(scrollYProgress, [0, 0.8], isMobile ? [-200, -600] : [-200, -2500]);
     const geomOpacity = useTransform(scrollYProgress, [0, 0.4, 0.7], [0.2, 0.1, 0]);
 
     const mainTextOpacity = useTransform(scrollYProgress, [0, 0.4, 0.6], [1, 1, 0]);
-    const subTextOpacity = useTransform(scrollYProgress, [0, 0.3, 0.5], [1, 0.8, 0]);
+    const subTextOpacity = useTransform(scrollYProgress, [0, 0.3, 0.5], [1, 1, 0]);
 
     // PHASE 30 STEP 2: CINEMATIC EXIT CHOREOGRAPHY
-    const frontY = useTransform(scrollYProgress, [0, 0.5, 1], ["0%", "0%", "-60%"]);
-    const backY = useTransform(scrollYProgress, [0, 0.5, 1], ["0%", "0%", "-90%"]);
-    const bgY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+    const frontY = useTransform(scrollYProgress, [0, 0.6, 1], ["0%", "0%", isMobile ? "-20%" : "-60%"]);
+    const backY = useTransform(scrollYProgress, [0, 0.6, 1], ["0%", "0%", isMobile ? "-30%" : "-90%"]);
+    const bgY = useTransform(scrollYProgress, [0, 1], ["0%", isMobile ? "10%" : "40%"]);
 
     // PHASE 26 STEP 4: SECTION EXIT MORPH
-    const morphScaleX = useTransform(scrollYProgress, [0.8, 1], [1, 0.92]);
-    const morphScaleY = useTransform(scrollYProgress, [0.8, 1], [1, 0.88]);
-    const morphRotate = useTransform(scrollYProgress, [0.8, 1], [0, -1.5]);
-    const morphZ = useTransform(scrollYProgress, [0.8, 1], [0, -200]);
+    const morphScaleX = useTransform(scrollYProgress, [0.8, 1], [1, isMobile ? 1 : 0.92]);
+    const morphScaleY = useTransform(scrollYProgress, [0.8, 1], [1, isMobile ? 0.98 : 0.88]);
+    const morphRotate = useTransform(scrollYProgress, [0.8, 1], [0, isMobile ? 0 : -1.5]);
+    const morphZ = useTransform(scrollYProgress, [0.8, 1], [0, isMobile ? 0 : -200]);
     const morphOpacity = useTransform(scrollYProgress, [0.9, 1], [1, 0]);
 
     // PHASE 20 STEP 1 & 2: HERO DISCOVERY TRIGGER
@@ -143,15 +143,6 @@ export default function BrutalistHero() {
     const bgLightX = useTransform(smoothMouseX, [-0.5, 0.5], ["20%", "80%"]);
     const bgLightY = useTransform(smoothMouseY, [-0.5, 0.5], ["20%", "80%"]);
     const atmosphericGradient = useMotionTemplate`radial-gradient(circle at ${bgLightX} ${bgLightY}, rgba(255,255,255,0.04) 0%, transparent 60%)`;
-
-    // PHASE 29 STEP 11: PERSISTENT MOBILE DETECTION
-    const [isMobile, setIsMobile] = useState(false);
-    useEffect(() => {
-        const check = () => setIsMobile(window.innerWidth < 768);
-        check();
-        window.addEventListener("resize", check);
-        return () => window.removeEventListener("resize", check);
-    }, []);
 
     const textArray1 = "DARSHIT".split("");
     const textArray2 = "LAGDHIR".split("");

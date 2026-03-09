@@ -16,7 +16,7 @@ export default function CustomCursor() {
     const stretchY = useTransform(smoothVelocity, [-2000, 0, 2000], [0.6, 1, 0.6]);
     const stretchX = useTransform(smoothVelocity, [-2000, 0, 2000], [1.4, 1, 1.4]);
 
-    const { lastDiscoveryTime, mouseX, mouseY } = useScene();
+    const { lastDiscoveryTime, mouseX, mouseY, isMobile } = useScene();
     const [cursorVariant, setCursorVariant] = useState("default");
     const [isRecentDiscovery, setIsRecentDiscovery] = useState(false);
     const [depthScale, setDepthScale] = useState(1);
@@ -45,6 +45,7 @@ export default function CustomCursor() {
 
     // PHASE 35: INACTIVITY FADE (Step 12)
     useEffect(() => {
+        if (isMobile) return;
         let timeout: NodeJS.Timeout;
         const handleMove = () => {
             setCursorOpacity(1);
@@ -91,10 +92,10 @@ export default function CustomCursor() {
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
-        if (typeof window === 'undefined') return;
+        if (typeof window === 'undefined' || isMobile) return;
         requestAnimationFrame(() => setIsMounted(true));
         
-        if (window.matchMedia("(hover: none)").matches || window.innerWidth < 768) return;
+        if (window.matchMedia("(hover: none)").matches) return;
 
         const moveMouse = (e: MouseEvent) => {
             const { clientX, clientY } = e;
@@ -159,6 +160,7 @@ export default function CustomCursor() {
 
     // Unified press listeners
     useEffect(() => {
+        if (isMobile) return;
         const press = () => setIsPressed(true);
         const release = () => setIsPressed(false);
         window.addEventListener("mousedown", press);

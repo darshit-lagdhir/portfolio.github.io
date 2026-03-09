@@ -6,28 +6,11 @@ import { useEffect, useState, useRef } from "react";
 import { useScene } from "@/context/SceneContext";
 
 export default function Template({ children }: { children: React.ReactNode }) {
+    const { isNavigating, isMobile } = useScene();
     const pathname = usePathname();
     const prevPathname = useRef(pathname);
     const [direction, setDirection] = useState<"forward" | "backward">("forward");
     const lastClickTime = useRef(0);
-    const { isNavigating } = useScene();
-    const [isMobile, setIsMobile] = useState(false);
-
-    useEffect(() => {
-        const frame = requestAnimationFrame(() => {
-            if (typeof window !== 'undefined') {
-                setIsMobile(window.innerWidth < 768);
-            }
-        });
-        const handleResize = () => {
-            requestAnimationFrame(() => setIsMobile(window.innerWidth < 768));
-        };
-        window.addEventListener("resize", handleResize);
-        return () => {
-            cancelAnimationFrame(frame);
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
 
     // PHASE 12: CINEMATIC TIMING (SUB-600MS)
     // PHASE 31: RHYTHM HARMONIZATION (PRIMARY: 600MS)
@@ -69,7 +52,14 @@ export default function Template({ children }: { children: React.ReactNode }) {
 
     const variants = {
         initial: (dir: string) => {
-            if (isProjectPage && !isMobile) {
+            if (isMobile) {
+                return {
+                    opacity: 0,
+                    y: dir === "forward" ? 10 : -10,
+                    zIndex: 50,
+                };
+            }
+            if (isProjectPage) {
                 return {
                     clipPath: "inset(20% 5vw 20% 5vw)", 
                     scale: 0.85,
@@ -80,7 +70,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
                 };
             }
             return {
-                clipPath: isMobile ? "inset(0% 0% 0% 0%)" : (dir === "forward" ? "inset(100% 0 0 0)" : "inset(0 0 100% 0)"),
+                clipPath: (dir === "forward" ? "inset(100% 0 0 0)" : "inset(0 0 100% 0)"),
                 y: dir === "forward" ? "20%" : "-20%",
                 scale: 0.9,
                 opacity: 0,
@@ -94,13 +84,21 @@ export default function Template({ children }: { children: React.ReactNode }) {
             opacity: 1,
             zIndex: 50,
             transition: { 
-                duration: duration * 1.5, // Slower expansion for cinematic feel
+                duration: isMobile ? duration : duration * 1.5,
                 ease: [0.19, 1, 0.22, 1] as [number, number, number, number], 
-                delay: 0.1 
+                delay: isMobile ? 0 : 0.1 
             }
         },
         exit: (dir: string) => {
-            if (isProjectPage && !isMobile) {
+            if (isMobile) {
+                return {
+                    opacity: 0,
+                    y: dir === "forward" ? -10 : 10,
+                    zIndex: 0,
+                    transition: { duration: duration * 0.8, ease }
+                };
+            }
+            if (isProjectPage) {
                 return {
                     clipPath: "inset(20% 5vw 20% 5vw)",
                     scale: 0.85,
@@ -111,7 +109,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
                 };
             }
             return {
-                clipPath: isMobile ? "inset(0% 0% 0% 0%)" : (dir === "forward" ? "inset(0 0 100% 0)" : "inset(100% 0 0 0)"),
+                clipPath: (dir === "forward" ? "inset(0 0 100% 0)" : "inset(100% 0 0 0)"),
                 y: dir === "forward" ? "-20%" : "20%",
                 scale: 0.9,
                 opacity: 0,

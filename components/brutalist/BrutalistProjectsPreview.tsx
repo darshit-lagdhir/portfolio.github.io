@@ -66,7 +66,7 @@ const ProjectPreviewSignal = memo(({ repoName }: { repoName: string }) => {
 ProjectPreviewSignal.displayName = "ProjectPreviewSignal";
 
 const ProjectItem = memo(({ project, idx, scrollYProgress }: { project: Project, idx: number, scrollYProgress: MotionValue<number> }) => {
-    const { setIsNavigating } = useScene();
+    const { setIsNavigating, isMobile } = useScene();
     // PHASE 30 STEP 3: SEQUENTIAL REVEAL ENGINE — STAGGERED SYSTEM ENTRY
     // PHASE 36 STEP 4 & 9: STAGGERED ENTRY + HORIZONTAL MICRO-SCROLL
     const start = idx * 0.22 + 0.15; // Delay entry until after the section title reveal
@@ -74,7 +74,6 @@ const ProjectItem = memo(({ project, idx, scrollYProgress }: { project: Project,
 
     const pOpacity = useTransform(scrollYProgress, [start, start + 0.1, end - 0.1, end], [0, 1, 1, 0]);
     const pY = useTransform(scrollYProgress, [start, start + 0.15], [120, 0]); 
-    // PHASE 36 STEP 9: SPATIAL VARIATION (Horizontal shift)
     const pX = useTransform(scrollYProgress, [start, end], [idx % 2 === 0 ? "5vw" : "-5vw", idx % 2 === 0 ? "-5vw" : "5vw"]);
     const pBlur = useTransform(scrollYProgress, [start, start + 0.08, end - 0.08, end], ["15px", "0px", "0px", "15px"]);
     const filterStr = useTransform(pBlur, b => `blur(${b})`);
@@ -82,14 +81,14 @@ const ProjectItem = memo(({ project, idx, scrollYProgress }: { project: Project,
 
     return (
         <motion.div
-            style={{
+            style={isMobile ? { opacity: 1, y: 0, x: 0, filter: "none", pointerEvents: "auto" } : {
                 opacity: pOpacity,
                 y: pY,
                 x: pX,
                 filter: filterStr,
                 pointerEvents: pointerEventsVal
             }}
-            className={`absolute inset-0 grid grid-cols-12 items-center ${project.span} transform-gpu`}
+            className={`${isMobile ? 'relative col-span-12' : `absolute inset-0 grid grid-cols-12 items-center ${project.span}`} transform-gpu`}
             data-project="true"
         >
             <div className="col-span-12">
@@ -166,7 +165,7 @@ const ProjectItem = memo(({ project, idx, scrollYProgress }: { project: Project,
 ProjectItem.displayName = "ProjectItem";
 
 export default function BrutalistProjectsPreview() {
-    const { setActiveSection } = useScene();
+    const { setActiveSection, isMobile } = useScene();
     const containerRef = useRef<HTMLDivElement>(null);
     const inView = useInView(containerRef, { once: false, amount: 0.1 });
     const scrambledTitle = useScramble("SELECTED_WORK_ARCHIVE", inView);
@@ -211,14 +210,6 @@ export default function BrutalistProjectsPreview() {
         }
     ];
 
-    const [isMobile, setIsMobile] = useState(false);
-    useEffect(() => {
-        const check = () => setIsMobile(window.innerWidth < 768);
-        check();
-        window.addEventListener("resize", check);
-        return () => window.removeEventListener("resize", check);
-    }, []);
-
     return (
         <ChoreographedSection id="projects" className="bg-white text-black">
             {/* STEP 5: Scroll Container (Pinned Sequence) */}
@@ -243,8 +234,8 @@ export default function BrutalistProjectsPreview() {
                     {/* FIXED HEADER SYSTEM — PHASE 42 DNA PATTERN */}
                     <motion.div 
                         style={{ 
-                            opacity: useTransform(scrollYProgress, [0, 0.1, 0.8, 0.95], [0, 1, 1, 0]),
-                            y: useTransform(scrollYProgress, [0, 0.1], [30, 0])
+                            opacity: isMobile ? 1 : useTransform(scrollYProgress, [0, 0.1, 0.8, 0.95], [0, 1, 1, 0]),
+                            y: isMobile ? 0 : useTransform(scrollYProgress, [0, 0.1], [30, 0])
                         }}
                         className={`${LAYOUT.CONTAINER} pt-12 md:pt-20 z-20 shrink-0`}
                     >
@@ -258,10 +249,10 @@ export default function BrutalistProjectsPreview() {
                     </motion.div>
 
                     {/* BREATHING PROJECT ZONE — PHASE 34: KINETIC CONTENT ONLY */}
-                    <motion.div style={{ paddingBottom: breathPadding }} className="relative z-10 w-full flex-grow overflow-hidden mt-12 md:mt-24">
+                    <motion.div style={isMobile ? { paddingBottom: "4rem" } : { paddingBottom: breathPadding }} className="relative z-10 w-full flex-grow overflow-hidden mt-12 md:mt-24">
                         <div className={`${LAYOUT.CONTAINER} relative h-full`}>
                             {/* STEP 6 & 7: EDITORIAL PROJECT BLOCKS (PINNED REVEAL) */}
-                            <div className="grid grid-cols-12 gap-y-12 gap-x-8 items-start relative h-full">
+                            <div className={`${isMobile ? 'flex flex-col gap-16' : 'grid grid-cols-12 gap-y-12 gap-x-8 items-start relative h-full'}`}>
                                 {projects.map((project, idx) => (
                                     <ProjectItem key={project.id} project={project} idx={idx} scrollYProgress={scrollYProgress} />
                                 ))}

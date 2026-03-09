@@ -30,7 +30,7 @@ const useScramble = (text: string, active: boolean) => {
 };
 
 export default function BrutalistAbout() {
-    const { setActiveSection } = useScene();
+    const { setActiveSection, isMobile } = useScene();
     const containerRef = useRef<HTMLDivElement>(null);
     const inView = useInView(containerRef, { once: false, amount: 0.1 });
     const scrambledTitle = useScramble("IDENTITY_SYSTEM", inView);
@@ -41,8 +41,8 @@ export default function BrutalistAbout() {
         offset: ["start end", "end start"]
     });
     const aboutOpacity = useTransform(scrollYProgress, [0, 0.15], [0, 1]);
-    const aboutY = useTransform(scrollYProgress, [0, 0.15], [60, 0]);
-    const breathPadding = useTransform(scrollYProgress, [0.4, 0.5, 0.6], ["2rem", "0rem", "2rem"]);
+    const aboutY = useTransform(scrollYProgress, [0, 0.15], [isMobile ? 30 : 60, 0]);
+    const breathPadding = useTransform(scrollYProgress, [0.4, 0.5, 0.6], [isMobile ? "0rem" : "2rem", "0rem", isMobile ? "0rem" : "2rem"]);
 
     return (
         <ChoreographedSection id="about">

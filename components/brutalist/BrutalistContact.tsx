@@ -31,7 +31,7 @@ const useScramble = (text: string, active: boolean) => {
 };
 
 export default function BrutalistContact() {
-    const { setActiveSection } = useScene();
+    const { setActiveSection, isMobile } = useScene();
     const [isHovered, setIsHovered] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     const inView = useInView(containerRef, { amount: 0.1 });
@@ -42,7 +42,7 @@ export default function BrutalistContact() {
         target: containerRef,
         offset: ["start end", "end start"]
     });
-    const breathPadding = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], ["8rem", "10rem", "10rem", "8rem"]);
+    const breathPadding = useTransform(scrollYProgress, [0, 0.4, 0.6, 1], [isMobile ? "4rem" : "8rem", isMobile ? "6rem" : "10rem", isMobile ? "6rem" : "10rem", isMobile ? "4rem" : "8rem"]);
 
     return (
         <ChoreographedSection

@@ -2,6 +2,7 @@
 
 import { motion, useMotionValue } from "framer-motion";
 import { useRef, useMemo } from "react";
+import { useScene } from "@/context/SceneContext";
 
 const MARQUEE_WORDS = [
     "SELECTED WORK",
@@ -15,6 +16,7 @@ const MARQUEE_WORDS = [
 ];
 
 export default function KineticMarquee() {
+    const { isMobile } = useScene();
     const containerRef = useRef<HTMLDivElement>(null);
     const isHovered = useMotionValue(0);
 
@@ -29,7 +31,7 @@ export default function KineticMarquee() {
             ref={containerRef}
             onMouseEnter={handleEnter}
             onMouseLeave={handleLeave}
-            className="relative w-full overflow-hidden py-10 border-y border-white/5 cursor-none bg-black"
+            className={`relative w-full overflow-hidden py-10 border-y border-white/5 ${isMobile ? '' : 'cursor-none'} bg-black`}
         >
             {/* STEP 3: INFINITE MARQUEE BAND */}
             <motion.div 

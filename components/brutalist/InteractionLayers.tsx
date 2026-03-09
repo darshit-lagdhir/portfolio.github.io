@@ -53,17 +53,19 @@ export function TapRipple() {
 
 // PHASE 20 STEP 5: INTERACTION FEEDBACK DOT
 export function DiscoveryFeedbackDot() {
-    const { lastDiscoveryTime } = useScene();
-    const [mousePos, setMousePos] = useState({ x: -100, y: -100 });
+    const { lastDiscoveryTime, mouseX, mouseY, isMobile } = useScene();
     const [isActive, setIsActive] = useState(false);
+    const [dotPos, setDotPos] = useState({ x: -100, y: -100 });
 
     useEffect(() => {
-        const handleMove = (e: MouseEvent) => {
-            setMousePos({ x: e.clientX, y: e.clientY });
+        if (isMobile) return;
+        const updatePos = () => {
+            setDotPos({ x: mouseX.get(), y: mouseY.get() });
         };
-        window.addEventListener("mousemove", handleMove, { passive: true });
-        return () => window.removeEventListener("mousemove", handleMove);
-    }, []);
+        const ux = mouseX.on("change", updatePos);
+        const uy = mouseY.on("change", updatePos);
+        return () => { ux(); uy(); };
+    }, [mouseX, mouseY, isMobile]);
 
     useEffect(() => {
         if (!lastDiscoveryTime) return;
@@ -78,7 +80,7 @@ export function DiscoveryFeedbackDot() {
         return () => clearInterval(interval);
     }, [lastDiscoveryTime]);
 
-    if (!isActive) return null;
+    if (!isActive || isMobile) return null;
 
     return (
         <>
@@ -87,14 +89,14 @@ export function DiscoveryFeedbackDot() {
                 animate={{ scale: [0, 4, 0], opacity: [0, 0.8, 0] }}
                 transition={{ duration: 1.2, ease: "circOut" }}
                 className="fixed pointer-events-none z-[300] w-2 h-2 rounded-full bg-white blur-[2px]"
-                style={{ left: mousePos.x, top: mousePos.y, x: "-50%", y: "-50%" }}
+                style={{ left: dotPos.x, top: dotPos.y, x: "-50%", y: "-50%" }}
             />
             <motion.div
                 initial={{ scale: 0, opacity: 1, borderWidth: "2px" }}
                 animate={{ scale: 6, opacity: 0, borderWidth: "0px" }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
                 className="fixed pointer-events-none z-[299] w-4 h-4 rounded-full border-white"
-                style={{ left: mousePos.x, top: mousePos.y, x: "-50%", y: "-50%" }}
+                style={{ left: dotPos.x, top: dotPos.y, x: "-50%", y: "-50%" }}
             />
         </>
     );

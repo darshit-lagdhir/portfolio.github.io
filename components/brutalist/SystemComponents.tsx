@@ -47,6 +47,7 @@ export const LAYOUT = {
 // PHASE 42: VISUAL IDENTITY SECTION HEADER PATTERN
 export const SectionHeader = memo(({ label, title, subtitle, divider = true, theme = "dark", discoveryHint }: { label: string, title: string, subtitle?: string, divider?: boolean, theme?: "dark" | "light", discoveryHint?: string }) => {
     const isDark = theme === "dark";
+    const { isMobile } = useScene();
     
     return (
         <div className="flex flex-col gap-6 items-start self-start w-full group/header">
@@ -54,7 +55,7 @@ export const SectionHeader = memo(({ label, title, subtitle, divider = true, the
                 <span className={`text-caption ${isDark ? "text-white/40" : "text-black/40"} tracking-[0.4em] uppercase`}>
                     {label}
                 </span>
-                {discoveryHint && (
+                {discoveryHint && !isMobile && (
                     <motion.span 
                         initial={{ opacity: 0, x: -10 }}
                         whileInView={{ opacity: 0 }}
@@ -67,18 +68,18 @@ export const SectionHeader = memo(({ label, title, subtitle, divider = true, the
             </div>
             {subtitle && (
                 <div className={`dna-line-motif ${isDark ? "" : "light"}`}>
-                    <span className={`text-medium ${isDark ? "text-white/60" : "text-black/60"} italic`}>
+                    <span className={`text-medium ${isDark ? "text-white/60" : "text-black/60"} italic block ${isMobile ? 'pr-4' : ''}`}>
                         {subtitle}
                     </span>
                 </div>
             )}
-            <div className="relative py-2 px-8 -m-8 w-full">
+            <div className={`relative py-2 ${isMobile ? '' : 'px-8 -m-8'} w-full`}>
                 <motion.h2
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: DUR.SLOW, delay: 0.2, ease: EASE.CALM }}
-                    className={`font-heading font-black uppercase whitespace-nowrap w-full type-react-hover ${isDark ? "text-white" : "text-black"} text-[clamp(1.2rem,3.2vw,2.4rem)] tracking-tighter leading-none text-selection-glow`}
+                    className={`font-heading font-black uppercase ${isMobile ? 'whitespace-normal text-left break-words' : 'whitespace-nowrap'} w-full type-react-hover ${isDark ? "text-white" : "text-black"} text-[clamp(1.2rem,3.2vw,2.4rem)] tracking-tighter leading-none text-selection-glow`}
                 >
                     {title}
                 </motion.h2>
@@ -148,25 +149,27 @@ export function SystemHeaderBar({ current }: { current: string }) {
 
 // PHASE 14 STEP 8: SYSTEM GRID OVERLAY
 export function SystemGridOverlay() {
-    // PHASE 37 STEP 7: GRID REFLECTION RESPONSE
+    const { mouseX, mouseY, isMobile } = useScene();
     const ref = useRef<HTMLDivElement>(null);
+
     useEffect(() => {
-        let lastX = 0, lastY = 0;
-        const handleMove = (e: MouseEvent) => {
+        if (!ref.current || isMobile) return;
+        
+        const updateGrid = () => {
             if (!ref.current) return;
-            const dist = Math.sqrt(Math.pow(e.clientX - lastX, 2) + Math.pow(e.clientY - lastY, 2));
-            if (dist > 70) {
-                ref.current.style.opacity = "0.2";
-                setTimeout(() => { if (ref.current) ref.current.style.opacity = "0.1" }, 300);
-            }
-            ref.current.style.setProperty('--grid-light-x', `${e.clientX}px`);
-            ref.current.style.setProperty('--grid-light-y', `${e.clientY}px`);
-            lastX = e.clientX;
-            lastY = e.clientY;
+            const mx = mouseX.get();
+            const my = mouseY.get();
+            ref.current.style.setProperty('--grid-light-x', `${mx}px`);
+            ref.current.style.setProperty('--grid-light-y', `${my}px`);
         };
-        window.addEventListener("mousemove", handleMove, { passive: true });
-        return () => window.removeEventListener("mousemove", handleMove);
-    }, []);
+
+        const unsubscribeX = mouseX.on("change", updateGrid);
+        const unsubscribeY = mouseY.on("change", updateGrid);
+        return () => {
+            unsubscribeX();
+            unsubscribeY();
+        };
+    }, [mouseX, mouseY, isMobile]);
 
     return (
         <div ref={ref} className="fixed inset-0 pointer-events-none z-0 opacity-[0.05] transition-all duration-700 ease-out grid-reflection-root">
@@ -183,6 +186,7 @@ export function SystemGridOverlay() {
 // PHASE 34 STEP 3 & 4: PROJECT INFORMATION PANELS WITH TENSION & TILT
 export const ProjectPanel = memo(({ title, index, children }: { title: string, index: number, children: React.ReactNode }) => {
     const ref = useRef<HTMLDivElement>(null);
+    const { isMobile } = useScene();
     const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "center center"] });
     const scrollVelocity = useVelocity(scrollYProgress);
     const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 });
@@ -202,19 +206,21 @@ export const ProjectPanel = memo(({ title, index, children }: { title: string, i
                 transformStyle: "preserve-3d",
                 perspective: "1200px"
             }}
-            whileHover={{ 
+            whileHover={!isMobile ? { 
                 zIndex: 20,
-                // PHASE 46: OPTIMIZED SHADOW (Step 9)
                 boxShadow: "0 20px 60px rgba(0,0,0,0.6)",
                 transition: { duration: 0.3 }
-            }}
+            } : {}}
+            whileTap={isMobile ? { scale: 0.98, backgroundColor: "rgba(255,255,255,0.05)" } : {}}
             className="w-full border border-white/10 bg-black/40 p-10 md:p-16 transition-all duration-500 shadow-2xl group/panel overflow-hidden transform-gpu"
             data-project="true"
         >
             {/* PHASE 37 STEP 3 & 10: EDGE ILLUMINATION & HOVER REFLECTION */}
-            <div 
-                className="absolute inset-0 pointer-events-none opacity-0 group-hover/panel:opacity-100 transition-opacity duration-700 z-0 bg-[radial-gradient(circle_at_var(--edge-light-x,50%)_var(--edge-light-y,50%),rgba(255,255,255,0.06)_0%,transparent_60%)]"
-            />
+            {!isMobile && (
+                <div 
+                    className="absolute inset-0 pointer-events-none opacity-0 group-hover/panel:opacity-100 transition-opacity duration-700 z-0 bg-[radial-gradient(circle_at_var(--edge-light-x,50%)_var(--edge-light-y,50%),rgba(255,255,255,0.06)_0%,transparent_60%)]"
+                />
+            )}
             
             {/* PHASE 37 STEP 8: PANEL SPOTLIGHT */}
             <div className="absolute inset-0 pointer-events-none opacity-0 group-hover/panel:opacity-30 transition-opacity duration-1000 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.02)_0%,transparent_80%)]" />
@@ -237,7 +243,6 @@ export const ProjectPanel = memo(({ title, index, children }: { title: string, i
 
 ProjectPanel.displayName = "ProjectPanel";
 
-// PHASE 34 STEP 3: MAGNETIC BUTTON SYSTEM
 export function MagneticButton({ 
     children, 
     className = "", 
@@ -247,10 +252,11 @@ export function MagneticButton({
     className?: string,
     onClick?: () => void 
 }) {
+    const { isMobile } = useScene();
     return (
         <motion.button
             onClick={onClick}
-            whileHover={{ scale: 1.1 }}
+            whileHover={!isMobile ? { scale: 1.1 } : {}}
             whileTap={{ scale: 0.9, y: 2 }}
             className={`relative flex items-center justify-center transition-all duration-200 ${className} transform-gpu`}
         >
@@ -439,7 +445,7 @@ interface Command {
 
 // PHASE 32: COMMAND INTERFACE (DEVELOPER NAVIGATION INTELLIGENCE)
 export function CommandPalette() {
-    const { isCommandPaletteOpen: open, setIsCommandPaletteOpen: setOpen, setIsNavigating } = useScene();
+    const { isCommandPaletteOpen: open, setIsCommandPaletteOpen: setOpen, setIsNavigating, isMobile } = useScene();
     const [query, setQuery] = useState("");
     const [selectedIndex, setSelectedIndex] = useState(0);
     const router = useRouter();
@@ -522,7 +528,7 @@ export function CommandPalette() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="fixed inset-0 bg-black/90 backdrop-blur-xl z-[9000] flex items-center justify-center p-4 cursor-none"
+                    className={`fixed inset-0 bg-black/90 backdrop-blur-xl z-[9000] flex items-center justify-center p-4 ${isMobile ? '' : 'cursor-none'}`}
                     onClick={() => setOpen(false)}
                 >
                     <motion.div
@@ -544,9 +550,11 @@ export function CommandPalette() {
                                 placeholder="EXECUTE_COMMAND..."
                                 className="flex-1 bg-transparent border-none outline-none text-white text-sm font-ui tracking-wider placeholder:text-white/20 uppercase"
                             />
-                            <div className="flex items-center gap-2">
-                                <span className="bg-white/5 px-2 py-1 border border-white/10 text-[8px] text-white/40">ESC_CLOSE</span>
-                            </div>
+                            {!isMobile && (
+                                <div className="flex items-center gap-2">
+                                    <span className="bg-white/5 px-2 py-1 border border-white/10 text-[8px] text-white/40">ESC_CLOSE</span>
+                                </div>
+                            )}
                         </div>
 
                         {/* COMMAND LIST — STEP 3 & 4 */}
@@ -554,7 +562,7 @@ export function CommandPalette() {
                             {filtered.length > 0 ? filtered.map((cmd, idx) => (
                                 <motion.button
                                     key={cmd.id}
-                                    onMouseMove={() => setSelectedIndex(idx)}
+                                    onMouseMove={() => !isMobile && setSelectedIndex(idx)}
                                     onClick={() => executeCommand(cmd)}
                                     className={`
                                         group w-full text-left px-5 py-4 flex items-center justify-between transition-all duration-200 transform-gpu
@@ -668,13 +676,7 @@ export function ScrollMoment({ children }: { children: React.ReactNode }) {
 
 // PHASE 15 STEP 5, 8 & 10: STORYTELLING BLOCKS & MICRO-ANIMATION
 export const StoryBlock = memo(({ title, children }: { title: string, children: React.ReactNode }) => {
-    const [isMobile, setIsMobile] = useState(false);
-    useEffect(() => { 
-        const check = () => setIsMobile(window.innerWidth < 768);
-        check();
-        window.addEventListener("resize", check, { passive: true });
-        return () => window.removeEventListener("resize", check);
-    }, []);
+    const { isMobile } = useScene();
 
     return (
         <div className="w-full relative py-20 group">
