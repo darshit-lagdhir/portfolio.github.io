@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useSpring, useMotionValue, useTransform, useScroll, MotionValue } from "framer-motion";
+import { motion, useSpring, useMotionValue, useTransform, useScroll, MotionValue, useMotionTemplate } from "framer-motion";
 import { useEffect, useState, useMemo, useRef } from "react";
 import { useScene } from "@/context/SceneContext";
 import { usePathname } from "next/navigation";
@@ -33,16 +33,14 @@ function GridDiscoveryNodes() {
 }
 
 export default function EnvironmentalSystem() {
-    const { activeSection, isIdle, interactionCount, attentionScore } = useScene();
-    const mouseX = useMotionValue(-1000);
-    const mouseY = useMotionValue(-1000);
-    const [isMobile, setIsMobile] = useState(false);
+    const { activeSection, isIdle, interactionCount, attentionScore, mouseX, mouseY, isMobile } = useScene();
+    
+    // Smooth trailing follow for atmospheric light
+    const smoothMouseX = useSpring(mouseX, { damping: 50, stiffness: 200 });
+    const smoothMouseY = useSpring(mouseY, { damping: 50, stiffness: 200 });
+
     const pathname = usePathname();
     const isProjectPage = pathname !== "/" && pathname !== "";
-
-    // Smooth spotlight coordinates (Step 2)
-    const lightX = useSpring(mouseX, { damping: 60, stiffness: 120, mass: 1 });
-    const lightY = useSpring(mouseY, { damping: 60, stiffness: 120, mass: 1 });
 
     // PHASE 18 STEP 11: REACTIVATION LIGHT SURGE
     const [surge, setSurge] = useState(1);
@@ -76,26 +74,6 @@ export default function EnvironmentalSystem() {
         stiffness: 80,
     });
 
-    useEffect(() => {
-        const checkMobile = () => setIsMobile(window.innerWidth < 768);
-        checkMobile();
-        window.addEventListener("resize", checkMobile);
-
-        const trackMouse = (e: MouseEvent) => {
-            mouseX.set(e.clientX);
-            mouseY.set(e.clientY);
-        };
-
-        if (!isMobile) {
-            window.addEventListener("mousemove", trackMouse, { passive: true });
-        }
-
-        return () => {
-            window.removeEventListener("resize", checkMobile);
-            window.removeEventListener("mousemove", trackMouse);
-        };
-    }, [isMobile, mouseX, mouseY]);
-
     const { scrollYProgress } = useScroll();
 
     // PHASE 37 STEP 1: GLOBAL AMBIENT LIGHT LAYER
@@ -108,11 +86,7 @@ export default function EnvironmentalSystem() {
         ]
     );
 
-    // PHASE 37 STEP 2 & 13: CURSOR LIGHT SOURCE (Spotlight)
-    const cursorLightBackground = useTransform(
-        [lightX, lightY, smoothIntensity],
-        ([x, y, op]) => `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,${op}) 0%, transparent 60%)`
-    );
+    const cursorLightBackground = useMotionTemplate`radial-gradient(circle at ${smoothMouseX}px ${smoothMouseY}px, rgba(255,255,255,${smoothIntensity}) 0%, transparent 60%)`;
 
     return (
         <div className="fixed inset-0 pointer-events-none z-[40]">
@@ -122,19 +96,19 @@ export default function EnvironmentalSystem() {
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 className="absolute inset-0"
             >
-                {/* GLOBAL AMBIENT LAYER (STEP 1) */}
+                {/* CONSOLIDATED DYNAMIC LIGHTING SOURCE (PHASE 47) */}
+                {!isMobile && (
+                    <motion.div
+                        className="absolute inset-0 z-0 transform-gpu"
+                        style={{ background: cursorLightBackground }}
+                    />
+                )}
+
+                {/* GLOBAL AMBIENT LAYER (PHASE 37) */}
                 <motion.div 
                     className="absolute inset-0"
                     style={{ background: ambientBackground, opacity: isMobile ? 0.3 : 1 }}
                 />
-                
-                {/* INTERACTIVE CURSOR LIGHT (STEP 2) */}
-                {!isMobile && (
-                    <motion.div
-                        className="absolute inset-0"
-                        style={{ background: cursorLightBackground }}
-                    />
-                )}
             </motion.div>
             
             {!isMobile && <GridDiscoveryNodes />}

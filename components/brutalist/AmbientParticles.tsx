@@ -22,19 +22,19 @@ interface Particle {
 
 export default function AmbientParticles() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const mouseRef = useRef({ x: -1000, y: -1000 });
     const scrollVelRef = useRef(0);
     const lastScrollRef = useRef(0);
     const particlesRef = useRef<Particle[]>([]);
     const rafRef = useRef<number>(0);
     const isWhiteSectionRef = useRef(false);
 
-    // PHASE 16 STEP 12 & 13: SYSTEM IDLE STATE
-    const { isIdle } = useScene();
+    // PHASE 47: CONSOLIDATED GLOBAL SIGNALS
+    const { isIdle, mouseX, mouseY } = useScene();
     const isIdleRef = useRef(isIdle);
     useEffect(() => { isIdleRef.current = isIdle; }, [isIdle]);
 
     const initParticles = useCallback((width: number, height: number) => {
+        // ... (rest of init remains same)
         // PHASE 28 STEP 6 & 12: PARTICLE ATMOSPHERE REFINEMENT (Ambient Dust)
         const isMobile = width < 768;
         const count = isMobile ? 0 : 12; // Optimized for Phase 46
@@ -79,14 +79,12 @@ export default function AmbientParticles() {
         resize();
         window.addEventListener("resize", resize);
 
-        // Track mouse
-        const onMouseMove = (e: MouseEvent) => {
-            mouseRef.current = { x: e.clientX, y: e.clientY };
-            // Step 7: Detect if cursor is over white section
+        // Track white section status natively via context-like check if needed or just keep local section detection
+        const onMouseMoveLocal = (e: MouseEvent) => {
             const target = e.target as HTMLElement;
             isWhiteSectionRef.current = !!target.closest(".bg-white");
         };
-        window.addEventListener("mousemove", onMouseMove, { passive: true });
+        window.addEventListener("mousemove", onMouseMoveLocal, { passive: true });
 
         // Step 10: Track scroll velocity
         const onScroll = () => {
@@ -97,50 +95,48 @@ export default function AmbientParticles() {
         window.addEventListener("scroll", onScroll, { passive: true });
 
         const animate = () => {
+            if (isIdleRef.current) {
+                rafRef.current = requestAnimationFrame(animate);
+                return;
+            }
+
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            // Step 7: Fade particles in white sections
             const globalFade = isWhiteSectionRef.current ? 0.15 : 1;
+            
+            // Consolidate mouse access
+            const mx = mouseX.get();
+            const my = mouseY.get();
 
-            const { x: mx, y: my } = mouseRef.current;
-            // Step 10: Scroll velocity boost + PHASE 16 STEP 12 & 13: IDLE REDUCTION
             const idleMultiplier = isIdleRef.current ? 0.3 : 1;
             const scrollBoost = (1 + Math.min(scrollVelRef.current * 0.01, 2)) * idleMultiplier;
-            scrollVelRef.current *= 0.95; // Decay
+            scrollVelRef.current *= 0.95;
 
-            if (!isIdleRef.current) {
-                particlesRef.current.forEach((p) => {
-                    // Move particles
-                    p.x += p.vx * scrollBoost;
-                    p.y += p.vy * scrollBoost;
+            particlesRef.current.forEach((p) => {
+                p.x += p.vx * scrollBoost;
+                p.y += p.vy * scrollBoost;
 
-                    // Step 2 + PHASE 24 STEP 4: Cursor disturbance — spatial depth response
-                    const dx = p.x - mx;
-                    const dy = p.y - my;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 120 * p.depth) {
-                        const force = (120 * p.depth - dist) / (120 * p.depth);
-                        p.x += (dx / dist) * force * p.depth;
-                        p.y += (dy / dist) * force * p.depth;
-                    }
+                const dx = p.x - mx;
+                const dy = p.y - my;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 120 * p.depth) {
+                    const force = (120 * p.depth - dist) / (120 * p.depth);
+                    p.x += (dx / dist) * force * p.depth;
+                    p.y += (dy / dist) * force * p.depth;
+                }
 
-                    // Wrap around screen edges
-                    if (p.x < -10) p.x = canvas.width + 10;
-                    if (p.x > canvas.width + 10) p.x = -10;
-                    if (p.y < -10) p.y = canvas.height + 10;
-                    if (p.y > canvas.height + 10) p.y = -10;
+                if (p.x < -10) p.x = canvas.width + 10;
+                if (p.x > canvas.width + 10) p.x = -10;
+                if (p.y < -10) p.y = canvas.height + 10;
+                if (p.y > canvas.height + 10) p.y = -10;
 
-                    // PHASE 18 STEP 5: PARTICLE LIGHT RESPONSE
-                    const lightDist = Math.sqrt(dx * dx + dy * dy);
-                    const lightBoost = lightDist < 300 ? (1 - lightDist / 300) * 0.4 : 0;
+                const lightDist = Math.sqrt(dx * dx + dy * dy);
+                const lightBoost = lightDist < 300 ? (1 - lightDist / 300) * 0.4 : 0;
 
-                    // Draw
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(255, 255, 255, ${(p.opacity + lightBoost) * globalFade})`;
-                    ctx.fill();
-                });
-            }
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${(p.opacity + lightBoost) * globalFade})`;
+                ctx.fill();
+            });
 
             rafRef.current = requestAnimationFrame(animate);
         };
@@ -150,10 +146,10 @@ export default function AmbientParticles() {
         return () => {
             cancelAnimationFrame(rafRef.current);
             window.removeEventListener("resize", resize);
-            window.removeEventListener("mousemove", onMouseMove);
+            window.removeEventListener("mousemove", onMouseMoveLocal);
             window.removeEventListener("scroll", onScroll);
         };
-    }, [initParticles]);
+    }, [initParticles, mouseX, mouseY]);
 
     return (
         <canvas

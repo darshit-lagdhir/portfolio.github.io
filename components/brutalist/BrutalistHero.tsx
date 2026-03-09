@@ -63,7 +63,7 @@ export default function BrutalistHero() {
     const sectionRef = useRef<HTMLElement>(null);
     const {
         setActiveSection, isIdle, scrollTempo, attentionScore,
-        triggerDiscovery, discoveries
+        triggerDiscovery, discoveries, interactionCount, mouseXProgress, mouseYProgress
     } = useScene();
 
     // PHASE 16 STEP 2: INTERACTION MEMORY (Sticky state on return)
@@ -82,12 +82,9 @@ export default function BrutalistHero() {
         const timer = setTimeout(() => setGlitchFired(true), 800);
         return () => clearTimeout(timer);
     }, []);
-
-    // MOUSE PARALLAX — PHASE 4
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
-    const smoothMouseX = useSpring(mouseX, { damping: 50, stiffness: 400 });
-    const smoothMouseY = useSpring(mouseY, { damping: 50, stiffness: 400 });
+    // PHASE 27 STEP 4 & 10: OPTIMIZED MOUSE PHYSICS
+    const smoothMouseX = useSpring(mouseXProgress, { damping: 50, stiffness: 400 });
+    const smoothMouseY = useSpring(mouseYProgress, { damping: 50, stiffness: 400 });
 
     const rotateX = useTransform(smoothMouseY, [-0.5, 0.5], [2, -2]); // MAX TILT: 2 DEGREES
     const rotateY = useTransform(smoothMouseX, [-0.5, 0.5], [-2, 2]); // COMPLEMENTARY TILT
@@ -98,22 +95,10 @@ export default function BrutalistHero() {
     const fgTransX = useTransform(smoothMouseX, [-0.5, 0.5], [-10, 10]);
     const fgTransY = useTransform(smoothMouseY, [-0.5, 0.5], [-10, 10]);
 
-    // PHASE 36 STEP 1: SECTION PINNING SYSTEM
-    const { scrollYProgress } = useScroll({
-        target: sectionRef,
-        offset: ["start start", "end end"]
-    });
+    const containerRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        const handleMouseMove = (e: MouseEvent) => {
-            const { clientX, clientY } = e;
-            const { innerWidth, innerHeight } = window;
-            mouseX.set(clientX / innerWidth - 0.5);
-            mouseY.set(clientY / innerHeight - 0.5);
-        };
-        window.addEventListener("mousemove", handleMouseMove);
-        return () => window.removeEventListener("mousemove", handleMouseMove);
-    }, [mouseX, mouseY]);
+    // PHASE 36 STEP 1: SECTION PINNING SYSTEM
+    const { scrollY, scrollYProgress } = useScroll();
 
     // PHASE 36 STEP 2: HERO SCROLL TRANSFORMATION
     const heroScale = useTransform(scrollYProgress, [0, 0.4, 0.8], [1, 0.8, 0.7]);

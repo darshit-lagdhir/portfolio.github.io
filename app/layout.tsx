@@ -21,7 +21,7 @@ const OptimizedParticles = memo(AmbientParticles);
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
   const { scrollY, scrollYProgress } = useScroll();
-  const { interactionCount, lastDiscoveryTime } = useScene();
+  const { interactionCount, lastDiscoveryTime, isLowPerf, isMobile } = useScene();
 
   // PHASE 40 STEP 4 & 6: THROTTLED SCROLL CALCULATIONS
   const scrollVelocity = useVelocity(scrollY);
@@ -73,8 +73,6 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
       <motion.main
         style={{
           rotateX: scrollTiltX,
-          lineHeight: layoutLineHeight,
-          letterSpacing: layoutLetterSpacing,
           scaleY: velocityStretch,
           borderColor: borderOpacity
         }}
@@ -86,19 +84,22 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
       <CustomCursor />
 
       {/* PHASE 40 STEP 10: OPTIMIZED STRUCTURAL GRIDS */}
-      <motion.div className="fixed inset-0 pointer-events-none z-0 opacity-[0.015]">
-        <motion.div
-           className="w-full h-full"
-           style={{
-             backgroundImage: `linear-gradient(rgba(255,255,255,0.05) 1.5px, transparent 1.5px), linear-gradient(90deg, rgba(255,255,255,0.05) 1.5px, transparent 1.5px)`,
-             backgroundSize: gridBackgroundSize,
-             y: structuralGridY
-           }}
-        />
-      </motion.div>
+      {!isLowPerf && (
+        <motion.div className="fixed inset-0 pointer-events-none z-0 opacity-[0.015]">
+          <motion.div
+             className="w-full h-full"
+             style={{
+               backgroundImage: `linear-gradient(rgba(255,255,255,0.05) 1.5px, transparent 1.5px), linear-gradient(90deg, rgba(255,255,255,0.05) 1.5px, transparent 1.5px)`,
+               backgroundSize: gridBackgroundSize,
+               y: structuralGridY
+             }}
+          />
+        </motion.div>
+      )}
 
-      <OptimizedEnvironmental />
-      <OptimizedParticles />
+      {/* PHASE 47: PERFORMANCE-BASED CONDITIONALS */}
+      {!isLowPerf && <OptimizedEnvironmental />}
+      {!isMobile && !isLowPerf && <OptimizedParticles />}
 
       <CommandPalette />
       <ContinuityLine />

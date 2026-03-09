@@ -9,19 +9,8 @@ import { EASE, DUR } from "@/components/brutalist/SystemComponents";
 
 
 export default function BrutalistNavbar() {
-    const { activeSection, isIdle, markInteraction, setIsCommandPaletteOpen } = useScene();
-    const [scrolled, setScrolled] = useState(false);
+    const { activeSection, isIdle, markInteraction, setIsCommandPaletteOpen, isScrolled } = useScene();
     const [menuOpen, setMenuOpen] = useState(false);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            if (typeof window !== 'undefined') {
-                setScrolled(window.scrollY > 40);
-            }
-        };
-        window.addEventListener("scroll", handleScroll, { passive: true });
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
 
     const navLinks = [
         { name: "01_HOME", href: "/#hero", id: "hero" },
@@ -41,7 +30,7 @@ export default function BrutalistNavbar() {
             transition={{ duration: DUR.PAGE, ease: EASE.CALM }}
             className={`
                 fixed top-0 left-0 w-full z-[2000] select-none transition-all duration-700
-                ${scrolled ? "py-8 bg-[#000000] border-b border-white/10" : isIdle ? "py-12" : "py-14 md:py-24 bg-transparent"}
+                ${isScrolled ? "py-8 bg-[#000000] border-b border-white/10" : isIdle ? "py-12" : "py-14 md:py-24 bg-transparent"}
             `}
         >
             <nav className="flex justify-between items-center px-[5vw] w-full max-w-[1800px] mx-auto">

@@ -8,11 +8,6 @@ import { EASE, DUR } from "@/components/brutalist/SystemComponents";
 
 
 export default function CustomCursor() {
-    const mouse = {
-        x: useMotionValue(-100),
-        y: useMotionValue(-100),
-    };
-
     const { scrollY } = useScroll();
     const scrollVelocity = useVelocity(scrollY as MotionValue<number>);
     const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 });
@@ -21,7 +16,7 @@ export default function CustomCursor() {
     const stretchY = useTransform(smoothVelocity, [-2000, 0, 2000], [0.6, 1, 0.6]);
     const stretchX = useTransform(smoothVelocity, [-2000, 0, 2000], [1.4, 1, 1.4]);
 
-    const { lastDiscoveryTime } = useScene();
+    const { lastDiscoveryTime, mouseX, mouseY } = useScene();
     const [cursorVariant, setCursorVariant] = useState("default");
     const [isRecentDiscovery, setIsRecentDiscovery] = useState(false);
     const [depthScale, setDepthScale] = useState(1);
@@ -82,14 +77,14 @@ export default function CustomCursor() {
 
     // Core dot: EXACT instant tracking response (no lag)
     const dot = {
-        x: useSpring(mouse.x, { damping: 30, stiffness: 2000, mass: 0.05 }),
-        y: useSpring(mouse.y, { damping: 30, stiffness: 2000, mass: 0.05 }),
+        x: useSpring(mouseX, { damping: 30, stiffness: 2000, mass: 0.05 }),
+        y: useSpring(mouseY, { damping: 30, stiffness: 2000, mass: 0.05 }),
     };
 
     // Outer ring: SMOOTH trailing response
     const ring = {
-        x: useSpring(mouse.x, resistanceSpring),
-        y: useSpring(mouse.y, resistanceSpring),
+        x: useSpring(mouseX, resistanceSpring),
+        y: useSpring(mouseY, resistanceSpring),
     };
 
     const [isPressed, setIsPressed] = useState(false);
@@ -110,9 +105,6 @@ export default function CustomCursor() {
             const isProject = !!target.closest("[data-project='true']");
             const isText = !!target.closest("h1, h2, h3, p, .text-massive, .text-large, .kinetic-letter");
             const isWhite = !!target.closest(".bg-white");
-
-            mouse.x.set(clientX);
-            mouse.y.set(clientY);
 
             // Maintain discovery highlights (non-magnetic)
             const interactables = interactablesRef.current;
@@ -136,7 +128,6 @@ export default function CustomCursor() {
                     htmlEl.style.setProperty('--edge-light-y', '50%');
                 }
             }
-
 
             // Depth Mapping
             if (target.closest(".z-depth-front")) setDepthScale(1.4);
@@ -164,7 +155,7 @@ export default function CustomCursor() {
 
         window.addEventListener("mousemove", moveMouse, { passive: true });
         return () => window.removeEventListener("mousemove", moveMouse);
-    }, [mouse.x, mouse.y, scrollVelocity]);
+    }, [pathname]);
 
     // Unified press listeners
     useEffect(() => {

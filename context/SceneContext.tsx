@@ -35,6 +35,14 @@ interface SceneContextType {
     // PHASE 32: COMMAND INTERFACE STATE
     isCommandPaletteOpen: boolean;
     setIsCommandPaletteOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    // PHASE 47: CONSOLIDATED RENDER PIPELINE
+    mouseX: MotionValue<number>;
+    mouseY: MotionValue<number>;
+    mouseXProgress: MotionValue<number>; // -0.5 to 0.5
+    mouseYProgress: MotionValue<number>; // -0.5 to 0.5
+    isLowPerf: boolean;
+    isMobile: boolean;
+    isScrolled: boolean;
 }
 
 const SceneContext = createContext<SceneContextType | undefined>(undefined);
@@ -61,6 +69,50 @@ export function SceneProvider({ children }: { children: React.ReactNode }) {
 
     // PHASE 32: COMMAND INTERFACE
     const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+
+    // PHASE 47: CONSOLIDATED RENDER PIPELINE SIGNALS
+    const mouseX = useMotionValue(-1000);
+    const mouseY = useMotionValue(-1000);
+    const mouseXProgress = useMotionValue(0);
+    const mouseYProgress = useMotionValue(0);
+    const [isLowPerf, setIsLowPerf] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 40);
+        };
+        window.addEventListener("scroll", handleScroll, { passive: true });
+
+        // Detect low-end devices via hardwareConcurrency or memory if available
+        if (typeof navigator !== 'undefined') {
+            const lowCpu = (navigator.hardwareConcurrency || 4) <= 4;
+            // @ts-expect-error - deviceMemory is not standard yet
+            const lowMem = (navigator.deviceMemory || 8) <= 4;
+            if (lowCpu || lowMem) setIsLowPerf(true);
+        }
+
+        const handleGlobalMouseMove = (e: MouseEvent) => {
+            const { clientX, clientY } = e;
+            const { innerWidth, innerHeight } = window;
+            mouseX.set(clientX);
+            mouseY.set(clientY);
+            mouseXProgress.set(clientX / innerWidth - 0.5);
+            mouseYProgress.set(clientY / innerHeight - 0.5);
+        };
+
+        window.addEventListener("mousemove", handleGlobalMouseMove, { passive: true });
+        return () => {
+            window.removeEventListener("mousemove", handleGlobalMouseMove);
+            window.removeEventListener("resize", checkMobile);
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, [mouseX, mouseY, mouseXProgress, mouseYProgress]);
 
     // PHASE 34: PURITY FIX - Extracted sound logic
     const playDiscoverySound = useCallback(() => {
@@ -203,7 +255,8 @@ export function SceneProvider({ children }: { children: React.ReactNode }) {
             isIdle, interactionCount, markInteraction,
             scrollTempo, attentionScore, focusZone, projectInterests, markProjectInterest,
             discoveries, triggerDiscovery, lastDiscoveryTime,
-            isCommandPaletteOpen, setIsCommandPaletteOpen
+            isCommandPaletteOpen, setIsCommandPaletteOpen,
+            mouseX, mouseY, mouseXProgress, mouseYProgress, isLowPerf, isMobile, isScrolled
         }}>
             <div className={`scene-mode-${mode} ${isIdle ? 'system-idle' : 'system-active'} focus-zone-${focusZone}`}>
                 {children}
