@@ -37,7 +37,7 @@ export default function AmbientParticles() {
     const initParticles = useCallback((width: number, height: number) => {
         // PHASE 28 STEP 6 & 12: PARTICLE ATMOSPHERE REFINEMENT (Ambient Dust)
         const isMobile = width < 768;
-        const count = isMobile ? 8 : 22; // Further reduced for cinematic cleanliness
+        const count = isMobile ? 0 : 12; // Optimized for Phase 46
         const particles: Particle[] = [];
 
         for (let i = 0; i < count; i++) {
@@ -108,37 +108,39 @@ export default function AmbientParticles() {
             const scrollBoost = (1 + Math.min(scrollVelRef.current * 0.01, 2)) * idleMultiplier;
             scrollVelRef.current *= 0.95; // Decay
 
-            particlesRef.current.forEach((p) => {
-                // Move particles
-                p.x += p.vx * scrollBoost;
-                p.y += p.vy * scrollBoost;
+            if (!isIdleRef.current) {
+                particlesRef.current.forEach((p) => {
+                    // Move particles
+                    p.x += p.vx * scrollBoost;
+                    p.y += p.vy * scrollBoost;
 
-                // Step 2 + PHASE 24 STEP 4: Cursor disturbance — spatial depth response
-                const dx = p.x - mx;
-                const dy = p.y - my;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < 120 * p.depth) {
-                    const force = (120 * p.depth - dist) / (120 * p.depth);
-                    p.x += (dx / dist) * force * p.depth;
-                    p.y += (dy / dist) * force * p.depth;
-                }
+                    // Step 2 + PHASE 24 STEP 4: Cursor disturbance — spatial depth response
+                    const dx = p.x - mx;
+                    const dy = p.y - my;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 120 * p.depth) {
+                        const force = (120 * p.depth - dist) / (120 * p.depth);
+                        p.x += (dx / dist) * force * p.depth;
+                        p.y += (dy / dist) * force * p.depth;
+                    }
 
-                // Wrap around screen edges
-                if (p.x < -10) p.x = canvas.width + 10;
-                if (p.x > canvas.width + 10) p.x = -10;
-                if (p.y < -10) p.y = canvas.height + 10;
-                if (p.y > canvas.height + 10) p.y = -10;
+                    // Wrap around screen edges
+                    if (p.x < -10) p.x = canvas.width + 10;
+                    if (p.x > canvas.width + 10) p.x = -10;
+                    if (p.y < -10) p.y = canvas.height + 10;
+                    if (p.y > canvas.height + 10) p.y = -10;
 
-                // PHASE 18 STEP 5: PARTICLE LIGHT RESPONSE
-                const lightDist = Math.sqrt(dx * dx + dy * dy);
-                const lightBoost = lightDist < 300 ? (1 - lightDist / 300) * 0.4 : 0;
+                    // PHASE 18 STEP 5: PARTICLE LIGHT RESPONSE
+                    const lightDist = Math.sqrt(dx * dx + dy * dy);
+                    const lightBoost = lightDist < 300 ? (1 - lightDist / 300) * 0.4 : 0;
 
-                // Draw
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 255, 255, ${(p.opacity + lightBoost) * globalFade})`;
-                ctx.fill();
-            });
+                    // Draw
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(255, 255, 255, ${(p.opacity + lightBoost) * globalFade})`;
+                    ctx.fill();
+                });
+            }
 
             rafRef.current = requestAnimationFrame(animate);
         };

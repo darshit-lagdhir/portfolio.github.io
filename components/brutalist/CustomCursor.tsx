@@ -94,7 +94,6 @@ export default function CustomCursor() {
 
     const [isPressed, setIsPressed] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
-    const [trails, setTrails] = useState<{ x: number, y: number, id: number }[]>([]);
 
     useEffect(() => {
         if (typeof window === 'undefined') return;
@@ -138,10 +137,6 @@ export default function CustomCursor() {
                 }
             }
 
-            // Limited trail generation
-            if (Math.abs(scrollVelocity.get()) > 300) {
-                setTrails(prev => [{ x: clientX, y: clientY, id: Date.now() }, ...prev].slice(0, 5));
-            }
 
             // Depth Mapping
             if (target.closest(".z-depth-front")) setDepthScale(1.4);
@@ -183,14 +178,6 @@ export default function CustomCursor() {
         };
     }, []);
 
-    // Optimized tail cleanup
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setTrails(prev => prev.length > 0 ? prev.slice(0, -1) : prev);
-        }, 120); // Faster rhythm than standard exit for trails
-        return () => clearInterval(timer);
-    }, []);
-
     const variants = {
         default: { 
             width: 32, height: 32, borderRadius: "50%",
@@ -215,18 +202,6 @@ export default function CustomCursor() {
 
     return (
         <>
-            <AnimatePresence>
-                {trails.map(t => (
-                    <motion.div
-                        key={t.id}
-                        initial={{ opacity: 0.2, scale: 0.5 }}
-                        animate={{ opacity: 0, scale: 0 }}
-                        className="fixed top-0 left-0 w-8 h-8 border border-white/20 rounded-full pointer-events-none z-[9997]"
-                        style={{ x: t.x, y: t.y, translateX: "-50%", translateY: "-50%" }}
-                    />
-                ))}
-            </AnimatePresence>
-
             <motion.div
                 className="fixed top-0 left-0 bg-white rounded-full pointer-events-none z-[9999] mix-blend-difference"
                 animate={{

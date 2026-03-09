@@ -67,7 +67,6 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
       <div className="cinematic-light-layer pointer-events-none" />
 
       <TapRipple />
-      <SectionGridShift />
       <DiscoveryFeedbackDot key={lastDiscoveryTime} />
       <CrossPageContinuity />
 

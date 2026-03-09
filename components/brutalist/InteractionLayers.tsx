@@ -26,10 +26,8 @@ export function TapRipple() {
             }, 1000);
         };
 
-        window.addEventListener("mousedown", handleTap);
         window.addEventListener("touchstart", handleTap, { passive: true });
         return () => {
-            window.removeEventListener("mousedown", handleTap);
             window.removeEventListener("touchstart", handleTap);
         };
     }, []);

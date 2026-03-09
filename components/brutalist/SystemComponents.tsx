@@ -204,8 +204,8 @@ export const ProjectPanel = memo(({ title, index, children }: { title: string, i
             }}
             whileHover={{ 
                 zIndex: 20,
-                // PHASE 37 STEP 4: DEPTH SHADOW SYSTEM
-                boxShadow: "0 40px 100px rgba(0,0,0,0.8), 0 0 1px rgba(255,255,255,0.1)",
+                // PHASE 46: OPTIMIZED SHADOW (Step 9)
+                boxShadow: "0 20px 60px rgba(0,0,0,0.6)",
                 transition: { duration: 0.3 }
             }}
             className="w-full border border-white/10 bg-black/40 p-10 md:p-16 transition-all duration-500 shadow-2xl group/panel overflow-hidden transform-gpu"

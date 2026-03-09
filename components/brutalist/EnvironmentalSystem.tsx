@@ -7,7 +7,8 @@ import { usePathname } from "next/navigation";
 import { DUR } from "@/components/brutalist/SystemComponents";
 
 // PHASE 43: GRID NODE REACTION (STEP 4)
-function GridDiscoveryNodes({ mouseX, mouseY }: { mouseX: MotionValue<number>, mouseY: MotionValue<number> }) {
+// PHASE 46: SIMPLIFIED STATIC GRID NODES
+function GridDiscoveryNodes() {
     const nodes = useMemo(() => {
         const arr = [];
         for (let x = 0; x < 6; x++) {
@@ -19,37 +20,15 @@ function GridDiscoveryNodes({ mouseX, mouseY }: { mouseX: MotionValue<number>, m
     }, []);
 
     return (
-        <div className="absolute inset-0 overflow-hidden opacity-20">
+        <div className="absolute inset-0 overflow-hidden opacity-10">
             {nodes.map(node => (
-                <GridNode key={node.id} node={node} mouseX={mouseX} mouseY={mouseY} />
+                <div 
+                    key={node.id}
+                    className="discovery-node absolute"
+                    style={{ left: `${node.x}%`, top: `${node.y}%`, width: '2px', height: '2px', background: 'white', opacity: 0.2 }}
+                />
             ))}
         </div>
-    );
-}
-
-function GridNode({ node, mouseX, mouseY }: { node: { x: number, y: number }, mouseX: MotionValue<number>, mouseY: MotionValue<number> }) {
-    const nodeRef = useRef<HTMLDivElement>(null);
-    const [isActive, setIsActive] = useState(false);
-
-    useEffect(() => {
-        const unsubscribeX = mouseX.on("change", (x) => {
-            if (!nodeRef.current) return;
-            const y = mouseY.get();
-            const rect = nodeRef.current.getBoundingClientRect();
-            const nx = rect.left + rect.width / 2;
-            const ny = rect.top + rect.height / 2;
-            const dist = Math.sqrt(Math.pow(x - nx, 2) + Math.pow(y - ny, 2));
-            setIsActive(dist < 150);
-        });
-        return () => unsubscribeX();
-    }, [mouseX, mouseY]);
-
-    return (
-        <div 
-            ref={nodeRef}
-            className={`discovery-node absolute ${isActive ? 'active' : ''}`}
-            style={{ left: `${node.x}%`, top: `${node.y}%` }}
-        />
     );
 }
 
@@ -158,7 +137,7 @@ export default function EnvironmentalSystem() {
                 )}
             </motion.div>
             
-            {!isMobile && <GridDiscoveryNodes mouseX={mouseX} mouseY={mouseY} />}
+            {!isMobile && <GridDiscoveryNodes />}
             
             {/* ATMOSPHERIC DENSITY OVERLAY (STEP 11) */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.01)_0%,transparent_80%)]" />
