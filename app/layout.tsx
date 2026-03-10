@@ -1,8 +1,12 @@
-"use client";
-
+import type { Metadata } from "next";
 import "./globals.css";
 import { fornire, ranade, panchang, hkGroteskWide } from "@/lib/fonts";
 import { SceneProvider } from "@/context/SceneContext";
+
+export const metadata: Metadata = {
+  title: "Darshit Lagdhir | Systems Engineer",
+  description: "Architectural portfolio of Darshit Lagdhir, focusing on systems thinking and high-performance digital environments.",
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -21,8 +25,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </SceneProvider>
       </body>
-
     </html>
   );
 }
-
