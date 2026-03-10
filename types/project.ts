@@ -10,20 +10,37 @@ export interface TechnicalMeta {
     authType?: string;
 }
 
+export interface TechGroup {
+    role: string;
+    items: string[];
+}
+
+export interface ProjectChallenge {
+    title: string;
+    description: string;
+}
+
+export interface InternalComponent {
+    name: string;
+    description: string;
+}
+
 export interface Project {
     slug: string;
     title: string;
     shortDescription: string;
-    techStack: string[];
+    techStack: string[]; // Keep for legacy/summary
+    techGroups?: TechGroup[];
     tier: 1 | 2 | 3;
-    overview?: string;
-    problem?: string;
+    overview: string;
+    problem: string;
     constraints?: string[];
     engineeringFocus?: string;
     technicalMeta?: TechnicalMeta;
-    diagramLayers?: { label: string }[];
+    architecture: string;
     architectureLayers?: ArchitectureLayer[];
-    architecture?: string;
+    internalComponents?: InternalComponent[];
+    challenges?: ProjectChallenge[];
     decisions?: string[];
     detailedDecisions?: {
         decision: string;
@@ -35,7 +52,7 @@ export interface Project {
     limitations?: string[];
     ifRebuildingToday?: string[];
     performance?: string;
-    future?: string[];
+    future?: ProjectChallenge[]; // Changed to structured objects
     githubRepoName?: string;
     githubUrl?: string;
     status: "COMPLETE" | "DEVELOPMENT" | string;
