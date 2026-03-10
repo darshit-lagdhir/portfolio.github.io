@@ -1,119 +1,166 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { motion } from "framer-motion";
 import { identity } from "@/data/identity";
+import { cn } from "../../lib/utils";
 
 const COMMANDS = [
-  { cmd: "help", desc: "List all available commands" },
-  { cmd: "link --linkedin", desc: "Open LinkedIn profile" },
-  { cmd: "link --github", desc: "Open GitHub profile" },
-  { cmd: "mail", desc: "Initialize mail client" },
-  { cmd: "clear", desc: "Clear terminal history" },
-  { cmd: "exit", desc: "Close interface connection" }
+  { cmd: "help", desc: "List all available diagnostic commands" },
+  { cmd: "bio", desc: "Download biological profile summary" },
+  { cmd: "links", desc: "Map all outgoing communication nodes" },
+  { cmd: "contact", desc: "Initialize secure mail protocol" },
+  { cmd: "status", desc: "Check system health and core metrics" },
+  { cmd: "clear", desc: "Purge terminal local history" },
 ];
 
 export default function TerminalContact() {
-  const [history, setHistory] = useState<string[]>(["Connection established...", "Type 'help' for instructions."]);
+  const [history, setHistory] = useState<{ type: 'input' | 'output'; content: string }[]>([
+    { type: 'output', content: "INITIALIZING_CONNECTION_V2.0.4..." },
+    { type: 'output', content: "IDENTITY_VERIFIED: DARSHIT_LAGDHIR" },
+    { type: 'output', content: "TYPE 'help' TO BEGIN..." }
+  ]);
   const [input, setInput] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
+  const scrollToBottom = useCallback(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
     }
-  }, [history]);
+  }, []);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [history, scrollToBottom]);
 
   const handleCommand = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!input.trim()) return;
+
     const cmd = input.trim().toLowerCase();
+    const newHistory = [...history, { type: 'input', content: input }] as any;
+    
     let response = "";
 
     switch (cmd) {
       case "help":
-        response = COMMANDS.map(c => `${c.cmd.padEnd(15)} - ${c.desc}`).join("\n");
+        response = "AVAILABLE_COMMANDS:\n\n" + COMMANDS.map(c => `${c.cmd.padEnd(12)} - ${c.desc}`).join("\n");
         break;
-      case "link --linkedin":
-        window.open(identity.linkedin, "_blank");
-        response = "Redirecting to LinkedIn...";
+      case "bio":
+        response = `PROFILE_SUMMARY:\nNAME: ${identity.name}\nLOC: ${identity.location}\nEDU: ${identity.university}\nFOCUS: SYSTEMS_ARCHITECTURE\nOBJ: BUILDING_ENGINES_THAT_ENDURE`;
         break;
-      case "link --github":
-        window.open(identity.github, "_blank");
-        response = "Redirecting to GitHub...";
+      case "links":
+        response = `OUTGOING_NODES:\nGITHUB:   ${identity.github}\nLINKEDIN: ${identity.linkedin}\nRESUME:   ${identity.resume}`;
         break;
-      case "mail":
+      case "contact":
         window.location.href = `mailto:${identity.email}`;
-        response = `Opening mail client for ${identity.email}...`;
+        response = `INITIALIZING_MAIL_PROTOCOL_FOR: ${identity.email}\nREDIRECTING...`;
+        break;
+      case "status":
+        response = `SYSTEM_HEALTH:\nCPU: NOMINAL\nMEM: OPTIMIZED\nLATENCY: 0.04ms\nUPTIME: 100%\nSTATUS: ACTIVE_FOR_COLLABORATION`;
         break;
       case "clear":
         setHistory([]);
         setInput("");
         return;
-      case "exit":
-        response = "Connection terminated. Refresh to reconnect.";
-        break;
       default:
-        response = `Command not found: ${cmd}. Type 'help' for available commands.`;
+        response = `COMMAND_NOT_FOUND: ${cmd}. TYPE 'help' FOR DIAGNOSTIC LIST.`;
     }
 
-    setHistory(prev => [...prev, `> ${input}`, response]);
+    setHistory([...newHistory, { type: 'output', content: response }]);
     setInput("");
   };
 
+  const focusInput = () => inputRef.current?.focus();
+
   return (
-    <section className="py-sys-128 pb-sys-256">
+    <div className="w-full relative">
       <div className="section-divider" data-label="05_CONNECTION_INTERFACE">
         <span className="divider-label">05_CONNECTION_INTERFACE</span>
       </div>
 
       <div className="grid-12">
         <div className="col-span-12 lg:col-span-8 lg:col-start-3">
-          <div className="border border-border-dim bg-bg-secondary overflow-hidden shadow-2xl">
-            {/* Terminal Header */}
-            <div className="bg-bg-primary border-b border-border-dim px-4 py-2 flex items-center justify-between">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.98 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className={cn(
+                "relative border border-border-dim bg-bg-secondary overflow-hidden transition-all duration-300 shadow-2xl",
+                isFocused ? "border-accent ring-1 ring-accent/20" : ""
+            )}
+            onClick={focusInput}
+          >
+            {/* TERMINAL HEADER */}
+            <div className="bg-bg-primary border-b border-border-dim px-6 py-3 flex items-center justify-between">
               <div className="flex gap-2">
-                <div className="w-2.5 h-2.5 rounded-full bg-red-900/40" />
-                <div className="w-2.5 h-2.5 rounded-full bg-yellow-900/40" />
-                <div className="w-2.5 h-2.5 rounded-full bg-green-900/40" />
+                <div className="w-2.5 h-2.5 rounded-full bg-red-500/20" />
+                <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/20" />
+                <div className="w-2.5 h-2.5 rounded-full bg-green-500/20" />
               </div>
-              <div className="type-metadata text-[0.5rem] opacity-40">DARSHIT_SHELL_V1.0.4</div>
+              <div className="type-metadata text-[0.5rem] opacity-30 tracking-widest font-mono">
+                DARSHIT_LAGDHIR_SHELL v2.0.4
+              </div>
+              <div className="w-12 h-1 bg-border-dim/20 rounded-full" />
             </div>
 
-            {/* Terminal Content */}
+            {/* TERMINAL CONTENT */}
             <div 
               ref={scrollRef}
-              className="p-6 h-[400px] overflow-y-auto font-mono text-sm type-body scrollbar-thin"
-              style={{ fontFamily: 'var(--font-body)' }}
+              className="p-8 h-[500px] overflow-y-auto scrollbar-thin scrollbar-thumb-border-dim"
             >
-              <div className="space-y-2 whitespace-pre-wrap">
+              <div className="space-y-4 font-mono text-[0.8rem] leading-relaxed">
                 {history.map((line, i) => (
-                  <div key={i} className={line.startsWith(">") ? "text-accent" : "opacity-60"}>
-                    {line}
-                  </div>
+                  <motion.div 
+                    key={i} 
+                    initial={{ opacity: 0, x: -5 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className={cn(
+                        "whitespace-pre-wrap",
+                        line.type === 'input' ? "text-accent" : "text-text-secondary"
+                    )}
+                  >
+                    {line.type === 'input' && <span className="mr-3 opacity-50">&lambda;</span>}
+                    {line.content}
+                  </motion.div>
                 ))}
               </div>
 
-              <form onSubmit={handleCommand} className="flex mt-4 items-center">
-                <span className="text-accent mr-2">&lambda;</span>
+              {/* INPUT LINE */}
+              <form onSubmit={handleCommand} className="flex mt-6 items-center">
+                <span className="text-accent mr-3 animate-pulse">&lambda;</span>
                 <input 
+                  ref={inputRef}
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  className="bg-transparent border-none outline-none flex-grow text-primary type-body h-full"
+                  onFocus={() => setIsFocused(true)}
+                  onBlur={() => setIsFocused(false)}
+                  className="bg-transparent border-none outline-none flex-grow text-text-primary font-mono text-[0.8rem] caret-accent"
                   autoFocus
-                  placeholder="enter command..."
+                  spellCheck={false}
+                  autoComplete="off"
                 />
               </form>
             </div>
-          </div>
 
-          <div className="mt-sys-48 flex justify-center gap-sys-32 opacity-40">
-            <a href={identity.github} target="_blank" className="type-nav hover:text-accent transition-colors">GITHUB</a>
-            <a href={identity.linkedin} target="_blank" className="type-nav hover:text-accent transition-colors">LINKEDIN</a>
-            <a href={`mailto:${identity.email}`} className="type-nav hover:text-accent transition-colors">EMAIL</a>
+            {/* DECORATIVE SCANLINE */}
+            <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-scanlines animate-scanline" />
+          </motion.div>
+
+          {/* QUICK LINKS */}
+          <div className="mt-sys-64 flex justify-between items-center px-4">
+            <div className="flex gap-sys-32">
+                <a href={identity.github} target="_blank" className="type-nav text-[0.6rem] hover:text-accent transition-colors">GITHUB_REF</a>
+                <a href={identity.linkedin} target="_blank" className="type-nav text-[0.6rem] hover:text-accent transition-colors">LINKEDIN_REF</a>
+            </div>
+            <div className="type-metadata text-[0.5rem] opacity-20">ENCRYPTED_COMMS_ACTIVE</div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
