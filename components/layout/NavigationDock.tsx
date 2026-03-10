@@ -2,21 +2,26 @@
 
 import { useScene } from "@/context/SceneContext";
 import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "../../lib/utils";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
-  { id: "hero", label: "HOME", code: "00" },
-  { id: "philosophy", label: "SYSTEMS", code: "01" },
-  { id: "systems", label: "MODULES", code: "02" },
-  { id: "capabilities", label: "SKILLS", code: "03" },
-  { id: "about", label: "ABOUT", code: "04" },
-  { id: "contact", label: "CONNECT", code: "05" },
+  { id: "hero", label: "HOME", code: "00", path: "/#hero" },
+  { id: "philosophy", label: "SYSTEMS", code: "01", path: "/#philosophy" },
+  { id: "systems", label: "MODULES", code: "02", path: "/#systems" },
+  { id: "capabilities", label: "SKILLS", code: "03", path: "/#capabilities" },
+  { id: "about", label: "ABOUT", code: "04", path: "/#about" },
+  { id: "contact", label: "CONNECT", code: "05", path: "/#contact" },
 ];
 
 export default function NavigationDock() {
   const { activeSection, isMobile, isScrolled } = useScene();
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
 
   const handleScroll = (id: string) => {
+    if (!isHomePage) return;
     const element = document.getElementById(id);
     if (element) {
       // Offset for mobile header if needed
@@ -43,18 +48,27 @@ export default function NavigationDock() {
       >
         <div className="type-metadata text-[0.6rem] text-accent tracking-[0.2em]">DAR_LAG_SYS</div>
         <div className="flex gap-sys-16">
-          {NAV_ITEMS.filter(item => ["hero", "systems", "contact"].includes(item.id)).map((item) => (
-            <button
-              key={item.id}
-              onClick={() => handleScroll(item.id)}
-              className={cn(
-                "type-nav text-[0.6rem] transition-colors p-2 focus:text-accent focus:outline-none",
-                activeSection === item.id ? "text-accent" : "text-text-muted"
-              )}
+          {!isHomePage ? (
+            <Link 
+              href="/"
+              className="type-nav text-[0.6rem] text-accent flex items-center gap-1"
             >
-              {item.label}
-            </button>
-          ))}
+              <span>←</span> RETURN_BASE
+            </Link>
+          ) : (
+            NAV_ITEMS.filter(item => ["hero", "systems", "contact"].includes(item.id)).map((item) => (
+              <button
+                key={item.id}
+                onClick={() => handleScroll(item.id)}
+                className={cn(
+                  "type-nav text-[0.6rem] transition-colors p-2 focus:text-accent focus:outline-none",
+                  activeSection === item.id ? "text-accent" : "text-text-muted"
+                )}
+              >
+                {item.label}
+              </button>
+            ))
+          )}
         </div>
       </motion.nav>
     );
@@ -67,7 +81,17 @@ export default function NavigationDock() {
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       className="fixed left-sys-32 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-sys-24"
     >
-      {NAV_ITEMS.map((item) => (
+      {!isHomePage && (
+         <Link 
+           href="/"
+           className="group flex flex-col gap-2 mb-8 focus:outline-none"
+         >
+           <span className="type-metadata text-[0.5rem] text-accent opacity-40 group-hover:opacity-100 transition-opacity">EXIT_NODE</span>
+           <span className="type-nav text-[0.6rem] text-text-muted group-hover:text-accent transition-colors">← RETURN_BASE</span>
+         </Link>
+      )}
+
+      {isHomePage && NAV_ITEMS.map((item) => (
         <button
           key={item.id}
           onClick={() => handleScroll(item.id)}

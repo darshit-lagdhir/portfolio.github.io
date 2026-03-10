@@ -6,13 +6,19 @@ import { Project } from "@/types/project";
 import { cn } from "@/lib/utils";
 import ArchitectureDiagram from "@/components/visualization/ArchitectureDiagram";
 
+import ProjectNetwork from "./ProjectNetwork";
+import { projects } from "@/data/projects";
+
 interface ProjectDocumentationProps {
   project: Project;
 }
 
 export default function ProjectDocumentation({ project }: ProjectDocumentationProps) {
+  const currentIndex = projects.findIndex(p => p.slug === project.slug);
+  const nextProject = projects[(currentIndex + 1) % projects.length];
+
   return (
-    <div className="min-h-screen pb-sys-128">
+    <div className="min-h-screen pb-sys-128 bg-noise">
       {/* 
          PHASE 2: PROJECT IDENTITY HEADER 
          Industrial, documentation-style header with primary metadata.
@@ -367,19 +373,56 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                  </div>
               </section>
            </div>
+
+           {/* 
+              PHASE 19 - CROSS-PROJECT NAVIGATION SYSTEM
+              Visualizing the larger engineering exploration.
+           */}
+           <ProjectNetwork currentSlug={project.slug} />
         </div>
       </main>
 
       {/* 
-         PHASE 9: NAVIGATION BACK 
+         PHASE 19 - SEQUENTIAL PROJECT NAVIGATION
+         The next node in the exploration manifest.
       */}
-      <footer className="system-container mt-sys-128 pt-sys-64 border-t border-border-dim text-center">
-         <Link 
-           href="/#systems" 
-           className="btn-primary inline-flex py-4 px-12"
-         >
-           BACK_TO_SYSTEM_LOCATOR
-         </Link>
+      <footer className="system-container mt-sys-128">
+         <div className="pt-sys-96 border-t border-border-dim grid-12">
+            <div className="col-span-12 lg:col-span-6">
+               <div className="type-metadata text-[0.45rem] opacity-30 mb-8 uppercase tracking-widest">NEXT_NODE_IN_MANIFEST</div>
+               <Link 
+                 href={`/${nextProject.slug}`}
+                 className="group relative block p-12 border border-border-dim bg-bg-secondary/10 hover:border-accent/40 transition-all overflow-hidden"
+               >
+                  <div className="flex justify-between items-center mb-6">
+                    <span className="type-metadata text-[0.4rem] text-accent">0{((currentIndex + 1) % projects.length) + 1} // SEQUENTIAL_JUMP</span>
+                    <span className="type-metadata text-[0.45rem] opacity-30 group-hover:opacity-100 transition-opacity">EXPLORE_NODE →</span>
+                  </div>
+                  <h3 className="type-identity text-4xl uppercase tracking-tighter group-hover:text-accent transition-colors">
+                    {nextProject.title}_
+                  </h3>
+                  
+                  {/* Transition Glitch Effect */}
+                  <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity select-none pointer-events-none">
+                     <span className="type-identity text-7xl uppercase">{nextProject.slug}</span>
+                  </div>
+               </Link>
+            </div>
+
+            <div className="col-span-12 lg:col-span-4 lg:col-start-9 flex flex-col justify-end mt-sys-64 lg:mt-0">
+               <div className="space-y-6 text-left lg:text-right">
+                  <p className="type-body text-xs text-text-muted leading-relaxed italic">
+                    All systems represented in this manifest are part of a unified exploration of technical frontiers.
+                  </p>
+                  <Link 
+                    href="/#systems" 
+                    className="type-nav text-[0.55rem] text-accent border border-accent/20 px-8 py-3 hover:bg-accent/5 transition-all inline-block uppercase"
+                  >
+                    Return to core manifest
+                  </Link>
+               </div>
+            </div>
+         </div>
       </footer>
     </div>
   );
