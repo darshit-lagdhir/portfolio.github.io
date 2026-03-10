@@ -38,4 +38,5 @@ export interface Project {
     future?: string[];
     githubRepoName?: string;
     githubUrl?: string;
+    status: "COMPLETE" | "DEVELOPMENT" | string;
 }

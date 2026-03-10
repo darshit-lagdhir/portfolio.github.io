@@ -335,6 +335,10 @@ h1, h2, h3 {
   100% { opacity: 1; }
 }
 
+.pulse {
+  animation: pulse 2s infinite;
+}
+
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--color-bg-primary); }
 ::-webkit-scrollbar-thumb { background: var(--color-border-bright); }
