@@ -75,7 +75,7 @@ export default function Cursor() {
     default: {
       scale: 1,
       backgroundColor: "transparent",
-      borderColor: "var(--color-accent)",
+      borderColor: "var(--color-border-bright)",
       borderWidth: "1px",
     },
     hover: {
@@ -95,7 +95,7 @@ export default function Cursor() {
   return (
     <motion.div
       className={cn(
-        "fixed top-0 left-0 w-6 h-6 rounded-full border border-accent pointer-events-none z-[9999] mix-blend-difference",
+        "fixed top-0 left-0 w-6 h-6 rounded-full border pointer-events-none z-[9999] mix-blend-difference",
         !isVisible && "opacity-0"
       )}
       style={{
@@ -118,7 +118,10 @@ export default function Cursor() {
         className="absolute inset-0 flex items-center justify-center"
         animate={{ opacity: cursorType === 'hover' ? 0 : 1 }}
       >
-        <div className="w-1 h-1 bg-accent rounded-full" />
+        <motion.div 
+          className="w-1 h-1 rounded-full"
+          animate={{ backgroundColor: cursorType === 'active' ? "var(--color-accent)" : "var(--color-text-secondary)" }}
+        />
       </motion.div>
     </motion.div>
   );

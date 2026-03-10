@@ -13,7 +13,7 @@ export default function SystemModules() {
 
       <div className="grid-12 mb-sys-64">
         <div className="col-span-12 lg:col-span-10">
-          <h2 className="type-h1 mb-sys-24">SYSTEM_PORTFOLIO_</h2>
+          <h2 className="type-h1">SYSTEM_PORTFOLIO_</h2>
           <p className="type-body text-lg max-w-2xl text-text-secondary">
             Modular architectures and high-assurance systems built to investigate performance constraints, formal security contracts, and state preservation.
           </p>

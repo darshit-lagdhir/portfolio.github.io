@@ -131,7 +131,7 @@ body {
   font-size: var(--font-size-identity);
   line-height: 0.85;
   text-transform: uppercase;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.05em; /* Tighter for massive scale */
   font-weight: 400;
 }
 
@@ -141,7 +141,7 @@ body {
   font-size: var(--font-size-h1);
   line-height: 1.05;
   text-transform: uppercase;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   font-weight: 700;
 }
 
@@ -150,7 +150,7 @@ body {
   font-size: var(--font-size-h2);
   line-height: 1.1;
   text-transform: uppercase;
-  letter-spacing: 0em;
+  letter-spacing: -0.01em;
   font-weight: 700;
 }
 
@@ -158,9 +158,9 @@ body {
 .type-emphasis {
   font-family: var(--font-emphasis);
   font-size: var(--font-size-h3);
-  line-height: 1.2;
+  line-height: 1.3;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em; /* Slightly wider for technical clarity */
   font-weight: 800;
 }
 
@@ -190,6 +190,7 @@ body {
   font-size: var(--font-size-body);
   line-height: 1.75;
   font-weight: 500;
+  letter-spacing: 0.01em; /* Micro-adjustment for wide grotesque legibility */
   color: var(--color-text-secondary);
 }
 
@@ -197,19 +198,30 @@ body {
   font-family: var(--font-body);
   font-size: 0.75rem;
   font-weight: 700;
+  line-height: 1.2;
   text-transform: uppercase;
   letter-spacing: 0.2em;
 }
 
 /* 
-   PHASE 4 — SPACING DEFAULTS
+   PHASE 4 — VERTICAL RHYTHM & SPACING DEFAULTS
+   Establishing a strict mathematical progression.
 */
 p {
   margin-bottom: var(--spacing-sys-24);
 }
+p:last-child {
+  margin-bottom: 0;
+}
 
-h1, h2, h3 {
+h1 {
+  margin-bottom: var(--spacing-sys-48);
+}
+h2 {
   margin-bottom: var(--spacing-sys-32);
+}
+h3 {
+  margin-bottom: var(--spacing-sys-24);
 }
 
 /* 
@@ -264,7 +276,7 @@ h1, h2, h3 {
   background-color: var(--color-border-dim);
   display: flex;
   align-items: center;
-  margin: var(--spacing-sys-128) 0 var(--spacing-sys-64) 0;
+  margin: 0 0 var(--spacing-sys-64) 0;
 }
 
 .divider-label {

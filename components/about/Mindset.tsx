@@ -15,7 +15,7 @@ export default function Mindset() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="type-h1 mb-sys-64 max-w-4xl"
+            className="type-h1 max-w-4xl"
           >
             WHY_SYSTEMS_MATTER: <br />
             <span className="text-secondary">INTERNAL_MECHANICS_AND_DURABILITY</span>

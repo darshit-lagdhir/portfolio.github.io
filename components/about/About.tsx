@@ -39,16 +39,16 @@ export default function About() {
       </div>
 
       <div className="grid-12 items-start">
-        {/* PHASE 3 & 8: NARRATIVE COLUMN (Narrow & Offset) */}
-        <div className="col-span-12 lg:col-span-6 lg:col-start-2 space-y-sys-64 mb-sys-96">
-          <div className="mb-sys-96">
+        {/* PHASE 3 & 8: NARRATIVE COLUMN (Primary Edge Alignment) */}
+        <div className="col-span-12 lg:col-span-7 mb-sys-64">
+          <div className="mb-sys-64">
             <h2 className="type-h1 mb-sys-24">SYSTEM_THINKER_</h2>
             <p className="type-body text-lg opacity-60 leading-relaxed max-w-xl">
               A detailed look into the investigative mindset and philosophical framework that drives my engineering process.
             </p>
           </div>
 
-          <div className="space-y-sys-96">
+          <div className="space-y-sys-64">
             {NARRATIVE_BLOCKS.map((block, index) => (
               <motion.div
                 key={block.id}

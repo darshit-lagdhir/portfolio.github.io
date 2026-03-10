@@ -73,10 +73,10 @@ export default function TerminalContact() {
       </div>
 
       <div className="grid-12">
-        <div className="col-span-12 lg:col-span-8 lg:col-start-3">
-          <div className="mb-sys-48 text-center lg:text-left">
-            <h2 className="type-h1 mb-sys-16">INITIATE_CONNECTION_</h2>
-            <p className="type-body opacity-60 max-w-xl mx-auto lg:mx-0">
+        <div className="col-span-12 lg:col-span-8">
+          <div className="mb-sys-48 text-left">
+            <h2 className="type-h1">INITIATE_CONNECTION_</h2>
+            <p className="type-body opacity-60 max-w-xl">
               You have reached the end of the architectural manifest. Use the command panel below to interact with the system and initiate contact.
             </p>
           </div>
