@@ -108,7 +108,9 @@ export function SceneProvider({ children }: { children: React.ReactNode }) {
     useEffect(() => {
         if (pathname !== "/") {
             const section = pathname.replace("/", "");
-            setActiveSection(section || "hero");
+            // Delaying state update to avoid cascading render warning
+            const timer = setTimeout(() => setActiveSection(section || "hero"), 0);
+            return () => clearTimeout(timer);
         }
     }, [pathname]);
 

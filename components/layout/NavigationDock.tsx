@@ -16,7 +16,7 @@ const NAV_ITEMS = [
 ];
 
 export default function NavigationDock() {
-  const { activeSection, isMobile, isScrolled } = useScene();
+  const { activeSection, isMobile } = useScene();
   const pathname = usePathname();
   const isHomePage = pathname === "/";
 

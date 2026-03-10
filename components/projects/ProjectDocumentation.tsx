@@ -127,7 +127,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                  <div className="bg-bg-secondary border-l-2 border-accent/30 p-8">
                     <div className="type-metadata text-[0.5rem] text-accent mb-4 tracking-tighter">PROBLEM_STATEMENT</div>
                     <p className="type-body opacity-70 italic text-sm md:text-base">
-                       "{project.problem}"
+                       &quot;{project.problem}&quot;
                     </p>
                  </div>
                </div>
@@ -252,9 +252,9 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                                <p className="type-body text-sm text-text-primary">{decision.approach}</p>
                             </div>
                             <div className="pt-4 border-t border-border-dim">
-                               <p className="type-body text-xs italic opacity-60">
-                                 "Reasoning: {decision.reasoning}"
-                               </p>
+                                <p className="type-body text-xs italic opacity-60">
+                                  &quot;Reasoning: {decision.reasoning}&quot;
+                                </p>
                             </div>
                          </div>
 
@@ -402,7 +402,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                  className="group relative block p-12 border border-border-dim bg-bg-secondary/10 hover:border-accent/40 transition-all overflow-hidden"
                >
                   <div className="flex justify-between items-center mb-6">
-                    <span className="type-metadata text-[0.4rem] text-accent">0{((currentIndex + 1) % projects.length) + 1} // SEQUENTIAL_JUMP</span>
+                     <span className="type-metadata text-[0.4rem] text-accent">0{((currentIndex + 1) % projects.length) + 1} {'//'} SEQUENTIAL_JUMP</span>
                     <span className="type-metadata text-[0.45rem] opacity-30 group-hover:opacity-100 transition-opacity">EXPLORE_NODE →</span>
                   </div>
                   <h3 className="type-identity text-4xl uppercase tracking-tighter group-hover:text-accent transition-colors">

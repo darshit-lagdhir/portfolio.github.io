@@ -11,7 +11,9 @@ export default function HeroArchitecture() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
+    // Delay state change to avoid cascading render warning
+    const timer = setTimeout(() => setIsClient(true), 0);
+    return () => clearTimeout(timer);
   }, []);
 
   if (!isClient) return null;

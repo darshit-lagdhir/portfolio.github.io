@@ -23,7 +23,11 @@ export default function Cursor() {
   useEffect(() => {
     // Check if device uses a fine pointer (mouse/trackpad)
     const mediaQuery = window.matchMedia("(pointer: fine)");
-    setIsPointer(mediaQuery.matches);
+    const timer = setTimeout(() => {
+      setIsPointer(mediaQuery.matches);
+    }, 0);
+
+
 
     const updatePosition = (e: MouseEvent) => {
       mouseX.set(e.clientX);
@@ -60,6 +64,7 @@ export default function Cursor() {
     }
 
     return () => {
+      clearTimeout(timer);
       window.removeEventListener("mousemove", updatePosition);
       window.removeEventListener("mouseover", handleMouseOver);
       window.removeEventListener("mousedown", handleMouseDown);

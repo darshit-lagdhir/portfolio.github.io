@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { identity } from "@/data/identity";
 import { cn } from "../../lib/utils";
 
@@ -51,7 +51,10 @@ export default function TerminalContact() {
         response = `Locating professional network node...\n--> REDIRECT: ${identity.linkedin}\nConnection established. Proceeding to viewport.`;
         break;
       case "message":
-        window.location.href = `mailto:${identity.email}`;
+        const emailUrl = `mailto:${identity.email}`;
+        setTimeout(() => {
+          window.location.href = emailUrl;
+        }, 0);
         response = `Constructing localized mail stream to ${identity.email}...\n--> WAITING: Awaiting your transmission payload.`;
         break;
       case "resume":

@@ -1,10 +1,8 @@
 "use client";
 
-import { Project } from "@/types/project";
 import { projects } from "@/data/projects";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
 
 interface ProjectNetworkProps {
   currentSlug: string;
