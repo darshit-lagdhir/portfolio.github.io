@@ -142,7 +142,7 @@ export default function TerminalContact() {
                     key={cmd.id}
                     onClick={() => executeCommand(cmd.id, cmd.label)}
                     disabled={isProcessing}
-                    className="group flex items-center justify-between px-4 py-3 border border-border-dim hover:border-accent hover:bg-accent/5 transition-all text-left disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="group flex items-center justify-between px-4 py-3 border border-border-dim hover:border-accent/50 hover:bg-accent/5 transition-all text-left disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-1 focus-visible:ring-accent/50 md:hover:translate-x-1"
                   >
                     <div className="flex items-center gap-3">
                       <span className="text-accent group-hover:translate-x-1 transition-transform">&lambda;</span>

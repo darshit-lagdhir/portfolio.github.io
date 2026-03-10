@@ -12,7 +12,7 @@ interface SystemModuleProps {
 
 export default function SystemModule({ project, index }: SystemModuleProps) {
   return (
-    <Link href={`/${project.slug}`}>
+    <Link href={`/${project.slug}`} className="focus:outline-none focus-visible:ring-1 focus-visible:ring-accent/50 block h-full">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -22,7 +22,7 @@ export default function SystemModule({ project, index }: SystemModuleProps) {
           delay: index * 0.1, 
           ease: [0.16, 1, 0.3, 1] 
         }}
-        className="group relative border border-border-dim bg-bg-secondary p-sys-32 h-full flex flex-col transition-all duration-300 hover:border-accent hover:bg-bg-secondary/80 md:hover:-translate-y-2"
+        className="group relative border border-border-dim bg-bg-secondary p-sys-32 h-full flex flex-col transition-all duration-300 hover:border-accent/50 hover:bg-bg-secondary/80 md:hover:-translate-y-1 hover:shadow-2xl hover:shadow-accent/5"
       >
         {/* Module Header Hook */}
         <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-100 transition-opacity">

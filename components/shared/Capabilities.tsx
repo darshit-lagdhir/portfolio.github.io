@@ -73,11 +73,12 @@ export default function Capabilities() {
         {capabilityClusters.map((cluster, index) => (
           <motion.div 
             key={cluster.id}
+            tabIndex={0}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: index * 0.1, duration: 0.6 }}
-            className="group border border-border-dim bg-bg-secondary p-sys-32 hover:border-accent transition-all duration-300 flex flex-col h-full"
+            className="group relative border border-border-dim bg-bg-secondary p-sys-32 hover:border-accent/50 transition-all duration-300 flex flex-col h-full focus:outline-none focus-visible:ring-1 focus-visible:ring-accent/50 md:hover:-translate-y-1 hover:shadow-xl hover:shadow-accent/5"
           >
             <div className="type-label mb-sys-16 text-accent flex items-center gap-2">
               <span className="w-1 h-1 bg-accent rounded-full" />

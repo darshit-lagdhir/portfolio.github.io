@@ -71,12 +71,14 @@ export default function NavigationDock() {
         <button
           key={item.id}
           onClick={() => handleScroll(item.id)}
-          className="group flex items-center gap-sys-16 text-left relative focus:outline-none"
+          className="group flex items-center gap-sys-16 text-left relative focus:outline-none focus-visible:ring-1 focus-visible:ring-accent/50 p-1"
         >
           {/* Diagnostic Code */}
           <span className={cn(
-            "type-metadata text-[0.6rem] transition-all duration-300 w-sys-24 focus-visible:text-accent",
-            activeSection === item.id ? "text-accent" : "text-text-muted opacity-40 group-hover:opacity-100 group-focus:opacity-100"
+            "type-metadata text-[0.6rem] transition-all duration-300 w-sys-24",
+            activeSection === item.id 
+              ? "text-accent" 
+              : "text-text-muted opacity-40 group-hover:opacity-100 group-hover:text-text-primary group-focus-visible:opacity-100"
           )}>
             {item.code}
           </span>
@@ -88,7 +90,7 @@ export default function NavigationDock() {
                 "type-nav text-[0.7rem] block transition-all duration-300",
                 activeSection === item.id 
                   ? "text-text-primary translate-x-0" 
-                  : "text-text-muted -translate-x-full group-hover:translate-x-0 group-focus:translate-x-0"
+                  : "text-text-muted -translate-x-full group-hover:translate-x-0 group-hover:text-text-primary group-focus-visible:translate-x-0"
               )}
             >
               {item.label}
@@ -104,6 +106,7 @@ export default function NavigationDock() {
                 initial={{ scaleY: 0 }}
                 animate={{ scaleY: 1 }}
                 exit={{ scaleY: 0 }}
+                transition={{ duration: 0.2 }}
               />
             )}
           </AnimatePresence>
