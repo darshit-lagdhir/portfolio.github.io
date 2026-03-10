@@ -46,6 +46,26 @@ export interface ProjectDiagram {
     layout: "layered" | "pipeline";
 }
 
+export interface EvolutionStep {
+    milestone: string;
+    description: string;
+    date?: string;
+}
+
+export interface DesignDecision {
+    title: string;
+    problem: string;
+    approach: string;
+    reasoning: string;
+    alternatives?: string[];
+}
+
+export interface DesignTradeoff {
+    title: string;
+    description: string;
+    impact: "PERFORMANCE" | "MAINTAINABILITY" | "SIMPLICITY" | "SCALABILITY";
+}
+
 export interface Project {
     slug: string;
     title: string;
@@ -62,15 +82,17 @@ export interface Project {
     architectureLayers?: ArchitectureLayer[];
     internalComponents?: InternalComponent[];
     challenges?: ProjectChallenge[];
-    diagram?: ProjectDiagram; // New visualization layer
-    decisions?: string[];
+    diagram?: ProjectDiagram; // Visualization layer
+    evolution?: EvolutionStep[]; // New story timeline
+    architectureDecisions?: DesignDecision[]; // Detailed 'Why'
+    tradeoffs?: DesignTradeoff[]; // Engineering compromises
+    decisions?: string[]; // Legacy
     detailedDecisions?: {
         decision: string;
         why: string;
         alternative: string;
         rejectedReason: string;
     }[];
-    tradeoffs?: string[];
     limitations?: string[];
     ifRebuildingToday?: string[];
     performance?: string;

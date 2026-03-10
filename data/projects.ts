@@ -88,7 +88,35 @@ export const projects: Project[] = [
                 { from: "rbac", to: "logistics" },
                 { from: "logistics", to: "db" }
             ]
-        }
+        },
+        evolution: [
+            { milestone: "Initial Prototype", description: "Basic Express server with simple JSON file persistence.", date: "WEEK_01" },
+            { milestone: "Architecture Pivot", description: "Moved to a layered service architecture to handle complex business rules separate from routing.", date: "WEEK_03" },
+            { milestone: "Stability Phase", description: "Implemented PostgreSQL with strict ACID transactions for delivery consistency.", date: "WEEK_06" }
+        ],
+        architectureDecisions: [
+            {
+                title: "Layered Service Isolation",
+                problem: "Coupling logistics logic (distance calculation, fleet assign) with API routes created a maintenance nightmare.",
+                approach: "Extracted all business logic into dedicated service classes independent of the web framework.",
+                reasoning: "Allows for unit testing of core logic without mocking HTTP req/res objects and simplifies logic reuse.",
+                alternatives: ["Hexagonal Architecture", "Monolithic Controllers"]
+            },
+            {
+                title: "ACID over Eventual Consistency",
+                problem: "Tracking shipment states required perfectly accurate horizontal lookups.",
+                approach: "Used PostgreSQL transactions for all shipment updates.",
+                reasoning: "In logistics, eventual consistency can lead to double-booked fleet members or lost parcels.",
+                alternatives: ["MongoDB with manual locking"]
+            }
+        ],
+        tradeoffs: [
+            {
+                title: "Maintainability over Hyper-Optimization",
+                description: "Chose clear, readable service layers over handwritten SQL optimizations for minor performance gains.",
+                impact: "MAINTAINABILITY"
+            }
+        ]
     },
     {
         slug: "uidai",
@@ -167,7 +195,27 @@ export const projects: Project[] = [
                 { from: "engine", to: "aggregator" },
                 { from: "aggregator", to: "dashboard" }
             ]
-        }
+        },
+        evolution: [
+            { milestone: "Engine Alpha", description: "Simple rule-based outlier detection for auth requests.", date: "PHASE_01" },
+            { milestone: "The Human Filter", description: "Implemented the advisory interface to allow expert feedback on false positives.", date: "PHASE_02" }
+        ],
+        architectureDecisions: [
+            {
+                title: "Asynchronous Pipeline",
+                problem: "Large identity datasets caused request timeouts during synchronous analysis.",
+                approach: "Implemented a Redis-backed Celery pipeline for non-blocking analysis.",
+                reasoning: "Identity verification doesn't always need instant feedback, but it MUST handle burst traffic without failure.",
+                alternatives: ["Kafka", "Vertical Scaling"]
+            }
+        ],
+        tradeoffs: [
+            {
+                title: "Precision over Speed",
+                description: "Sacrificed near-instant alerts for deep-packet matching to reduce false alarms for operators.",
+                impact: "SCALABILITY"
+            }
+        ]
     },
     {
         slug: "pfcv",
@@ -255,6 +303,26 @@ export const projects: Project[] = [
                 { from: "uir", to: "solver" },
                 { from: "solver", to: "report" }
             ]
-        }
+        },
+        evolution: [
+            { milestone: "Core Synthesizer", description: "First successful mapping of Rust memory to C++ void pointers.", date: "BUILD_02" },
+            { milestone: "Clang Integration", description: "Switched to libtooling for AST extraction to ensure 100% type reliability.", date: "BUILD_09" }
+        ],
+        architectureDecisions: [
+            {
+                title: "Rust for Safety Logic",
+                problem: "Writing verification logic in C++ led to too many 'verifier-at-fault' memory leaks.",
+                approach: "Ported the entire synthesis engine to Rust.",
+                reasoning: "The code verifying safety should be inherently safe; Rust ensures the synthesizer itself is memory-secure.",
+                alternatives: ["Standard C++ Smart Pointers"]
+            }
+        ],
+        tradeoffs: [
+            {
+                title: "Simplicity over Runtime Performance",
+                description: "Chose exhaustive AST walkthroughs over optimized bytecode analysis to ensure absolute verification correctness.",
+                impact: "SIMPLICITY"
+            }
+        ]
     }
 ];

@@ -206,37 +206,167 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
         </div>
 
         {/* 
-           PHASE 7 & 8: CHALLENGES & FUTURE 
-           Footer analysis sections.
+           PHASE 18 - ARCHITECTURAL STORYTELLING SYSTEM
+           Deep narrative on WHY the system exists in its current form.
         */}
-        <div className="grid-12 mt-sys-96 pt-sys-96 border-t border-border-dim">
-           <section className="col-span-12 lg:col-span-6 space-y-sys-48">
-              <div className="section-divider" data-label="05_DESIGN_CHALLENGES">
-                <span className="divider-label">05_DESIGN_CHALLENGES</span>
+        <div className="mt-sys-128 space-y-sys-128">
+           {/* Section 05: Engineering Decisions & Trade-offs */}
+           <section>
+              <div className="section-divider mb-sys-64" data-label="05_DESIGN_REASONING">
+                <span className="divider-label">05_DESIGN_REASONING</span>
               </div>
-              <div className="space-y-sys-40">
-                 {project.challenges?.map((challenge, idx) => (
-                   <div key={idx} className="max-w-xl">
-                      <h4 className="type-label text-accent mb-4">{challenge.title.toUpperCase()}</h4>
-                      <p className="type-body text-sm opacity-70 leading-relaxed">{challenge.description}</p>
-                   </div>
-                 ))}
+              
+              <div className="grid-12 gap-sys-64">
+                 <div className="col-span-12 lg:col-span-7 space-y-sys-64">
+                    {project.architectureDecisions?.map((decision, idx) => (
+                      <motion.div 
+                        key={idx}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="p-8 border border-border-dim bg-bg-secondary/30 relative group"
+                      >
+                         <div className="type-metadata text-[0.45rem] text-accent mb-4">DECISION_LOG_0{idx + 1}</div>
+                         <h3 className="type-emphasis text-lg mb-8 uppercase tracking-tighter">{decision.title}</h3>
+                         
+                         <div className="space-y-6">
+                            <div>
+                               <div className="type-metadata text-[0.4rem] opacity-30 mb-2">THE_PROBLEM</div>
+                               <p className="type-body text-sm text-text-secondary">{decision.problem}</p>
+                            </div>
+                            <div>
+                               <div className="type-metadata text-[0.4rem] opacity-30 mb-2">THE_APPROACH</div>
+                               <p className="type-body text-sm text-text-primary">{decision.approach}</p>
+                            </div>
+                            <div className="pt-4 border-t border-border-dim">
+                               <p className="type-body text-xs italic opacity-60">
+                                 "Reasoning: {decision.reasoning}"
+                               </p>
+                            </div>
+                         </div>
+
+                         {decision.alternatives && (
+                            <div className="mt-8 flex flex-wrap gap-3">
+                               <span className="type-metadata text-[0.4rem] opacity-20">DISCARDED_VECTORS:</span>
+                               {decision.alternatives.map(alt => (
+                                 <span key={alt} className="type-metadata text-[0.4rem] text-text-muted line-through opacity-40">{alt}</span>
+                               ))}
+                            </div>
+                         )}
+                      </motion.div>
+                    ))}
+                 </div>
+
+                 <aside className="col-span-12 lg:col-span-4 lg:col-start-9 space-y-sys-64">
+                    <div className="sticky top-sys-64 space-y-sys-64">
+                       {/* Trade-offs Highlight */}
+                       <div>
+                          <div className="type-metadata text-[0.5rem] text-secondary mb-6 tracking-widest">SYSTEM_TRADE_OFFS</div>
+                          <div className="space-y-8">
+                             {project.tradeoffs?.map((tradeoff, idx) => (
+                               <div key={idx} className="space-y-2">
+                                  <div className="flex justify-between items-center">
+                                     <h4 className="type-label text-[0.6rem] text-text-primary">{tradeoff.title}</h4>
+                                     <span className="type-metadata text-[0.4rem] text-accent border border-accent/20 px-1">{tradeoff.impact}</span>
+                                  </div>
+                                  <p className="type-body text-xs opacity-50 italic">{tradeoff.description}</p>
+                               </div>
+                             ))}
+                          </div>
+                       </div>
+
+                       {/* Architecture Meta Summary */}
+                       <div className="p-6 border-l border-border-dim bg-bg-secondary/20">
+                          <p className="type-body text-xs font-mono opacity-40 leading-relaxed uppercase">
+                            Warning: Design maturity reached through iterative failure analysis. All listed approaches are verified against production constraints.
+                          </p>
+                       </div>
+                    </div>
+                 </aside>
               </div>
            </section>
 
-           <section className="col-span-12 lg:col-span-6 space-y-sys-48 mt-sys-96 lg:mt-0 lg:col-start-8">
-              <div className="section-divider" data-label="06_FUTURE_ROADMAP">
-                <span className="divider-label">06_FUTURE_ROADMAP</span>
-              </div>
-              <div className="space-y-sys-40">
-                 {project.future?.map((item, idx) => (
-                   <div key={idx} className="max-w-xl">
-                      <h4 className="type-label text-secondary mb-4">{item.title.toUpperCase()}</h4>
-                      <p className="type-body text-sm opacity-70 leading-relaxed">{item.description}</p>
+           {/* Section 06: System Evolution Timeline */}
+           {project.evolution && (
+             <section className="pb-sys-128">
+                <div className="section-divider mb-sys-96" data-label="06_SYSTEM_EVOLUTION">
+                  <span className="divider-label">06_SYSTEM_EVOLUTION</span>
+                </div>
+
+                <div className="relative max-w-4xl mx-auto pl-8 lg:pl-0">
+                   {/* Vertical Line */}
+                   <div className="absolute left-8 lg:left-1/2 top-0 bottom-0 w-[1px] bg-border-dim hidden lg:block" />
+                   
+                   <div className="space-y-sys-64">
+                      {project.evolution.map((step, idx) => (
+                        <motion.div 
+                          key={idx}
+                          initial={{ opacity: 0, x: idx % 2 === 0 ? -20 : 20 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          className={cn(
+                            "relative flex flex-col lg:flex-row items-center gap-sys-32 lg:gap-0",
+                            idx % 2 === 0 ? "lg:flex-row-reverse" : ""
+                          )}
+                        >
+                           {/* Timeline Pointer */}
+                           <div className="absolute left-0 lg:left-1/2 -translate-x-1/2 w-3 h-3 bg-accent rounded-full border-4 border-bg-primary z-10" />
+                           
+                           <div className={cn(
+                             "w-full lg:w-1/2",
+                             idx % 2 === 0 ? "lg:pl-sys-64" : "lg:pr-sys-64 lg:text-right"
+                           )}>
+                              <div className="type-metadata text-[0.5rem] text-accent mb-2 uppercase tracking-[0.3em] font-bold">
+                                {step.date || `STEP_0${idx + 1}`}
+                              </div>
+                              <h4 className="type-emphasis text-sm mb-4">{step.milestone.toUpperCase()}</h4>
+                              <p className="type-body text-sm text-text-muted leading-relaxed max-w-sm lg:ml-auto lg:mr-0 inline-block">
+                                {step.description}
+                              </p>
+                           </div>
+                           
+                           {/* Empty side for layout on desktop */}
+                           <div className="hidden lg:block lg:w-1/2" />
+                        </motion.div>
+                      ))}
                    </div>
-                 ))}
-              </div>
-           </section>
+                </div>
+             </section>
+           )}
+
+           {/* 
+              PHASE 7 & 8: CHALLENGES & FUTURE 
+              Final technical outlook modules.
+           */}
+           <div className="grid-12 pt-sys-96 border-t border-border-dim">
+              <section className="col-span-12 lg:col-span-6 space-y-sys-48">
+                 <div className="section-divider" data-label="07_ENGINEERING_CHALLENGES">
+                   <span className="divider-label">07_ENGINEERING_CHALLENGES</span>
+                 </div>
+                 <div className="space-y-sys-40">
+                    {project.challenges?.map((challenge, idx) => (
+                      <div key={idx} className="max-w-xl">
+                         <h4 className="type-label text-accent mb-4">{challenge.title.toUpperCase()}</h4>
+                         <p className="type-body text-sm opacity-70 leading-relaxed">{challenge.description}</p>
+                      </div>
+                    ))}
+                 </div>
+              </section>
+
+              <section className="col-span-12 lg:col-span-6 space-y-sys-48 mt-sys-96 lg:mt-0 lg:col-start-8">
+                 <div className="section-divider" data-label="08_SYSTEM_EVOLUTION_BEYOND">
+                   <span className="divider-label">08_SYSTEM_EVOLUTION_BEYOND</span>
+                 </div>
+                 <div className="space-y-sys-40">
+                    {project.future?.map((item, idx) => (
+                      <div key={idx} className="max-w-xl">
+                         <h4 className="type-label text-secondary mb-4">{item.title.toUpperCase()}</h4>
+                         <p className="type-body text-sm opacity-70 leading-relaxed">{item.description}</p>
+                      </div>
+                    ))}
+                 </div>
+              </section>
+           </div>
         </div>
       </main>
 
