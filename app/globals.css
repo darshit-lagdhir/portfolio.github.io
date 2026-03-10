@@ -1,104 +1,286 @@
 @import "tailwindcss";
 
-:root {
-  /* CORE ARCHITECTURAL TOKENS */
-  --bg-primary: #000000;
-  --bg-secondary: #050505;
-  --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.6);
-  --accent: #ffffff;
-  --border-color: rgba(255, 255, 255, 0.1);
-
-  /* TYPE SYSTEM — PHASE 6 PRIMARY TOOL */
-  --font-identity: var(--font-identity); /* Fornire */
-  --font-heading: var(--font-heading);   /* Ranade */
-  --font-emphasis: var(--font-emphasis); /* Panchang */
-  --font-body: var(--font-body);         /* HK Grotesk Wide */
-
-  /* SPATIAL HIERARCHY */
-  --page-padding: clamp(2rem, 8vw, 10rem);
-  --section-gap: clamp(4rem, 12vh, 15rem);
-}
-
 @theme {
-  --color-bg-primary: var(--bg-primary);
-  --color-bg-secondary: var(--bg-secondary);
-  --color-text-primary: var(--text-primary);
-  --color-text-secondary: var(--text-secondary);
-  --color-accent: var(--accent);
-  --color-border-dim: var(--border-color);
+  /* 
+     PHASE 1 — COLOR SYSTEM (ENGINEERING DARK)
+     Minimalist, low-strain, high-precision palette.
+  */
+  --color-bg-primary: #0a0a0a;   /* The "Abyss" background */
+  --color-bg-secondary: #0f0f0f; /* Elevated surfaces */
+  --color-text-primary: #e5e5e5; /* Primary high-readability */
+  --color-text-secondary: #a3a3a3;/* Structural labels */
+  --color-text-muted: #525252;   /* De-emphasized metadata */
+  --color-accent: #0066ff;       /* Electric Blue (Functional highlight) */
+  --color-accent-dim: #003380;   /* Muted accent for inactive states */
+  --color-border-dim: rgba(255, 255, 255, 0.05); /* Architectural lines */
+  --color-border-bright: rgba(255, 255, 255, 0.15); /* Interactive borders */
 
-  --font-identity: var(--font-identity);
-  --font-heading: var(--font-heading);
-  --font-emphasis: var(--font-emphasis);
-  --font-body: var(--font-body);
+  /* 
+     PHASE 4 — TYPOGRAPHY HIERARCHY
+     Identity > Heading > Emphasis > Body > Label
+  */
+  --font-identity: var(--font-identity);   /* Fornire: Identity statements */
+  --font-heading: var(--font-heading);     /* Ranade: Structural titles */
+  --font-emphasis: var(--font-emphasis);   /* Panchang: Technical labels */
+  --font-body: var(--font-body);           /* HK Grotesk Wide: Body architecture */
+
+  /* 
+     PHASE 2 — SPACING SYSTEM (MODULAR SCALE)
+     Predictable 4px-base modular progression.
+  */
+  --spacing-sys-4: 0.25rem;
+  --spacing-sys-8: 0.5rem;
+  --spacing-sys-12: 0.75rem;
+  --spacing-sys-16: 1rem;
+  --spacing-sys-24: 1.5rem;
+  --spacing-sys-32: 2rem;
+  --spacing-sys-48: 3rem;
+  --spacing-sys-64: 4rem;
+  --spacing-sys-96: 6rem;
+  --spacing-sys-128: 8rem;
+  --spacing-sys-192: 12rem;
+  --spacing-sys-256: 16rem;
+
+  /* 
+     PHASE 3 — LAYOUT GRID
+  */
+  --grid-max-width: 1400px;
+  --grid-columns: 12;
+  --grid-gutter: 2.5rem;
+
+  /* 
+     PHASE 9 — MOTION PREPARATION
+     Standardized ease/timing for system cohesion.
+  */
+  --transition-snappy: 150ms cubic-bezier(0.2, 0, 0, 1);
+  --transition-smooth: 400ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-cinematic: 800ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* BASE STYLING */
+/* 
+   BASE ARCHITECTURE & RESET
+*/
+:root {
+  color-scheme: dark;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
   font-family: var(--font-body);
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
   line-height: 1.6;
-}
-
-/* TYPOGRAPHY UTILITIES */
-.font-identity { font-family: var(--font-identity); }
-.font-heading { font-family: var(--font-heading); }
-.font-emphasis { font-family: var(--font-emphasis); }
-.font-body { font-family: var(--font-body); }
-
-h1, h2, h3, h4, h5 {
-  font-weight: normal;
-  text-transform: uppercase;
-}
-
-/* ARCHITECTURAL LAYOUT PRIMITIVES */
-.system-container {
-  width: 100%;
-  max-width: 1800px;
-  margin: 0 auto;
-  padding: 0 var(--page-padding);
-}
-
-.structural-line {
-  height: 1px;
-  width: 100%;
-  background-color: var(--border-color);
-}
-
-/* PERFORMANCE-OPTIMIZED MOTION */
-.fade-in {
-  animation: fadeIn 0.6s cubic-bezier(0.2, 0, 0.2, 1) forwards;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* SCROLLBAR RESET */
-::-webkit-scrollbar {
-  width: 4px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--bg-primary);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--text-secondary);
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
 }
 
 ::selection {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: var(--color-accent);
+  color: #ffffff;
 }
+
+/* 
+   PHASE 4 — TYPOGRAPHY ARCHITECTURAL STYLES
+*/
+.type-identity {
+  font-family: var(--font-identity);
+  font-size: clamp(3rem, 10vw, 12rem);
+  line-height: 0.9;
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+}
+
+.type-heading {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 4vw, 3.5rem);
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+.type-emphasis {
+  font-family: var(--font-emphasis);
+  font-size: clamp(0.75rem, 1.2vw, 1rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.type-body {
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+}
+
+.type-label {
+  font-family: var(--font-emphasis);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: var(--color-text-muted);
+}
+
+/* 
+   PHASE 3 — CENTERED CONTENT GRID
+*/
+.system-container {
+  width: 100%;
+  max-width: var(--grid-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--spacing-sys-32);
+  padding-right: var(--spacing-sys-32);
+}
+
+@media (max-width: 768px) {
+  .system-container {
+    padding-left: var(--spacing-sys-16);
+    padding-right: var(--spacing-sys-16);
+  }
+}
+
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--grid-gutter);
+}
+
+@media (max-width: 1024px) {
+  .grid-12 {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .grid-12 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 
+   PHASE 5 — BACKGROUND SYSTEM (ARCHITECTURAL GRID)
+*/
+.system-bg-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -10;
+  background-image: 
+    linear-gradient(to right, var(--color-border-dim) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-border-dim) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(circle at center, black, transparent 90%);
+  opacity: 0.6;
+}
+
+/* 
+   PHASE 6 — SECTION DIVIDER SYSTEM
+*/
+.section-divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-border-dim);
+  display: flex;
+  align-items: center;
+  margin: var(--spacing-sys-128) 0;
+}
+
+.divider-label {
+  font-family: var(--font-emphasis);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4em;
+  color: var(--color-text-muted);
+  background-color: var(--color-bg-primary);
+  padding-right: var(--spacing-sys-24);
+  position: relative;
+  top: -1px;
+}
+
+/* 
+   PHASE 7 — INTERACTION FEEDBACK
+*/
+.interactive-link {
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+  transition: var(--transition-snappy);
+  cursor: pointer;
+}
+
+.interactive-link:hover {
+  color: var(--color-accent);
+}
+
+.interactive-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 1px;
+  background-color: var(--color-accent);
+  transition: var(--transition-smooth);
+}
+
+.interactive-link:hover::after {
+  width: 100%;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-sys-12) var(--spacing-sys-24);
+  background-color: transparent;
+  border: 1px solid var(--color-border-bright);
+  color: var(--color-text-primary);
+  font-family: var(--font-emphasis);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: var(--transition-snappy);
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-text-primary);
+  color: var(--color-bg-primary);
+  border-color: var(--color-text-primary);
+}
+
+/* 
+   ENGINEERING DECORATION UTILITIES
+*/
+.eng-bracket::before { content: '['; margin-right: 0.5em; opacity: 0.3; }
+.eng-bracket::after { content: ']'; margin-left: 0.5em; opacity: 0.3; }
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  display: inline-block;
+  margin-right: var(--spacing-sys-8);
+  box-shadow: 0 0 10px var(--color-accent-dim);
+}
+
+/* 
+   SCROLLBAR & UTILITIES
+*/
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--color-bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--color-border-bright); }
+::-webkit-scrollbar-thumb:hover { background: var(--color-accent); }
+
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.hide-scrollbar::-webkit-scrollbar { display: none; }

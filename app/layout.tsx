@@ -11,8 +11,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning 
       className={`${fornire.variable} ${ranade.variable} ${panchang.variable} ${hkGroteskWide.variable}`}
     >
-      <body className="antialiased bg-black text-white overflow-x-hidden selection:bg-white selection:text-black">
+      <body className="antialiased bg-bg-primary text-text-primary overflow-x-hidden selection:bg-accent selection:text-white">
         <SceneProvider>
+          <div className="system-bg-grid" />
           <div className="relative min-h-screen flex flex-col">
             <main className="flex-grow">
               {children}
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </div>
         </SceneProvider>
       </body>
+
     </html>
   );
 }
