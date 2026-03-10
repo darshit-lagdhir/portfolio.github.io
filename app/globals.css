@@ -34,7 +34,7 @@
   --font-size-micro: 0.6rem;
 
   /* 
-     SPACING SYSTEM
+     PHASE 2 — SPACING SYSTEM (MODULAR SCALE)
   */
   --spacing-sys-4: 0.25rem;
   --spacing-sys-8: 0.5rem;
@@ -50,17 +50,23 @@
   --spacing-sys-192: 12rem;
   --spacing-sys-256: 16rem;
 
+  /* 
+     PHASE 3 — LAYOUT GRID
+  */
   --grid-max-width: 1400px;
   --grid-columns: 12;
   --grid-gutter: 2.5rem;
 
+  /* 
+     PHASE 9 — MOTION PREPARATION
+  */
   --transition-snappy: 150ms cubic-bezier(0.2, 0, 0, 1);
   --transition-smooth: 400ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-cinematic: 800ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* 
-   BASE TYPOGRAPHY DEFAULTS
+   BASE ARCHITECTURE & RESET
 */
 :root {
   color-scheme: dark;
