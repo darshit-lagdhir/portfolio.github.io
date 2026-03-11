@@ -19,31 +19,31 @@ const COMPARISON_ATTRIBUTES: ComparisonAttribute[] = [
   {
     id: "domain",
     label: "PRIMARY_DOMAIN",
-    description: "The core engineering territory where the system operates.",
+    description: "Core technical territory of operation.",
     getValue: (p) => p.authority?.primaryDomain || "N/A"
   },
   {
     id: "architecture",
     label: "ARCH_STYLE",
-    description: "The fundamental structural pattern governing the system logic.",
+    description: "Structural pattern governing system logic.",
     getValue: (p) => p.technicalMeta?.architectureStyle || "N/A"
   },
   {
     id: "complexity",
-    label: "SYSTEM_COMPLEXITY",
-    description: "Estimated architectural scale based on logic density and boundary isolation.",
+    label: "COMPLEXITY",
+    description: "Logic density and boundary isolation score.",
     getValue: (p) => p.authority?.complexityScore || 0
   },
   {
     id: "reliability",
-    label: "RELIABILITY_FOCUS",
-    description: "The primary technical challenge addressed regarding system stability.",
+    label: "RELIABILITY",
+    description: "Primary technical stability challenge.",
     getValue: (p) => p.challenges?.[0]?.title || "N/A"
   },
   {
     id: "experimentation",
     label: "EXP_VECTORS",
-    description: "Areas of active technical research and iteration within the project.",
+    description: "Areas of active research and iteration.",
     getValue: (p) => p.authority?.experimentationAreas || []
   }
 ];

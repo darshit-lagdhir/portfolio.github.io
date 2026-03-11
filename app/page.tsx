@@ -45,31 +45,31 @@ export default function Home() {
       </SectionContainer>
 
       {/* 
-         MANIFEST_NODE_02: RESEARCH_ARCHIVE
-      */}
-      <SectionContainer id="archive">
-        <ExplorationArchive />
-      </SectionContainer>
-
-      {/* 
-         MANIFEST_NODE_03: SYSTEM_LABORATORY
-      */}
-      <SectionContainer id="laboratory">
-        <SystemLaboratory />
-      </SectionContainer>
-
-      {/* 
-         MANIFEST_NODE_04: INTELLECTUAL_DOMAINS
+         MANIFEST_NODE_02: INTELLECTUAL_DOMAINS
       */}
       <SectionContainer id="domains">
         <EngineeringDomains />
       </SectionContainer>
 
       {/* 
-         MANIFEST_NODE_05: TECHNICAL_MINDSET
+         MANIFEST_NODE_03: TECHNICAL_MINDSET
       */}
       <SectionContainer id="philosophy">
         <EngineeringPhilosophy />
+      </SectionContainer>
+
+      {/* 
+         MANIFEST_NODE_04: RESEARCH_ARCHIVE
+      */}
+      <SectionContainer id="archive">
+        <ExplorationArchive />
+      </SectionContainer>
+
+      {/* 
+         MANIFEST_NODE_05: SYSTEM_LABORATORY
+      */}
+      <SectionContainer id="laboratory">
+        <SystemLaboratory />
       </SectionContainer>
 
       {/* 

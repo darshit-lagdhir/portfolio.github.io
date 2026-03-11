@@ -25,16 +25,16 @@ export default function SystemLaboratory() {
 
   return (
     <div className="w-full relative">
-      <SectionDivider label="03_SYSTEM_LABORATORY" />
+      <SectionDivider label="05_SYSTEM_LABORATORY" />
 
       <div className="grid-12 mb-sys-64">
         <div className="col-span-12 lg:col-span-8">
-           <div className="flex items-center gap-3 mb-4">
-              <div className="w-2 h-2 bg-accent rounded-full animate-pulse" />
-              <span className="type-metadata text-[0.45rem] tracking-[0.2em] text-accent">EXPERIMENTAL_ZONE</span>
+           <div className="flex items-center gap-3 mb-4 opacity-40">
+              <div className="w-1.5 h-1.5 bg-accent/60 rounded-full" />
+              <span className="type-metadata text-[0.45rem] tracking-[0.2em]">EXPERIMENTAL_ZONE</span>
            </div>
            <h2 className="type-h1 uppercase tracking-tighter mb-6">Engineering_Lab_</h2>
-           <p className="type-body text-lg text-text-secondary max-w-2xl opacity-70">
+           <p className="type-body text-sm text-text-secondary max-w-2xl opacity-50">
              An interactive playground for exploring the internal mechanics of systems engineering. 
              These lightweight modules demonstrate technical concepts using real-time feedback and parameter manipulation.
            </p>

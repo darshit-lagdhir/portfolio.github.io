@@ -13,7 +13,7 @@ export default function ExplorationArchive() {
 
   return (
     <div className="w-full relative">
-      <SectionDivider label="ARC_EXPLORATION_ARCHIVE" />
+      <SectionDivider label="04_RESEARCH_ARCHIVE" />
       
       <div className="mb-sys-48">
         <h2 className="type-h2">TECHNICAL_EXPLORATIONS_</h2>

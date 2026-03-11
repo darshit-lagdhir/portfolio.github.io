@@ -22,15 +22,15 @@ export default function EngineeringDomains() {
 
   return (
     <div className="w-full relative">
-      <SectionDivider label="04_INTELLECTUAL_DOMAINS" />
+      <SectionDivider label="02_ENGINEERING_DOMAINS" />
 
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-sys-24 mb-sys-64">
          <div className="space-y-4">
-           <div className="type-metadata text-[0.45rem] text-accent">INTELLECTUAL_MANIFEST</div>
-           <h2 className="type-identity text-4xl md:text-5xl uppercase tracking-tighter">Engineering_Domains</h2>
+           <div className="type-metadata text-[0.45rem] text-accent opacity-50">INTELLECTUAL_MANIFEST</div>
+           <h2 className="type-identity text-3xl md:text-4xl uppercase tracking-tighter">Engineering_Domains</h2>
          </div>
          <div className="max-w-md">
-            <p className="type-body text-sm opacity-50 italic">
+            <p className="type-body text-xs opacity-40 italic">
               A conceptual map of technical exploration, categorizing individual systems into broader engineering themes and research vectors.
             </p>
          </div>
@@ -76,10 +76,12 @@ export default function EngineeringDomains() {
         {/* Domain Detail & Map Area */}
         <div className="module-frame lg:col-span-8 min-h-[500px] relative !p-8 md:!p-12 overflow-hidden flex flex-col justify-center">
           {/* Visual Domain Map Layer */}
-          <DomainMap 
-            activeDomainId={activeDomainId} 
-            onDomainClick={(id) => setActiveDomainId(id)} 
-          />
+          {!isMobile && (
+            <DomainMap 
+              activeDomainId={activeDomainId} 
+              onDomainClick={(id) => setActiveDomainId(id)} 
+            />
+          )}
 
           <AnimatePresence mode="wait">
             {activeDomain ? (

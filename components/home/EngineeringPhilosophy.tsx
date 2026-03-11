@@ -35,7 +35,7 @@ const PRINCIPLES = [
 export default function EngineeringPhilosophy() {
   return (
     <div className="w-full">
-      <SectionDivider label="05_TECHNICAL_MINDSET" />
+      <SectionDivider label="03_TECHNICAL_MINDSET" />
 
       <div className="grid-12 items-start gap-y-sys-64 md:gap-y-0">
         <div className="col-span-12 lg:col-span-12 mb-sys-96 text-center lg:text-left">
@@ -46,12 +46,17 @@ export default function EngineeringPhilosophy() {
              transition={{ duration: 0.8 }}
              className="max-w-5xl"
            >
-              <h2 className="type-h1 text-4xl md:text-6xl mb-sys-32 uppercase leading-[1.1] tracking-tighter">
-                Architecture is a <span className="text-accent underline decoration-accent/20 decoration-1 underline-offset-8">Diagnostic Discipline</span>, not just a constructive one.
+              <h2 className="type-h1 text-4xl md:text-5xl mb-sys-48 uppercase leading-[1.05] tracking-tighter">
+                Architecture is a <span className="text-accent underline decoration-accent/20 decoration-1 underline-offset-[12px]">Diagnostic Discipline</span>, not just a constructive one.
               </h2>
-              <p className="type-body text-xl md:text-2xl text-text-primary/70 leading-relaxed max-w-3xl">
-                I believe that building robust systems requires a commitment to understanding their internal mechanics. My goal is to build software that isn't just functional, but architectural—stable, predictable, and resilient by design.
-              </p>
+              <div className="space-y-6">
+                <p className="type-body text-xl md:text-2xl text-text-primary/70 leading-relaxed max-w-3xl">
+                  I believe that building robust systems requires a commitment to understanding their internal mechanics. 
+                </p>
+                <p className="type-body text-base md:text-lg text-text-secondary leading-relaxed max-w-2xl opacity-60">
+                  My goal is to build software that isn't just functional, but architectural—stable, predictable, and resilient by design.
+                </p>
+              </div>
            </motion.div>
         </div>
 
