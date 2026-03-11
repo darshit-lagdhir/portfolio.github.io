@@ -57,10 +57,14 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
              >
                <span className={cn(
                  "w-2 h-2 rounded-full",
-                 project.status === "COMPLETE" ? "bg-green-500/50" : "bg-yellow-500/50 pulse"
+                 project.status === "COMPLETE" ? "bg-green-500/50" : 
+                 project.status === "ACTIVE_DEVELOPMENT" ? "bg-yellow-500/50 pulse" :
+                 project.status === "HACKATHON" ? "bg-blue-400/50" : "bg-yellow-500/50 pulse"
                )} />
                <span className="type-metadata text-[0.5rem] text-accent tracking-widest">
-                 {project.status === "COMPLETE" ? "STABLE_SYSTEM_NODE" : "NODE_UNDER_DEVELOPMENT"}
+                 {project.status === "COMPLETE" ? "COMPLETE" : 
+                  project.status === "ACTIVE_DEVELOPMENT" ? "ACTIVE_DEVELOPMENT" :
+                  project.status === "HACKATHON" ? "HACKATHON_PROJECT" : "IN_DEVELOPMENT"}
                </span>
              </motion.div>
 
@@ -182,23 +186,23 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
             </section>
 
             <section>
-               <SectionDivider label="04_SYSTEM_METRICS" className="mb-sys-32" />
+               <SectionDivider label="04_SYSTEM_OVERVIEW" className="mb-sys-32" />
                <div className="bg-bg-secondary/30 p-6 border border-border-dim font-mono text-[0.6rem] space-y-3 text-text-muted">
                   <div className="flex justify-between">
-                    <span>UPTIME_GUARANTEE</span>
-                    <span className="text-accent">99.98%</span>
+                    <span>SYSTEM_TYPE</span>
+                    <span className="text-accent">{project.technicalMeta?.systemType?.toUpperCase()}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>LATENCY_OPTIMIZATION</span>
-                    <span className="text-secondary">ACTIVE</span>
+                    <span>ARCHITECTURE</span>
+                    <span className="text-secondary">{project.technicalMeta?.architectureStyle?.toUpperCase()}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>REDUNDANCY_LAYERS</span>
-                    <span>03_NODES</span>
+                    <span>STORAGE</span>
+                    <span>{project.technicalMeta?.storageType?.toUpperCase()}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span>STORAGE_PROTOCOL</span>
-                    <span className="text-accent">{project.technicalMeta?.storageType}</span>
+                    <span>FOCUS</span>
+                    <span className="text-accent">{project.engineeringFocus?.toUpperCase()}</span>
                   </div>
                </div>
             </section>

@@ -18,95 +18,112 @@ export const projects: Project[] = [
         status: "COMPLETE",
         domains: ["backend_development", "security_linux", "data_systems"],
         overview: "MoveX is a logistics management system built to handle franchise-based shipping, staffing, and fleet coordination. It manages the full delivery lifecycle — from customer booking and pricing through pickup scheduling, dispatch, hub transfers, and final delivery confirmation. The system focuses on backend architecture and operational workflows rather than UI complexity.",
-        problem: "Traditional logistics software often suffers from monolithic coupling where a breach in one role (e.g., customer) can escalate to administrative control. MoveX was built to solve this through rigid role-based session isolation.",
-        engineeringFocus: "Systems Architecture & Role Isolation",
+        problem: "Courier services involve multiple operational steps: booking parcels, assigning pickup tasks, tracking shipments, updating delivery status, managing staff roles, and maintaining operational reports. Without a centralized system, managing these processes becomes complicated and error-prone. MoveX attempts to organize all of these operations into a single system that handles authentication, shipment tracking, and operational management.",
+        engineeringFocus: "Backend Architecture & Operational Workflows",
         technicalMeta: {
             systemType: "Web Application",
             architectureStyle: "Modular Monolith",
-            storageType: "Relational (ACID-compliant)",
+            storageType: "Relational (PostgreSQL)",
         },
         authority: {
             complexityScore: 7,
-            architectureDepth: "LRY_ISO_HNDL",
-            researchFocus: "State Preservation in Distributed Logistics",
-            primaryDomain: "Distributed Systems",
-            experimentationAreas: ["RBAC Boundary Isolation", "Row-Level Multi-tenant Locking"],
+            architectureDepth: "ROLE_ISO_HNDL",
+            researchFocus: "Role-Based Session Isolation in Multi-User Systems",
+            primaryDomain: "Backend Development",
+            experimentationAreas: ["Role-Based Access Control", "Session Security", "Database Schema Design"],
             deepDives: [
                 {
-                    type: "DEBUGGING",
-                    title: "The Ghost Dispatcher Bug",
-                    content: "Resolved a critical race condition where two franchisees could simultaneously claim the same shipment during high-concurrency periods. Solved via a unique composite index combined with a 'SELECT FOR UPDATE' transactional lock in PostgreSQL."
+                    type: "DISCOVERY",
+                    title: "Session Security Design",
+                    content: "Login sessions are stored in the database with secure session management. Passwords are hashed using Bcrypt. Request rate limits prevent brute-force login attempts. Role-based access control ensures users can only access dashboards appropriate to their role."
                 },
                 {
                     type: "OPTIMIZATION",
-                    title: "State Machine Normalization",
-                    content: "Refactored the shipment state transitions from a series of IF/ELSE statements to a rigid state-transition table, reducing logic bugs in multi-step logistics by 80%."
+                    title: "PostgreSQL Schema Architecture",
+                    content: "The database uses PostgreSQL with key tables for organizations, users, sessions, password_resets, and shipments. Each shipment is tracked using a unique tracking ID linked to sender and receiver information. The schema supports both authentication and logistics operations."
+                },
+                {
+                    type: "REDESIGN",
+                    title: "Split Deployment Model",
+                    content: "MoveX supports a split deployment architecture where backend services run on platforms like Render, frontend assets are served through Cloudflare, and PostgreSQL databases are hosted through Supabase. This separates application layers for scalability and security."
                 }
             ],
             experimentationNotes: [
                 {
-                    title: "Abandoned: Server-Sent Events (SSE)",
-                    content: "Initially attempted to use SSE for real-time tracking, but abandoned it in favor of a robust polling-plus-state sync mechanism to handle unreliable mobile connections in logistics environments."
+                    title: "Designing Role-Based Systems",
+                    content: "Learned how to separate authentication concerns from business logic so that each role operates within its own access boundary without shared state leaking between roles."
+                },
+                {
+                    title: "Database Schema Design for Workflows",
+                    content: "Designing schemas for operational workflows taught me the importance of tracking state transitions explicitly rather than inferring them from timestamp comparisons."
+                },
+                {
+                    title: "Debugging Real-World Application Behavior",
+                    content: "Many bugs only appeared when multiple roles interacted with the same data simultaneously. This taught me the value of database-level constraints over application-level validation."
                 }
             ],
-            recurringPatterns: ["Modular Interface Separation", "Atomic Transactional Locks"]
+            recurringPatterns: ["Modular Route Separation", "Database-Level State Tracking", "Role-Based Middleware Chains"]
         },
-        architecture: "The MoveX architecture utilizes a modular controller pattern where each logistics role (Admin, Staff, Franchisee, Customer) is treated as a separate micro-service interface within a consolidated runtime. This ensures shared data integrity while maintaining strict boundary separation.",
+        architecture: "MoveX operates as a single integrated system with multiple operational modules. The backend server handles authentication, business logic, and database operations through Express routes organized by role. The frontend provides separate dashboard interfaces for administrators, franchisees, staff, and customers. The design focuses on maintaining clear separation between frontend pages and backend logic, with each role having its own controller, middleware, and view layer.",
         internalComponents: [
-            { name: "Shipment Lifecycle Manager", description: "State machine responsible for tracking status transitions from 'Initiated' to 'Delivered' with atomic database updates." },
-            { name: "RBAC Middleware", description: "Security layer that verifies identity and permissions at the route level, preventing horizontal privilege escalation." },
-            { name: "Geographic Routing Hub", description: "Service for calculating hub-to-hub transfers and franchisee proximity for staff assignment." }
+            { name: "User Management", description: "Handles registration, authentication, login sessions, and role-based access. Each user is assigned a role that determines which dashboards and operations they can access." },
+            { name: "Franchise & Staff Operations", description: "Allows administrators to manage franchise branches and assign staff members. Franchisees can manage their own staff and oversee local operations." },
+            { name: "Customer Booking & Pricing", description: "Customers can create parcel bookings, calculate delivery costs based on weight and distance, and track the status of their shipments." },
+            { name: "Pickup & Dispatch Management", description: "Schedules parcel pickups and assigns delivery tasks to staff members. Manages the assignment workflow from pickup request to staff confirmation." },
+            { name: "Shipment Tracking & Delivery", description: "Tracks the progress of each parcel from booking through hub transfers to final delivery. Supports proof-of-delivery uploads and delivery confirmation." },
+            { name: "Reports & Analytics", description: "Provides operational statistics and reporting dashboards showing shipment volumes, delivery performance, and staff activity across franchise branches." }
         ],
         challenges: [
-            { title: "Race Conditions in Staff Assignment", description: "Ensuring that multiple franchisees cannot claim the same staffing request simultaneously required the implementation of row-level locking in PostgreSQL." },
-            { title: "Session Integrity", description: "Preventing token replay attacks across different role subdomains while keeping the UX seamless for multi-role users." }
+            { title: "Managing Session Security", description: "Building secure session management that prevents token replay and ensures each role operates within its own access boundary required careful middleware design and database-backed session storage." },
+            { title: "Shipment State Tracking", description: "Tracking a parcel through multiple status transitions (booked, picked up, in transit, delivered) required a clear state model that prevents invalid transitions and handles edge cases like cancelled or returned shipments." },
+            { title: "Multi-Role Data Access", description: "Different roles need different views of the same data. An admin sees all shipments, a franchisee sees only their branch, and a customer sees only their own parcels. Implementing this consistently required careful middleware design." }
         ],
         future: [
-            { title: "AI-Driven Route Optimization", description: "Integrating graph-based algorithms to minimize transit time between hubs." },
-            { title: "Real-time Telemetry", description: "Implementing WebSocket-based tracking for fleet movement." }
+            { title: "Route Optimization", description: "Exploring algorithms to suggest optimal delivery routes based on geographic proximity and current staff workload." },
+            { title: "Real-Time Status Updates", description: "Investigating WebSocket or polling-based approaches to provide live shipment status updates to customers." }
         ],
         diagram: {
             layout: "layered",
             nodes: [
                 { 
                     id: "client", 
-                    label: "CLIENT_UI", 
+                    label: "FRONTEND_UI", 
                     type: "client", 
-                    description: "React-based interface for customers and staff.",
-                    responsibilities: ["Session management", "Shipment booking interface", "Role-based view rendering"],
-                    tech: ["React", "Framer Motion", "TailwindCSS"]
+                    description: "Vanilla JavaScript dashboard interfaces for each role.",
+                    responsibilities: ["Role-based dashboard rendering", "Shipment booking forms", "Status display"],
+                    tech: ["HTML", "CSS", "Vanilla JavaScript"]
                 },
                 { 
                     id: "gateway", 
-                    label: "API_GATEWAY", 
+                    label: "EXPRESS_SERVER", 
                     type: "interface", 
-                    description: "Express-based entry point with session validation.",
-                    responsibilities: ["Request routing", "JWT verification", "Rate limiting"],
-                    tech: ["Express", "JWT", "Helmet.js"]
+                    description: "Express-based entry point handling routing and session validation.",
+                    responsibilities: ["Request routing", "Session verification", "Rate limiting"],
+                    tech: ["Express", "JWT", "Bcrypt"]
                 },
                 { 
                     id: "rbac", 
-                    label: "RBAC_ENGINE", 
+                    label: "AUTH_MIDDLEWARE", 
                     type: "logic", 
-                    description: "Strict role-based isolation policy enforcer.",
-                    responsibilities: ["Permission mapping", "Resource-level access control", "Audit logging"],
-                    tech: ["Custom Middleware", "Policy-as-Code"]
+                    description: "Role-based access control middleware enforcing permissions per route.",
+                    responsibilities: ["Permission checking", "Role validation", "Access boundary enforcement"],
+                    tech: ["Custom Middleware", "JWT Verification"]
                 },
                 { 
                     id: "logistics", 
-                    label: "LOGISTICS_SRV", 
+                    label: "BUSINESS_LOGIC", 
                     type: "service", 
-                    description: "Core shipment and fleet management logic.",
-                    responsibilities: ["Shipment state machine", "Fleet assignment algorithms", "Distance calculations"],
-                    tech: ["Node.js", "Clustered Worker Threads"]
+                    description: "Core shipment and operational workflow logic.",
+                    responsibilities: ["Shipment state transitions", "Booking and pricing", "Staff assignment"],
+                    tech: ["Node.js", "Express Controllers"]
                 },
                 { 
                     id: "db", 
                     label: "POSTGRES_DB", 
                     type: "database", 
-                    description: "ACID-compliant relational data store.",
-                    responsibilities: ["Persistent storage", "Atomic shipment updates", "Relational integrity"],
-                    tech: ["PostgreSQL", "B-Tree Indexing"]
+                    description: "PostgreSQL database storing all operational data.",
+                    responsibilities: ["User and session storage", "Shipment records", "Organization data"],
+                    tech: ["PostgreSQL"]
                 }
             ],
             connections: [
@@ -117,56 +134,69 @@ export const projects: Project[] = [
             ]
         },
         evolution: [
-            { milestone: "Initial Prototype", description: "Basic Express server with simple JSON file persistence.", date: "WEEK_01" },
-            { milestone: "Architecture Pivot", description: "Moved to a layered service architecture to handle complex business rules separate from routing.", date: "WEEK_03" },
-            { milestone: "Stability Phase", description: "Implemented PostgreSQL with strict ACID transactions for delivery consistency.", date: "WEEK_06" }
+            { milestone: "Initial Prototype", description: "Started with a basic Express server and simple file-based data storage to test the core booking workflow.", date: "PHASE_01" },
+            { milestone: "Database Integration", description: "Migrated from file storage to PostgreSQL to support relational data and ensure integrity across concurrent operations.", date: "PHASE_02" },
+            { milestone: "Role System Implementation", description: "Built the role-based access control system with separate middleware chains for Admin, Franchisee, Staff, and Customer roles.", date: "PHASE_03" },
+            { milestone: "Full Workflow Completion", description: "Completed the end-to-end shipment lifecycle from booking through pickup, dispatch, transit, and delivery confirmation.", date: "PHASE_04" }
         ],
         architectureDecisions: [
             {
-                title: "Layered Service Isolation",
-                problem: "Coupling logistics logic (distance calculation, fleet assign) with API routes created a maintenance nightmare.",
-                approach: "Extracted all business logic into dedicated service classes independent of the web framework.",
-                reasoning: "Allows for unit testing of core logic without mocking HTTP req/res objects and simplifies logic reuse.",
-                alternatives: ["Hexagonal Architecture", "Monolithic Controllers"]
+                title: "Modular Route Separation by Role",
+                problem: "Mixing all role logic into shared routes made the codebase difficult to maintain and created security risks.",
+                approach: "Separated routes, controllers, and middleware into role-specific modules so each role has its own isolated code path.",
+                reasoning: "This makes it easy to modify one role without affecting others and creates a natural security boundary.",
+                alternatives: ["Single shared controller with role checks", "Microservice per role"]
             },
             {
-                title: "ACID over Eventual Consistency",
-                problem: "Tracking shipment states required perfectly accurate horizontal lookups.",
-                approach: "Used PostgreSQL transactions for all shipment updates.",
-                reasoning: "In logistics, eventual consistency can lead to double-booked fleet members or lost parcels.",
-                alternatives: ["MongoDB with manual locking"]
+                title: "PostgreSQL over NoSQL",
+                problem: "Shipment tracking requires consistent relational data with strict integrity guarantees.",
+                approach: "Used PostgreSQL with structured tables and foreign key relationships to ensure data consistency.",
+                reasoning: "In logistics, eventually-consistent data can lead to lost shipments or double-assigned staff.",
+                alternatives: ["MongoDB", "SQLite"]
+            },
+            {
+                title: "Server-Side Sessions over Stateless Tokens",
+                problem: "Needed to invalidate sessions immediately when a user's role changes or suspicious activity is detected.",
+                approach: "Stored sessions in the database rather than relying purely on stateless JWT tokens.",
+                reasoning: "Stateless JWTs cannot be revoked until they expire. Database-backed sessions give immediate control.",
+                alternatives: ["Pure JWT with short expiry", "Redis session store"]
             }
         ],
         tradeoffs: [
             {
-                title: "Maintainability over Hyper-Optimization",
-                description: "Chose clear, readable service layers over handwritten SQL optimizations for minor performance gains.",
-                impact: "MAINTAINABILITY"
+                title: "Simplicity over Scalability",
+                description: "Chose a monolithic architecture with modular separation rather than microservices. Simpler to deploy and debug but limits horizontal scaling.",
+                impact: "SIMPLICITY"
+            },
+            {
+                title: "Vanilla JS over Frontend Framework",
+                description: "Used plain HTML/CSS/JavaScript for the frontend rather than React or similar frameworks. Keeps the focus on backend architecture.",
+                impact: "SIMPLICITY"
             }
         ],
         storyFlow: [
             {
-                id: "ingestion",
-                title: "Inbound Request Handshake",
-                description: "The system receives a shipment request through the encrypted Client UI. The API Gateway immediately initiates a security handshake to verify the origin.",
+                id: "booking",
+                title: "Customer Creates Booking",
+                description: "A customer submits a parcel booking through the frontend form. The request is sent to the Express server with the session token.",
                 activeNodes: ["client", "gateway"]
             },
             {
-                id: "verification",
-                title: "RBAC Security Check",
-                description: "The request is passed to the RBAC Engine, which validates session integrity and ensures the user has appropriate permissions for the requested shipment action.",
+                id: "authentication",
+                title: "Session & Role Verification",
+                description: "The auth middleware validates the session token and confirms the customer role. The request is authorized to proceed.",
                 activeNodes: ["gateway", "rbac"]
             },
             {
-                id: "transition",
-                title: "State Machine Update",
-                description: "The Logistics Service processes the business logic, transitioning the shipment through the state machine and calculating hub assignments.",
+                id: "processing",
+                title: "Booking Logic & Pricing",
+                description: "The business logic layer calculates pricing based on weight and distance, creates the shipment record, and assigns a unique tracking ID.",
                 activeNodes: ["logistics"]
             },
             {
-                id: "persistence",
-                title: "Relational Commitment",
-                description: "Finally, the system performs an atomic commit to the PostgreSQL database, ensuring the new system state is persistent and auditable.",
+                id: "storage",
+                title: "Database Commit",
+                description: "The shipment record is committed to PostgreSQL with all booking details and an initial status of 'booked'. The customer receives their tracking ID.",
                 activeNodes: ["logistics", "db"]
             }
         ]
