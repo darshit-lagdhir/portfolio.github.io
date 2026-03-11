@@ -370,94 +370,111 @@ export const projects: Project[] = [
         status: "ACTIVE_DEVELOPMENT",
         domains: ["systems_engineering", "programming_languages", "security_linux"],
         overview: "The Polyglot FFI Contract Verifier (PFCV) is a verification pipeline designed to ensure safety when connecting high-level programming languages to native C/C++ libraries. FFI boundaries can introduce type mismatches, memory safety problems, and ABI compatibility issues. PFCV attempts to solve this by extracting metadata from native source code, converting it into a universal intermediate representation, generating formal safety contracts, and enforcing those contracts at runtime. This project is an ongoing exploration into cross-language verification and runtime safety.",
-        problem: "Foreign Function Interfaces (FFI) are notorious for creating 'safety gaps' where the compiler's guarantees from one language vanish when calling another, leading to silent memory corruption and exploitable vulnerabilities.",
-        engineeringFocus: "Formal Contract Synthesis",
+        problem: "When a high-level language calls native code through FFI, several assumptions must hold: function parameters must match expected types, pointers must reference valid memory, ownership rules must be respected, and binary interfaces must remain compatible across compilation boundaries. If any of these assumptions fail, the program may crash or behave unpredictably. PFCV attempts to detect these issues before they cause runtime failures.",
+        engineeringFocus: "Cross-Language Verification Pipeline",
         technicalMeta: {
-            systemType: "Systems Tooling",
-            architectureStyle: "8-Module Universal IR Pipeline",
+            systemType: "Verification Pipeline",
+            architectureStyle: "Multi-Stage Pipeline",
             storageType: "In-Memory AST State",
         },
         authority: {
-            complexityScore: 9,
-            architectureDepth: "MEM_ISO_LRY",
-            researchFocus: "Formal Verification of FFI Bounds",
-            primaryDomain: "Systems Programming",
-            experimentationAreas: ["AST-to-UIR Normalization", "Pointer Escape Analysis"],
+            complexityScore: 8,
+            architectureDepth: "FFI_VERIFY",
+            researchFocus: "Cross-Language Safety Verification",
+            primaryDomain: "Systems Engineering",
+            experimentationAreas: ["Metadata Extraction", "Intermediate Representation Design", "Contract Synthesis"],
             deepDives: [
                 {
-                    type: "OPTIMIZATION",
-                    title: "Pointer Escape Solver",
-                    content: "Engineered a formal analysis pass that ensures pointers intended for local stack frames do not escape into the global heap during the cross-language transition. Solved using Z3 logic constraints over the synthesised IR."
+                    type: "DISCOVERY",
+                    title: "Metadata Extraction with Clang",
+                    content: "The pipeline begins by extracting metadata from native C/C++ source code using Clang compiler tooling. This step analyzes header files and function definitions to extract function signatures, parameter types, pointer relationships, and struct definitions. This metadata forms the foundation for all later verification steps."
                 },
                 {
-                    type: "DEBUGGING",
-                    title: "The Clang AST Memory Leak",
-                    content: "Fixed a recurring memory exhaustion bug in the extractor by implementing a customized Clang RecursiveASTVisitor that properly manages memory across the multi-language semantic traversal."
+                    type: "OPTIMIZATION",
+                    title: "Universal Intermediate Representation",
+                    content: "After extraction, the system converts language-specific metadata into a normalized intermediate representation. The IR captures scalars, pointers, structures, and memory ownership relationships in a consistent format, allowing the system to reason about functions across multiple programming languages."
+                },
+                {
+                    type: "REDESIGN",
+                    title: "Contract Synthesis and Enforcement",
+                    content: "The synthesis engine analyzes the IR to generate safety contracts — rules like 'a pointer parameter must not be null' or 'a buffer size must match a specified length parameter.' Language adapters then enforce these contracts at runtime, intercepting FFI calls to verify rules before native functions execute."
                 }
             ],
             experimentationNotes: [
                 {
-                    title: "Lessons in Type Safety",
-                    content: "Initially tried manual type mapping, which proved too error-prone for production use. Switched to the automated synthesizer to eliminate human error in FFI boundary definitions."
+                    title: "Understanding Cross-Language Boundaries",
+                    content: "Working on PFCV taught me how much hidden complexity exists at the boundary between two programming languages. Type systems that seem compatible on the surface often have subtle differences in memory layout, alignment, and ownership semantics."
+                },
+                {
+                    title: "Working with Compiler Tooling",
+                    content: "Learning to use Clang's AST tooling was one of the most technically demanding parts of this project. Compiler internals are complex, but understanding how source code is represented as an abstract syntax tree is fundamental to building verification tools."
+                },
+                {
+                    title: "Designing Modular Pipeline Architecture",
+                    content: "Building PFCV as a series of independent stages — extraction, normalization, synthesis, enforcement — taught me the value of modular architecture. Each stage can be tested and improved independently."
                 }
             ],
-            recurringPatterns: ["AST-to-IR Pipeline", "Formal Verification"]
+            recurringPatterns: ["Pipeline Stage Isolation", "AST-Based Analysis", "Contract-Driven Verification"]
         },
-        architecture: "The PFCV handles verification through an 8-stage pipeline. It extracts Abstract Syntax Trees (ASTs) from the source languages, synthesizes a common 'Universal Intermediate Representation' (UIR), and then uses formal logic solvers to verify memory boundary safety.",
+        architecture: "PFCV operates as a multi-stage pipeline where each stage transforms information from the previous one. Native source code enters the pipeline, metadata is extracted using compiler tooling, that metadata is normalized into a universal intermediate representation, safety contracts are synthesized from the IR, and those contracts are enforced at runtime through language-specific adapters.",
         internalComponents: [
-            { name: "AST Extraction Module", description: "Utilizes Clang and Tree-Sitter to generate precise semantic maps of the target functions." },
-            { name: "UIR Synthesizer", description: "Maps heterogeneous language types (e.g., Python lists to C++ vectors) into a common, verifiable format." },
-            { name: "Boundary Solver", description: "Employs formal verification techniques to ensure that memory pointers never escape their sandbox during the FFI call." }
+            { name: "Metadata Extractor", description: "Uses Clang compiler tooling to analyze native C/C++ header files and extract function signatures, parameter types, pointer relationships, and struct definitions." },
+            { name: "IR Normalizer", description: "Converts language-specific metadata into a universal intermediate representation that captures scalars, pointers, structures, and memory ownership in a consistent format." },
+            { name: "Contract Synthesizer", description: "Analyzes the normalized IR to generate formal safety contracts — rules that define valid conditions for cross-language function calls." },
+            { name: "Runtime Enforcer", description: "Language-specific adapters that intercept FFI calls and verify contract rules before allowing native functions to execute." },
+            { name: "Safety Reporter", description: "Generates reports documenting verification results, contract violations, and safety status for each analyzed FFI boundary." }
         ],
         challenges: [
-            { title: "Heterogeneous Type Mapping", description: "Ensuring that dynamic Python types match strict C++ memory layouts without manual binding boilerplate." },
-            { title: "LLVM Integration", description: "Working directly with LLVM's IR to verify assembly-level stability required deep-diving into compiler internals." }
+            { title: "Type System Differences", description: "Different languages represent the same concepts differently. A Python list and a C++ vector may seem similar but have completely different memory layouts, ownership semantics, and access patterns." },
+            { title: "Compiler Tooling Complexity", description: "Working with Clang's AST requires understanding internal compiler representations. The learning curve is steep, but the precision of AST-based analysis is essential for reliable verification." },
+            { title: "Multi-Language Adapter Design", description: "Each target language (Python, Rust, C++) requires its own runtime adapter that integrates with the language's FFI mechanism. Designing adapters that are both thorough and non-intrusive is an ongoing challenge." }
         ],
         future: [
-            { title: "Auto-Generation of Bridges", description: "Automatically synthesizing the FFI bridge code based on verified contracts." }
+            { title: "Additional Language Adapters", description: "Expanding beyond the current Python, Rust, and C++ targets to support additional languages." },
+            { title: "Automated Bridge Generation", description: "Automatically generating FFI bridge code from verified contracts rather than requiring manual binding definitions." }
         ],
         diagram: {
             layout: "pipeline",
             nodes: [
                 { 
                     id: "analyser", 
-                    label: "SOURCE_ANALYSER", 
+                    label: "SOURCE_PARSER", 
                     type: "pipeline", 
-                    description: "Multi-language static code analysis.",
-                    responsibilities: ["Source file parsing", "Tokenization", "Contextual metadata extraction"],
+                    description: "Parses source files in multiple languages to prepare for analysis.",
+                    responsibilities: ["Source file parsing", "Tokenization", "Initial metadata collection"],
                     tech: ["Python", "Tree-Sitter"]
                 },
                 { 
                     id: "ast", 
                     label: "AST_EXTRACTOR", 
                     type: "logic", 
-                    description: "Precise semantic mapping using Clang/Tree-Sitter.",
-                    responsibilities: ["AST tree generation", "Type signature extraction", "Memory layout analysis"],
+                    description: "Extracts precise function metadata from native code using Clang.",
+                    responsibilities: ["AST generation", "Type signature extraction", "Struct layout analysis"],
                     tech: ["Clang Tooling", "C++"]
                 },
                 { 
                     id: "uir", 
-                    label: "UIR_SYNTHESIZER", 
+                    label: "IR_NORMALIZER", 
                     type: "logic", 
-                    description: "Universal IR generation for cross-lang contracts.",
-                    responsibilities: ["Type normalization", "Contract synthesis", "IR lowering"],
-                    tech: ["Rust", "cxx-bridge"]
+                    description: "Converts language-specific types into a universal intermediate format.",
+                    responsibilities: ["Type normalization", "Ownership mapping", "IR generation"],
+                    tech: ["Rust"]
                 },
                 { 
                     id: "solver", 
-                    label: "FORMAL_SOLVER", 
+                    label: "CONTRACT_ENGINE", 
                     type: "service", 
-                    description: "Z3-backed memory boundary verification.",
-                    responsibilities: ["Constraint generation", "Formal proof solving", "Memory safety validation"],
-                    tech: ["Z3 Solver", "Formal Logic"]
+                    description: "Generates and verifies safety contracts from the normalized IR.",
+                    responsibilities: ["Contract synthesis", "Constraint solving", "Safety validation"],
+                    tech: ["Z3 Solver", "Python"]
                 },
                 { 
                     id: "report", 
                     label: "SAFETY_REPORT", 
                     type: "interface", 
-                    description: "Final validation status and audit trail.",
-                    responsibilities: ["Safety metric aggregation", "Violation reporting", "Contract export"],
-                    tech: ["JSON", "Markdown Generator"]
+                    description: "Outputs verification results and violation details.",
+                    responsibilities: ["Result aggregation", "Violation reporting", "Contract documentation"],
+                    tech: ["JSON", "Markdown"]
                 }
             ],
             connections: [
@@ -468,48 +485,69 @@ export const projects: Project[] = [
             ]
         },
         evolution: [
-            { milestone: "Core Synthesizer", description: "First successful mapping of Rust memory to C++ void pointers.", date: "BUILD_02" },
-            { milestone: "Clang Integration", description: "Switched to libtooling for AST extraction to ensure 100% type reliability.", date: "BUILD_09" }
+            { milestone: "Pipeline Design", description: "Designed the multi-stage pipeline architecture and defined the intermediate representation format.", date: "PHASE_01" },
+            { milestone: "Clang Integration", description: "Integrated Clang compiler tooling for AST extraction, enabling precise analysis of C/C++ function signatures.", date: "PHASE_02" },
+            { milestone: "Contract Synthesis", description: "Implemented the contract synthesis engine that generates safety rules from the normalized IR.", date: "PHASE_03" },
+            { milestone: "Runtime Adapters", description: "Currently developing language-specific adapters for Python and Rust to enforce contracts at runtime.", date: "PHASE_04" }
         ],
         architectureDecisions: [
             {
-                title: "Rust for Safety Logic",
-                problem: "Writing verification logic in C++ led to too many 'verifier-at-fault' memory leaks.",
-                approach: "Ported the entire synthesis engine to Rust.",
-                reasoning: "The code verifying safety should be inherently safe; Rust ensures the synthesizer itself is memory-secure.",
-                alternatives: ["Standard C++ Smart Pointers"]
+                title: "Pipeline Architecture over Monolithic Analyzer",
+                problem: "A single monolithic analyzer would tightly couple extraction, normalization, and verification logic, making it difficult to test or extend.",
+                approach: "Designed the system as a series of independent pipeline stages where each stage produces output consumed by the next.",
+                reasoning: "Each pipeline stage can be developed, tested, and improved independently. Adding a new language only requires a new extractor and adapter.",
+                alternatives: ["Monolithic analysis engine", "Plugin-based architecture"]
+            },
+            {
+                title: "Clang Tooling over Manual Parsing",
+                problem: "Parsing C/C++ headers manually would miss edge cases in complex type definitions, macros, and templates.",
+                approach: "Used Clang's AST tooling to get compiler-accurate metadata extraction.",
+                reasoning: "Clang already solves the hard problem of fully parsing C/C++. Using it ensures extraction accuracy and handles edge cases.",
+                alternatives: ["Custom parser", "Regular expression extraction"]
+            },
+            {
+                title: "Rust for IR Logic",
+                problem: "Writing verification logic that is itself memory-safe is important for a tool that verifies memory safety.",
+                approach: "Implemented the IR normalization and contract synthesis in Rust.",
+                reasoning: "If the verifier itself has memory bugs, it undermines the credibility of the verification results. Rust's ownership system prevents this.",
+                alternatives: ["C++ with smart pointers", "Python with type checking"]
             }
         ],
         tradeoffs: [
             {
-                title: "Simplicity over Runtime Performance",
-                description: "Chose exhaustive AST walkthroughs over optimized bytecode analysis to ensure absolute verification correctness.",
-                impact: "SIMPLICITY"
+                title: "Thoroughness over Speed",
+                description: "The pipeline performs exhaustive AST analysis rather than optimized bytecode inspection. This is slower but more reliable for catching subtle type mismatches.",
+                impact: "PERFORMANCE"
+            },
+            {
+                title: "Modular Stages over Integrated Processing",
+                description: "Breaking the pipeline into separate stages adds overhead from serialization between stages but makes the system easier to develop and debug.",
+                impact: "MAINTAINABILITY"
             }
         ],
         storyFlow: [
             {
-                id: "probing",
-                title: "Static Source Probing",
-                description: "The verifier first probes the target source files in multiple languages, tokenizing and extracting raw contextual metadata.",
+                id: "parsing",
+                title: "Source Code Parsing",
+                description: "The pipeline receives native source files and parses them to prepare for metadata extraction.",
                 activeNodes: ["analyser"]
             },
             {
                 id: "extraction",
-                title: "Semantic Mapping",
-                description: "Using the Clang frontend, the system extracts high-precision ASTs to map the exact memory layout of foreign functions.",
+                title: "AST Metadata Extraction",
+                description: "Clang compiler tooling analyzes the parsed code to extract function signatures, parameter types, pointer relationships, and struct definitions.",
                 activeNodes: ["ast"]
             },
             {
-                id: "synthesis",
-                title: "Universal IR Synthesis",
-                description: "The system normalizes heterogeneous language types into a common Universal Intermediate Representation to enable cross-lang verification.",
+                id: "normalization",
+                title: "IR Normalization",
+                description: "The extracted metadata is converted into a universal intermediate representation that normalizes types across different languages.",
                 activeNodes: ["uir"]
             },
             {
                 id: "verification",
-                title: "Formal Proof Engine",
-                description: "Finally, the Z3-backed logic solver verifies the memory safety of the contract and generates a comprehensive safety report.",
+                title: "Contract Synthesis & Verification",
+                description: "Safety contracts are generated from the IR and verified using constraint solving. Results are compiled into a safety report documenting any violations found.",
                 activeNodes: ["solver", "report"]
             }
         ]
