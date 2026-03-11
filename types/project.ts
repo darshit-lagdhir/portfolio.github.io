@@ -108,4 +108,12 @@ export interface Project {
     githubRepoName?: string;
     githubUrl?: string;
     status: "COMPLETE" | "DEVELOPMENT" | string;
+    domains?: string[]; // IDs of engineering domains
+}
+
+export interface EngineeringDomain {
+    id: string;
+    name: string;
+    description: string;
+    relatedDomains: string[]; // IDs of connected domains for visualization
 }

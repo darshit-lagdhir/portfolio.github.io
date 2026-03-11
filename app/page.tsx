@@ -1,6 +1,7 @@
 import Hero from "@/components/hero/Hero";
 import Mindset from "@/components/about/Mindset";
 import SystemModules from "@/components/projects/SystemModules";
+import EngineeringDomains from "@/components/home/EngineeringDomains";
 import Capabilities from "@/components/shared/Capabilities";
 import About from "@/components/about/About";
 import TerminalContact from "@/components/contact/TerminalContact";
@@ -22,6 +23,11 @@ export default function Home() {
       {/* PHASE 4: SYSTEMS */}
       <SectionContainer id="systems">
         <SystemModules />
+      </SectionContainer>
+
+      {/* NEW: ENGINEERING DOMAINS */}
+      <SectionContainer id="domains">
+        <EngineeringDomains />
       </SectionContainer>
 
       {/* PHASE 5: CAPABILITIES */}
