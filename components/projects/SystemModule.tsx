@@ -32,25 +32,66 @@ export default function SystemModule({ project, index }: SystemModuleProps) {
           </span>
         </div>
 
-        {/* Status Indicator */}
-        <div className="flex items-center gap-2 mb-sys-24">
-          <span className={cn(
-            "w-1.5 h-1.5 rounded-full",
-            project.status === "COMPLETE" ? "bg-green-500/50" : "bg-yellow-500/50 pulse"
-          )} />
-          <span className="type-label text-[0.6rem] opacity-50">
-            {project.status === "COMPLETE" ? "STABLE_BUILD" : "ACTIVE_RESEARCH"}
-          </span>
+        {/* Status & Credibility Indicators */}
+        <div className="flex items-center justify-between mb-sys-24">
+          <div className="flex items-center gap-2">
+            <span className={cn(
+              "w-1.5 h-1.5 rounded-full",
+              project.status === "COMPLETE" ? "bg-green-500/50" : "bg-yellow-500/50 pulse"
+            )} />
+            <span className="type-label text-[0.6rem] opacity-50">
+              {project.status === "COMPLETE" ? "STABLE_BUILD" : "ACTIVE_RESEARCH"}
+            </span>
+          </div>
+          
+          {project.authority && (
+             <div className="flex items-center gap-4">
+                <div className="flex items-center gap-1.5">
+                   <div className="type-metadata text-[0.4rem] opacity-30">COMPLEXITY</div>
+                   <div className="flex gap-0.5">
+                      {[...Array(5)].map((_, i) => (
+                        <div 
+                          key={i} 
+                          className={cn(
+                            "w-1.5 h-1", 
+                            i < Math.round((project.authority?.complexityScore || 0) / 2) ? "bg-accent" : "bg-border-dim"
+                          )} 
+                        />
+                      ))}
+                   </div>
+                </div>
+                <div className="type-metadata text-[0.45rem] px-2 py-0.5 border border-accent/20 text-accent bg-accent/5">
+                   {project.authority.architectureDepth}
+                </div>
+             </div>
+          )}
         </div>
 
         <div className="mb-sys-16">
-          <div className="type-label text-accent mb-2">PROJECT_MODULE</div>
+          <div className="type-label text-accent mb-2">PROJECT_MODULE // {project.authority?.primaryDomain.toUpperCase() || "CORE"}</div>
           <h3 className="type-h2 leading-none">{project.title.toUpperCase()}</h3>
         </div>
 
-        <p className="type-body text-sm mb-sys-48 opacity-70 leading-relaxed flex-grow">
+        <p className="type-body text-sm mb-sys-32 opacity-70 leading-relaxed">
           {project.shortDescription}
         </p>
+
+        {/* Technical Depth Metadata Area */}
+        {project.authority && (
+          <div className="mb-sys-48 space-y-4 pt-4 border-t border-border-dim/30">
+             <div>
+                <div className="type-metadata text-[0.4rem] opacity-30 mb-1.5 uppercase tracking-widest">Research_Focus</div>
+                <div className="type-body text-[0.65rem] opacity-80 italic">&quot;{project.authority.researchFocus}&quot;</div>
+             </div>
+             <div className="flex flex-wrap gap-2">
+                {project.authority.experimentationAreas.map(area => (
+                  <span key={area} className="type-metadata text-[0.4rem] opacity-40 bg-bg-primary/50 px-1.5 py-0.5">
+                    #{area.toUpperCase().replace(/\s+/g, '_')}
+                  </span>
+                ))}
+             </div>
+          </div>
+        )}
 
         <div className="mt-auto">
           <div className="type-metadata text-[0.5rem] mb-sys-12 opacity-30">TECHNICAL_STACK</div>

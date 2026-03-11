@@ -25,6 +25,32 @@ export const projects: Project[] = [
             architectureStyle: "Modular Monolith",
             storageType: "Relational (ACID-compliant)",
         },
+        authority: {
+            complexityScore: 7,
+            architectureDepth: "LRY_ISO_HNDL",
+            researchFocus: "State Preservation in Distributed Logistics",
+            primaryDomain: "Distributed Systems",
+            experimentationAreas: ["RBAC Boundary Isolation", "Row-Level Multi-tenant Locking"],
+            deepDives: [
+                {
+                    type: "DEBUGGING",
+                    title: "The Ghost Dispatcher Bug",
+                    content: "Resolved a critical race condition where two franchisees could simultaneously claim the same shipment during high-concurrency periods. Solved via a unique composite index combined with a 'SELECT FOR UPDATE' transactional lock in PostgreSQL."
+                },
+                {
+                    type: "OPTIMIZATION",
+                    title: "State Machine Normalization",
+                    content: "Refactored the shipment state transitions from a series of IF/ELSE statements to a rigid state-transition table, reducing logic bugs in multi-step logistics by 80%."
+                }
+            ],
+            experimentationNotes: [
+                {
+                    title: "Abandoned: Server-Sent Events (SSE)",
+                    content: "Initially attempted to use SSE for real-time tracking, but abandoned it in favor of a robust polling-plus-state sync mechanism to handle unreliable mobile connections in logistics environments."
+                }
+            ],
+            recurringPatterns: ["Modular Interface Separation", "Atomic Transactional Locks"]
+        },
         architecture: "The MoveX architecture utilizes a modular controller pattern where each logistics role (Admin, Staff, Franchisee, Customer) is treated as a separate micro-service interface within a consolidated runtime. This ensures shared data integrity while maintaining strict boundary separation.",
         internalComponents: [
             { name: "Shipment Lifecycle Manager", description: "State machine responsible for tracking status transitions from 'Initiated' to 'Delivered' with atomic database updates." },
@@ -169,6 +195,32 @@ export const projects: Project[] = [
             architectureStyle: "Sequential Pipeline",
             storageType: "Structured & Vectorized",
         },
+        authority: {
+            complexityScore: 8,
+            architectureDepth: "NON_BLOCKING_PIPE",
+            researchFocus: "Advisory Intelligence Mechanisms",
+            primaryDomain: "Data Engineering",
+            experimentationAreas: ["Async Alert Correlation", "Human Feedback Weighting"],
+            deepDives: [
+                {
+                    type: "REDESIGN",
+                    title: "Switched to Asynchronous Ingestion",
+                    content: "Originally built with synchronous endpoints, the system failed under burst traffic. Redesigned to use a Redis-backed queue (Celery), enabling the system to sustain 5x the ingestion load with no dropped authentication signals."
+                },
+                {
+                    type: "DISCOVERY",
+                    title: "The Feedback Loop Anomaly",
+                    content: "Discovered that human-in-the-loop decisions were often biased by alert order. Implemented randomized priority shufflers in the advisory interface to normalize human decision-making and improve dataset balance."
+                }
+            ],
+            experimentationNotes: [
+                {
+                    title: "Lesson: Simpler Models for First-Pass",
+                    content: "Found that complex deep learning models had too much latency for initial outlier detection. Switched to lightweight statistical scanners for Level 1, reserving deep inference for verified risk clusters."
+                }
+            ],
+            recurringPatterns: ["Async Worker Pipelines", "Feedback Loops"]
+        },
         architecture: "The system is structured as a non-blocking diagnostic pipeline. Data enters through high-throughput ingestors, is processed by a suite of pattern-detection models, and is then presented as prioritized alerts to an advisory interface.",
         internalComponents: [
             { name: "Anomaly Detection Engine", description: "ML-backed service that scans for statistical outliers in authentication requests." },
@@ -294,6 +346,32 @@ export const projects: Project[] = [
             systemType: "Systems Tooling",
             architectureStyle: "8-Module Universal IR Pipeline",
             storageType: "In-Memory AST State",
+        },
+        authority: {
+            complexityScore: 9,
+            architectureDepth: "MEM_ISO_LRY",
+            researchFocus: "Formal Verification of FFI Bounds",
+            primaryDomain: "Systems Programming",
+            experimentationAreas: ["AST-to-UIR Normalization", "Pointer Escape Analysis"],
+            deepDives: [
+                {
+                    type: "OPTIMIZATION",
+                    title: "Pointer Escape Solver",
+                    content: "Engineered a formal analysis pass that ensures pointers intended for local stack frames do not escape into the global heap during the cross-language transition. Solved using Z3 logic constraints over the synthesised IR."
+                },
+                {
+                    type: "DEBUGGING",
+                    title: "The Clang AST Memory Leak",
+                    content: "Fixed a recurring memory exhaustion bug in the extractor by implementing a customized Clang RecursiveASTVisitor that properly manages memory across the multi-language semantic traversal."
+                }
+            ],
+            experimentationNotes: [
+                {
+                    title: "Lessons in Type Safety",
+                    content: "Initially tried manual type mapping, which proved too error-prone for production use. Switched to the automated synthesizer to eliminate human error in FFI boundary definitions."
+                }
+            ],
+            recurringPatterns: ["AST-to-IR Pipeline", "Formal Verification"]
         },
         architecture: "The PFCV handles verification through an 8-stage pipeline. It extracts Abstract Syntax Trees (ASTs) from the source languages, synthesizes a common 'Universal Intermediate Representation' (UIR), and then uses formal logic solvers to verify memory boundary safety.",
         internalComponents: [

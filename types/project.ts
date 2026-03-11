@@ -73,11 +73,33 @@ export interface StoryStep {
     activeNodes: string[]; // IDs of diagram nodes to highlight
 }
 
+export interface DeepDive {
+    type: "DEBUGGING" | "REDESIGN" | "OPTIMIZATION" | "DISCOVERY";
+    title: string;
+    content: string;
+}
+
+export interface ExperimentNote {
+    title: string;
+    content: string;
+}
+
+export interface AuthorityLayer {
+    complexityScore: number; // 1-10
+    architectureDepth: string;
+    researchFocus: string;
+    primaryDomain: string;
+    experimentationAreas: string[];
+    deepDives?: DeepDive[];
+    experimentationNotes?: ExperimentNote[];
+    recurringPatterns?: string[];
+}
+
 export interface Project {
     slug: string;
     title: string;
     shortDescription: string;
-    techStack: string[]; // Keep for legacy/summary
+    techStack: string[]; 
     techGroups?: TechGroup[];
     tier: 1 | 2 | 3;
     overview: string;
@@ -89,11 +111,11 @@ export interface Project {
     architectureLayers?: ArchitectureLayer[];
     internalComponents?: InternalComponent[];
     challenges?: ProjectChallenge[];
-    diagram?: ProjectDiagram; // Visualization layer
-    evolution?: EvolutionStep[]; // New story timeline
-    architectureDecisions?: DesignDecision[]; // Detailed 'Why'
-    tradeoffs?: DesignTradeoff[]; // Engineering compromises
-    decisions?: string[]; // Legacy
+    diagram?: ProjectDiagram; 
+    evolution?: EvolutionStep[]; 
+    architectureDecisions?: DesignDecision[]; 
+    tradeoffs?: DesignTradeoff[]; 
+    decisions?: string[]; 
     detailedDecisions?: {
         decision: string;
         why: string;
@@ -103,12 +125,13 @@ export interface Project {
     limitations?: string[];
     ifRebuildingToday?: string[];
     performance?: string;
-    future?: ProjectChallenge[]; // Changed to structured objects
-    storyFlow?: StoryStep[]; // Phase 27: System Runtime Story
+    future?: ProjectChallenge[]; 
+    storyFlow?: StoryStep[]; 
     githubRepoName?: string;
     githubUrl?: string;
     status: "COMPLETE" | "DEVELOPMENT" | string;
-    domains?: string[]; // IDs of engineering domains
+    domains?: string[]; 
+    authority?: AuthorityLayer; // Phase 31: Credibility Layer
 }
 
 export interface EngineeringDomain {

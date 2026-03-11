@@ -202,13 +202,27 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                   </div>
                </div>
             </section>
+
+            {project.authority?.recurringPatterns && (
+              <section>
+                 <SectionDivider label="05_RECURRING_PATTERNS" className="mb-sys-32" />
+                 <div className="space-y-4">
+                    {project.authority.recurringPatterns.map(pattern => (
+                      <div key={pattern} className="flex items-center gap-3">
+                         <div className="w-1.5 h-1.5 bg-accent/40 rotate-45" />
+                         <span className="type-metadata text-[0.6rem] opacity-60 tracking-tight">{pattern.toUpperCase()}</span>
+                      </div>
+                    ))}
+                 </div>
+              </section>
+            )}
           </aside>
         </div>
 
         <div className="mt-sys-128 space-y-sys-128">
            {/* Section 05: Engineering Decisions & Trade-offs */}
            <section>
-              <SectionDivider label="05_DESIGN_REASONING" className="mb-sys-64" />
+              <SectionDivider label="06_DESIGN_REASONING" className="mb-sys-64" />
               
               <div className="grid-12 gap-sys-64">
                  <div className="col-span-12 lg:col-span-7 space-y-sys-64">
@@ -271,7 +285,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
            {/* Section 06: Operational Runtime Simulation (Story Flow) */}
            {project.storyFlow && project.diagram && (
               <section className="py-sys-128 border-t border-border-dim">
-                <SectionDivider label="06_RUNTIME_SIMULATION" className="mb-sys-64" />
+                 <SectionDivider label="07_RUNTIME_SIMULATION" className="mb-sys-64" />
                 
                 <div className="space-y-sys-64">
                    <ArchitectureDiagram 
@@ -287,10 +301,60 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
               </section>
            )}
 
-           {/* Section 07: Evolution Timeline */}
+           {/* Section 08: Technical Deep Dives (Authority & Credibility) */}
+           {project.authority?.deepDives && (
+              <section>
+                 <SectionDivider label="08_TECHNICAL_DEEP_DIVES" className="mb-sys-64" />
+                 <div className="grid-12 gap-sys-48">
+                    {project.authority.deepDives.map((dive, idx) => (
+                      <div 
+                        key={idx} 
+                        className="col-span-12 lg:col-span-6 p-10 border border-border-dim bg-bg-secondary/20 hover:border-accent/40 transition-all group"
+                      >
+                         <div className="type-metadata text-[0.45rem] text-accent mb-6 flex items-center gap-3">
+                            <span className="w-1 h-1 bg-accent" />
+                            DEEP_DIVE_0{idx + 1} {'//'} {dive.type}
+                         </div>
+                         <h3 className="type-emphasis text-xl mb-6 tracking-tighter group-hover:text-accent transition-colors">{dive.title}</h3>
+                         <p className="type-body text-sm leading-relaxed text-text-secondary opacity-80 group-hover:opacity-100 transition-opacity">
+                            {dive.content}
+                         </p>
+                      </div>
+                    ))}
+                 </div>
+              </section>
+           )}
+
+           {/* Section 09: Experimentation Log */}
+           {project.authority?.experimentationNotes && (
+              <section>
+                 <SectionDivider label="09_EXPERIMENTATION_LOG" className="mb-sys-64" />
+                 <div className="bg-bg-secondary/40 border border-border-dim p-12">
+                    <div className="grid-12 gap-sys-64">
+                       <div className="col-span-12 lg:col-span-4">
+                          <div className="type-metadata text-[0.5rem] opacity-30 mb-4 uppercase tracking-widest">Iterative_Learning</div>
+                          <h3 className="type-emphasis text-lg mb-6">Signals of curiosity and system evolution through failure.</h3>
+                          <div className="w-12 h-0.5 bg-accent/30" />
+                       </div>
+                       <div className="col-span-12 lg:col-span-8 space-y-12">
+                          {project.authority.experimentationNotes.map((note, idx) => (
+                            <div key={idx} className="space-y-4">
+                               <div className="type-label text-accent opacity-60">NOTE_LOG_0{idx + 1}: {note.title}</div>
+                               <p className="type-body text-sm text-text-secondary leading-relaxed border-l border-border-dim pl-6 italic">
+                                  &quot;{note.content}&quot;
+                               </p>
+                            </div>
+                          ))}
+                       </div>
+                    </div>
+                 </div>
+              </section>
+           )}
+
+           {/* Section 10: Evolution Timeline */}
            {project.evolution && (
               <section className="pb-sys-128">
-                 <SectionDivider label="07_SYSTEM_EVOLUTION" className="mb-sys-96" />
+                 <SectionDivider label="10_SYSTEM_EVOLUTION" className="mb-sys-96" />
                  <div className="relative max-w-4xl mx-auto pl-8 lg:pl-0">
                     <div className="absolute left-8 lg:left-1/2 top-0 bottom-0 w-[1px] bg-border-dim hidden lg:block" />
                     <div className="space-y-sys-64">
@@ -310,10 +374,10 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
               </section>
            )}
 
-           {/* Section 08 & 09: Challenges & Future */}
+           {/* Section 11 & 12: Challenges & Future */}
            <div className="grid-12 pt-sys-96 border-t border-border-dim">
               <section className="col-span-12 lg:col-span-6 space-y-sys-48">
-                 <SectionDivider label="08_ENGINEERING_CHALLENGES" />
+                 <SectionDivider label="11_ENGINEERING_CHALLENGES" />
                  <div className="space-y-sys-40">
                     {project.challenges?.map((challenge, idx) => (
                       <div key={idx} className="max-w-xl">
@@ -325,7 +389,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
               </section>
 
               <section className="col-span-12 lg:col-span-6 space-y-sys-48 mt-sys-96 lg:mt-0 lg:col-start-8">
-                 <SectionDivider label="09_SYSTEM_EVOLUTION_BEYOND" />
+                 <SectionDivider label="12_SYSTEM_EVOLUTION_BEYOND" />
                  <div className="space-y-sys-40">
                     {project.future?.map((item, idx) => (
                       <div key={idx} className="max-w-xl">
