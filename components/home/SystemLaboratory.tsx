@@ -6,10 +6,10 @@ import { laboratoryExperiments, LaboratoryExperiment } from "@/data/laboratory";
 import SectionDivider from "@/components/shared/SectionDivider";
 import { cn } from "@/lib/utils";
 
-// --- EXPERIMENT COMPONENTS (Placeholder imports or internal components) ---
-import DistributedSyncLab from "./lab/DistributedSyncLab";
-import PipelineBackpressureLab from "./lab/PipelineBackpressureLab";
-import AuthBoundaryLab from "./lab/AuthBoundaryLab";
+// --- EXPERIMENT COMPONENTS ---
+import DistributedSyncLab from "@/components/home/lab/DistributedSyncLab";
+import PipelineBackpressureLab from "@/components/home/lab/PipelineBackpressureLab";
+import AuthBoundaryLab from "@/components/home/lab/AuthBoundaryLab";
 
 const LAB_COMPONENTS: Record<string, React.FC> = {
   "distributed-sync": DistributedSyncLab,
