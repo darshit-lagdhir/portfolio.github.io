@@ -22,7 +22,7 @@ export default function EngineeringDomains() {
 
   return (
     <div className="w-full relative">
-      <SectionDivider label="02_ENGINEERING_DOMAINS" />
+      <SectionDivider label="03_INTELLECTUAL_DOMAINS" />
 
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-sys-24 mb-sys-64">
          <div className="space-y-4">

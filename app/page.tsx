@@ -1,5 +1,6 @@
 import Hero from "@/components/hero/Hero";
 import SystemModules from "@/components/projects/SystemModules";
+import ExplorationArchive from "@/components/home/ExplorationArchive";
 import EngineeringDomains from "@/components/home/EngineeringDomains";
 import EngineeringPhilosophy from "@/components/home/EngineeringPhilosophy";
 import SystemComparison from "@/components/home/SystemComparison";
@@ -26,42 +27,49 @@ export default function Home() {
       </SectionContainer>
 
       {/* 
-         MANIFEST_NODE_02: INTELLECTUAL_DOMAINS
+         MANIFEST_NODE_02: RESEARCH_ARCHIVE
+      */}
+      <SectionContainer id="archive">
+        <ExplorationArchive />
+      </SectionContainer>
+
+      {/* 
+         MANIFEST_NODE_03: INTELLECTUAL_DOMAINS
       */}
       <SectionContainer id="domains">
         <EngineeringDomains />
       </SectionContainer>
 
       {/* 
-         MANIFEST_NODE_03: TECHNICAL_MINDSET
+         MANIFEST_NODE_04: TECHNICAL_MINDSET
       */}
       <SectionContainer id="philosophy">
         <EngineeringPhilosophy />
       </SectionContainer>
 
       {/* 
-         MANIFEST_NODE_04: COMPARATIVE_ANALYSIS
+         MANIFEST_NODE_05: COMPARATIVE_ANALYSIS
       */}
       <SectionContainer id="comparison">
         <SystemComparison />
       </SectionContainer>
 
       {/* 
-         MANIFEST_NODE_05: HUMAN_CONSTRUCT
+         MANIFEST_NODE_06: HUMAN_CONSTRUCT
       */}
       <SectionContainer id="about">
         <About />
       </SectionContainer>
 
       {/* 
-         MANIFEST_NODE_06: SYSTEM_REFLECTIONS
+         MANIFEST_NODE_07: SYSTEM_REFLECTIONS
       */}
       <SectionContainer id="reflections" noPadding>
         <FinalReflection />
       </SectionContainer>
 
       {/* 
-         MANIFEST_NODE_07: CONNECTION_BUS
+         MANIFEST_NODE_08: CONNECTION_BUS
       */}
       <SectionContainer id="contact">
         <TerminalContact />

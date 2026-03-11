@@ -9,12 +9,13 @@ import { cn } from "@/lib/utils";
 const NAV_ITEMS = [
   { id: "hero", label: "HOME", code: "00", path: "/#hero" },
   { id: "systems", label: "SYSTEMS", code: "01", path: "/#systems" },
-  { id: "domains", label: "DOMAINS", code: "02", path: "/#domains" },
-  { id: "philosophy", label: "PHILOSOPHY", code: "03", path: "/#philosophy" },
-  { id: "comparison", label: "COMPARE", code: "04", path: "/#comparison" },
-  { id: "about", label: "ABOUT", code: "05", path: "/#about" },
-  { id: "reflections", label: "REFLECT", code: "06", path: "/#reflections" },
-  { id: "contact", label: "CONNECT", code: "07", path: "/#contact" },
+  { id: "archive", label: "ARCHIVE", code: "02", path: "/#archive" },
+  { id: "domains", label: "DOMAINS", code: "03", path: "/#domains" },
+  { id: "philosophy", label: "PHILOSOPHY", code: "04", path: "/#philosophy" },
+  { id: "comparison", label: "COMPARE", code: "05", path: "/#comparison" },
+  { id: "about", label: "ABOUT", code: "06", path: "/#about" },
+  { id: "reflections", label: "REFLECT", code: "07", path: "/#reflections" },
+  { id: "contact", label: "CONNECT", code: "08", path: "/#contact" },
 ];
 
 export default function NavigationDock() {

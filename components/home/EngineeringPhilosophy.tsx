@@ -35,7 +35,7 @@ const PRINCIPLES = [
 export default function EngineeringPhilosophy() {
   return (
     <div className="w-full">
-      <SectionDivider label="03_ENGINEERING_PHILOSOPHY" />
+      <SectionDivider label="04_TECHNICAL_MINDSET" />
 
       <div className="grid-12 items-start gap-y-sys-64 md:gap-y-0">
         <div className="col-span-12 lg:col-span-12 mb-sys-96 text-center lg:text-left">

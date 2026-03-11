@@ -53,7 +53,7 @@ export default function SystemComparison() {
 
   return (
     <div id="comparison" className="w-full relative py-sys-32">
-      <SectionDivider label="04_SYSTEM_COMPARISON" />
+      <SectionDivider label="05_COMPARATIVE_ANALYSIS" />
 
       <div className="mb-sys-64">
         <h2 className="type-h1 uppercase tracking-tighter mb-4">Architectural_Themes_</h2>
@@ -70,7 +70,7 @@ export default function SystemComparison() {
             <div className="col-span-3 p-8 border-l border-b border-border-dim bg-bg-secondary/20 flex items-center">
               <div className="type-metadata text-[0.45rem] opacity-30 tracking-[0.2em]">TECHNICAL_DIMENSIONS</div>
             </div>
-            {projects.map((project, idx) => (
+            {projects.filter(p => p.tier === 1).map((project, idx) => (
               <div key={project.slug} className="module-frame col-span-3 h-full group relative overflow-hidden !rounded-none border-t-0 border-r-0">
                 <div className="absolute top-2 right-2">
                    <div className="arch-marker scale-50 opacity-20 group-hover:opacity-100 transition-opacity" />
@@ -120,7 +120,7 @@ export default function SystemComparison() {
               </div>
 
               {/* System Values */}
-              {projects.map((project) => {
+              {projects.filter(p => p.tier === 1).map((project) => {
                 const value = attr.getValue(project);
                 return (
                   <div key={`${project.slug}-${attr.id}`} className="col-span-3 p-8 border-l border-b border-border-dim flex items-center">
@@ -164,7 +164,7 @@ export default function SystemComparison() {
 
       {/* MOBILE COMPARISON STACK */}
       <div className="lg:hidden space-y-6">
-        {projects.map((project, pIdx) => (
+        {projects.filter(p => p.tier === 1).map((project, pIdx) => (
           <div key={project.title} className="border border-border-dim bg-bg-secondary/20 overflow-hidden">
             <div className="bg-bg-primary p-6 border-b border-border-dim flex justify-between items-center">
               <div>

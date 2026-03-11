@@ -483,5 +483,62 @@ export const projects: Project[] = [
                 activeNodes: ["solver", "report"]
             }
         ]
+    },
+    {
+        slug: "go-distributed-worker",
+        title: "Go Distributed Worker",
+        shortDescription: "Experimental distributed task runner with gossip-protocol discovery.",
+        techStack: ["Go", "gRPC", "Protobuf"],
+        tier: 2,
+        status: "RESEARCH",
+        domains: ["distributed_systems", "systems_programming"],
+        overview: "A research project exploring node discovery and task balancing in a decentralized environment using Go and gRPC.",
+        problem: "Centralized orchestrators are single points of failure. This experiment probes the viability of gossip-based state sync.",
+        architecture: "Nodes gossip about their current load and health, using a distributed consensus algorithm to pick the next worker.",
+        authority: {
+            complexityScore: 5,
+            architectureDepth: "GOSP_DISC",
+            researchFocus: "Decentralized Orchestration",
+            primaryDomain: "Distributed Systems",
+            experimentationAreas: ["SWIM Protocol", "Raft Consensus Simplification"]
+        }
+    },
+    {
+        slug: "rust-kv-store",
+        title: "Rust Core KV",
+        shortDescription: "LSM-tree based key-value store built in pure Rust.",
+        techStack: ["Rust", "Tokio", "LSM Tree"],
+        tier: 2,
+        status: "ACTIVE_RESEARCH",
+        domains: ["systems_programming", "database_arch"],
+        overview: "An exploration of specialized storage engines, specifically Log-Structured Merge-Trees and their performance in write-heavy workloads.",
+        problem: "B-Trees often suffer from write-amplification. LSM-Trees optimize for fast sequential writes, but require efficient compaction strategies.",
+        architecture: "Features a multi-level compaction engine, Bloom filter normalization, and an async WAL (Write-Ahead Log) for crash recovery.",
+        authority: {
+            complexityScore: 6,
+            architectureDepth: "LSM_STORAGE",
+            researchFocus: "Write-Ahead Log Reliability",
+            primaryDomain: "Database Engineering",
+            experimentationAreas: ["Compaction Strategies", "Bloom Filter False Positives"]
+        }
+    },
+    {
+        slug: "cpp-jit-exp",
+        title: "C++ JIT Experiment",
+        shortDescription: "A minimal Just-In-Time compiler for a domain-specific mathematical language.",
+        techStack: ["C++", "LLVM", "X86_64"],
+        tier: 3,
+        status: "ARCHIVED",
+        domains: ["systems_programming"],
+        overview: "A low-level probe into runtime code generation and the LLVM infrastructure.",
+        problem: "Interpreting math expressions is slow. This experiment JIT-compiles expressions directly to machine code at runtime.",
+        architecture: "Parsing → SSA Generation → LLVM Optimization → Execution.",
+        authority: {
+            complexityScore: 4,
+            architectureDepth: "RUNTIME_CodeGen",
+            researchFocus: "LLVM IR Mapping",
+            primaryDomain: "Compiler Engineering",
+            experimentationAreas: ["SSA Form", "Machine Code Emission"]
+        }
     }
 ];

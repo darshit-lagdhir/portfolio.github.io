@@ -8,7 +8,7 @@ import DiscoveryHint from "@/components/shared/DiscoveryHint";
 export default function SystemModules() {
   return (
     <div className="w-full">
-      <SectionDivider label="01_ENGINEERING_SYSTEMS" />
+      <SectionDivider label="01_SYSTEM_CATALOGUE" />
 
       <div className="grid-12 mb-sys-64">
         <div className="col-span-12 lg:col-span-10">
@@ -21,7 +21,7 @@ export default function SystemModules() {
 
       {/* MODULE GRID LAYER */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-sys-32">
-        {projects.map((project, index) => (
+        {projects.filter(p => p.tier === 1).map((project, index) => (
           <SystemModule 
             key={project.slug} 
             project={project} 

@@ -6,7 +6,7 @@ import SectionDivider from "@/components/shared/SectionDivider";
 export default function FinalReflection() {
   return (
     <div className="w-full relative">
-      <SectionDivider label="06_SYSTEM_REFLECTIONS" />
+      <SectionDivider label="07_SYSTEM_REFLECTIONS" />
       
       <div className="py-sys-64 mb-sys-64">
         <div className="max-w-4xl mx-auto text-center space-y-8">

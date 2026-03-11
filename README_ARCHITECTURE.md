@@ -27,19 +27,23 @@ This portfolio is engineered as a high-fidelity systems documentation environmen
 /types              # Shared TypeScript definitions
 ```
 
-## 🚀 How to Add New Projects
+## 🚀 System Growth & Evolution
+The portfolio is designed for long-term scalability through a Tiered Registry System.
 
-The portfolio is designed for data-driven expansion. To add a new system:
+### 1. Project Tier Classification
+Projects are categorized into three tiers in `data/projects.ts`:
+- **Tier 1 (Core Systems):** Major architectural builds. These appear as large modules in the main catalogue and are included in the comparison matrix.
+- **Tier 2 (Experiments):** Active research, learning prototypes, and technical investigations. These appear in the Exploration Archive.
+- **Tier 3 (Archived):** Past experiments or deprecated builds. These are preserved in the Exploration Archive with an "Archived" status.
 
-1. **Update Data:** Add a new project entry to `data/projects.ts` following the `Project` type.
-2. **Define Diagram:** Use the `diagram` object within the project entry to define:
-   - `layout`: "layered" | "pipeline" | "grid"
-   - `nodes`: List of system components with their specific tech and roles.
-   - `connections`: Mapping of data/control flow between nodes.
-3. **Automatic Integration:** The system will automatically:
-   - Generate a new dedicated documentation page at `/[slug]`.
-   - Update the "Systems Manifest" section on the homepage.
-   - Integrate the node into the "Cross-Project Navigation" engine.
+### 2. How to Add a New System
+1. **Define the Data:** Add a new entry to `data/projects.ts` following the [`Project`](types/project.ts) type.
+2. **Assign Tier:** Set the `tier` property (1, 2, or 3) to determine where the system surface.
+3. **Define Mechanics:**
+   - **Diagram:** Define nodes and connections for the interactive architecture engine.
+   - **StoryFlow:** Outline the technical walkthrough steps for deep storytelling.
+   - **Authority:** Map the complexity scores and research focus for the credibility layer.
+4. **Automatic Routing:** The system uses dynamic routing to overnight generate a deep documentation page at `/[slug]`.
 
 ## 🛠️ Tech Stack Primitives
 - **Core:** Next.js (App Router), TypeScript
