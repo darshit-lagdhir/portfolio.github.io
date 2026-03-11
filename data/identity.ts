@@ -39,5 +39,31 @@ export const identity = {
         web: ["HTML", "CSS", "React", "Node.js"],
         databases: ["PostgreSQL", "MySQL", "MongoDB", "SQLite"],
         tools: ["Git", "GitHub", "VS Code", "Google Cloud"]
-    }
+    },
+    engineeringPrinciples: [
+        {
+            id: "build",
+            title: "BUILD",
+            description: "I begin by creating a prototype or system idea. The goal is to make the system work as quickly as possible so that real behavior can be observed.",
+            icon: "01"
+        },
+        {
+            id: "break",
+            title: "BREAK",
+            description: "Systems almost always fail during early stages. These failures reveal hidden assumptions and weaknesses in the architecture.",
+            icon: "02"
+        },
+        {
+            id: "understand",
+            title: "UNDERSTAND",
+            description: "Instead of immediately patching, I investigate the failure in detail—tracing execution paths and studying internal mechanics to find the root cause.",
+            icon: "03"
+        },
+        {
+            id: "redesign",
+            title: "REDESIGN",
+            description: "Once the root cause is understood, the system is refactored. The new design attempts to eliminate the weakness discovered earlier.",
+            icon: "04"
+        }
+    ]
 };

@@ -6,10 +6,6 @@ import SectionContainer from "@/components/shared/SectionContainer";
 // --- LAZY-LOADED ARCHITECTURAL NODES ---
 // We use dynamic imports to reduce initial bundle size and execution time.
 // Loading skeletons match the engineering aesthetic of the portal.
-const ExplorationArchive = dynamic(() => import("@/components/home/ExplorationArchive"), { 
-  loading: () => <div className="w-full h-[400px] border border-dashed border-border-dim animate-pulse flex items-center justify-center type-metadata opacity-20">INITIALIZING_ARCHIVE_DATA...</div>
-});
-
 const SystemLaboratory = dynamic(() => import("@/components/home/SystemLaboratory"), {
   loading: () => <div className="w-full h-[500px] border border-border-dim bg-bg-secondary/10 flex items-center justify-center type-metadata opacity-20">BOOTING_LAB_ENVIRONMENT...</div>
 });
@@ -59,42 +55,35 @@ export default function Home() {
       </SectionContainer>
 
       {/* 
-         MANIFEST_NODE_04: RESEARCH_ARCHIVE
-      */}
-      <SectionContainer id="archive">
-        <ExplorationArchive />
-      </SectionContainer>
-
-      {/* 
-         MANIFEST_NODE_05: SYSTEM_LABORATORY
+         MANIFEST_NODE_04: SYSTEMS_EXPLORATION
       */}
       <SectionContainer id="laboratory">
         <SystemLaboratory />
       </SectionContainer>
 
       {/* 
-         MANIFEST_NODE_06: COMPARATIVE_ANALYSIS
+         MANIFEST_NODE_05: COMPARATIVE_ANALYSIS
       */}
       <SectionContainer id="comparison">
         <SystemComparison />
       </SectionContainer>
 
       {/* 
-         MANIFEST_NODE_07: HUMAN_CONSTRUCT
+         MANIFEST_NODE_06: HUMAN_CONSTRUCT
       */}
       <SectionContainer id="about">
         <About />
       </SectionContainer>
 
       {/* 
-         MANIFEST_NODE_08: SYSTEM_REFLECTIONS
+         MANIFEST_NODE_07: SYSTEM_REFLECTIONS
       */}
       <SectionContainer id="reflections" noPadding>
         <FinalReflection />
       </SectionContainer>
 
       {/* 
-         MANIFEST_NODE_09: CONNECTION_BUS
+         MANIFEST_NODE_08: CONNECTION_BUS
       */}
       <SectionContainer id="contact">
         <TerminalContact />

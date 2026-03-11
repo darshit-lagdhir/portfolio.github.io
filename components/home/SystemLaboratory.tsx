@@ -2,78 +2,70 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { laboratoryExperiments } from "@/data/laboratory";
+import { laboratoryExplorations } from "@/data/laboratory";
 import SectionDivider from "@/components/shared/SectionDivider";
 import { cn } from "@/lib/utils";
-
-// --- EXPERIMENT COMPONENTS ---
-import DistributedSyncLab from "@/components/home/lab/DistributedSyncLab";
-import PipelineBackpressureLab from "@/components/home/lab/PipelineBackpressureLab";
-import AuthBoundaryLab from "@/components/home/lab/AuthBoundaryLab";
-
-const LAB_COMPONENTS: Record<string, React.FC> = {
-  "distributed-sync": DistributedSyncLab,
-  "pipeline-backpressure": PipelineBackpressureLab,
-  "rbac-collision": AuthBoundaryLab,
-};
+import Link from "next/link";
 
 export default function SystemLaboratory() {
-  const [activeLabId, setActiveLabId] = useState<string>(laboratoryExperiments[0].id);
+  const [activeId, setActiveId] = useState<string>(laboratoryExplorations[0].id);
   
-  const activeLab = laboratoryExperiments.find(l => l.id === activeLabId);
-  const ActiveComponent = activeLabId ? LAB_COMPONENTS[activeLabId] : null;
+  const activeExploration = laboratoryExplorations.find(l => l.id === activeId);
 
   return (
     <div className="w-full relative">
-      <SectionDivider label="05_SYSTEM_LABORATORY" />
+      <SectionDivider label="05_SYSTEMS_EXPLORATION" />
 
       <div className="grid-12 mb-sys-64">
         <div className="col-span-12 lg:col-span-8">
            <div className="flex items-center gap-3 mb-6 opacity-30">
               <div className="w-1 h-1 bg-accent/40 rounded-full" />
-              <span className="type-metadata text-[0.4rem] tracking-[0.3em] font-mono">WORKSPACE_SANDBOX</span>
+              <span className="type-metadata text-[0.4rem] tracking-[0.3em] font-mono">ACTIVE_EXPLORATION_BOARD</span>
            </div>
-           <h2 className="type-h1 uppercase tracking-tighter mb-6">Engineering_Lab_</h2>
+           <h2 className="type-h1 uppercase tracking-tighter mb-6">Systems_Exploration_</h2>
            <p className="type-body text-sm text-text-secondary max-w-2xl opacity-50">
-             An interactive playground for exploring the internal mechanics of systems engineering. 
-             These lightweight modules demonstrate technical concepts using real-time feedback and parameter manipulation.
+             A record of technical curiosity and ongoing learning. These cards represent specific domains 
+             being investigated to understand high-level system behavior and low-level architectural mechanics.
            </p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-sys-48">
-        {/* LAB SELECTION SIDEBAR */}
+        {/* EXPLORATION SELECTION SIDEBAR */}
         <div className="lg:col-span-4 space-y-4">
-          <div className="type-metadata text-[0.45rem] opacity-30 mb-6 tracking-widest uppercase">SELECT_EXPERIMENT</div>
-          {laboratoryExperiments.map((lab) => (
+          <div className="type-metadata text-[0.45rem] opacity-30 mb-6 tracking-widest uppercase">SELECT_DOMAIN</div>
+          {laboratoryExplorations.map((item) => (
             <button
-              key={lab.id}
-              onClick={() => setActiveLabId(lab.id)}
+              key={item.id}
+              onClick={() => setActiveId(item.id)}
               className={cn(
                 "module-frame w-full text-left transition-all relative group !p-6",
-                activeLabId === lab.id 
+                activeId === item.id 
                   ? "border-accent/40 bg-accent/5" 
                   : "hover:border-border-bright opacity-60 hover:opacity-100"
               )}
             >
               <div className="flex justify-between items-start mb-3">
-                 <span className="type-metadata text-[0.4rem] opacity-40">{lab.concept.toUpperCase()}</span>
+                 <span className="type-metadata text-[0.35rem] opacity-40">{item.field.toUpperCase()}</span>
                  <div className={cn(
                    "arch-marker scale-[0.4] transition-all",
-                   activeLabId === lab.id ? "opacity-100" : "opacity-20 group-hover:opacity-100"
+                   activeId === item.id ? "opacity-100" : "opacity-20 group-hover:opacity-100"
                  )} />
               </div>
               <h3 className={cn(
                 "type-emphasis text-base mb-2 transition-colors",
-                activeLabId === lab.id ? "text-accent" : "text-text-primary"
+                activeId === item.id ? "text-accent" : "text-text-primary"
               )}>
-                {lab.title.toUpperCase()}
+                {item.title.toUpperCase()}
               </h3>
-              <p className="type-body text-[0.7rem] opacity-50 line-clamp-2 leading-relaxed">
-                {lab.description}
-              </p>
+              
+              <div className="flex flex-wrap gap-2 mt-4">
+                {item.tech.slice(0, 3).map(t => (
+                  <span key={t} className="type-metadata text-[0.3rem] opacity-30 uppercase">{t}</span>
+                ))}
+              </div>
 
-              {activeLabId === lab.id && (
+              {activeId === item.id && (
                 <motion.div 
                   layoutId="lab-indicator"
                   className="absolute right-0 top-0 w-1 h-full bg-accent"
@@ -83,16 +75,16 @@ export default function SystemLaboratory() {
           ))}
         </div>
 
-        {/* INTERACTIVE VIEWPORT */}
+        {/* EXPLORATION VIEWPORT */}
         <div className="lg:col-span-8 min-h-[500px] flex flex-col">
            <div className="module-frame flex-grow relative overflow-hidden bg-bg-secondary/20 !p-0 flex flex-col">
               {/* VIEWPORT HEADER */}
               <div className="p-6 border-b border-border-dim bg-bg-secondary flex justify-between items-center z-20">
                  <div className="flex items-center gap-4">
-                    <span className="type-metadata text-[0.45rem] opacity-40">EXPERIMENT_VIEWPORT</span>
+                    <span className="type-metadata text-[0.45rem] opacity-40">EXPLORATION_BOARD</span>
                     <div className="w-[1px] h-3 bg-border-dim/50" />
                     <span className="type-metadata text-[0.45rem] text-accent font-mono uppercase">
-                      {activeLab?.id.replace(/-/g, '_')}
+                      {activeExploration?.id.replace(/-/g, '_')}
                     </span>
                  </div>
                  <div className="flex gap-1.5 opacity-20">
@@ -101,58 +93,65 @@ export default function SystemLaboratory() {
                  </div>
               </div>
 
-              {/* DEMO AREA */}
-              <div className="flex-grow relative overflow-hidden flex items-center justify-center p-8 md:p-12">
+              {/* CONTENT AREA */}
+              <div className="flex-grow relative overflow-hidden flex flex-col p-12 md:p-16">
                  <AnimatePresence mode="wait">
                     <motion.div
-                      key={activeLabId}
-                      initial={{ opacity: 0, scale: 0.98 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 1.02 }}
+                      key={activeId}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
                       transition={{ duration: 0.3 }}
-                      className="w-full h-full flex items-center justify-center"
+                      className="max-w-xl"
                     >
-                      {ActiveComponent ? <ActiveComponent /> : (
-                        <div className="type-metadata opacity-20 tracking-widest text-[0.5rem]">
-                          INITIALIZING_LAB_ENVIRONMENT_
-                        </div>
-                      )}
+                       <div className="type-metadata text-[0.35rem] text-accent/60 mb-8 border-l border-accent/20 pl-4 py-1">
+                         DOMAIN_ANALYSIS // {activeExploration?.field.toUpperCase()}
+                       </div>
+                       
+                       <h3 className="type-h2 text-3xl mb-8 uppercase tracking-tighter">
+                         {activeExploration?.title}
+                       </h3>
+                       
+                       <p className="type-body text-lg opacity-60 leading-relaxed mb-12">
+                         {activeExploration?.description}
+                       </p>
+
+                       <div className="space-y-8">
+                          <div>
+                             <h4 className="type-metadata text-[0.45rem] opacity-30 mb-4 tracking-widest uppercase">Related_Technologies</h4>
+                             <div className="flex flex-wrap gap-3">
+                                {activeExploration?.tech.map(t => (
+                                  <span key={t} className="px-3 py-1.5 border border-border-dim type-metadata text-[0.4rem] opacity-40 bg-bg-primary/30">
+                                    {t.toUpperCase()}
+                                  </span>
+                                ))}
+                             </div>
+                          </div>
+
+                          {activeExploration?.relatedProject && (
+                            <div>
+                               <h4 className="type-metadata text-[0.45rem] opacity-30 mb-4 tracking-widest uppercase">Cross_Sector_Alignment</h4>
+                               <Link 
+                                 href={`/${activeExploration.relatedProject}`}
+                                 className="inline-flex items-center gap-4 group/link"
+                               >
+                                  <div className="w-8 h-[1px] bg-accent/20 group-hover/link:w-12 transition-all" />
+                                  <span className="type-metadata text-[0.45rem] text-accent/60 group-hover/link:text-accent transition-colors">
+                                    VIEW_RELATED_SYSTEM: {activeExploration.relatedProject.toUpperCase()}
+                                  </span>
+                               </Link>
+                            </div>
+                          )}
+                       </div>
                     </motion.div>
                  </AnimatePresence>
               </div>
 
-              {/* EXPLANATION DRAWER (Subtle footer) */}
-              <div className="p-8 border-t border-border-dim bg-bg-primary/20">
-                 <div className="flex flex-col md:flex-row gap-8 justify-between">
-                    <div className="max-w-md">
-                       <h4 className="type-metadata text-[0.5rem] text-accent mb-2 tracking-widest">TECHNICAL_CONTEXT</h4>
-                       <p className="type-body text-[0.7rem] opacity-60 leading-relaxed">
-                         {activeLab?.description}
-                       </p>
-                    </div>
-                    <div className="flex gap-12 items-end">
-                       <div>
-                          <h4 className="type-metadata text-[0.5rem] opacity-30 mb-2">COMPLEXITY</h4>
-                          <div className="flex gap-1">
-                             {[...Array(3)].map((_, i) => (
-                               <div 
-                                 key={i} 
-                                 className={cn(
-                                   "w-4 h-1",
-                                   i === 0 ? "bg-accent" : 
-                                   i === 1 && (activeLab?.complexity === "MEDIUM" || activeLab?.complexity === "HIGH") ? "bg-accent/60" :
-                                   i === 2 && activeLab?.complexity === "HIGH" ? "bg-accent/40" : "bg-border-dim"
-                                 )} 
-                               />
-                             ))}
-                          </div>
-                       </div>
-                       <div className="pb-1">
-                          <span className="type-metadata text-[0.45rem] opacity-20 tracking-tighter">
-                            LATENCY_SYNCED // AGENT_VERIFIED
-                          </span>
-                       </div>
-                    </div>
+              {/* VIEWPORT FOOTER */}
+              <div className="p-8 border-t border-border-dim bg-bg-primary/20 bg-grid-dim bg-[size:10px_10px]">
+                 <div className="flex justify-between items-center opacity-20">
+                    <div className="type-metadata text-[0.35rem]">STATE: ACTIVE_INVESTIGATION</div>
+                    <div className="type-metadata text-[0.35rem]">ID: {activeExploration?.id.toUpperCase()}</div>
                  </div>
               </div>
            </div>

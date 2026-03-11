@@ -3,33 +3,7 @@
 import { motion } from "framer-motion";
 import SectionDivider from "@/components/shared/SectionDivider";
 import DiscoveryHint from "@/components/shared/DiscoveryHint";
-
-const PRINCIPLES = [
-  {
-    id: "experimentation",
-    title: "BUILD_AND_BREAK",
-    description: "I learn primarily by building systems directly and exposing them to stress. True understanding comes from the feedback loop of construction and controlled failure.",
-    icon: "01"
-  },
-  {
-    id: "debugging",
-    title: "DEBUGGING_AS_LEARNING",
-    description: "Many of my technical insights come from investigating unexpected system failures. I view debugging not just as a problem to fix, but as a primary learning tool.",
-    icon: "02"
-  },
-  {
-    id: "redesign",
-    title: "CONTINUOUS_REDESIGN",
-    description: "Whenever architectural problems appear, I see an opportunity to tear down and reconstruct. I value the lessons learned from a broken state as much as a stable build.",
-    icon: "03"
-  },
-  {
-    id: "humility",
-    title: "TECHNICAL_HUMILITY",
-    description: "I am actively learning how large, continuous systems are designed. My exploration is an ongoing, hands-on process driven by curiosity rather than assumed expertise.",
-    icon: "04"
-  }
-];
+import { identity } from "@/data/identity";
 
 export default function EngineeringPhilosophy() {
   return (
@@ -48,19 +22,41 @@ export default function EngineeringPhilosophy() {
               <h2 className="type-h1 text-4xl md:text-5xl mb-sys-48 uppercase leading-[1.05] tracking-tighter">
                 Architecture is a <span className="text-accent underline decoration-accent/20 decoration-1 underline-offset-[12px]">Diagnostic Discipline</span>, not just a constructive one.
               </h2>
-              <div className="space-y-6">
-                <p className="type-body text-xl md:text-2xl text-text-primary/70 leading-relaxed max-w-3xl">
-                  I believe that the best way to learn how a system works is to build it, break it, and then spend hours figuring out why it failed.
-                </p>
-                <p className="type-body text-base md:text-lg text-text-secondary leading-relaxed max-w-2xl opacity-60">
-                  My goal isn&apos;t just to write code that runs. I am actively learning how to architect software that is stable, predictable, and resilient by studying real-world mechanics.
-                </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div className="space-y-6">
+                  <p className="type-body text-xl md:text-2xl text-text-primary/70 leading-relaxed">
+                    {identity.learningPhilosophy.split('. ')[0]}.
+                  </p>
+                  <p className="type-body text-base md:text-lg text-text-secondary leading-relaxed opacity-60">
+                    I treat debugging not as a frustrating task, but as a primary learning tool. Many of my architectural insights—from memory behavior to session security—come from investigating why a system behaved in an unexpected way.
+                  </p>
+                </div>
+                <div className="space-y-6 border-l border-border-dim pl-12 hidden md:block">
+                  <p className="type-metadata text-[0.45rem] text-accent/40 mb-4 opacity-100 flex items-center gap-2">
+                    <span className="w-1 h-1 bg-accent/40" />
+                    APPLIED_PROJECT_INSIGHTS
+                  </p>
+                  <div className="space-y-4">
+                    <div className="group/insight">
+                      <span className="type-metadata text-[0.35rem] text-text-muted block mb-1">MOVEX</span>
+                      <p className="type-body text-[0.65rem] opacity-40 group-hover/insight:opacity-80 transition-opacity">Debugging session boundaries taught me the hidden complexity of role isolation.</p>
+                    </div>
+                    <div className="group/insight">
+                      <span className="type-metadata text-[0.35rem] text-text-muted block mb-1">PFCV</span>
+                      <p className="type-body text-[0.65rem] opacity-40 group-hover/insight:opacity-80 transition-opacity">Exploring cross-language FFI revealed subtle memory safety violations at the ABI level.</p>
+                    </div>
+                    <div className="group/insight">
+                      <span className="type-metadata text-[0.35rem] text-text-muted block mb-1">UIDAI</span>
+                      <p className="type-body text-[0.65rem] opacity-40 group-hover/insight:opacity-80 transition-opacity">Designing advisory-only boundaries taught me the importance of ethical system constraints.</p>
+                    </div>
+                  </div>
+                </div>
               </div>
            </motion.div>
         </div>
 
         <div className="col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-           {PRINCIPLES.map((principle, index) => (
+           {identity.engineeringPrinciples.map((principle, index) => (
              <motion.div
                key={principle.id}
                initial={{ opacity: 0 }}
