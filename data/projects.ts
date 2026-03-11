@@ -204,151 +204,170 @@ export const projects: Project[] = [
     {
         slug: "uidai",
         title: "UIDAI Advisory System",
-        shortDescription: "A hackathon project analyzing Aadhaar enrollment data to identify regional patterns and provide advisory insights to human operators.",
-        techStack: ["Python", "FastAPI", "Pandas"],
+        shortDescription: "A hackathon project analyzing aggregated Aadhaar enrollment data to identify regional patterns and provide contextual advisory insights to human operators.",
+        techStack: ["Python", "FastAPI", "Pandas", "Scikit-Learn"],
         techGroups: [
-            { role: "Core Language", items: ["Python 3.10+"] },
+            { role: "Core Engine", items: ["Python", "Pandas", "NumPy"] },
             { role: "API Layer", items: ["FastAPI", "Uvicorn"] },
-            { role: "Data Processing", items: ["Pandas", "Scikit-Learn"] },
-            { role: "Database", items: ["PostgreSQL"] }
+            { role: "Analysis Stage", items: ["Scikit-Learn", "Statistical Scanners"] },
+            { role: "Data Management", items: ["PostgreSQL", "Aggregated Datasets"] }
         ],
         tier: 1,
         githubRepoName: "uidai-advisory",
         githubUrl: "https://github.com/darshit-lagdhir/uidai-advisory-system",
         status: "HACKATHON",
         domains: ["data_systems", "ai_ml", "systems_engineering"],
-        overview: "The UIDAI Advisory Intelligence System was built during a hackathon focused on Aadhaar enrollment data. It analyzes enrollment datasets across thousands of pincodes to identify patterns such as regions with unusual enrollment spikes, declining activity, or high volatility. The system remains strictly advisory — it highlights patterns with confidence scores and explanatory context, but never makes decisions. All final decisions remain in human hands.",
-        problem: "Identifying subtle fraud patterns at a national scale requires a system that can process high volumes of data without eliminating the nuance that human operators provide. Automation alone often results in high false-positives.",
-        engineeringFocus: "Human-in-the-loop Pattern Detection",
+        overview: "The UIDAI Advisory Intelligence System was developed for a hackathon focused on analyzing aggregated Aadhaar enrollment data. The system monitors enrollment counts across thousands of locations to identify patterns that may require human attention. It is designed as a purely advisory tool; it identifies patterns and provides contextual explanations so that officials can interpret data more effectively. The system highlights trends with confidence scores but never makes autonomous decisions.",
+        problem: "Monitoring enrollment patterns manually across millions of records in thousands of centers is extremely difficult. Officials struggle to detect unexpected spikes, sudden drops (Ghost Zones), or gradual trend shifts in specific demographic groups across a national scale. The project attempts to make these patterns visible by analyzing aggregated counts and presenting summarized signals for review.",
+        engineeringFocus: "Advisory Pattern Detection & Ethical Design",
         technicalMeta: {
             systemType: "Advisory Engine",
-            architectureStyle: "Sequential Pipeline",
-            storageType: "Structured & Vectorized",
+            architectureStyle: "Sequential Data Pipeline",
+            storageType: "Aggregated Pincode-Level Data",
         },
         authority: {
             complexityScore: 8,
-            architectureDepth: "NON_BLOCKING_PIPE",
-            researchFocus: "Advisory Intelligence Mechanisms",
+            architectureDepth: "ADVISORY_PIPELINE",
+            researchFocus: "Non-Intrusive Pattern Identification",
             primaryDomain: "Data Engineering",
-            experimentationAreas: ["Async Alert Correlation", "Human Feedback Weighting"],
+            experimentationAreas: ["Confidence Scoring Logic", "Baseline Pattern Synthesis"],
             deepDives: [
                 {
-                    type: "REDESIGN",
-                    title: "Switched to Asynchronous Ingestion",
-                    content: "Originally built with synchronous endpoints, the system failed under burst traffic. Redesigned to use a Redis-backed queue (Celery), enabling the system to sustain 5x the ingestion load with no dropped authentication signals."
+                    type: "DISCOVERY",
+                    title: "Signal Types and Trend Shifters",
+                    content: "The system generates specific signals like 'High Stress' (volume exceeding norms) and 'Trend Shifter' (direction changes in activity). These flags are designed to prompt human investigation rather than trigger automated responses, ensuring the system remains a partner to the operator."
                 },
                 {
-                    type: "DISCOVERY",
-                    title: "The Feedback Loop Anomaly",
-                    content: "Discovered that human-in-the-loop decisions were often biased by alert order. Implemented randomized priority shufflers in the advisory interface to normalize human decision-making and improve dataset balance."
+                    type: "OPTIMIZATION",
+                    title: "Establishing Regional Baselines",
+                    content: "To detect anomalies, the system establishes a baseline pattern for each region based on historical data. By comparing current data against these historical norms, we can identify demographic shifts (like 'Baby Boom' or 'Employment Magnet' zones) without requiring hard-coded thresholds."
+                },
+                {
+                    type: "REDESIGN",
+                    title: "Strict Functional Boundaries",
+                    content: "The design was refined to explicitly prevent automated decision-making. The system does not issue instructions to field teams, assign resources, or rank individuals. This boundary is enforced by a reporting-only architecture where all outputs are channeled through an advisory dashboard."
                 }
             ],
             experimentationNotes: [
                 {
-                    title: "Lesson: Simpler Models for First-Pass",
-                    content: "Found that complex deep learning models had too much latency for initial outlier detection. Switched to lightweight statistical scanners for Level 1, reserving deep inference for verified risk clusters."
+                    title: "Aggregated Privacy Boundaries",
+                    content: "Learned that useful insights can be extracted entirely from aggregated pincode counts without ever touching PII or biometrics. Privacy is built into the data model itself by only processing high-level totals."
+                },
+                {
+                    title: "Communicating Uncertainty",
+                    content: "Implementing confidence levels (HIGH/MEDIUM/LOW) taught me that an AI's most valuable output often isn't the prediction itself, but the degree of certainty attached to it. This prevents officials from over-relying on system signals."
+                },
+                {
+                    title: "Human Contextual Advantage",
+                    content: "Discovered that many 'anomalies' were actually local events or network issues. This reinforced the requirement for human review, as local teams possess contextual knowledge an algorithm cannot see."
                 }
             ],
-            recurringPatterns: ["Async Worker Pipelines", "Feedback Loops"]
+            recurringPatterns: ["Baseline-vs-Current Analysis", "Advisory Signal Propagation", "Privacy-by-Aggregation"]
         },
-        architecture: "The system is structured as a non-blocking diagnostic pipeline. Data enters through high-throughput ingestors, is processed by a suite of pattern-detection models, and is then presented as prioritized alerts to an advisory interface.",
+        architecture: "The system operates as a structured diagnostic pipeline. It organizes incoming enrollment records by date, location (pincode), and age group. It kemudian establishing a baseline pattern for each region and identifies deviations. These deviations are translated into prioritized signals and presented on a dashboard for human review.",
         internalComponents: [
-            { name: "Anomaly Detection Engine", description: "ML-backed service that scans for statistical outliers in authentication requests." },
-            { name: "Human Review Interface", description: "Interface allowing operators to confirm or reject system suggestions, feeding data back into the learning loop." },
-            { name: "Pattern Aggregator", description: "Module that correlates individual anomalies into larger, structural risk clusters." }
+            { name: "Pattern Detection Logic", description: "Identifies demographic trends such as 'Baby Boom Zones' (0-5 enrollment) and 'Employment Magnet Zones' (adult migration indicators)." },
+            { name: "Signal Generation Engine", description: "Triggers flags like 'High Stress' for volume spikes and 'Ghost Zone Signal' for sustained zero-activity periods in active regions." },
+            { name: "Confidence Scoring Module", description: "Calculates reliability scores (HIGH/MEDIUM/LOW) for each signal based on data completeness and pattern stability." },
+            { name: "Advisory Dashboard", description: "A review-only interface that presents highlighted patterns and contextual signals for official human evaluation." },
+            { name: "Privacy Aggregator", description: "Ensures no individual-level data is ingested, strictly enforcing district and pincode-level analysis boundaries." }
         ],
         challenges: [
-            { title: "Latency in High-Volume Ingestion", description: "Processing millions of records while maintaining sub-second latency for the advisory dashboard required the move to asynchronous task queues." },
-            { title: "The 'Advice' UX", description: "Designing an interface that communicates system uncertainty to human operators without causing decision fatigue." }
+            { title: "Handling National-Scale Datasets", description: "Processing data across thousands of locations while maintaining clear regional context required efficient data partitioning and baseline comparison logic." },
+            { title: "Defining the 'Advice' Boundary", description: "Ensuring the system UI does not suggest actions but only identifies patterns required a careful redesign of how alerts are worded and displayed." },
+            { title: "Data Volatility", description: "Normalizing data to account for temporary network issues or regional holidays that can cause false-positive 'Ghost Zone' signals." }
         ],
         future: [
-            { title: "Vectorized Pattern Search", description: "Storing fraud patterns in a vector database for faster semantic similarity lookups." }
+            { title: "Cross-District Correlation", description: "Identifying if migration patterns in one district correlate with enrollment shifts in neighboring regions." },
+            { title: "Improved Contextual Hooks", description: "Allowing human officials to 'tag' known events (like local festivals) to automatically adjust baselines." }
         ],
         diagram: {
             layout: "pipeline",
             nodes: [
                 { 
-                    id: "ingestor", 
-                    label: "DATA_INGESTOR", 
-                    type: "pipeline", 
-                    description: "High-throughput asynchronous data entry.",
-                    responsibilities: ["Raw request normalization", "Async queue management", "Ingestion rate monitoring"],
-                    tech: ["Redis Queue", "Celery", "Pydantic"]
+                    id: "data", 
+                    label: "AGGREGATED_DATA", 
+                    type: "database", 
+                    description: "Pincode-level enrollment counts.",
+                    responsibilities: ["Historical record storage", "Location-based data partitioning", "Demographic count isolation"],
+                    tech: ["PostgreSQL", "Aggregated JSON"]
+                },
+                { 
+                    id: "baseline", 
+                    label: "BASELINE_SYNTHESIZER", 
+                    type: "logic", 
+                    description: "Establishes historical norms for each region.",
+                    responsibilities: ["Historical trend analysis", "Regional baseline generation", "Statistical mean calculation"],
+                    tech: ["Pandas", "NumPy"]
                 },
                 { 
                     id: "engine", 
-                    label: "PATTERN_ENGINE", 
-                    type: "logic", 
-                    description: "Statistical and ML-based anomaly scanners.",
-                    responsibilities: ["Statistical outlier detection", "ML inference", "Pattern synthesis"],
-                    tech: ["Scikit-Learn", "NumPy", "Pandas"]
-                },
-                { 
-                    id: "aggregator", 
-                    label: "ALERT_HUB", 
+                    label: "PATTERN_DETECTOR", 
                     type: "service", 
-                    description: "Correlates individual events into risk clusters.",
-                    responsibilities: ["Anomaly grouping", "Severity score calculation", "Historical pattern matching"],
-                    tech: ["PostgreSQL", "SQLAlchemy"]
+                    description: "Compares current vs baseline data.",
+                    responsibilities: ["Anomaly identification", "Demographic shift detection", "Confidence scoring"],
+                    tech: ["Python", "Statistical Scanners"]
                 },
                 { 
                     id: "dashboard", 
                     label: "ADVISORY_UI", 
                     type: "client", 
-                    description: "Human-in-the-loop diagnostic interface.",
-                    responsibilities: ["Real-time alert rendering", "Expert fallback triggers", "Decision record logging"],
-                    tech: ["React", "WebSockets", "D3.js"]
+                    description: "Human-centered signal dashboard.",
+                    responsibilities: ["Signal highlighting", "Contextual display", "Official review logging"],
+                    tech: ["Vanilla JS", "D3.js"]
                 }
             ],
             connections: [
-                { from: "ingestor", to: "engine" },
-                { from: "engine", to: "aggregator" },
-                { from: "aggregator", to: "dashboard" }
+                { from: "data", to: "baseline" },
+                { from: "baseline", to: "engine" },
+                { from: "engine", to: "dashboard" }
             ]
         },
         evolution: [
-            { milestone: "Engine Alpha", description: "Simple rule-based outlier detection for auth requests.", date: "PHASE_01" },
-            { milestone: "The Human Filter", description: "Implemented the advisory interface to allow expert feedback on false positives.", date: "PHASE_02" }
+            { milestone: "Data Partitioning", description: "Refined the data model to focus strictly on pincode-level demographic counts.", date: "HACKATHON_W1" },
+            { milestone: "Baseline Logic", description: "Implemented the baseline-vs-current comparison engine to identify regional spikes.", date: "HACKATHON_W2" },
+            { milestone: "Advisory Interface", description: "Built the signal dashboard highlighting 'Ghost Zones' and 'Baby Boom' patterns.", date: "HACKATHON_W3" }
         ],
         architectureDecisions: [
             {
-                title: "Asynchronous Pipeline",
-                problem: "Large identity datasets caused request timeouts during synchronous analysis.",
-                approach: "Implemented a Redis-backed Celery pipeline for non-blocking analysis.",
-                reasoning: "Identity verification doesn't always need instant feedback, but it MUST handle burst traffic without failure.",
-                alternatives: ["Kafka", "Vertical Scaling"]
+                title: "Advisory Only Architecture",
+                problem: "Automated decisions in identity systems can lead to high-impact false positives.",
+                approach: "Designed a 'read-only' pattern detection pipeline with no automated instruction capability.",
+                reasoning: "Ensures all final decisions remain with human officials who have the necessary local context.",
+                alternatives: ["Automated Alerting Systems", "Rule-based Auto-flags"]
+            },
+            {
+                title: "Privacy by Aggregation",
+                problem: "Handling individual records within a hackathon environment carries high privacy risks.",
+                approach: "Processed data strictly at the aggregated pincode level, discarding all individual identifiers.",
+                reasoning: "Aggregation provides significant insight while ensuring that zero individual-level data is ever stored or analyzed.",
+                alternatives: ["Data Anonymization", "Homomorphic Encryption"]
             }
         ],
         tradeoffs: [
             {
-                title: "Precision over Speed",
-                description: "Sacrificed near-instant alerts for deep-packet matching to reduce false alarms for operators.",
-                impact: "SCALABILITY"
+                title: "Context over Automation",
+                description: "Sacrificed speed of action to ensure every signal undergoes mandatory human review for contextual accuracy.",
+                impact: "SIMPLICITY"
             }
         ],
         storyFlow: [
             {
-                id: "ingestion",
-                title: "High-Throughput Stream",
-                description: "Raw identity data streams into the system through asynchronous ingestors, being normalized and queued for analysis.",
-                activeNodes: ["ingestor"]
+                id: "baseline",
+                title: "Baseline Synthesis",
+                description: "The system analyzes historical data for a specific pincode to establish a normal enrollment pattern for each age group.",
+                activeNodes: ["data", "baseline"]
             },
             {
-                id: "inference",
-                title: "Pattern Detection",
-                description: "The Pattern Engine runs statistical and ML models on the queued data to identify outliers and potential fraud vectors.",
+                id: "comparison",
+                title: "Pattern Identification",
+                description: "Current enrollment data is compared against the baseline. The engine identifies patterns like 'Baby Boom Zones' or 'Trend Shifters'.",
                 activeNodes: ["engine"]
             },
             {
-                id: "aggregation",
-                title: "Risk Synthesis",
-                description: "Detected anomalies are aggregated into prioritized risk clusters within the Alert Hub for structured investigation.",
-                activeNodes: ["aggregator"]
-            },
-            {
-                id: "advisory",
-                title: "Human Oversight",
-                description: "The Advisory Dashboard presents the synthesis to a human operator, who provides the final resolution based on system advice.",
+                id: "advice",
+                title: "Advisory Highlighting",
+                description: "Detected signals are prioritized by confidence scores and presented to human officials on the advisory dashboard.",
                 activeNodes: ["dashboard"]
             }
         ]
