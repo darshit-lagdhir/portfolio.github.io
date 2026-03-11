@@ -28,7 +28,15 @@ export default function Hero() {
             transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="mt-sys-64"
           >
-            <button className="btn-primary opacity-60 hover:opacity-100 transition-opacity">EXPLORE_SYSTEM_BUILDS</button>
+            <button 
+              onClick={() => {
+                const el = document.getElementById('systems');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="btn-primary opacity-60 hover:opacity-100 transition-opacity"
+            >
+              EXPLORE_SYSTEM_BUILDS
+            </button>
           </motion.div>
         </div>
 

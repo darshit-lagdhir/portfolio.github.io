@@ -56,10 +56,10 @@ export default function HeroArchitecture() {
 
         {/* Nodes */}
         {[
-            { x: 100, y: 100, label: "MOD_A" },
-            { x: 300, y: 100, label: "MOD_B" },
-            { x: 300, y: 300, label: "MOD_C" },
-            { x: 100, y: 300, label: "MOD_D" }
+            { x: 100, y: 100, label: "PFCV_NODE" },
+            { x: 300, y: 100, label: "MOVEX_SYS" },
+            { x: 300, y: 300, label: "UIDAI_INT" },
+            { x: 100, y: 300, label: "SYS_CORE" }
         ].map((node, i) => (
             <g key={`node-${i}`}>
                 <motion.circle 

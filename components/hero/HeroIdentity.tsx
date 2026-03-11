@@ -36,8 +36,11 @@ export default function HeroIdentity() {
         className="max-w-[480px] relative"
       >
         <div className="absolute -left-8 top-0 bottom-0 w-[1px] bg-border-dim hidden md:block" />
-        <p className="type-body text-base md:text-lg leading-relaxed text-text-secondary opacity-60 font-medium tracking-tight">
-          A {identity.positioning} driven by an intense curiosity to deconstruct complex systems. I build by observing internal mechanics, analyzing points of failure, and engineering resilient architectures.
+        <p className="type-body text-base md:text-lg leading-relaxed text-text-secondary opacity-80 font-medium tracking-tight mb-6">
+          {identity.heroParagraph}
+        </p>
+        <p className="type-metadata text-[0.55rem] tracking-widest text-accent/60 uppercase">
+          {identity.linkedinHeadline}
         </p>
       </motion.div>
     </div>
