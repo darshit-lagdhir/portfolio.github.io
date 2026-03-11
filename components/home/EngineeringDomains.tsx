@@ -21,6 +21,9 @@ export default function EngineeringDomains() {
   return (
     <section className="py-sys-128 border-t border-border-dim bg-bg-primary relative overflow-hidden">
       <div className="system-container">
+        <div className="section-divider mb-sys-64" data-label="02_ENGINEERING_DOMAINS">
+          <span className="divider-label">02_ENGINEERING_DOMAINS</span>
+        </div>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-sys-24 mb-sys-64">
            <div className="space-y-4">
              <div className="type-metadata text-[0.45rem] text-accent">INTELLECTUAL_MANIFEST</div>

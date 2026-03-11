@@ -1,8 +1,7 @@
 import Hero from "@/components/hero/Hero";
-import Mindset from "@/components/about/Mindset";
 import SystemModules from "@/components/projects/SystemModules";
 import EngineeringDomains from "@/components/home/EngineeringDomains";
-import Capabilities from "@/components/shared/Capabilities";
+import EngineeringPhilosophy from "@/components/home/EngineeringPhilosophy";
 import About from "@/components/about/About";
 import TerminalContact from "@/components/contact/TerminalContact";
 import SectionContainer from "@/components/shared/SectionContainer";
@@ -15,11 +14,6 @@ export default function Home() {
         <Hero />
       </SectionContainer>
 
-      {/* PHASE 3: PHILOSOPHY */}
-      <SectionContainer id="philosophy">
-        <Mindset />
-      </SectionContainer>
-
       {/* PHASE 4: SYSTEMS */}
       <SectionContainer id="systems">
         <SystemModules />
@@ -30,12 +24,12 @@ export default function Home() {
         <EngineeringDomains />
       </SectionContainer>
 
-      {/* PHASE 5: CAPABILITIES */}
-      <SectionContainer id="capabilities">
-        <Capabilities />
+      {/* NEW: ENGINEERING PHILOSOPHY */}
+      <SectionContainer id="philosophy">
+        <EngineeringPhilosophy />
       </SectionContainer>
 
-      {/* PHASE 6: ABOUT */}
+      {/* PHASE 6: ABOUT (NARRATIVE) */}
       <SectionContainer id="about">
         <About />
       </SectionContainer>

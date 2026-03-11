@@ -7,8 +7,8 @@ export default function SystemModules() {
   return (
     <div className="w-full">
       {/* SECTION HEADER LAYER */}
-      <div className="section-divider" data-label="02_ENGINEERING_SYSTEMS">
-        <span className="divider-label">02_ENGINEERING_SYSTEMS</span>
+      <div className="section-divider" data-label="01_ENGINEERING_SYSTEMS">
+        <span className="divider-label">01_ENGINEERING_SYSTEMS</span>
       </div>
 
       <div className="grid-12 mb-sys-64">
