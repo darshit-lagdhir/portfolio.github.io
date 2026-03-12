@@ -39,7 +39,7 @@ export default function SystemStoryFlow({ steps, onStepChange }: SystemStoryFlow
       <div className="flex justify-between items-end">
         <div className="space-y-2">
           <div className="type-metadata text-[0.45rem] text-accent">SYSTEM_LIFECYCLE</div>
-          <h2 className="type-identity text-3xl md:text-4xl uppercase tracking-tighter">Operational_Walkthrough</h2>
+          <h2 className="type-identity text-3xl md:text-4xl uppercase tracking-tighter">Development_Journey</h2>
         </div>
         
         <div className="flex items-center gap-4">
@@ -64,7 +64,7 @@ export default function SystemStoryFlow({ steps, onStepChange }: SystemStoryFlow
 
       <div className="relative border border-border-dim bg-bg-secondary/20 overflow-hidden min-h-[250px] md:min-h-[200px]">
         <div className="absolute top-0 right-0 p-4 border-l border-b border-border-dim">
-           <div className="type-metadata text-[0.4rem] opacity-30">RUNTIME_STEP // 0{activeStepIndex + 1}_OF_0{steps.length}</div>
+           <div className="type-metadata text-[0.4rem] opacity-30">EVOLUTION_STEP // 0{activeStepIndex + 1}_OF_0{steps.length}</div>
         </div>
 
         <AnimatePresence mode="wait">
@@ -90,7 +90,7 @@ export default function SystemStoryFlow({ steps, onStepChange }: SystemStoryFlow
 
             {activeStep.activeNodes.length > 0 && (
                <div className="pt-4 flex items-center gap-3">
-                  <div className="type-metadata text-[0.4rem] opacity-30 uppercase">Involved_Nodes:</div>
+                  <div className="type-metadata text-[0.4rem] opacity-30 uppercase">Related_Components:</div>
                   <div className="flex gap-2">
                     {activeStep.activeNodes.map(nodeId => (
                       <span key={nodeId} className="type-metadata text-[0.4rem] px-2 py-0.5 border border-accent/20 text-accent/80 bg-accent/5">

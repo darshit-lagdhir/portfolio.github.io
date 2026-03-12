@@ -176,30 +176,30 @@ export const projects: Project[] = [
                 impact: "SIMPLICITY"
             }
         ],
-        storyFlow: [
+        developmentStory: [
             {
-                id: "booking",
-                title: "Customer Creates Booking",
-                description: "A customer submits a parcel booking through the frontend form. The request is sent to the Express server with the session token.",
-                activeNodes: ["client", "gateway"]
+                id: "motivation",
+                title: "Operational Motivation",
+                description: "The project began with a simple objective: Create a backend system capable of managing parcel operations from booking to delivery, exploring how multi-role workflows function in a real-world environment.",
+                activeNodes: ["gateway"]
             },
             {
-                id: "authentication",
-                title: "Session & Role Verification",
-                description: "The auth middleware validates the session token and confirms the customer role. The request is authorized to proceed.",
-                activeNodes: ["gateway", "rbac"]
+                id: "complexity",
+                title: "Structural Expansion",
+                description: "As the system grew, I designed intricate authentication systems, role-based dashboards, and custom shipment tracking logic to ensure data integrity across the logistics lifecycle.",
+                activeNodes: ["rbac", "logistics"]
             },
             {
-                id: "processing",
-                title: "Booking Logic & Pricing",
-                description: "The business logic layer calculates pricing based on weight and distance, creates the shipment record, and assigns a unique tracking ID.",
-                activeNodes: ["logistics"]
+                id: "challenges",
+                title: "Technical Friction",
+                description: "Development revealed significant challenges in handling session security between roles and designing database schemas that could accurately track complex temporal state transitions.",
+                activeNodes: ["db"]
             },
             {
-                id: "storage",
-                title: "Database Commit",
-                description: "The shipment record is committed to PostgreSQL with all booking details and an initial status of 'booked'. The customer receives their tracking ID.",
-                activeNodes: ["logistics", "db"]
+                id: "evolution",
+                title: "System Stabilization",
+                description: "Through deep iteration and debugging, the initial prototype evolved into a modular platform where authentication concerns were isolated from operational logistics logic.",
+                activeNodes: ["client", "gateway", "rbac", "logistics", "db"]
             }
         ]
     },
@@ -355,24 +355,30 @@ export const projects: Project[] = [
                 impact: "SIMPLICITY"
             }
         ],
-        storyFlow: [
+        developmentStory: [
             {
-                id: "baseline",
-                title: "Baseline Synthesis",
-                description: "The system analyzes historical data for a specific pincode to establish a normal enrollment pattern for each age group.",
-                activeNodes: ["data", "baseline"]
+                id: "challenge",
+                title: "Hackathon Challenge",
+                description: "The project started with a challenge to analyze large-scale Aadhaar enrollment data covering thousands of centers, where manual monitoring was functionally impossible.",
+                activeNodes: ["data"]
             },
             {
-                id: "comparison",
-                title: "Pattern Identification",
-                description: "Current enrollment data is compared against the baseline. The engine identifies patterns like 'Baby Boom Zones' or 'Trend Shifters'.",
-                activeNodes: ["engine"]
+                id: "insight",
+                title: "Pattern Visualization",
+                description: "I realized that identifying spikes or 'Ghost Zones' required an automated system that could highlight unusual enrollment patterns for further human review.",
+                activeNodes: ["baseline", "engine"]
             },
             {
-                id: "advice",
-                title: "Advisory Highlighting",
-                description: "Detected signals are prioritized by confidence scores and presented to human officials on the advisory dashboard.",
+                id: "ethical",
+                title: "Advisory-Only Boundary",
+                description: "Recognizing the gravity of identity data, I intentionally designed the system to be advisory-only, providing signals and context but never making autonomous decisions.",
                 activeNodes: ["dashboard"]
+            },
+            {
+                id: "learning",
+                title: "Responsible Design",
+                description: "Developing this system reinforced the vital lesson that data tools should empower human officials with context rather than replacing them with opaque algorithms.",
+                activeNodes: ["data", "baseline", "engine", "dashboard"]
             }
         ]
     },
@@ -550,30 +556,30 @@ export const projects: Project[] = [
                 impact: "MAINTAINABILITY"
             }
         ],
-        storyFlow: [
+        developmentStory: [
             {
-                id: "parsing",
-                title: "Source Code Parsing",
-                description: "The pipeline receives native source files and parses them to prepare for metadata extraction.",
+                id: "curiosity",
+                title: "FFI Boundary Research",
+                description: "Curiosity about the fragile interaction between high-level languages and native C/C++ libraries led to an investigation into common Foreign Function Interface failure modes.",
                 activeNodes: ["analyser"]
             },
             {
-                id: "extraction",
-                title: "AST Metadata Extraction",
-                description: "Clang compiler tooling analyzes the parsed code to extract function signatures, parameter types, pointer relationships, and struct definitions.",
+                id: "fragility",
+                title: "Identifying Failure Vectors",
+                description: "I identified that runtime crashes often stemmed from incorrect function signatures, pointer misuse, or misaligned memory ownership assumptions across compilation boundaries.",
                 activeNodes: ["ast"]
             },
             {
-                id: "normalization",
-                title: "IR Normalization",
-                description: "The extracted metadata is converted into a universal intermediate representation that normalizes types across different languages.",
-                activeNodes: ["uir"]
+                id: "pipeline",
+                title: "Contract Synthesis Idea",
+                description: "This research inspired the creation of a verification pipeline that extracts metadata from native code and generates safety contracts to enforce valid cross-language calls.",
+                activeNodes: ["uir", "solver"]
             },
             {
-                id: "verification",
-                title: "Contract Synthesis & Verification",
-                description: "Safety contracts are generated from the IR and verified using constraint solving. Results are compiled into a safety report documenting any violations found.",
-                activeNodes: ["solver", "report"]
+                id: "evolution",
+                title: "Modular Research Pipeline",
+                description: "The system evolved from a conceptual exploration into a multi-stage modular pipeline, representing a deep dive into systems engineering and runtime safety.",
+                activeNodes: ["analyser", "ast", "uir", "solver", "report"]
             }
         ]
     }

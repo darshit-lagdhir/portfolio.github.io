@@ -126,7 +126,7 @@ export interface Project {
     ifRebuildingToday?: string[];
     performance?: string;
     future?: ProjectChallenge[]; 
-    storyFlow?: StoryStep[]; 
+    developmentStory?: StoryStep[];
     githubRepoName?: string;
     githubUrl?: string;
     status: "COMPLETE" | "DEVELOPMENT" | string;
