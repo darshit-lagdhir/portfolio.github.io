@@ -112,13 +112,21 @@ export default function SystemLaboratory() {
                          {activeExploration?.title}
                        </h3>
                        
-                       <p className="type-body text-lg opacity-60 leading-relaxed mb-12">
-                         {activeExploration?.description}
+                       <p className="type-body text-base opacity-40 leading-relaxed mb-12">
+                         {activeExploration?.context}
                        </p>
 
-                       <div className="space-y-8">
+                       <div className="space-y-12">
+                          <div className="relative pl-8 border-l border-accent/30">
+                             <div className="absolute -left-[3px] top-0 w-[5px] h-[5px] bg-accent" />
+                             <h4 className="type-metadata text-[0.45rem] opacity-30 mb-4 tracking-widest uppercase italic">Key_Discovery_insight</h4>
+                             <p className="type-body text-lg text-text-primary leading-relaxed italic">
+                                "{activeExploration?.insight}"
+                             </p>
+                          </div>
+
                           <div>
-                             <h4 className="type-metadata text-[0.45rem] opacity-30 mb-4 tracking-widest uppercase">Related_Technologies</h4>
+                             <h4 className="type-metadata text-[0.45rem] opacity-30 mb-4 tracking-widest uppercase font-mono">Involved_Primitives</h4>
                              <div className="flex flex-wrap gap-3">
                                 {activeExploration?.tech.map(t => (
                                   <span key={t} className="px-3 py-1.5 border border-border-dim type-metadata text-[0.4rem] opacity-40 bg-bg-primary/30">
@@ -130,14 +138,14 @@ export default function SystemLaboratory() {
 
                           {activeExploration?.relatedProject && (
                             <div>
-                               <h4 className="type-metadata text-[0.45rem] opacity-30 mb-4 tracking-widest uppercase">Cross_Sector_Alignment</h4>
+                               <h4 className="type-metadata text-[0.45rem] opacity-30 mb-4 tracking-widest uppercase font-mono">System_Implementation</h4>
                                <Link 
                                  href={`/${activeExploration.relatedProject}`}
                                  className="inline-flex items-center gap-4 group/link"
                                >
                                   <div className="w-8 h-[1px] bg-accent/20 group-hover/link:w-12 transition-all" />
                                   <span className="type-metadata text-[0.45rem] text-accent/60 group-hover/link:text-accent transition-colors">
-                                    VIEW_RELATED_SYSTEM: {activeExploration.relatedProject.toUpperCase()}
+                                    APPLIED_IN: {activeExploration.relatedProject.toUpperCase()}
                                   </span>
                                </Link>
                             </div>
