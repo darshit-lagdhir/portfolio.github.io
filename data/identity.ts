@@ -34,12 +34,44 @@ export const identity = {
             description: "Understanding how data infrastructure works and how storage engines persist information."
         }
     ],
-    technologyStack: {
-        languages: ["C", "C++", "Java", "Python", "JavaScript", "TypeScript"],
-        web: ["HTML", "CSS", "React", "Node.js"],
-        databases: ["PostgreSQL", "MySQL", "MongoDB", "SQLite"],
-        tools: ["Git", "GitHub", "VS Code", "Google Cloud"]
-    },
+    capabilities: [
+        {
+            category: "Programming Languages",
+            description: "Tools for architectural exploration. Currently using Java and C++ to study deep data structures and algorithmic thinking, while using Python for data analysis.",
+            items: ["C", "C++", "Java", "Python", "JavaScript", "TypeScript"],
+            projects: ["PFCV", "UIDAI", "MoveX"]
+        },
+        {
+            category: "Backend Development",
+            description: "Designing server logic and workflows. Node.js and Express were the primary tools used for building the MoveX operational backend.",
+            items: ["Node.js", "Express", "REST APIs", "Session Auth", "Middlewares"],
+            projects: ["MoveX"]
+        },
+        {
+            category: "Frontend Technologies",
+            description: "Building interfaces for system management. Using React and Vanilla JavaScript to create dashboards for multi-role logistics systems.",
+            items: ["HTML", "CSS", "React", "Vanilla JS", "Tailwind"],
+            projects: ["MoveX", "UIDAI"]
+        },
+        {
+            category: "Databases",
+            description: "Managing operational data persistence. PostgreSQL serves as the main relational engine for tracking shipments and user sessions.",
+            items: ["PostgreSQL", "MySQL", "MongoDB", "SQLite"],
+            projects: ["MoveX", "UIDAI"]
+        },
+        {
+            category: "Tools & Platforms",
+            description: "Infrastructural support for the development lifecycle, from version control to early cloud exploration.",
+            items: ["Git", "GitHub", "VS Code", "Google Cloud", "Clang Tooling"],
+            projects: ["PFCV"]
+        },
+        {
+            category: "Learning Focus",
+            description: "Active investigation zones where I am currently building knowledge through hands-on experimentation.",
+            items: ["Data Structures", "Systems Architecture", "Cross-Language FFI", "AI/ML Patterns", "Linux Security"],
+            projects: []
+        }
+    ],
     engineeringPrinciples: [
         {
             id: "build",

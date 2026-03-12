@@ -4,38 +4,10 @@ import { motion } from "framer-motion";
 
 import { identity } from "@/data/identity";
 
-const capabilityClusters = [
-  {
-    category: "LANGUAGES",
-    description: "Actively working with several programming languages while exploring deeper concepts in data structures and memory behavior.",
-    items: identity.technologyStack.languages,
-    id: "cap-lang"
-  },
-  {
-    category: "BACKEND_&_WEB",
-    description: "Building backend systems and server logic with Node.js, Express, and React. Designing REST APIs, session management, and authentication flows.",
-    items: identity.technologyStack.web,
-    id: "cap-web"
-  },
-  {
-    category: "DATABASES",
-    description: "Working with multiple databases and learning how data infrastructure, schema design, and storage engines function under the hood.",
-    items: identity.technologyStack.databases,
-    id: "cap-data"
-  },
-  {
-    category: "TOOLS_&_PLATFORMS",
-    description: "Day-to-day tools used for version control, development environments, and cloud exploration.",
-    items: identity.technologyStack.tools,
-    id: "cap-tools"
-  },
-  {
-    category: "CURRENTLY_LEARNING",
-    description: "Areas of active exploration — studying Go and Rust for performance, Python for AI experimentation, and Linux internals for security research.",
-    items: ["Go", "Rust", "AI / ML", "Linux Internals", "Cybersecurity"],
-    id: "cap-learning"
-  }
-];
+const capabilityClusters = identity.capabilities.map((cap, idx) => ({
+  ...cap,
+  id: `cap-${idx}`
+}));
 
 export default function Capabilities() {
   return (
@@ -91,15 +63,26 @@ export default function Capabilities() {
               {cluster.category}
             </h3>
 
-            <p className="type-body text-xs mb-10 opacity-30 leading-relaxed flex-grow font-medium">
+            <p className="type-body text-xs mb-8 opacity-40 leading-relaxed flex-grow font-medium">
               {cluster.description}
             </p>
+
+            {/* ASSOCIATED PROJECTS */}
+            {cluster.projects && cluster.projects.length > 0 && (
+              <div className="mb-8 flex flex-wrap gap-2">
+                {cluster.projects.map(proj => (
+                  <span key={proj} className="type-metadata text-[0.35rem] text-accent/60 px-1.5 py-0.5 border border-accent/10 bg-accent/5">
+                    {proj}
+                  </span>
+                ))}
+              </div>
+            )}
 
             {/* TECHNICAL PRIMITIVES LIST */}
             <div className="mt-auto pt-8 border-t border-border-dim/20">
               <div className="flex flex-wrap gap-x-6 gap-y-3">
                 {cluster.items.map(item => (
-                  <span key={item} className="type-metadata text-[0.4rem] opacity-20 group-hover:opacity-40 transition-opacity uppercase font-mono tracking-widest">
+                  <span key={item} className="type-metadata text-[0.4rem] opacity-20 group-hover:opacity-60 transition-opacity uppercase font-mono tracking-widest">
                     {item}
                   </span>
                 ))}
