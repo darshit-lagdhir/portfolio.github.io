@@ -21,10 +21,12 @@ export const projects: Project[] = [
         problem: "Courier services involve multiple operational steps: booking parcels, assigning pickup tasks, tracking shipments, updating delivery status, managing staff roles, and maintaining operational reports. Without a centralized system, managing these processes becomes complicated and error-prone. MoveX attempts to organize all of these operations into a single system that handles authentication, shipment tracking, and operational management.",
         engineeringFocus: "Backend Architecture & Operational Workflows",
         technicalMeta: {
-            systemType: "Web Application",
+            systemType: "Operational backend system",
             architectureStyle: "Modular Monolith",
             storageType: "Relational (PostgreSQL)",
         },
+        purpose: "Logistics workflow management system designed to manage parcel operations, shipments, and role-based dashboards.",
+        learningOutcomes: ["Backend Architecture", "Role-Based Access Control", "Database Schema Design"],
         authority: {
             complexityScore: 7,
             architectureDepth: "ROLE_ISO_HNDL",
@@ -221,10 +223,12 @@ export const projects: Project[] = [
         problem: "Monitoring enrollment patterns manually across millions of records in thousands of centers is extremely difficult. Officials struggle to detect unexpected spikes, sudden drops (Ghost Zones), or gradual trend shifts in specific demographic groups across a national scale. The project attempts to make these patterns visible by analyzing aggregated counts and presenting summarized signals for review.",
         engineeringFocus: "Advisory Pattern Detection & Ethical Design",
         technicalMeta: {
-            systemType: "Advisory Engine",
+            systemType: "Data analysis and advisory system",
             architectureStyle: "Sequential Data Pipeline",
             storageType: "Aggregated Pincode-Level Data",
         },
+        purpose: "Data analysis system that highlights enrollment patterns in Aadhaar datasets to support human decision-making.",
+        learningOutcomes: ["Statistical Pattern Detection", "Advisory Signal Design", "Privacy-by-Aggregation"],
         authority: {
             complexityScore: 8,
             architectureDepth: "ADVISORY_PIPELINE",
@@ -392,10 +396,12 @@ export const projects: Project[] = [
         problem: "When a high-level language calls native code through FFI, several assumptions must hold: function parameters must match expected types, pointers must reference valid memory, ownership rules must be respected, and binary interfaces must remain compatible across compilation boundaries. If any of these assumptions fail, the program may crash or behave unpredictably. PFCV attempts to detect these issues before they cause runtime failures.",
         engineeringFocus: "Cross-Language Verification Pipeline",
         technicalMeta: {
-            systemType: "Verification Pipeline",
+            systemType: "Systems engineering research pipeline",
             architectureStyle: "Multi-Stage Pipeline",
             storageType: "In-Memory AST State",
         },
+        purpose: "Verification pipeline designed to improve safety when calling native libraries across different programming languages.",
+        learningOutcomes: ["Language Interoperability", "Compiler Tooling (Clang)", "Contract-Driven Verification"],
         authority: {
             complexityScore: 8,
             architectureDepth: "FFI_VERIFY",

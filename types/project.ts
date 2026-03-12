@@ -131,7 +131,9 @@ export interface Project {
     githubUrl?: string;
     status: "COMPLETE" | "DEVELOPMENT" | string;
     domains?: string[]; 
-    authority?: AuthorityLayer; // Phase 31: Credibility Layer
+    authority?: AuthorityLayer; 
+    purpose?: string;
+    learningOutcomes?: string[];
 }
 
 export interface EngineeringDomain {

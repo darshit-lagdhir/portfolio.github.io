@@ -18,34 +18,40 @@ interface ComparisonAttribute {
 
 const COMPARISON_ATTRIBUTES: ComparisonAttribute[] = [
   {
-    id: "domain",
-    label: "PRIMARY_DOMAIN",
-    description: "Core technical territory of operation.",
-    getValue: (p) => p.authority?.primaryDomain || "N/A"
+    id: "purpose",
+    label: "PRIMARY_PURPOSE",
+    description: "Core objective and functional target.",
+    getValue: (p) => p.purpose || "N/A"
   },
   {
-    id: "architecture",
-    label: "ARCH_STYLE",
-    description: "Structural pattern governing system logic.",
-    getValue: (p) => p.technicalMeta?.architectureStyle || "N/A"
+    id: "category",
+    label: "SYSTEM_CATEGORY",
+    description: "Architectural classification of the build.",
+    getValue: (p) => p.technicalMeta?.systemType || "N/A"
   },
   {
-    id: "complexity",
-    label: "COMPLEXITY",
-    description: "Logic density and boundary isolation score.",
-    getValue: (p) => p.authority?.complexityScore || 0
+    id: "focus",
+    label: "TECHNICAL_FOCUS",
+    description: "Primary engineering area emphasized.",
+    getValue: (p) => p.engineeringFocus || "N/A"
   },
   {
-    id: "reliability",
-    label: "RELIABILITY",
-    description: "Primary technical stability challenge.",
-    getValue: (p) => p.challenges?.[0]?.title || "N/A"
+    id: "tech",
+    label: "TECH_STACK",
+    description: "Core languages and frameworks used.",
+    getValue: (p) => p.techStack || []
   },
   {
-    id: "experimentation",
-    label: "EXP_VECTORS",
-    description: "Areas of active research and iteration.",
-    getValue: (p) => p.authority?.experimentationAreas || []
+    id: "status",
+    label: "PROJECT_STATUS",
+    description: "Current state of development/deployment.",
+    getValue: (p) => p.status || "N/A"
+  },
+  {
+    id: "outcomes",
+    label: "LEARNING_OUTCOMES",
+    description: "Key architectural insights gained.",
+    getValue: (p) => p.learningOutcomes || []
   }
 ];
 
@@ -123,27 +129,15 @@ export default function SystemComparison() {
               {/* System Values */}
               {projects.filter(p => p.tier === 1).map((project) => {
                 const value = attr.getValue(project);
+                const isArray = Array.isArray(value);
+
                 return (
                   <div key={`${project.slug}-${attr.id}`} className="col-span-3 p-8 border-l border-b border-border-dim flex items-center">
-                    {attr.id === "complexity" ? (
-                      <div className="flex gap-1 w-full opacity-60">
-                        {[...Array(10)].map((_, i) => (
-                          <div 
-                            key={i} 
-                            className={cn(
-                              "flex-1 h-2", 
-                              i < Number(value) 
-                                ? "bg-accent/30" 
-                                : "bg-border-dim"
-                            )} 
-                          />
-                        ))}
-                      </div>
-                    ) : attr.id === "experimentation" ? (
-                      <div className="flex flex-col gap-1.5 grayscale opacity-40">
-                        {(value as string[]).slice(0, 2).map(area => (
-                          <span key={area} className="type-metadata text-[0.4rem] px-2 py-0.5 border border-border-dim uppercase truncate">
-                            {area}
+                    {isArray ? (
+                      <div className="flex flex-wrap gap-1.5 grayscale opacity-40 group-hover:opacity-80 transition-all">
+                        {(value as string[]).map(item => (
+                          <span key={item} className="type-metadata text-[0.35rem] px-2 py-0.5 border border-border-dim uppercase truncate">
+                            {item}
                           </span>
                         ))}
                       </div>
@@ -180,26 +174,13 @@ export default function SystemComparison() {
             <div className="p-6 space-y-6 bg-noise">
               {COMPARISON_ATTRIBUTES.map((attr) => {
                 const value = attr.getValue(project);
+                const isArray = Array.isArray(value);
                 return (
                   <div key={attr.id} className="space-y-2">
                     <div className="type-metadata text-[0.45rem] opacity-30 uppercase tracking-[0.2em]">{attr.label}</div>
-                    {attr.id === "complexity" ? (
-                      <div className="flex gap-1">
-                        {[...Array(10)].map((_, i) => (
-                          <div 
-                            key={i} 
-                            className={cn(
-                              "flex-1 h-2", 
-                              i < Number(value) ? "bg-accent/60" : "bg-border-dim"
-                            )} 
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="type-emphasis text-[0.7rem] text-text-secondary leading-tight uppercase">
-                        {Array.isArray(value) ? value.join(" // ") : value}
-                      </div>
-                    )}
+                    <div className="type-emphasis text-[0.7rem] text-text-secondary leading-tight uppercase">
+                      {isArray ? (value as string[]).join(" // ") : value}
+                    </div>
                   </div>
                 );
               })}
@@ -213,15 +194,15 @@ export default function SystemComparison() {
         <div className="flex flex-wrap justify-center gap-8">
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 bg-accent" />
-            <span className="type-metadata text-[0.5rem]">MODULAR_ISOLATION</span>
+            <span className="type-metadata text-[0.5rem]">ROLE_BASED_ISOLATION</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 bg-accent" />
-            <span className="type-metadata text-[0.5rem]">STATE_VERIFICATION</span>
+            <span className="type-metadata text-[0.5rem]">CONTRACT_DRIVEN_SAFETY</span>
           </div>
           <div className="flex items-center gap-2">
             <div className="w-1.5 h-1.5 bg-accent" />
-            <span className="type-metadata text-[0.5rem]">ASYNC_DATA_PIPELINES</span>
+            <span className="type-metadata text-[0.5rem]">ADVISORY_INTELLIGENCE</span>
           </div>
         </div>
         <div className="type-metadata text-[0.4rem] font-mono">HASH: 77_ARCH_DISCOVERY_2026</div>
