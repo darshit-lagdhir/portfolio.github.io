@@ -96,6 +96,17 @@ export default function EngineeringDomains() {
                 </div>
 
                 <div className="space-y-6">
+                   <div className="type-metadata text-[0.45rem] opacity-30 uppercase tracking-widest">Involved_Technologies</div>
+                   <div className="flex flex-wrap gap-2">
+                      {activeDomain.relatedTech?.map(tech => (
+                        <span key={tech} className="px-3 py-1 bg-bg-secondary border border-border-dim type-metadata text-[0.6rem] hover:border-accent transition-colors">
+                          {tech}
+                        </span>
+                      ))}
+                   </div>
+                </div>
+
+                <div className="space-y-6">
                    <div className="type-metadata text-[0.45rem] opacity-30 uppercase tracking-widest">Connected_Systems</div>
                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {relatedProjects.map(project => (

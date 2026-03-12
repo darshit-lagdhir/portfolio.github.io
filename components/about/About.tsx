@@ -97,22 +97,12 @@ export default function About() {
                 SYSTEM_TOOLS_&_CAPABILITIES
              </div>
              <div className="grid grid-cols-1 md:grid-cols-2 gap-sys-48">
-                <div>
-                  <h4 className="type-metadata text-[0.6rem] opacity-30 mb-4 tracking-widest">LANGUAGES</h4>
-                  <p className="type-body text-sm font-medium text-text-secondary leading-relaxed">{identity.technologyStack.languages.join(" • ")}</p>
-                </div>
-                <div>
-                  <h4 className="type-metadata text-[0.6rem] opacity-30 mb-4 tracking-widest">WEB_DEVELOPMENT</h4>
-                  <p className="type-body text-sm font-medium text-text-secondary leading-relaxed">{identity.technologyStack.web.join(" • ")}</p>
-                </div>
-                <div>
-                  <h4 className="type-metadata text-[0.6rem] opacity-30 mb-4 tracking-widest">DATABASES</h4>
-                  <p className="type-body text-sm font-medium text-text-secondary leading-relaxed">{identity.technologyStack.databases.join(" • ")}</p>
-                </div>
-                <div>
-                  <h4 className="type-metadata text-[0.6rem] opacity-30 mb-4 tracking-widest">TOOLS_&_PLATFORMS</h4>
-                  <p className="type-body text-sm font-medium text-text-secondary leading-relaxed">{identity.technologyStack.tools.join(" • ")}</p>
-                </div>
+                {identity.capabilities.slice(0, 4).map((cap, idx) => (
+                  <div key={idx}>
+                    <h4 className="type-metadata text-[0.6rem] opacity-30 mb-4 tracking-widest uppercase">{cap.category.replace(/ /g, "_")}</h4>
+                    <p className="type-body text-sm font-medium text-text-secondary leading-relaxed">{cap.items.join(" • ")}</p>
+                  </div>
+                ))}
              </div>
           </div>
 

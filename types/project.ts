@@ -141,4 +141,6 @@ export interface EngineeringDomain {
     name: string;
     description: string;
     relatedDomains: string[]; // IDs of connected domains for visualization
+    relatedTech?: string[];
+    relatedProjects?: string[];
 }
