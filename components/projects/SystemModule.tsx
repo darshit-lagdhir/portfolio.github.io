@@ -36,14 +36,14 @@ export default function SystemModule({ project, index }: SystemModuleProps) {
           <div className="flex items-center gap-3">
             <span className={cn(
               "w-1 h-1 rounded-full",
-              project.status === "COMPLETE" ? "bg-accent/30" : 
-              project.status === "ACTIVE_DEVELOPMENT" ? "bg-yellow-500/40" :
-              project.status === "HACKATHON" ? "bg-blue-400/40" : "bg-text-muted/30"
+              project.status === "Completed" ? "bg-accent/30" : 
+              project.status === "Active Development" ? "bg-yellow-500/40" :
+              project.status === "Hackathon Project" ? "bg-blue-400/40" : "bg-text-muted/30"
             )} />
             <span className="type-metadata text-[0.4rem] opacity-30 tracking-widest font-mono">
-              {project.status === "COMPLETE" ? "STABLE" : 
-               project.status === "ACTIVE_DEVELOPMENT" ? "IN_DEVELOPMENT" :
-               project.status === "HACKATHON" ? "HACKATHON" : "RESEARCH"}
+              {project.status === "Completed" ? "STABLE" : 
+               project.status === "Active Development" ? "IN_DEVELOPMENT" :
+               project.status === "Hackathon Project" ? "HACKATHON" : "RESEARCH"}
             </span>
           </div>
           
@@ -69,7 +69,7 @@ export default function SystemModule({ project, index }: SystemModuleProps) {
 
         <div className="mb-sys-32">
           <div className="type-metadata text-[0.35rem] text-accent/20 mb-3 tracking-[0.3em] font-mono">NODE_{index + 1} {'//'} {project.authority?.primaryDomain.toUpperCase() || "CORE"}</div>
-          <h3 className="type-h2 leading-tight text-xl md:text-2xl tracking-tighter">{project.title.toLowerCase()}</h3>
+          <h3 className="type-h2 leading-tight text-xl md:text-2xl tracking-tighter">{project.name.toLowerCase()}</h3>
         </div>
 
         <p className="type-body text-xs mb-sys-64 opacity-40 leading-relaxed font-medium">

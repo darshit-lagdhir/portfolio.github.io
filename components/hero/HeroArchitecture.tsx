@@ -56,16 +56,18 @@ export default function HeroArchitecture() {
 
         {/* Nodes */}
         {[
-            { x: 100, y: 100, label: "PFCV_NODE" },
-            { x: 300, y: 100, label: "MOVEX_SYS" },
-            { x: 300, y: 300, label: "UIDAI_INT" },
-            { x: 100, y: 300, label: "SYS_CORE" }
+            { x: 100, y: 100, label: "PFCV_SYSTEM" },
+            { x: 300, y: 100, label: "MOVEX_CORE" },
+            { x: 300, y: 300, label: "UIDAI_ADVISOR" },
+            { x: 100, y: 300, label: "BACKEND_DEV" },
+            { x: 200, y: 60, label: "SYSTEMS_ENG" },
+            { x: 200, y: 340, label: "DATA_SYSTEMS" }
         ].map((node, i) => (
             <g key={`node-${i}`}>
                 <motion.circle 
                     cx={node.x} 
                     cy={node.y} 
-                    r="4" 
+                    r="3" 
                     fill="currentColor"
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
@@ -74,7 +76,7 @@ export default function HeroArchitecture() {
                 <motion.circle 
                     cx={node.x} 
                     cy={node.y} 
-                    r="8" 
+                    r="6" 
                     stroke="currentColor" 
                     fill="transparent"
                     strokeWidth="0.5"
@@ -82,9 +84,9 @@ export default function HeroArchitecture() {
                     transition={{ duration: 3, repeat: Infinity, delay: i }}
                 />
                 <text 
-                    x={node.x + 12} 
-                    y={node.y + 4} 
-                    className="type-metadata text-[6px] fill-current opacity-40 font-mono"
+                    x={node.x + 10} 
+                    y={node.y + 3} 
+                    className="type-metadata text-[5px] fill-current opacity-40 font-mono"
                 >
                     {node.label}
                 </text>

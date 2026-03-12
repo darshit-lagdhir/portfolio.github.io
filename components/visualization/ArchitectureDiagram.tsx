@@ -2,18 +2,20 @@
 
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ProjectDiagram } from "@/types/project";
+import { DiagramNode, DiagramConnection } from "@/types/project";
 import ArchNode from "./ArchNode";
 import ArchConnection from "./ArchConnection";
 import { cn } from "@/lib/utils";
 import { useScene } from "@/context/SceneContext";
 
 interface ArchitectureDiagramProps {
-  diagram: ProjectDiagram;
+  layout: "layered" | "pipeline";
+  nodes: DiagramNode[];
+  connections: DiagramConnection[];
   highlightedNodes?: string[];
 }
 
-export default function ArchitectureDiagram({ diagram, highlightedNodes = [] }: ArchitectureDiagramProps) {
+export default function ArchitectureDiagram({ layout, nodes, connections, highlightedNodes = [] }: ArchitectureDiagramProps) {
   const { isMobile } = useScene();
   const [activeNodeId, setActiveNodeId] = useState<string | null>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -62,9 +64,9 @@ export default function ArchitectureDiagram({ diagram, highlightedNodes = [] }: 
       window.removeEventListener("resize", debouncedUpdate);
       if (resizeTimeoutRef.current) clearTimeout(resizeTimeoutRef.current);
     };
-  }, [diagram, isVisible]);
+  }, [nodes, connections, isVisible]);
 
-  const activeNode = diagram.nodes.find(n => n.id === activeNodeId);
+  const activeNode = nodes.find(n => n.id === activeNodeId);
 
   return (
     <div className="relative w-full py-sys-32">
@@ -76,14 +78,14 @@ export default function ArchitectureDiagram({ diagram, highlightedNodes = [] }: 
             ? "grid-cols-1 gap-y-12" 
             : cn(
                 "gap-y-16 lg:gap-y-24",
-                diagram.layout === "pipeline" 
+                layout === "pipeline" 
                   ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-4" 
                   : "grid-cols-1 md:grid-cols-3"
               )
         )}
       >
         {/* Connection Layer */}
-        {diagram.connections.map((conn, idx) => {
+        {connections.map((conn, idx) => {
           const isFromActive = conn.from === activeNodeId;
           const isToActive = conn.to === activeNodeId;
           const isPathActive = isFromActive || isToActive;
@@ -94,14 +96,14 @@ export default function ArchitectureDiagram({ diagram, highlightedNodes = [] }: 
               fromRect={nodeRects[conn.from]}
               toRect={nodeRects[conn.to]}
               parentRect={parentRect}
-              layout={diagram.layout}
+              layout={layout}
               isActive={isPathActive}
             />
           );
         })}
 
         {/* Nodes Layer */}
-        {diagram.nodes.map((node) => {
+        {nodes.map((node) => {
           const isHighlighted = highlightedNodes.includes(node.id);
           const isSelected = activeNodeId === node.id;
           const isAnyHighlighted = highlightedNodes.length > 0;
@@ -189,7 +191,7 @@ export default function ArchitectureDiagram({ diagram, highlightedNodes = [] }: 
       </AnimatePresence>
 
       <div className="mt-6 flex justify-between items-center opacity-20">
-         <div className="type-metadata text-[0.4rem]">VIS_ENGINE_v1.0 // LAYOUT_{diagram.layout.toUpperCase()}</div>
+         <div className="type-metadata text-[0.4rem]">VIS_ENGINE_v1.0 // LAYOUT_{layout.toUpperCase()}</div>
          <div className="type-metadata text-[0.4rem]">SELECT_NODE_FOR_TELEMETRY</div>
       </div>
     </div>

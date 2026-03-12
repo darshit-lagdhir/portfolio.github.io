@@ -72,9 +72,9 @@ export default function Hero() {
       {/* Interface Intelligence Hint */}
       <div className="absolute bottom-sys-32 right-sys-32 hidden lg:block opacity-40">
         <DiscoveryHint 
-          label={identity.discoveryHints.toAbout.label}
+          label={identity.discovery_hints.toAbout.label}
           href="#about"
-          description={identity.discoveryHints.toAbout.description}
+          description={identity.discovery_hints.toAbout.description}
           orientation="right"
         />
       </div>

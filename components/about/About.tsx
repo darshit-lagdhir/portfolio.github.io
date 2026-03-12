@@ -10,13 +10,13 @@ const NARRATIVE_BLOCKS = [
     id: "curiosity",
     label: "INTERNAL_MECHANICS",
     title: "UNDERSTANDING_SYSTEMS",
-    content: identity.aboutNarrative
+    content: identity.about.about_intro
   },
   {
     id: "learning",
     label: "LEARNING_PROCESS",
     title: "CONSTRUCT_AND_DEBUG",
-    content: identity.learningPhilosophy
+    content: identity.about.about_learning_context
   }
 ];
 
@@ -25,7 +25,7 @@ export default function About() {
     <div className="w-full relative">
       <SectionDivider 
         label="01_ABOUT" 
-        description={identity.sectionTransitions.toAbout}
+        description={identity.section_transitions.toAbout}
       />
 
       <div className="grid-12 items-start">
@@ -40,7 +40,9 @@ export default function About() {
           {/* BIO DETAILS (Mobile only or integrated) */}
           <div className="lg:hidden mt-sys-64 pt-sys-64 border-t border-border-dim">
             <div className="type-metadata text-[0.6rem] mb-2 opacity-30 tracking-widest">EDUCATION_REF</div>
-            <div className="type-emphasis text-sm">{identity.degree.toUpperCase()} @ {identity.university.toUpperCase()}</div>
+            <div className="type-emphasis text-sm">
+              {identity.degree?.toUpperCase()} @ {identity.university?.toUpperCase()}
+            </div>
           </div>
         </div>
 
@@ -77,7 +79,7 @@ export default function About() {
                 ACTIVE_EXPLORATION_DOMAINS
              </div>
              <div className="grid grid-cols-1 md:grid-cols-2 gap-sys-32">
-                {identity.currentExplorationDomains.map((domain, idx) => (
+                {identity.exploration_focus.map((domain, idx) => (
                     <motion.div 
                       key={domain.title}
                       initial={{ opacity: 0, y: 10 }}
@@ -112,7 +114,9 @@ export default function About() {
           {/* BIO DETAILS (Mobile only or integrated) */}
           <div className="lg:hidden mt-sys-64 pt-sys-64 border-t border-border-dim">
             <div className="type-metadata text-[0.6rem] mb-2 opacity-30 tracking-widest">EDUCATION_REF</div>
-            <div className="type-emphasis text-sm">{identity.degree.toUpperCase()} @ {identity.university.toUpperCase()}</div>
+            <div className="type-emphasis text-sm">
+              {identity.degree?.toUpperCase()} @ {identity.university?.toUpperCase()}
+            </div>
           </div>
         </div>
 
@@ -133,9 +137,9 @@ export default function About() {
       
       <div className="mt-sys-96 flex justify-end">
         <DiscoveryHint 
-          label={identity.discoveryHints.toDomains.label}
+          label={identity.discovery_hints.toDomains.label}
           href="#domains"
-          description={identity.discoveryHints.toDomains.description}
+          description={identity.discovery_hints.toDomains.description}
           orientation="right"
         />
       </div>
@@ -194,9 +198,9 @@ function AboutVisualElement() {
 
       <div className="mt-sys-128 pt-sys-64 border-t border-border-dim/20 relative">
         <DiscoveryHint 
-          label={identity.discoveryHints.toContact.label} 
+          label={identity.discovery_hints.toContact.label} 
           href="#contact"
-          description={identity.discoveryHints.toContact.description}
+          description={identity.discovery_hints.toContact.description}
           orientation="left"
         />
         <div className="absolute bottom-0 right-0 type-metadata text-[0.4rem] opacity-20 hidden md:block">

@@ -58,14 +58,14 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
              >
                <span className={cn(
                  "w-2 h-2 rounded-full",
-                 project.status === "COMPLETE" ? "bg-green-500/50" : 
-                 project.status === "ACTIVE_DEVELOPMENT" ? "bg-yellow-500/50 pulse" :
-                 project.status === "HACKATHON" ? "bg-blue-400/50" : "bg-yellow-500/50 pulse"
+                 project.status === "Completed" ? "bg-green-500/50" : 
+                 project.status === "Active Development" ? "bg-yellow-500/50 pulse" :
+                 project.status === "Hackathon Project" ? "bg-blue-400/50" : "bg-yellow-500/50 pulse"
                )} />
                <span className="type-metadata text-[0.5rem] text-accent tracking-widest">
-                 {project.status === "COMPLETE" ? "COMPLETE" : 
-                  project.status === "ACTIVE_DEVELOPMENT" ? "ACTIVE_DEVELOPMENT" :
-                  project.status === "HACKATHON" ? "HACKATHON_PROJECT" : "IN_DEVELOPMENT"}
+                 {project.status === "Completed" ? "COMPLETE" : 
+                  project.status === "Active Development" ? "ACTIVE_DEVELOPMENT" :
+                  project.status === "Hackathon Project" ? "HACKATHON_PROJECT" : "IN_DEVELOPMENT"}
                </span>
              </motion.div>
 
@@ -75,7 +75,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                transition={{ duration: 0.8 }}
                className="type-identity text-5xl md:text-8xl leading-none mb-sys-32"
              >
-               {project.title.toUpperCase()}_
+               {project.name.toUpperCase()}_
              </motion.h1>
 
              <motion.p 
@@ -125,7 +125,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
             <section>
                 <div className="space-y-sys-48">
                   <p className="type-body text-base md:text-lg leading-relaxed text-text-primary opacity-80 font-medium">
-                    {project.overview}
+                    {project.longDescription}
                   </p>
                   <div className="module-frame !p-10 border-dashed opacity-60">
                      <div className="type-metadata text-[0.4rem] text-accent/40 mb-6 tracking-[0.3em] font-mono uppercase">PROBLEM_DEFINITION</div>
@@ -140,7 +140,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                <SectionDivider label="02_ARCHITECTURE_SPEC" className="mb-sys-48" />
                <div className="space-y-sys-32">
                  <p className="type-body leading-relaxed text-text-secondary">
-                   {project.architecture}
+                   {project.engineeringFocus}
                  </p>
                  
                  <div className="grid grid-cols-1 md:grid-cols-2 gap-sys-24 mt-sys-48">
@@ -153,16 +153,18 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                     ))}
                  </div>
 
-                 {project.diagram && (
-                   <div className="mt-sys-96">
-                     <div className="flex items-center gap-4 mb-sys-32 opacity-30">
-                        <div className="h-[1px] flex-grow bg-border-dim" />
-                        <span className="type-metadata text-[0.5rem] tracking-widest">SYSTEM_BLUEPRINT_REFERENCE</span>
-                        <div className="h-[1px] flex-grow bg-border-dim" />
-                     </div>
-                     <ArchitectureDiagram diagram={project.diagram} />
+                 <div className="mt-sys-96">
+                   <div className="flex items-center gap-4 mb-sys-32 opacity-30">
+                      <div className="h-[1px] flex-grow bg-border-dim" />
+                      <span className="type-metadata text-[0.5rem] tracking-widest">SYSTEM_BLUEPRINT_REFERENCE</span>
+                      <div className="h-[1px] flex-grow bg-border-dim" />
                    </div>
-                 )}
+                   <ArchitectureDiagram 
+                     layout={project.layout}
+                     nodes={project.architecture_nodes}
+                     connections={project.architecture_connections}
+                   />
+                 </div>
                </div>
             </section>
           </div>
@@ -224,9 +226,9 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
 
             <section className="pt-sys-48 border-t border-border-dim/20">
                 <DiscoveryHint 
-                   label={identity.discoveryHints.toProjectComparison.label} 
+                   label={identity.discovery_hints.toProjectComparison.label} 
                    href="/#comparison"
-                   description={identity.discoveryHints.toProjectComparison.description}
+                   description={identity.discovery_hints.toProjectComparison.description}
                    orientation="left"
                 />
             </section>
@@ -297,21 +299,23 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
            </section>
 
            {/* Section 06: System Evolution Journey (Story Flow) */}
-           {project.developmentStory && project.diagram && (
+           {project.development_story && (
               <section className="py-sys-128 border-t border-border-dim">
                  <SectionDivider label="07_DEVELOPMENT_JOURNEY" className="mb-sys-64" />
                 
-                <div className="space-y-sys-64">
+                 <div className="space-y-sys-64">
                    <ArchitectureDiagram 
-                      diagram={project.diagram} 
+                      layout={project.layout} 
+                      nodes={project.architecture_nodes}
+                      connections={project.architecture_connections}
                       highlightedNodes={highlightedNodes}
                    />
                    
                    <SystemStoryFlow 
-                      steps={project.developmentStory}
+                      steps={project.development_story}
                       onStepChange={(step) => setHighlightedNodes(step.activeNodes)}
                    />
-                </div>
+                 </div>
               </section>
            )}
 
@@ -432,7 +436,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                     <span className="type-metadata text-[0.45rem] opacity-30 group-hover:opacity-100 transition-opacity">EXPLORE_NODE →</span>
                   </div>
                   <h3 className="type-identity text-4xl uppercase tracking-tighter group-hover:text-accent transition-colors">
-                    {nextProject.title}_
+                    {nextProject.name}_
                   </h3>
                   <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity select-none pointer-events-none">
                      <span className="type-identity text-7xl uppercase">{nextProject.slug}</span>
@@ -443,9 +447,9 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
             <div className="col-span-12 lg:col-span-4 lg:col-start-9 flex flex-col justify-end mt-sys-64 lg:mt-0 items-start lg:items-end">
                <div className="space-y-12 text-left lg:text-right w-full">
                   <DiscoveryHint 
-                    label={identity.discoveryHints.toProjectComparisonMatrix.label} 
+                    label={identity.discovery_hints.toProjectComparisonMatrix.label} 
                     href="/#comparison"
-                    description={identity.discoveryHints.toProjectComparisonMatrix.description}
+                    description={identity.discovery_hints.toProjectComparisonMatrix.description}
                     orientation="right"
                   />
                   <div className="space-y-6">

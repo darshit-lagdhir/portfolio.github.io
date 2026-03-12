@@ -1,93 +1,119 @@
-# ARCHITECTURAL DECISION RECORD // ENGINEERING SIGNATURE SYSTEM
+# Darshit Lagdhir // Systems Engineering Portfolio
 
-**STATUS:** `LOCKED_AND_INITIALIZED`
-**VERSION:** `1.0.0_STABLE`
-**PURPOSE:** `LONG_TERM_ENGINEERING_ENVIRONMENT`
+This repository contains the source code and architectural documentation for my personal portfolio. This project is not a static gallery or a generic template; it is a deliberately engineered system designed to document my learning journey through systems engineering, backend architecture, and technical exploration.
 
----
-
-## 🏛️ SYSTEM DECLARATION & IDENTITY
-
-This repository is **not a simple personal website**. It has formally transitioned from an active development project into a **permanent engineering signature**. 
-
-It is a long-term engineering showcase environment designed to represent a rigorous, systems-thinking approach to software architecture. The portfolio stands as a living record of technical exploration, structural problem solving, and analytical documentation.
-
-This environment communicates identity not through empty design elements, but through functional structures:
-- Interactive architecture diagram constraints
-- Synthetic laboratory experiments
-- Technical decision logs
-- Domain-specific analytics matrices
+The portfolio serves as a structured interface for explaining how I approach building software, breaking complex problems down into modular components, and understanding the internal mechanics of complex systems.
 
 ---
 
-## ⚖️ LONG-TERM MAINTENANCE PRINCIPLES
+## 👨‍💻 About the Developer
 
-To preserve the intellectual density and performance of this environment, future development is strictly governed by the following constraints:
+**Darshit Lagdhir**  
+*Aspiring Systems Architect*
 
-1. **Architectural Preservation:** The core structural code of this portfolio has been finalized. Unnecessary module refactoring or sweeping structural redesigns are strictly prohibited. The system is built for multi-year durability.
-2. **Growth by Extension:** The portfolio should grow monotonically. New projects, research nodes, and experiments should be integrated into the existing registry (`/data/projects.ts` and `/data/laboratory.ts`) rather than forcing a redesign of the interface layer.
-3. **Archive, Do Not Erase:** As older prototypes lose relevance natively, they must be transitioned into the Tier 2/Tier 3 `ExplorationArchive.tsx` sub-system, functioning as a historical record of continuous technical evolution.
-4. **Design Restraint:** The visual interface relies purely on structural typography, high-reliability background patterns, and exact mathematical spacing. No flashy graphical trends, temporary aesthetics, or heavy visual motion mechanics shall be introduced.
-5. **Periodic Audits:** While the architecture is sealed, subsequent project introductions must undergo strict performance auditing to ensure they do not introduce memory regressions, slow paint times, or layout shifts.
+I am a software engineer focused on exploring backend systems, programming language boundaries, and the internal mechanics of how software actually works. My work is driven by a curiosity for what happens beneath the surface of high-level abstractions—specifically how data flows through pipelines, how memory is managed across FFI boundaries, and how multi-role systems maintain security and state integrity.
 
 ---
 
-## 🧭 PORTFOLIO GROWTH MODEL
+## 🏛️ Portfolio Structure
 
-The system is designed to seamlessly integrate future technical investigations:
+The portfolio is organized into a logical narrative sequence that moves from identity and philosophy into applied systems and deep-dive research:
 
-- **Core Frameworks (Tier 1):** Large-scale backend systems, distributed architectures, and production applications will populate the `SystemsModule` and `SystemComparison` sections.
-- **Micro-Investigations (Tier 2/3):** Short-burst learnings, proof-of-concept tests, and unlaunched architectures must be channeled straight to the Exploration Archive.
-- **Laboratory Vectors:** Future learning boundaries (such as AI verification pipelines or low-level memory handling models) should be exposed via the `SystemLaboratory` component.
-
-### Maintaining the Core Narrative
-
-The homepage scroll acts as a cohesive technical journey. Irrespective of what new projects get inserted, the narrative sequence MUST remain structurally intact:
-1. **Identity & Vector** (`HeroIdentity`) 
-2. **Applied Solutions** (`SystemModule`)
-3. **Broader Analytics** (`SystemComparison` & `DomainMap`)
-4. **Active Learning** (`SystemLaboratory`)
-5. **Philosophy & Human Construct** (`About`, `Capabilities`) 
-6. **Execution Protocol** (`TerminalContact`)
+1.  **Identity Probing (Hero)**: A high-level introduction to my technical focus.
+2.  **Human Construct (About)**: Detailed background on my mindset and educational path.
+3.  **Intellectual Territory (Domains)**: A map of the technical areas I am currently exploring.
+4.  **Core Project Modules (Systems)**: Detailed documentation of real systems I have built.
+5.  **Comparative Matrix (Comparison)**: An analytical look at how different architectures solve specific problems.
+6.  **Capabilities Map (Exploration)**: A visual representation of the tools and technologies I actually use.
+7.  **Laboratory Records (Archive)**: A collection of small-scale technical investigations and curiosity-driven experiments.
+8.  **Technical Principles (Philosophy)**: A breakdown of my engineering workflow and core principles.
+9.  **System Reflections**: Final thoughts on architectural rigor and systems thinking.
+10. **Connection Bus (Contact)**: A terminal-style interface for professional communication.
 
 ---
 
-## 📁 REPOSITORY BLUEPRINT
+## 🚀 Featured Systems
 
-The file hierarchy remains strictly enforced:
+The portfolio highlights three primary projects that represent different architectural challenges:
 
-```text
-/app                  # Framework Routes (Enforcing Next.js App Router rules)
-/components           
-  ├─/about            # Human logic & technical mindset representations
-  ├─/contact          # Secure CLI-interaction portal
-  ├─/hero             # Loaders & core identity nodes
-  ├─/home             # Systems exposition grids & experimental labs
-  ├─/layout           # Structural wrappers (Dock, BG Grid, Interactions)
-  ├─/projects         # Project Deep Dives (Decisions, Diagrams, Evolution)
-  ├─/shared           # Standalone primitives & strict interaction nodes
-  └─/visualization    # Diagram rendering structures (Nodes & Edges)
-/context              # Global state constraints (Performance / Capabilities)
-/data                 # Immutable Database Mappings (The single source of truth)
-```
+### 1. MoveX (Logistics Management)
+A full logistics and courier management system built with **Node.js, Express, and PostgreSQL**. It manages the complete parcel lifecycle—from booking and pricing to pickup scheduling, hub transfers, and final delivery. This project explored **Role-Based Access Control (RBAC)**, database schema design for complex workflows, and session security in multi-user environments.
 
-## 📝 TECHNICAL DOCUMENTATION PROTOCOL
+### 2. Polyglot FFI Contract Verifier (PFCV)
+A verification pipeline designed to improve safety when calling native C/C++ libraries from high-level languages (Python, Rust) through **Foreign Function Interfaces (FFI)**. This research project uses **Clang compiler tooling** to extract metadata, normalizes it into a universal intermediate representation, and synthesizes safety contracts to prevent runtime crashes.
 
-Any new system logged into the repository via the data endpoints **must strictly honor** the documentation schema defined during initialization:
-1. `overview`: Accurate constraint breakdown.
-2. `architecture`: Direct Node & Edge mapping for Framer-driven visualization. 
-3. `architectureDecisions`: Clear problem/path/reasoning structures logging discard protocols.
-4. `systemLifecycle`: Operational walkthrough definitions from bootup to execution.
+### 3. UIDAI Advisory Intelligence System
+A data analysis system developed for a hackathon to analyze aggregated Aadhaar enrollment datasets. The system establishes regional baselines to identify unusual activity patterns (such as "Ghost Zones" or "High Stress" areas) and generates prioritized advisory signals for human evaluation, emphasizing **privacy-by-aggregation** and ethical AI boundaries.
 
 ---
 
-## ⚙️ TECHNICAL SPECIFICATIONS
+## 🛠️ Technology Stack
 
-- **Core Engine**: NEXT.JS 14+ (App Router, Turbopack)
-- **Typing Strictness**: TypeScript 
-- **Kinematics & Rendering**: Framer Motion 
-- **Styling Architecture**: TailwindCSS + Deep vanilla CSS 
-- **Deployment Protocol**: Vercel Edge 
+The portfolio itself is built with a focus on performance, structural clarity, and technical honesty:
+
+*   **Framework**: [Next.js](https://nextjs.org/) (App Router)
+*   **Library**: [React](https://reactjs.org/)
+*   **Language**: [TypeScript](https://www.typescriptlang.org/) for strict type safety
+*   **Styling**: Custom **Vanilla CSS** and **TailwindCSS** for precise architectural layouts
+*   **Animations**: [Framer Motion](https://www.framer.com/motion/) for system-state transitions and data-flow visualizations
+*   **Deployment**: Vercel
 
 ---
-*SYS_HASH: 77_ARCH_DISCOVERY_2026 // ENGINEERING_SIGNATURE_STABILIZED*
+
+## 📁 Repository Blueprint
+
+*   `app/`: Contains the Next.js page routes, including the main homepage and dynamic project documentation paths.
+*   `components/`: Reusable UI components organized by section (hero, about, projects, visualization, shared).
+*   `data/`: The "Source of Truth" for all content. Contains structured TypeScript objects for identity, projects, domains, and laboratory records.
+*   `lib/`: Helper utilities for layout logic, animations, and data processing.
+*   `public/`: Static assets, including custom fonts, icons, and architecture-related graphics.
+*   `types/`: TypeScript interface definitions ensuring data consistency across the system.
+
+---
+
+## 📊 Data-Driven Architecture
+
+To keep content separate from presentation logic, the portfolio uses a centralized data layer. Adding new content is as simple as updating the structured TypeScript files in the `/data` directory. This allows the UI components to remain focused strictly on rendering and interaction, while the content remains immutable and easy to manage.
+
+---
+
+## ⚡ Quick Start (Local Execution)
+
+To explore the portfolio or inspect the architecture locally:
+
+1.  **Clone the repository**:
+    ```bash
+    git clone https://github.com/darshit-lagdhir/portfolio.github.io.git
+    cd portfolio
+    ```
+
+2.  **Install dependencies**:
+    ```bash
+    npm install
+    ```
+
+3.  **Run the development server**:
+    ```bash
+    npm run dev
+    ```
+
+4.  **Access the interface**:
+    Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+---
+
+## 📝 Design Philosophy
+
+*   **Minimal Visual Noise**: Every element should serve a functional or narrative purpose.
+*   **Structured Navigation**: The interface follows a logical engineering manifest.
+*   **System Explanation**: Visuals represent real architectural nodes and data flows, not just decoration.
+*   **Honest Representation**: The portfolio documents learning progress, technical trade-offs, and project limitations with transparency.
+
+---
+
+## 🤝 Connection
+
+If you enjoy discussing system architecture, debugging strange software behavior, or exploring the internal mechanics of complex software, feel free to connect via [LinkedIn](https://www.linkedin.com/in/darshit-lagdhir/) or [GitHub](https://github.com/darshit-lagdhir).
+
+---
+*SYS_HASH: 70_README_REWRITE_2026 // DOCUMENTATION_SIG_STABILIZED*

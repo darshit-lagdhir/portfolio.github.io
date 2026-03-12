@@ -10,7 +10,7 @@ export default function FinalReflection() {
     <div className="w-full relative">
       <SectionDivider 
         label="08_REFLECTION" 
-        description={identity.sectionTransitions.toReflection}
+        description={identity.section_transitions.toReflection}
       />
       
       <div className="py-sys-96 lg:py-sys-128 mb-sys-64">
@@ -45,7 +45,7 @@ export default function FinalReflection() {
             className="space-y-10"
           >
             <p className="type-body text-base md:text-lg text-text-secondary opacity-60 leading-relaxed font-light px-6 max-w-3xl mx-auto">
-              {identity.closingReflection}
+              {identity.final_reflection}
             </p>
             
             <div className="flex flex-col items-center gap-6">
@@ -61,9 +61,9 @@ export default function FinalReflection() {
 
         <div className="mt-sys-96 flex justify-center">
            <DiscoveryHint 
-             label={identity.discoveryHints.toContact.label}
+             label={identity.discovery_hints.toContact.label}
              href="#contact"
-             description={identity.discoveryHints.toContact.description}
+             description={identity.discovery_hints.toContact.description}
              orientation="center"
            />
         </div>

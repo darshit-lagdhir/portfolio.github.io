@@ -25,8 +25,8 @@ export default function HeroIdentity() {
         transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
         className="type-identity mb-sys-64 leading-[0.85] tracking-tighter"
       >
-        EXPLORING <br />
-        <span className="text-text-secondary opacity-40">MECHANICS_</span>
+        {identity.hero_identity.hero_title.split(' ')[0]} <br />
+        <span className="text-text-secondary opacity-40">{identity.hero_identity.hero_title.split(' ')[1]}_</span>
       </motion.h1>
 
       <motion.div
@@ -37,10 +37,10 @@ export default function HeroIdentity() {
       >
         <div className="absolute -left-8 top-0 bottom-0 w-[1px] bg-border-dim hidden md:block" />
         <p className="type-body text-base md:text-lg leading-relaxed text-text-secondary opacity-80 font-medium tracking-tight mb-6">
-          {identity.heroParagraph}
+          {identity.hero_identity.hero_description}
         </p>
         <p className="type-metadata text-[0.55rem] tracking-widest text-accent/60 uppercase">
-          {identity.linkedinHeadline}
+          {identity.headline}
         </p>
       </motion.div>
     </div>

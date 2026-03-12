@@ -10,7 +10,7 @@ export default function EngineeringPhilosophy() {
     <div className="w-full">
       <SectionDivider 
         label="07_PHILOSOPHY" 
-        description={identity.sectionTransitions.toPhilosophy}
+        description={identity.section_transitions.toPhilosophy}
       />
 
       <div className="grid-12 items-start gap-y-sys-64 md:gap-y-0">
@@ -28,7 +28,7 @@ export default function EngineeringPhilosophy() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <div className="space-y-6">
                   <p className="type-body text-xl md:text-2xl text-text-primary/70 leading-relaxed">
-                    {identity.learningPhilosophy.split('. ')[0]}.
+                    {identity.about.about_learning_context.split('. ')[0]}.
                   </p>
                   <p className="type-body text-base md:text-lg text-text-secondary leading-relaxed opacity-60">
                     I treat debugging not as a frustrating task, but as a primary learning tool. Many of my architectural insights—from memory behavior to session security—come from investigating why a system behaved in an unexpected way.
@@ -59,9 +59,9 @@ export default function EngineeringPhilosophy() {
         </div>
 
         <div className="col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-           {identity.engineeringPrinciples.map((principle, index) => (
+           {identity.learning_workflow.map((principle, index) => (
              <motion.div
-               key={principle.id}
+               key={principle.title}
                initial={{ opacity: 0 }}
                whileInView={{ opacity: 1 }}
                viewport={{ once: true }}
@@ -76,7 +76,7 @@ export default function EngineeringPhilosophy() {
                 <div className="flex flex-col h-full">
                    <div className="type-metadata text-[0.45rem] text-accent/40 mb-10 flex items-center gap-2">
                       <span className="w-1 h-1 bg-accent/40" />
-                      PRINC_0{principle.icon}
+                      PRINC_0{index + 1}
                    </div>
                    
                    <h3 className="type-emphasis text-sm mb-8 tracking-tight group-hover:text-accent/80 transition-colors">
@@ -100,9 +100,9 @@ export default function EngineeringPhilosophy() {
 
       <div className="mt-sys-128 flex flex-col items-center text-center">
         <DiscoveryHint 
-          label={identity.discoveryHints.toReflection.label} 
+          label={identity.discovery_hints.toReflection.label} 
           href="#reflections"
-          description={identity.discoveryHints.toReflection.description}
+          description={identity.discovery_hints.toReflection.description}
           orientation="center"
         />
       </div>

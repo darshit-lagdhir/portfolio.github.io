@@ -96,51 +96,47 @@ export interface AuthorityLayer {
 }
 
 export interface Project {
-    slug: string;
-    title: string;
+    id: string; // Internal project_id
+    name: string; // Display name
+    slug: string; // URL slug
+    route_path: string; // Routing metadata (e.g. /movex)
     shortDescription: string;
-    techStack: string[]; 
+    longDescription: string;
+    category: "Operational Backend System" | "Verification Pipeline" | "Advisory Data Analysis System" | string;
+    techStack: string[];
     techGroups?: TechGroup[];
+    status: "Completed" | "Active Development" | "Hackathon Project" | string;
+    learningOutcomes: string[];
     tier: 1 | 2 | 3;
-    overview: string;
-    problem: string;
-    constraints?: string[];
+    
+    // Core Engineering Data
     engineeringFocus?: string;
     technicalMeta?: TechnicalMeta;
-    architecture: string;
-    architectureLayers?: ArchitectureLayer[];
-    internalComponents?: InternalComponent[];
+    architecture_nodes: DiagramNode[];
+    architecture_connections: DiagramConnection[];
+    development_story: StoryStep[];
+    
+    // Legacy / Deep Dive Fields (Preserved for component compatibility where needed)
+    problem: string;
+    constraints?: string[];
     challenges?: ProjectChallenge[];
-    diagram?: ProjectDiagram; 
     evolution?: EvolutionStep[]; 
     architectureDecisions?: DesignDecision[]; 
     tradeoffs?: DesignTradeoff[]; 
-    decisions?: string[]; 
-    detailedDecisions?: {
-        decision: string;
-        why: string;
-        alternative: string;
-        rejectedReason: string;
-    }[];
-    limitations?: string[];
-    ifRebuildingToday?: string[];
-    performance?: string;
-    future?: ProjectChallenge[]; 
-    developmentStory?: StoryStep[];
-    githubRepoName?: string;
-    githubUrl?: string;
-    status: "COMPLETE" | "DEVELOPMENT" | string;
-    domains?: string[]; 
     authority?: AuthorityLayer; 
-    purpose?: string;
-    learningOutcomes?: string[];
+    internalComponents?: InternalComponent[];
+    future?: ProjectChallenge[];
+
+    // Internal UI hints
+    layout: "layered" | "pipeline";
+    domains?: string[];
 }
 
 export interface EngineeringDomain {
     id: string;
     name: string;
     description: string;
-    relatedDomains: string[]; // IDs of connected domains for visualization
+    relatedDomains: string[]; 
     relatedTech?: string[];
     relatedProjects?: string[];
 }

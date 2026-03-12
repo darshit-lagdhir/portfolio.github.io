@@ -1,39 +1,40 @@
-export const identity = {
+import { Identity } from "@/types/identity";
+
+export const identity: Identity = {
     name: "Darshit Lagdhir",
-    positioning: "Systems-Focused Developer",
-    linkedinHeadline: "Aspiring Systems Architect | Learning High-Performance Backend & Distributed Systems",
-    heroParagraph: "I am a systems-focused developer who spends a lot of time trying to understand how complex software actually works. Most of my learning happens by building systems, breaking them, and then trying to figure out why they failed. I enjoy exploring the internal mechanics of applications, from how services communicate to how data flows through a system and where things start to break.",
-    university: "Kristu Jayanti University",
-    degree: "BCA",
-    location: "Bangalore, India",
-    github: "https://github.com/darshit-lagdhir",
-    linkedin: "https://www.linkedin.com/in/darshitlagdhir/",
-    email: "darshitlagdhir@gmail.com",
-    resume: "/resume.pdf",
-    aboutNarrative: "I enjoy understanding how systems actually work internally. Instead of focusing only on writing code that runs, I try to understand what happens underneath the application—exploring memory behavior, service communication, data flow between components, and architectural failures. I am still learning how large continuous systems are designed, and my technical exploration is very much an ongoing, hands-on process.",
-    learningPhilosophy: "My learning process follows a repeated cycle: Build something interesting. Watch it break. Read documentation until the system becomes understandable. Redesign the architecture. Repeat. I view debugging not just as a problem to fix, but as a primary learning tool to investigate unexpected system failures.",
-    currentExplorationDomains: [
+    headline: "Aspiring Systems Architect | Learning High-Performance Backend & Distributed Systems",
+    short_identity: "Systems-focused developer building and breaking software to understand how it actually works.",
+    
+    hero_identity: {
+        hero_title: "EXPLORING MECHANICS",
+        hero_subtitle: "Building systems to understand their internal behavior.",
+        hero_description: "I am a systems-focused developer who spends a lot of time trying to understand how complex software actually works. Most of my learning happens by building systems, breaking them, and then trying to figure out why they failed. I enjoy exploring the internal mechanics of applications, from how services communicate to how data flows through a system and where things start to break."
+    },
+    
+    about: {
+        about_intro: "I enjoy understanding how systems actually work internally. Instead of focusing only on writing code that runs, I try to understand what happens underneath the application—exploring memory behavior, service communication, data flow between components, and architectural failures.",
+        about_learning_context: "I am a student currently exploring system architecture through hands-on experimentation. I view my development projects not just as functional tools, but as technical research to understand the trade-offs and failures inherent in software design."
+    },
+    
+    learning_workflow: [
         {
-            title: "Languages & Deep Data Structures",
-            description: "Deepening my knowledge of Java and C++ with a strong focus on Data Structures and Algorithms."
+            title: "BUILD",
+            description: "I begin by creating a prototype or system idea. The goal is to make the system work as quickly as possible so that real behavior can be observed."
         },
         {
-            title: "High-Performance Systems",
-            description: "Learning Go and Rust to understand system-level performance and raw execution limits."
+            title: "BREAK",
+            description: "Systems almost always fail during early stages. These failures reveal hidden assumptions and weaknesses in the architecture."
         },
         {
-            title: "AI & Machine Learning",
-            description: "Using Python to experiment with Artificial Intelligence loops and data models."
+            title: "UNDERSTAND",
+            description: "Instead of immediately patching, I investigate the failure in detail—tracing execution paths and studying internal mechanics to find the root cause."
         },
         {
-            title: "Security & Linux Systems",
-            description: "Exploring cybersecurity boundaries and Linux internal mechanics."
-        },
-        {
-            title: "Databases & Data Systems",
-            description: "Understanding how data infrastructure works and how storage engines persist information."
+            title: "REDESIGN",
+            description: "Once the root cause is understood, the system is refactored. The new design attempts to eliminate the weakness discovered earlier."
         }
     ],
+    
     capabilities: [
         {
             category: "Programming Languages",
@@ -42,7 +43,7 @@ export const identity = {
             projects: ["PFCV", "UIDAI", "MoveX"]
         },
         {
-            category: "Backend Development",
+            category: "Backend Technologies",
             description: "Designing server logic and workflows. Node.js and Express were the primary tools used for building the MoveX operational backend.",
             items: ["Node.js", "Express", "REST APIs", "Session Auth", "Middlewares"],
             projects: ["MoveX"]
@@ -64,42 +65,46 @@ export const identity = {
             description: "Infrastructural support for the development lifecycle, from version control to early cloud exploration.",
             items: ["Git", "GitHub", "VS Code", "Google Cloud", "Clang Tooling"],
             projects: ["PFCV"]
-        },
-        {
-            category: "Learning Focus",
-            description: "Active investigation zones where I am currently building knowledge through hands-on experimentation.",
-            items: ["Data Structures", "Systems Architecture", "Cross-Language FFI", "AI/ML Patterns", "Linux Security"],
-            projects: []
         }
     ],
-    engineeringPrinciples: [
+    
+    exploration_focus: [
         {
-            id: "build",
-            title: "BUILD",
-            description: "I begin by creating a prototype or system idea. The goal is to make the system work as quickly as possible so that real behavior can be observed.",
-            icon: "01"
+            title: "Systems Engineering",
+            description: "Deepening my knowledge of low-level mechanics and hardware-software interaction."
         },
         {
-            id: "break",
-            title: "BREAK",
-            description: "Systems almost always fail during early stages. These failures reveal hidden assumptions and weaknesses in the architecture.",
-            icon: "02"
+            title: "Programming Languages",
+            description: "Exploring language design, type systems, and cross-language compatibility."
         },
         {
-            id: "understand",
-            title: "UNDERSTAND",
-            description: "Instead of immediately patching, I investigate the failure in detail—tracing execution paths and studying internal mechanics to find the root cause.",
-            icon: "03"
+            title: "Backend Systems",
+            description: "Designing reliable, multi-role distributed systems and operational workflows."
         },
         {
-            id: "redesign",
-            title: "REDESIGN",
-            description: "Once the root cause is understood, the system is refactored. The new design attempts to eliminate the weakness discovered earlier.",
-            icon: "04"
+            title: "Data Systems",
+            description: "Understanding storage engine internals and relational integrity in complex datasets."
+        },
+        {
+            title: "Artificial Intelligence Exploration",
+            description: "Researching how advisory AI systems can support human decision-making with confidence metrics."
+        },
+        {
+            title: "Linux and Security",
+            description: "Investigating operating system internals, kernel boundaries, and cybersecurity fundamentals."
         }
     ],
-    closingReflection: "This portfolio represents a small part of my journey trying to understand how complex software systems actually work. Most of what I learn comes from building projects, watching them fail, and then spending time figuring out why they failed. The systems shown here are not perfect solutions — they are experiments that helped me understand backend architectures, cross-language interfaces, and data analysis systems. I am still learning, still exploring new areas, and still breaking things along the way. But that process is what makes understanding technology interesting.",
-    sectionTransitions: {
+    
+    contact: {
+        github_url: "https://github.com/darshit-lagdhir",
+        linkedin_url: "https://www.linkedin.com/in/darshitlagdhir/",
+        email: "darshitlagdhir@gmail.com",
+        resume_url: "/resume.pdf"
+    },
+    
+    final_reflection: "This portfolio represents a small part of my journey trying to understand how complex software systems actually work. Most of what I learn comes from building projects, watching them fail, and then spending time figuring out why they failed. The systems shown here are not perfect solutions — they are experiments that helped me understand backend architectures, cross-language interfaces, and data analysis systems. I am still learning, still exploring new areas, and still breaking things along the way. But that process is what makes technology interesting.",
+    
+    section_transitions: {
         toAbout: "Before looking at the systems themselves, it helps to understand how I approach learning and building software.",
         toDomains: "These are the technical areas I am currently exploring while building systems and studying how they behave internally.",
         toSystems: "These are the systems I have built while exploring backend architecture, language boundaries, and data analysis.",
@@ -110,7 +115,8 @@ export const identity = {
         toReflection: "After exploring the systems and experiments above, this portfolio really represents one thing: a continuing attempt to understand how complex software actually works.",
         toContact: "If you enjoy discussing system architecture, debugging strange software behavior, or exploring how systems work internally, feel free to connect."
     },
-    discoveryHints: {
+    
+    discovery_hints: {
         toAbout: {
             label: "UNDERSTAND_SYSTEM_STUDENT",
             description: "Understand the mindset and educational background supporting these explorations."
@@ -155,5 +161,9 @@ export const identity = {
             label: "CROSS_PROJECT_CONTEXT",
             description: "Analyze how this specific system situtates within the broader architectural comparison matrix."
         }
-    }
+    },
+    
+    location: "Bangalore, India",
+    university: "Kristu Jayanti University",
+    degree: "BCA"
 };

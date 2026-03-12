@@ -22,13 +22,13 @@ const COMPARISON_ATTRIBUTES: ComparisonAttribute[] = [
     id: "purpose",
     label: "PRIMARY_PURPOSE",
     description: "Core objective and functional target.",
-    getValue: (p) => p.purpose || "N/A"
+    getValue: (p) => p.shortDescription || "N/A"
   },
   {
     id: "category",
     label: "SYSTEM_CATEGORY",
     description: "Architectural classification of the build.",
-    getValue: (p) => p.technicalMeta?.systemType || "N/A"
+    getValue: (p) => p.category || "N/A"
   },
   {
     id: "focus",
@@ -63,7 +63,7 @@ export default function SystemComparison() {
     <div id="comparison" className="w-full relative py-sys-32">
       <SectionDivider 
         label="04_COMPARISON" 
-        description={identity.sectionTransitions.toComparison}
+        description={identity.section_transitions.toComparison}
       />
 
       <div className="mb-sys-64">
@@ -88,7 +88,7 @@ export default function SystemComparison() {
                 </div>
                 <div className="type-metadata text-[0.4rem] text-accent mb-4">SYSTEM_NODE_0{idx + 1}</div>
                 <h3 className="type-emphasis text-lg mb-6 group-hover:text-accent transition-colors">
-                  {project.title.toUpperCase()}
+                  {project.name.toUpperCase()}
                 </h3>
                 <Link 
                   href={`/${project.slug}`}
@@ -164,11 +164,11 @@ export default function SystemComparison() {
       {/* MOBILE COMPARISON STACK */}
       <div className="lg:hidden space-y-6">
         {projects.filter(p => p.tier === 1).map((project, pIdx) => (
-          <div key={project.title} className="border border-border-dim bg-bg-secondary/20 overflow-hidden">
+          <div key={project.name} className="border border-border-dim bg-bg-secondary/20 overflow-hidden">
             <div className="bg-bg-primary p-6 border-b border-border-dim flex justify-between items-center">
               <div>
                 <div className="type-metadata text-[0.4rem] text-accent mb-1">SYSTEM_0{pIdx + 1}</div>
-                <h3 className="type-emphasis text-sm">{project.title.toUpperCase()}</h3>
+                <h3 className="type-emphasis text-sm">{project.name.toUpperCase()}</h3>
               </div>
               <Link href={`/${project.slug}`} className="type-nav text-[0.5rem] border border-border-dim px-3 py-1">
                 SPEC →
@@ -214,9 +214,9 @@ export default function SystemComparison() {
 
       <div className="mt-sys-64 flex justify-end">
         <DiscoveryHint 
-          label={identity.discoveryHints.toExploration.label} 
+          label={identity.discovery_hints.toExploration.label} 
           href="#exploration"
-          description={identity.discoveryHints.toExploration.description}
+          description={identity.discovery_hints.toExploration.description}
           orientation="right"
         />
       </div>

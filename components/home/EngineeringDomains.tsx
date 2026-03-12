@@ -25,7 +25,7 @@ export default function EngineeringDomains() {
     <div className="w-full relative">
       <SectionDivider 
         label="02_DOMAINS" 
-        description={identity.sectionTransitions.toDomains}
+        description={identity.section_transitions.toDomains}
       />
 
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-sys-24 mb-sys-64">
@@ -122,8 +122,8 @@ export default function EngineeringDomains() {
                            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
                               <div className="arch-marker scale-50" />
                            </div>
-                           <h4 className="type-emphasis text-sm group-hover:text-accent transition-colors">{project.title}</h4>
-                           <p className="type-body text-[0.7rem] opacity-50 mt-2 line-clamp-2 italic">{project.shortDescription}</p>
+                            <h4 className="type-emphasis text-sm group-hover:text-accent transition-colors">{project.name}</h4>
+                            <p className="type-body text-[0.7rem] opacity-50 mt-2 line-clamp-2 italic">{project.shortDescription}</p>
                         </Link>
                       ))}
                    </div>
@@ -159,9 +159,9 @@ export default function EngineeringDomains() {
         </div>
         <div className="mt-sys-64 flex flex-col md:flex-row justify-between items-start md:items-end gap-sys-32">
         <DiscoveryHint 
-          label={identity.discoveryHints.toSystems.label}
+          label={identity.discovery_hints.toSystems.label}
           href="#systems"
-          description={identity.discoveryHints.toSystems.description}
+          description={identity.discovery_hints.toSystems.description}
           orientation="right"
         />
       </div>

@@ -32,7 +32,7 @@ export default function Capabilities() {
 
       <SectionDivider 
         label="05_EXPLORATION" 
-        description={identity.sectionTransitions.toExploration}
+        description={identity.section_transitions.toExploration}
       />
 
       <div className="grid-12 mb-sys-64">
@@ -96,9 +96,9 @@ export default function Capabilities() {
       
       <div className="mt-sys-64 flex justify-end">
         <DiscoveryHint 
-          label={identity.discoveryHints.toArchive.label}
+          label={identity.discovery_hints.toArchive.label}
           href="#archive"
-          description={identity.discoveryHints.toArchive.description}
+          description={identity.discovery_hints.toArchive.description}
           orientation="right"
         />
       </div>

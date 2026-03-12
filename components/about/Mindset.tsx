@@ -1,13 +1,16 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { identity } from "@/data/identity";
+import SectionDivider from "@/components/shared/SectionDivider";
 
 export default function Mindset() {
   return (
     <div className="w-full">
-      <div className="section-divider" data-label="01_SYSTEM_PHILOSOPHY">
-        <span className="divider-label">01_SYSTEM_PHILOSOPHY</span>
-      </div>
+      <SectionDivider 
+        label="01_SYSTEM_PHILOSOPHY" 
+        description={identity.section_transitions.toPhilosophy}
+      />
 
       <div className="grid-12">
         <div className="col-span-12 lg:col-span-12">
@@ -24,10 +27,10 @@ export default function Mindset() {
           <div className="grid-12">
             <div className="col-span-12 md:col-span-6">
               <p className="type-body mb-sys-32">
-                My approach to engineering is an endless cycle of experimentation: build, break, debug, redesign, and repeat. True mastery comes not from writing code that works the first time, but from observing how systems fail under pressure.
+                {identity.hero_identity.hero_description}
               </p>
               <p className="type-body">
-                I treat software development as an architectural discipline. The goal is never just to implement a feature, but to deeply understand the structural integrity, data flow, and mechanical trade-offs of the systems I build.
+                {identity.about.about_intro}
               </p>
             </div>
             <div className="col-span-12 md:col-span-5 md:col-start-8 flex flex-col justify-center border-l border-border-dim pl-sys-32">

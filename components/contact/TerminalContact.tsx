@@ -42,21 +42,21 @@ export default function TerminalContact() {
     let response = "";
     switch (cmdId) {
       case "about":
-        response = `${identity.name}\n${identity.positioning}\n\nExploration Focus: Understanding how complex software systems behave internally and investigating failure points in high-performance architectures.`;
+        response = `${identity.name}\n${identity.headline}\n\nExploration Focus: ${identity.short_identity}`;
         break;
       case "projects":
         response = "SYSTEM_MANIFEST [ACTIVE_NODES]:\n\n- MoveX: Logistics management system built with Node.js and PostgreSQL.\n- PFCV: Cross-language FFI verification pipeline investigating runtime safety.\n- UIDAI Advisory: Data pattern analysis system for Aadhaar enrollment datasets.";
         break;
       case "github":
-        window.open(identity.github, "_blank");
-        response = `Handshake established with git_node. Redirecting to source repositories.\nSTATUS: REDIRECT_SUCCESS [${identity.github}]`;
+        window.open(identity.contact.github_url, "_blank");
+        response = `Handshake established with git_node. Redirecting to source repositories.\nSTATUS: REDIRECT_SUCCESS [${identity.contact.github_url}]`;
         break;
       case "linkedin":
-        window.open(identity.linkedin, "_blank");
-        response = `Mapping professional connection route. Handshaking with identity_node.\nSTATUS: REDIRECT_SUCCESS [${identity.linkedin}]`;
+        window.open(identity.contact.linkedin_url, "_blank");
+        response = `Mapping professional connection route. Handshaking with identity_node.\nSTATUS: REDIRECT_SUCCESS [${identity.contact.linkedin_url}]`;
         break;
       case "contact":
-        response = "If you would like to discuss systems architecture, backend development, or debugging strange software behavior, feel free to connect through GitHub or LinkedIn.";
+        response = identity.section_transitions.toContact;
         break;
       case "help":
         response = "AVAILABLE_COMMANDS:\n- about: Display developer identity\n- projects: List core system modules\n- github: Access source code repositories\n- linkedin: Open professional connection node\n- contact: View communication options";
@@ -73,7 +73,7 @@ export default function TerminalContact() {
     <div className="w-full relative">
       <SectionDivider 
         label="09_CONTACT" 
-        description={identity.sectionTransitions.toContact}
+        description={identity.section_transitions.toContact}
       />
 
       <div className="grid-12">
