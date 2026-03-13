@@ -2,51 +2,51 @@ import { EngineeringDomain } from "@/types/project";
 
 export const engineeringDomains: EngineeringDomain[] = [
     {
-        id: "systems_engineering",
+        domain_id: "systems_engineering",
         name: "Systems Engineering",
-        description: "Studying how complex software systems behave internally — exploring service communication, failure points, and the internal mechanics of applications.",
-        relatedDomains: ["backend_systems", "programming_languages", "security_linux"],
-        relatedTech: ["Node.js Internals", "Clang Tooling", "Architecture Patterns"],
-        relatedProjects: ["PFCV", "MoveX"]
+        description: "Focusing on how complex software systems behave internally and how architectural decisions affect long-term stability and resilience.",
+        connected_domains: ["programming_languages", "linux_security"],
+        technologies: ["Node.js Internals", "System Architecture", "Observation Patterns"],
+        related_projects: ["PFCV", "MoveX"]
     },
     {
-        id: "programming_languages",
+        domain_id: "programming_languages",
         name: "Programming Languages",
-        description: "Exploring language-level mechanics and deep data structures using C++, Java, and Python. Investigating cross-language boundaries and memory safety.",
-        relatedDomains: ["systems_engineering", "security_linux"],
-        relatedTech: ["C", "C++", "Java", "Python", "Rust"],
-        relatedProjects: ["PFCV"]
+        description: "Studying language internals and exploring deep data structures using C, C++, and Java to understand low-level execution and memory behavior.",
+        connected_domains: ["systems_engineering"],
+        technologies: ["C", "C++", "Java", "Python", "JavaScript", "TypeScript"],
+        related_projects: ["PFCV"]
     },
     {
-        id: "backend_systems",
+        domain_id: "backend_systems",
         name: "Backend Systems",
-        description: "Designing server-side architectures, API structures, and session-based authentication workflows for operational scale.",
-        relatedDomains: ["systems_engineering", "data_systems"],
-        relatedTech: ["Node.js", "Express", "REST APIs", "JWT", "Session Auth"],
-        relatedProjects: ["MoveX"]
+        description: "Designing reliable server-side architectures, API structures, and session-based authentication workflows using Node.js and Express.",
+        connected_domains: ["data_systems"],
+        technologies: ["Node.js", "Express", "REST APIs", "Session Auth", "Middlewares"],
+        related_projects: ["MoveX"]
     },
     {
-        id: "data_systems",
+        domain_id: "data_systems",
         name: "Data Systems",
-        description: "Managing operational data persistence and exploring how database schemas and storage engines function under the hood.",
-        relatedDomains: ["backend_systems", "ai_exploration"],
-        relatedTech: ["PostgreSQL", "MySQL", "MongoDB", "SQLite"],
-        relatedProjects: ["MoveX", "UIDAI"]
+        description: "Designing robust database schemas and understanding how structured data persistence supports high-assurance application state.",
+        connected_domains: ["backend_systems", "ai_exploration"],
+        technologies: ["PostgreSQL", "MySQL", "MongoDB", "SQLite"],
+        related_projects: ["MoveX", "UIDAI"]
     },
     {
-        id: "ai_exploration",
-        name: "AI Exploration",
-        description: "Experimenting with artificial intelligence and pattern detection using Python to highlight signals in large datasets. This is an active learning area.",
-        relatedDomains: ["data_systems", "programming_languages"],
-        relatedTech: ["Python", "Pandas", "Scikit-Learn", "NumPy"],
-        relatedProjects: ["UIDAI"]
+        domain_id: "ai_exploration",
+        name: "Artificial Intelligence Exploration",
+        description: "Researching how advisory AI systems can support human decision-making and exploring basic machine learning concepts using Python.",
+        connected_domains: ["data_systems"],
+        technologies: ["Python", "Data Analysis Tools", "NumPy", "Pandas"],
+        related_projects: ["UIDAI"]
     },
     {
-        id: "security_linux",
-        name: "Security & Linux",
-        description: "Exploring Linux environments and system security concepts to understand how boundaries are enforced and where systems fail.",
-        relatedDomains: ["systems_engineering", "programming_languages"],
-        relatedTech: ["Linux Internals", "Security Boundaries", "Resource Management"],
-        relatedProjects: []
+        domain_id: "linux_security",
+        name: "Linux and Security",
+        description: "Investigating operating system internals, Linux environments, and studying foundational cybersecurity concepts and system boundaries.",
+        connected_domains: ["systems_engineering"],
+        technologies: ["Linux Environments", "System Configuration", "Security Fundamentals"],
+        related_projects: []
     }
 ];

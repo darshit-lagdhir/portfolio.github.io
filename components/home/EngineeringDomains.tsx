@@ -16,7 +16,7 @@ export default function EngineeringDomains() {
   const { isMobile } = useScene();
   const [activeDomainId, setActiveDomainId] = useState<string | null>(null);
 
-  const activeDomain = engineeringDomains.find(d => d.id === activeDomainId);
+  const activeDomain = engineeringDomains.find(d => d.domain_id === activeDomainId);
   const relatedProjects = activeDomainId 
     ? projects.filter(p => p.domains?.includes(activeDomainId))
     : [];
@@ -45,18 +45,18 @@ export default function EngineeringDomains() {
         <div className="lg:col-span-4 space-y-6">
           {engineeringDomains.map((domain) => (
             <button
-              key={domain.id}
-              onClick={() => setActiveDomainId(activeDomainId === domain.id ? null : domain.id)}
+              key={domain.domain_id}
+              onClick={() => setActiveDomainId(activeDomainId === domain.domain_id ? null : domain.domain_id)}
               className={cn(
                 "module-frame w-full text-left relative group !p-8",
-                activeDomainId === domain.id 
+                activeDomainId === domain.domain_id 
                   ? "border-accent/30 bg-accent/5" 
                   : "hover:border-border-bright"
               )}
             >
               <div className="flex justify-between items-center mb-3">
-                 <span className="type-metadata text-[0.4rem] opacity-20 tracking-widest">{domain.id.split('_')[0].toUpperCase()}</span>
-                 {activeDomainId === domain.id && (
+                 <span className="type-metadata text-[0.4rem] opacity-20 tracking-widest">{domain.domain_id.split('_')[0].toUpperCase()}</span>
+                 {activeDomainId === domain.domain_id && (
                    <motion.div 
                      layoutId="active-indicator"
                      className="w-1 h-1 bg-accent/60"
@@ -65,7 +65,7 @@ export default function EngineeringDomains() {
               </div>
               <h3 className={cn(
                 "type-emphasis text-xs md:text-sm transition-colors tracking-tight",
-                activeDomainId === domain.id ? "text-accent/80" : "text-text-primary/70"
+                activeDomainId === domain.domain_id ? "text-accent/80" : "text-text-primary/70"
               )}>
                 {domain.name.toUpperCase()}
               </h3>
@@ -86,14 +86,14 @@ export default function EngineeringDomains() {
           <AnimatePresence mode="wait">
             {activeDomain ? (
               <motion.div
-                key={activeDomain.id}
+                key={activeDomain.domain_id}
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 className="space-y-sys-64 relative z-10"
               >
                 <div className="space-y-4">
-                   <div className="type-metadata text-[0.45rem] text-accent/60">DOMAIN_SPECIFICATION // {activeDomain.id}</div>
+                   <div className="type-metadata text-[0.45rem] text-accent/60">DOMAIN_SPECIFICATION // {activeDomain.domain_id}</div>
                    <p className="type-body text-lg md:text-xl text-text-primary leading-relaxed max-w-2xl">
                      {activeDomain.description}
                    </p>
@@ -102,7 +102,7 @@ export default function EngineeringDomains() {
                 <div className="space-y-6">
                    <div className="type-metadata text-[0.45rem] opacity-30 uppercase tracking-widest">Involved_Technologies</div>
                    <div className="flex flex-wrap gap-2">
-                      {activeDomain.relatedTech?.map(tech => (
+                      {activeDomain.technologies?.map(tech => (
                         <span key={tech} className="px-3 py-1 bg-bg-secondary border border-border-dim type-metadata text-[0.6rem] hover:border-accent transition-colors">
                           {tech}
                         </span>

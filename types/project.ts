@@ -133,10 +133,10 @@ export interface Project {
 }
 
 export interface EngineeringDomain {
-    id: string;
+    domain_id: string;
     name: string;
     description: string;
-    relatedDomains: string[]; 
-    relatedTech?: string[];
-    relatedProjects?: string[];
+    connected_domains: string[]; 
+    technologies?: string[];
+    related_projects?: string[];
 }

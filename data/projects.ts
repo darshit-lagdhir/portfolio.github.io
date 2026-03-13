@@ -71,6 +71,7 @@ export const projects: Project[] = [
             { title: "Multi-Role Data Access", description: "Different roles need different views of the same data. An admin sees all shipments, a franchisee sees only their branch, and a customer sees only their own parcels. Implementing this consistently required careful middleware design." }
         ],
         layout: "layered",
+        domains: ["backend_systems", "data_systems"],
         architecture_nodes: [
             { 
                 id: "frontend", 
@@ -268,6 +269,7 @@ export const projects: Project[] = [
             { title: "Data Volatility", description: "Normalizing data to account for temporary network issues or regional holidays that can cause false-positive 'Ghost Zone' signals." }
         ],
         layout: "pipeline",
+        domains: ["data_systems", "ai_exploration"],
         architecture_nodes: [
             { 
                 id: "data_source", 
@@ -461,6 +463,7 @@ export const projects: Project[] = [
             { title: "Multi-Language Adapter Design", description: "Each target language (Python, Rust, C++) requires its own runtime adapter that integrates with the language's FFI mechanism. Designing adapters that are both thorough and non-intrusive is an ongoing challenge." }
         ],
         layout: "pipeline",
+        domains: ["programming_languages", "systems_engineering"],
         architecture_nodes: [
             { 
                 id: "native_source", 

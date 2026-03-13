@@ -16,7 +16,7 @@ export default function DomainMap({ activeDomainId, onDomainClick }: DomainMapPr
     backend_systems: { x: 80, y: 40 },
     data_systems: { x: 75, y: 70 },
     programming_languages: { x: 20, y: 40 },
-    security_linux: { x: 25, y: 70 },
+    linux_security: { x: 25, y: 70 },
     ai_exploration: { x: 50, y: 80 }
   };
 
@@ -25,16 +25,16 @@ export default function DomainMap({ activeDomainId, onDomainClick }: DomainMapPr
       <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
         {/* Connection Lines */}
         {engineeringDomains.map(domain => 
-          domain.relatedDomains.map(relId => {
-            const start = nodePositions[domain.id];
+          domain.connected_domains.map(relId => {
+            const start = nodePositions[domain.domain_id];
             const end = nodePositions[relId];
             if (!start || !end) return null;
 
-            const isHighlighted = activeDomainId === domain.id || activeDomainId === relId;
+            const isHighlighted = activeDomainId === domain.domain_id || activeDomainId === relId;
 
             return (
               <motion.line
-                key={`${domain.id}-${relId}`}
+                key={`${domain.domain_id}-${relId}`}
                 x1={start.x}
                 y1={start.y}
                 x2={end.x}
@@ -55,15 +55,15 @@ export default function DomainMap({ activeDomainId, onDomainClick }: DomainMapPr
 
         {/* Nodes */}
         {engineeringDomains.map(domain => {
-          const pos = nodePositions[domain.id];
-          const isActive = activeDomainId === domain.id;
-          const isRelated = activeDomainId && engineeringDomains.find(d => d.id === activeDomainId)?.relatedDomains.includes(domain.id);
+          const pos = nodePositions[domain.domain_id];
+          const isActive = activeDomainId === domain.domain_id;
+          const isRelated = activeDomainId && engineeringDomains.find(d => d.domain_id === activeDomainId)?.connected_domains.includes(domain.domain_id);
 
           return (
             <g 
-              key={domain.id} 
+              key={domain.domain_id} 
               className="cursor-pointer"
-              onClick={() => onDomainClick(domain.id)}
+              onClick={() => onDomainClick(domain.domain_id)}
             >
               <motion.circle
                 cx={pos.x}
