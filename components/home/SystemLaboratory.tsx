@@ -8,16 +8,23 @@ import { identity } from "@/data/identity";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import DiscoveryHint from "@/components/shared/DiscoveryHint";
+import ExplorationArchive from "./ExplorationArchive";
 
 export default function SystemLaboratory() {
-  const [activeId, setActiveId] = useState<string>(laboratoryExplorations[0].id);
+  const ongoingExplorations = laboratoryExplorations.filter(
+    l => l.status === "ongoing" || l.status === "investigating"
+  );
   
-  const activeExploration = laboratoryExplorations.find(l => l.id === activeId);
+  const [activeId, setActiveId] = useState<string>(
+    ongoingExplorations.length > 0 ? ongoingExplorations[0].investigation_id : ""
+  );
+  
+  const activeExploration = ongoingExplorations.find(l => l.investigation_id === activeId);
 
   return (
     <div className="w-full relative">
       <SectionDivider 
-        label="06_ARCHIVE" 
+        label="06_LAB" 
         description={identity.section_transitions.toArchive}
       />
 
@@ -27,10 +34,10 @@ export default function SystemLaboratory() {
               <div className="w-1 h-1 bg-accent/40 rounded-full" />
               <span className="type-metadata text-[0.4rem] tracking-[0.3em] font-mono">ACTIVE_EXPLORATION_BOARD</span>
            </div>
-           <h2 className="type-h1 uppercase tracking-tighter mb-6">Systems_Exploration_</h2>
+           <h2 className="type-h1 uppercase tracking-tighter mb-6">Systems_Laboratory_</h2>
            <p className="type-body text-sm text-text-secondary max-w-2xl opacity-50">
-             A record of technical curiosity and ongoing learning. These cards represent specific domains 
-             being investigated to understand high-level system behavior and low-level architectural mechanics.
+             Current investigations into system behavior and low-level architectural mechanics. 
+             These active research tracks represent the front-line of my technical learning process.
            </p>
         </div>
       </div>
@@ -38,39 +45,39 @@ export default function SystemLaboratory() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-sys-48">
         {/* EXPLORATION SELECTION SIDEBAR */}
         <div className="lg:col-span-4 space-y-4">
-          <div className="type-metadata text-[0.45rem] opacity-30 mb-6 tracking-widest uppercase">SELECT_DOMAIN</div>
-          {laboratoryExplorations.map((item) => (
+          <div className="type-metadata text-[0.45rem] opacity-30 mb-6 tracking-widest uppercase">SELECT_TRACK</div>
+          {ongoingExplorations.map((item) => (
             <button
-              key={item.id}
-              onClick={() => setActiveId(item.id)}
+              key={item.investigation_id}
+              onClick={() => setActiveId(item.investigation_id)}
               className={cn(
                 "module-frame w-full text-left transition-all relative group !p-6",
-                activeId === item.id 
+                activeId === item.investigation_id 
                   ? "border-accent/40 bg-accent/5" 
                   : "hover:border-border-bright opacity-60 hover:opacity-100"
               )}
             >
               <div className="flex justify-between items-start mb-3">
-                 <span className="type-metadata text-[0.35rem] opacity-40">{item.field.toUpperCase()}</span>
+                 <span className="type-metadata text-[0.35rem] opacity-40">{item.related_domains[0].replace(/_/g, ' ').toUpperCase()}</span>
                  <div className={cn(
                    "arch-marker scale-[0.4] transition-all",
-                   activeId === item.id ? "opacity-100" : "opacity-20 group-hover:opacity-100"
+                   activeId === item.investigation_id ? "opacity-100" : "opacity-20 group-hover:opacity-100"
                  )} />
               </div>
               <h3 className={cn(
                 "type-emphasis text-base mb-2 transition-colors",
-                activeId === item.id ? "text-accent" : "text-text-primary"
+                activeId === item.investigation_id ? "text-accent" : "text-text-primary"
               )}>
                 {item.title.toUpperCase()}
               </h3>
               
               <div className="flex flex-wrap gap-2 mt-4">
-                {item.tech.slice(0, 3).map(t => (
-                  <span key={t} className="type-metadata text-[0.3rem] opacity-30 uppercase">{t}</span>
+                {item.related_domains.map(domainId => (
+                  <span key={domainId} className="type-metadata text-[0.3rem] opacity-30 uppercase">{domainId.replace(/_/g, ' ')}</span>
                 ))}
               </div>
 
-              {activeId === item.id && (
+              {activeId === item.investigation_id && (
                 <motion.div 
                   layoutId="lab-indicator"
                   className="absolute right-0 top-0 w-1 h-full bg-accent"
@@ -86,14 +93,14 @@ export default function SystemLaboratory() {
               {/* VIEWPORT HEADER */}
               <div className="p-6 border-b border-border-dim bg-bg-secondary flex justify-between items-center z-20">
                  <div className="flex items-center gap-4">
-                    <span className="type-metadata text-[0.45rem] opacity-40">EXPLORATION_BOARD</span>
+                    <span className="type-metadata text-[0.45rem] opacity-40">RESEARCH_LOG</span>
                     <div className="w-[1px] h-3 bg-border-dim/50" />
                     <span className="type-metadata text-[0.45rem] text-accent font-mono uppercase">
-                      {activeExploration?.id.replace(/-/g, '_')}
+                      {activeExploration?.investigation_id.toUpperCase()}
                     </span>
                  </div>
                  <div className="flex gap-1.5 opacity-20">
-                    <div className="w-1 h-3 bg-accent" />
+                    <div className="w-1 h-3 bg-accent animate-pulse" />
                     <div className="w-1 h-3 bg-accent" />
                  </div>
               </div>
@@ -110,49 +117,57 @@ export default function SystemLaboratory() {
                       className="max-w-xl"
                     >
                        <div className="type-metadata text-[0.35rem] text-accent/60 mb-8 border-l border-accent/20 pl-4 py-1">
-                         DOMAIN_ANALYSIS // {activeExploration?.field.toUpperCase()}
+                         INVESTIGATION_STATE // {activeExploration?.status.toUpperCase()}
                        </div>
                        
                        <h3 className="type-h2 text-3xl mb-8 uppercase tracking-tighter">
                          {activeExploration?.title}
                        </h3>
                        
-                       <p className="type-body text-base opacity-40 leading-relaxed mb-12">
-                         {activeExploration?.context}
-                       </p>
-
                        <div className="space-y-12">
+                         <div>
+                            <h4 className="type-metadata text-[0.45rem] opacity-30 mb-4 tracking-widest uppercase font-mono">Research_Context</h4>
+                            <p className="type-body text-base opacity-60 leading-relaxed">
+                               {activeExploration?.context}
+                            </p>
+                         </div>
+
                           <div className="relative pl-8 border-l border-accent/30">
                              <div className="absolute -left-[3px] top-0 w-[5px] h-[5px] bg-accent" />
-                             <h4 className="type-metadata text-[0.45rem] opacity-30 mb-4 tracking-widest uppercase italic">Key_Discovery_insight</h4>
+                             <h4 className="type-metadata text-[0.45rem] opacity-30 mb-4 tracking-widest uppercase italic">Preliminary_Insights</h4>
                              <p className="type-body text-lg text-text-primary leading-relaxed italic">
-                                &quot;{activeExploration?.insight}&quot;
+                                {activeExploration?.insight}
                              </p>
                           </div>
 
                           <div>
-                             <h4 className="type-metadata text-[0.45rem] opacity-30 mb-4 tracking-widest uppercase font-mono">Involved_Primitives</h4>
+                             <h4 className="type-metadata text-[0.45rem] opacity-30 mb-4 tracking-widest uppercase font-mono">Linked_Domains</h4>
                              <div className="flex flex-wrap gap-3">
-                                {activeExploration?.tech.map(t => (
-                                  <span key={t} className="px-3 py-1.5 border border-border-dim type-metadata text-[0.4rem] opacity-40 bg-bg-primary/30">
-                                    {t.toUpperCase()}
+                                {activeExploration?.related_domains.map(domain => (
+                                  <span key={domain} className="px-3 py-1.5 border border-border-dim type-metadata text-[0.4rem] opacity-40 bg-bg-primary/30">
+                                    {domain.toUpperCase()}
                                   </span>
                                 ))}
                              </div>
                           </div>
 
-                          {activeExploration?.relatedProject && (
+                          {activeExploration?.related_projects && activeExploration.related_projects.length > 0 && (
                             <div>
-                               <h4 className="type-metadata text-[0.45rem] opacity-30 mb-4 tracking-widest uppercase font-mono">System_Implementation</h4>
-                               <Link 
-                                 href={`/${activeExploration.relatedProject}`}
-                                 className="inline-flex items-center gap-4 group/link"
-                               >
-                                  <div className="w-8 h-[1px] bg-accent/20 group-hover/link:w-12 transition-all" />
-                                  <span className="type-metadata text-[0.45rem] text-accent/60 group-hover/link:text-accent transition-colors">
-                                    APPLIED_IN: {activeExploration.relatedProject.toUpperCase()}
-                                  </span>
-                               </Link>
+                               <h4 className="type-metadata text-[0.45rem] opacity-30 mb-4 tracking-widest uppercase font-mono">Applied_Environment</h4>
+                               <div className="flex flex-wrap gap-4">
+                                {activeExploration.related_projects.map(project => (
+                                   <Link 
+                                     key={project}
+                                     href={`/${project}`}
+                                     className="inline-flex items-center gap-4 group/link"
+                                   >
+                                      <div className="w-8 h-[1px] bg-accent/20 group-hover/link:w-12 transition-all" />
+                                      <span className="type-metadata text-[0.45rem] text-accent/60 group-hover/link:text-accent transition-colors">
+                                        {project.toUpperCase()}
+                                      </span>
+                                   </Link>
+                                ))}
+                               </div>
                             </div>
                           )}
                        </div>
@@ -163,12 +178,16 @@ export default function SystemLaboratory() {
               {/* VIEWPORT FOOTER */}
               <div className="p-8 border-t border-border-dim bg-bg-primary/20 bg-grid-dim bg-[size:10px_10px]">
                  <div className="flex justify-between items-center opacity-20">
-                    <div className="type-metadata text-[0.35rem]">STATE: ACTIVE_INVESTIGATION</div>
-                    <div className="type-metadata text-[0.35rem]">ID: {activeExploration?.id.toUpperCase()}</div>
+                    <div className="type-metadata text-[0.35rem]">TELEMETRY: ACTIVE</div>
+                    <div className="type-metadata text-[0.35rem]">ID: {activeExploration?.investigation_id.toUpperCase()}</div>
                  </div>
               </div>
            </div>
         </div>
+      </div>
+
+      <div className="mt-sys-128">
+        <ExplorationArchive />
       </div>
 
       <div className="mt-sys-64 flex justify-end">
