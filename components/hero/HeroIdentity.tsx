@@ -10,20 +10,24 @@ export default function HeroIdentity() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="flex items-center gap-sys-12 mb-sys-48"
+        className="flex flex-col gap-1 mb-sys-48"
       >
-        <span className="w-1.5 h-1.5 rounded-full bg-accent-dim" />
-        <div className="type-metadata flex items-center gap-3">
-          <span className="opacity-20 font-mono tracking-widest text-[0.4rem]">SYSTEM_ID_00</span>
-          <span className="opacity-40 tracking-[0.4em] text-[0.45rem]">{identity.name.toUpperCase()}</span>
+        <div className="flex items-center gap-3">
+          <span className="w-2 h-2 rounded-full bg-accent" />
+          <h2 className="type-emphasis text-xl md:text-2xl tracking-tighter text-text-primary">
+            {identity.name}
+          </h2>
         </div>
+        <p className="type-metadata text-[0.65rem] tracking-[0.3em] text-accent uppercase font-bold pl-5">
+          {identity.headline}
+        </p>
       </motion.div>
 
       <motion.h1
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-        className="type-display mb-sys-64 leading-[0.85] tracking-tighter"
+        transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+        className="type-display mb-sys-48 leading-[0.85] tracking-tighter"
       >
         {identity.hero_identity.hero_title.split(' ')[0]} <br />
         <span className="text-text-muted">{identity.hero_identity.hero_title.split(' ')[1]}_</span>
@@ -33,14 +37,11 @@ export default function HeroIdentity() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-        className="max-w-[480px] relative"
+        className="max-w-[500px] relative mt-sys-16"
       >
         <div className="absolute -left-8 top-0 bottom-0 w-[1px] bg-border-dim hidden md:block" />
-        <p className="type-body text-base md:text-lg leading-relaxed text-text-secondary opacity-80 font-medium tracking-tight mb-6">
+        <p className="type-body text-base md:text-lg leading-relaxed text-text-secondary opacity-70 font-medium tracking-tight">
           {identity.hero_identity.hero_description}
-        </p>
-        <p className="type-metadata text-[0.55rem] tracking-widest text-accent uppercase">
-          {identity.headline}
         </p>
       </motion.div>
     </div>

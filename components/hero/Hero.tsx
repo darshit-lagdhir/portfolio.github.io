@@ -31,12 +31,12 @@ export default function Hero() {
           >
             <button 
               onClick={() => {
-                const el = document.getElementById('systems');
+                const el = document.getElementById('about');
                 if (el) el.scrollIntoView({ behavior: 'smooth' });
               }}
               className="btn-primary opacity-60 hover:opacity-100 transition-opacity"
             >
-              EXPLORE_SYSTEM_BUILDS
+              INITIATE_IDENTITY_PROBE
             </button>
           </motion.div>
         </div>

@@ -8,7 +8,7 @@ export const identity: Identity = {
     hero_identity: {
         hero_title: "EXPLORING MECHANICS",
         hero_subtitle: "Building systems to understand their internal behavior.",
-        hero_description: "I am a systems-focused developer who spends a lot of time trying to understand how complex software actually works. Most of my learning happens by building systems, breaking them, and then trying to figure out why they failed. I enjoy exploring the internal mechanics of applications, from how services communicate to how data flows through a system and where things start to break."
+        hero_description: "I build and break systems to understand their internal mechanics. My focus is on exploring how services communicate, how data flows, and where architectures fail in production-like environments."
     },
     
     about: {
@@ -105,15 +105,15 @@ export const identity: Identity = {
     final_reflection: "This portfolio represents a small part of my journey trying to understand how complex software systems actually work. Most of what I learn comes from building projects, watching them fail, and then spending time figuring out why they failed. The systems shown here are not perfect solutions — they are experiments that helped me understand backend architectures, cross-language interfaces, and data analysis systems. I am still learning, still exploring new areas, and still breaking things along the way. But that process is what makes technology interesting.",
     
     section_transitions: {
-        toAbout: "Before looking at the systems themselves, it helps to understand how I approach learning and building software.",
-        toDomains: "These are the technical areas I am currently exploring while building systems and studying how they behave internally.",
-        toSystems: "These are the systems I have built while exploring backend architecture, language boundaries, and data analysis.",
-        toComparison: "Each system explores a different technical problem. Comparing them helps reveal what each one was designed to investigate.",
-        toExploration: "Not everything I learn becomes a full project. Some ideas begin as small investigations while trying to understand how systems behave.",
-        toArchive: "These are small technical investigations that influenced how I understand software systems.",
-        toPhilosophy: "Most of what I learn comes from building systems, breaking them, and then trying to understand why they failed.",
-        toReflection: "After exploring the systems and experiments above, this portfolio really represents one thing: a continuing attempt to understand how complex software actually works.",
-        toContact: "If you enjoy discussing system architecture, debugging strange software behavior, or exploring how systems work internally, feel free to connect."
+        toAbout: "Every system build begins with a specific mindset. This is how I approach the act of construction and the inevitability of failure.",
+        toDomains: "Curiosity is mapped across specific technical territories. These are the current domains where I apply architectural experimentation.",
+        toSystems: "When explorations crystallize, they become implemented systems. These projects represent realized investigations into backend design and safety.",
+        toComparison: "Systems are best understood through analysis. Comparing these builds reveals the recurring patterns and divergent goals across my work.",
+        toExploration: "Beyond major systems, I maintain active investigations into technical primitives and specialized knowledge clusters.",
+        toArchive: "Curiosity often leads to targeted technical probes. These records document smaller investigations that influenced my broader understanding.",
+        toPhilosophy: "Design is an iterative diagnostic discipline. This is the core workflow I use to build, break, and understand software mechanics.",
+        toReflection: "After mapping the systems and research above, the manifest concludes with a final reflection on the nature of architectural rigor.",
+        toContact: "The story ends with an invitation to connect. I am always open to discussing system architecture, debugging failures, or exploring new mechanics."
     },
     
     discovery_hints: {
