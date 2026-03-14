@@ -47,24 +47,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     >
       <body className="antialiased bg-bg-primary text-text-primary overflow-x-hidden selection:bg-accent selection:text-white">
         <SceneProvider>
-          {/* Phase 3: System Grid Background Engine */}
+          {/* BACKGROUND LAYER: visual backdrop for the portal */}
           <SystemBackground />
           
-          {/* Phase 13: Custom Cursor System */}
-          <Cursor />
-          
-          {/* Phase 4: Global Navigation Dock */}
+          {/* NAVIGATION LAYER: persistent navigational interface */}
           <NavigationDock />
 
-          <div className="relative min-h-screen flex flex-col">
-            {/* Phase 5: Scroll Behavior Infrastructure */}
-            <SmoothScroll>
-              {/* Phase 1: Main Content Container */}
-              <main className="flex-grow pt-sys-64 lg:pt-0">
-                {children}
-              </main>
-            </SmoothScroll>
-          </div>
+          {/* CONTENT LAYER: scroll-managed dynamic content */}
+          <SmoothScroll>
+            <main className="flex-grow w-full relative">
+              {children}
+            </main>
+          </SmoothScroll>
+
+          {/* INTERACTION LAYER: custom cursor overlay (disabled on touch) */}
+          <Cursor />
         </SceneProvider>
         <Analytics />
         <SpeedInsights />

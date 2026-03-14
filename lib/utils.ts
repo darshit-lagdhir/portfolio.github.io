@@ -100,7 +100,9 @@ export function getStatusMetadata(status: string) {
 
 /**
  * Generates the internal routing path for a project node.
+ * Pulls directly from the centralized route definition in data/projects.ts.
  */
 export function getProjectUrl(slug: string): string {
-  return `/${slug}`;
+  const project = getProjectBySlug(slug);
+  return project?.route || `/${slug}`;
 }

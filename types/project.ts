@@ -99,7 +99,7 @@ export interface Project {
     id: string; // Internal project_id
     name: string; // Display name
     slug: string; // URL slug
-    route_path: string; // Routing metadata (e.g. /movex)
+    route: string; // Routing metadata (e.g. /movex)
     shortDescription: string;
     longDescription: string;
     category: "Operational Backend System" | "Verification Pipeline" | "Advisory Data Analysis System" | string;

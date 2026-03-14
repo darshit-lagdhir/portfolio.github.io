@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { Project } from "@/types/project";
 import Link from "next/link";
-import { cn } from "../../lib/utils";
+import { cn, getProjectUrl, getStatusMetadata, formatLabel } from "@/lib/utils";
 
 interface SystemModuleProps {
   project: Project;
@@ -11,8 +11,10 @@ interface SystemModuleProps {
 }
 
 export default function SystemModule({ project, index }: SystemModuleProps) {
+  const statusMeta = getStatusMetadata(project.status);
+
   return (
-    <Link href={`/${project.slug}`} className="focus:outline-none focus-visible:ring-1 focus-visible:ring-accent/40 block h-full">
+    <Link href={getProjectUrl(project.slug)} className="focus:outline-none focus-visible:ring-1 focus-visible:ring-accent/40 block h-full">
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -34,41 +36,34 @@ export default function SystemModule({ project, index }: SystemModuleProps) {
         {/* Status & Credibility Indicators */}
         <div className="flex items-center justify-between mb-sys-48">
           <div className="flex items-center gap-3">
-            <span className={cn(
-              "w-1 h-1 rounded-full",
-              project.status === "Completed" ? "bg-accent/30" : 
-              project.status === "Active Development" ? "bg-yellow-500/40" :
-              project.status === "Hackathon Project" ? "bg-blue-400/40" : "bg-text-muted/30"
-            )} />
+            <span className={cn("w-1 h-1 rounded-full", statusMeta.color.split(" ").filter(c => c.startsWith("bg-"))[0])} />
             <span className="type-metadata text-[0.4rem] opacity-30 tracking-widest font-mono">
-              {project.status === "Completed" ? "STABLE" : 
-               project.status === "Active Development" ? "IN_DEVELOPMENT" :
-               project.status === "Hackathon Project" ? "HACKATHON" : "RESEARCH"}
+              {statusMeta.label === "COMPLETE" ? "STABLE" : statusMeta.label}
             </span>
           </div>
           
           {project.authority && (
-             <div className="flex items-center gap-4">
-                <div className="flex gap-1 opacity-20 group-hover:opacity-40 transition-opacity">
-                   {[...Array(5)].map((_, i) => (
-                     <div 
-                       key={i} 
-                       className={cn(
-                         "w-1 h-1", 
-                         i < Math.round((project.authority?.complexityScore || 0) / 2) ? "bg-accent" : "bg-border-dim"
-                       )} 
-                     />
-                   ))}
-                </div>
-                <div className="type-metadata text-[0.35rem] px-2 py-0.5 border border-border-dim text-text-muted/60 uppercase tracking-widest">
-                   {project.authority.architectureDepth}
-                </div>
-             </div>
+            <div className="flex items-center gap-4">
+              <div className="flex gap-1 opacity-20 group-hover:opacity-40 transition-opacity">
+                {[...Array(5)].map((_, i) => (
+                  <div 
+                    key={i} 
+                    className={cn(
+                      "w-1 h-1", 
+                      i < Math.round((project.authority?.complexityScore || 0) / 2) ? "bg-accent" : "bg-border-dim"
+                    )} 
+                  />
+                ))}
+              </div>
+              <div className="type-metadata text-[0.35rem] px-2 py-0.5 border border-border-dim text-text-muted/60 uppercase tracking-widest">
+                {project.authority.architectureDepth}
+              </div>
+            </div>
           )}
         </div>
 
         <div className="mb-sys-32">
-          <div className="type-metadata text-[0.35rem] text-accent/20 mb-3 tracking-[0.3em] font-mono">NODE_{index + 1} {'//'} {project.authority?.primaryDomain.toUpperCase() || "CORE"}</div>
+          <div className="type-metadata text-[0.35rem] text-accent/20 mb-3 tracking-[0.3em] font-mono">NODE_{index + 1} {'//'} {formatLabel(project.authority?.primaryDomain || "CORE")}</div>
           <h3 className="type-h2 leading-tight text-xl md:text-2xl tracking-tighter">{project.name.toLowerCase()}</h3>
         </div>
 
