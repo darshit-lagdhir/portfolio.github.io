@@ -30,25 +30,66 @@ export default function About() {
       />
 
       <div className="grid-12 items-start">
-        <div className="col-span-12 lg:col-span-7 mb-sys-64">
-          <div className="mb-sys-64">
-            <h2 className="type-h1 mb-sys-24">SYSTEM_STUDENT_</h2>
-            <p className="type-body text-lg opacity-60 leading-relaxed max-w-xl">
-              An ongoing exploration into internal system mechanics, high-performance architecture, and technical resilience.
+        <div className="col-span-12 lg:col-span-7 mb-sys-64 lg:mb-0">
+          <div className="mb-sys-96">
+            <h2 className="type-h1 mb-sys-32">SYSTEM_STUDENT_</h2>
+            <p className="type-body text-lg text-text-secondary max-w-xl leading-relaxed">
+              An ongoing exploration into internal system mechanics, high-performance architecture, and technical resilience. My focus lies at the intersection of systems engineering and specialized verification pipelines.
             </p>
           </div>
 
-          {/* BIO DETAILS (Mobile only or integrated) */}
-          <div className="lg:hidden mt-sys-64 pt-sys-64 border-t border-border-dim">
-            <div className="type-metadata text-[0.6rem] mb-2 opacity-30 tracking-widest">EDUCATION_REF</div>
-            <div className="type-emphasis text-sm">
-              {formatLabel(identity.degree || "")} @ {formatLabel(identity.university || "")}
+          <div className="space-y-sys-96">
+            {/* BIO DETAILS */}
+            <div className="pt-sys-48 border-t border-border-dim/20">
+              <div className="type-metadata text-[0.65rem] mb-4 opacity-30 tracking-[0.4em]">EDUCATION_MANIFEST</div>
+              <div className="type-emphasis text-sm md:text-base text-text-primary">
+                {formatLabel(identity.degree || "")} @ {formatLabel(identity.university || "")}
+              </div>
+            </div>
+
+            {/* EXPLORATION DOMAINS */}
+            <div className="pt-sys-48 border-t border-border-dim/20">
+              <div className="type-label text-accent mb-8 tracking-widest flex items-center gap-2">
+                  <span className="w-1 h-1 bg-accent rounded-full opacity-50" />
+                  ACTIVE_EXPLORATION_DOMAINS
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-sys-32">
+                  {identity.exploration_focus.map((domain, idx) => (
+                      <motion.div 
+                        key={domain.title}
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: idx * 0.1, duration: 0.5 }}
+                        className="module-frame opacity-80 hover:opacity-100 transition-opacity"
+                      >
+                          <h4 className="type-emphasis text-sm mb-3 text-text-primary tracking-tight">{domain.title}</h4>
+                          <p className="type-body text-xs text-text-secondary opacity-60 leading-relaxed font-medium">{domain.description}</p>
+                      </motion.div>
+                  ))}
+              </div>
+            </div>
+
+            {/* TECHNOLOGY STACK */}
+            <div className="pt-sys-48 border-t border-border-dim/20">
+              <div className="type-label text-accent mb-8 tracking-widest flex items-center gap-2">
+                  <span className="w-1 h-1 bg-accent rounded-full opacity-50" />
+                  SYSTEM_TOOLS_&_CAPABILITIES
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-sys-48">
+                  {identity.capabilities.slice(0, 4).map((cap, idx) => (
+                    <div key={idx} className="space-y-4">
+                      <h4 className="type-metadata text-[0.6rem] opacity-30 tracking-widest uppercase">{formatLabel(cap.category.replace(/ /g, "_"))}</h4>
+                      <p className="type-body text-sm font-medium text-text-secondary leading-relaxed max-w-xs">{cap.items.join(" • ")}</p>
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="col-span-12 lg:col-span-5 lg:col-start-8">
-          <div className="module-frame space-y-sys-48 relative overflow-hidden">
+        <div className="col-span-12 lg:col-span-5 lg:col-start-8 space-y-sys-64">
+          <div className="module-frame space-y-sys-64 relative overflow-hidden">
              {/* Architectural Background Trace */}
              <div className="absolute top-0 left-0 w-[1px] h-full bg-border-dim opacity-20" />
              
@@ -66,71 +107,24 @@ export default function About() {
                   {block.label}
                 </div>
                 <h3 className="type-emphasis text-xl mb-6 tracking-tighter group-hover:text-accent transition-colors">{block.title}</h3>
-                <p className="type-body text-text-secondary leading-relaxed text-sm md:text-base">
+                <p className="type-body text-text-secondary leading-relaxed text-sm md:text-base max-w-md">
                   {block.content}
                 </p>
               </motion.div>
             ))}
           </div>
 
-          {/* EXPLORATION DOMAINS */}
-          <div className="mt-sys-64 pt-sys-64 border-t border-border-dim/20">
-             <div className="type-label text-accent mb-8 tracking-widest flex items-center gap-2">
-                <span className="w-1 h-1 bg-accent rounded-full opacity-50" />
-                ACTIVE_EXPLORATION_DOMAINS
-             </div>
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-sys-32">
-                {identity.exploration_focus.map((domain, idx) => (
-                    <motion.div 
-                      key={domain.title}
-                      initial={{ opacity: 0, y: 10 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: idx * 0.1, duration: 0.5 }}
-                      className="module-frame opacity-80 hover:opacity-100 transition-opacity"
-                    >
-                        <h4 className="type-emphasis text-sm mb-3 text-text-primary tracking-tight">{domain.title}</h4>
-                        <p className="type-body text-xs text-text-secondary opacity-60 leading-relaxed font-medium">{domain.description}</p>
-                    </motion.div>
-                ))}
-             </div>
-          </div>
+          <div className="hidden lg:block sticky top-sys-128">
+            <AboutVisualElement />
 
-          {/* TECHNOLOGY STACK */}
-          <div className="mt-sys-64 pt-sys-64 border-t border-border-dim/20">
-             <div className="type-label text-accent mb-8 tracking-widest flex items-center gap-2">
-                <span className="w-1 h-1 bg-accent rounded-full opacity-50" />
-                SYSTEM_TOOLS_&_CAPABILITIES
-             </div>
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-sys-48">
-                {identity.capabilities.slice(0, 4).map((cap, idx) => (
-                  <div key={idx}>
-                    <h4 className="type-metadata text-[0.6rem] opacity-30 mb-4 tracking-widest uppercase">{formatLabel(cap.category.replace(/ /g, "_"))}</h4>
-                    <p className="type-body text-sm font-medium text-text-secondary leading-relaxed">{cap.items.join(" • ")}</p>
-                  </div>
-                ))}
-             </div>
-          </div>
-
-          {/* BIO DETAILS (Mobile only or integrated) */}
-          <div className="lg:hidden mt-sys-64 pt-sys-64 border-t border-border-dim">
-            <div className="type-metadata text-[0.6rem] mb-2 opacity-30 tracking-widest">EDUCATION_REF</div>
-            <div className="type-emphasis text-sm">
-              {formatLabel(identity.degree || "")} @ {formatLabel(identity.university || "")}
-            </div>
-          </div>
-        </div>
-
-        <div className="hidden lg:block lg:col-span-4 lg:col-start-9 sticky top-sys-128 mt-sys-128">
-          <AboutVisualElement />
-
-          <div className="mt-sys-64 space-y-sys-32 opacity-20">
-            <div className="type-metadata text-[0.5rem] tracking-[0.3em]">DIAGNOSTIC_TELEMETRY</div>
-            <div className="space-y-2 font-mono text-[0.45rem] leading-tight">
-              OBJ_CURIOSITY: ACTIVE <br />
-              STATE_LEARNING: ITERATIVE <br />
-              BUFFER_STAMINA: 1024GB <br />
-              LATENCY_THOUGHT: 0.04MS
+            <div className="mt-sys-64 space-y-sys-32 opacity-20">
+              <div className="type-metadata text-[0.5rem] tracking-[0.3em]">DIAGNOSTIC_TELEMETRY</div>
+              <div className="space-y-2 font-mono text-[0.45rem] leading-tight">
+                OBJ_CURIOSITY: ACTIVE <br />
+                STATE_LEARNING: ITERATIVE <br />
+                BUFFER_STAMINA: 1024GB <br />
+                LATENCY_THOUGHT: 0.04MS
+              </div>
             </div>
           </div>
         </div>

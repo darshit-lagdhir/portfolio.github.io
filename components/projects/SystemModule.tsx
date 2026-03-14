@@ -20,6 +20,11 @@ export default function SystemModule({ project, index }: SystemModuleProps) {
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
+        whileHover={!useScene().isMobile ? { 
+          scale: 1.015,
+          y: -4,
+          transition: { duration: 0.2, ease: "easeOut" }
+        } : {}}
         viewport={{ once: true, margin: "-10%" }}
         transition={{
           duration: isLowPerf ? 0.3 : 1,
@@ -67,7 +72,7 @@ export default function SystemModule({ project, index }: SystemModuleProps) {
 
         <div className="mb-sys-32">
           <div className="type-metadata text-[0.35rem] text-accent/60 mb-3 tracking-[0.3em] font-mono">NODE_{index + 1} {'//'} {formatLabel(project.authority?.primaryDomain || "CORE")}</div>
-          <h3 className="type-h2 leading-tight text-xl md:text-2xl tracking-tighter text-text-primary">{project.name.toLowerCase()}</h3>
+          <h3 className="type-h2 leading-tight text-xl md:text-2xl tracking-tighter text-text-primary group-hover:text-accent transition-colors">{project.name.toLowerCase()}</h3>
         </div>
 
         <p className="type-body text-xs mb-sys-64 text-text-secondary opacity-60 leading-relaxed font-medium">

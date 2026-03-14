@@ -4,12 +4,15 @@ import React, { memo } from "react";
 import { motion } from "framer-motion";
 import { DiagramNode } from "@/types/project";
 import { cn } from "@/lib/utils";
+import { useScene } from "@/context/SceneContext";
 
 interface ArchNodeProps {
   node: DiagramNode;
   isActive: boolean;
   isDimmed: boolean;
   onClick: () => void;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
 }
 
 const TYPE_COLORS = {
@@ -30,20 +33,23 @@ const TYPE_LABELS = {
   client: "USER_INTERFACE"
 };
 
-function ArchNode({ node, isActive, isDimmed, onClick }: ArchNodeProps) {
+function ArchNode({ node, isActive, isDimmed, onClick, onMouseEnter, onMouseLeave }: ArchNodeProps) {
+  const { isMobile } = useScene();
   return (
     <motion.div
       role="button"
       tabIndex={0}
       aria-pressed={isActive}
       onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
           onClick();
         }
       }}
-      whileHover={{ scale: isDimmed ? 1 : 1.02 }}
+      whileHover={!isMobile ? { scale: isDimmed ? 1 : 1.02 } : {}}
       className={cn(
         "relative p-4 border transition-all duration-300 cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-accent",
         isActive 

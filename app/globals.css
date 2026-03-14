@@ -44,16 +44,15 @@
   --spacing-sys-32: 2rem;
   --spacing-sys-48: 3rem;
   --spacing-sys-64: 4rem;
-  --spacing-sys-80: 5rem;
   --spacing-sys-96: 6rem;
-  --spacing-sys-128: 10rem;
-  --spacing-sys-192: 15rem;
-  --spacing-sys-256: 20rem;
+  --spacing-sys-128: 8rem;
+  --spacing-sys-192: 12rem;
+  --spacing-sys-256: 16rem;
 
   /* 
      PHASE 3 — LAYOUT GRID
   */
-  --grid-max-width: 1400px;
+  --grid-max-width: 1200px;
   --grid-columns: 12;
   --grid-gutter: 2.5rem;
 
@@ -393,7 +392,7 @@ h3 {
   color: inherit;
   text-decoration: none;
   position: relative;
-  transition: var(--transition-snappy);
+  transition: color var(--transition-snappy);
   cursor: pointer;
 }
 
@@ -411,7 +410,7 @@ h3 {
   width: 0;
   height: 1px;
   background-color: var(--color-accent);
-  transition: var(--transition-smooth);
+  transition: width var(--transition-smooth);
 }
 
 @media (hover: hover) {
@@ -432,16 +431,18 @@ h3 {
   font-size: 0.7rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  transition: var(--transition-snappy);
+  transition: all var(--transition-snappy);
   cursor: pointer;
   white-space: nowrap;
 }
 
 @media (hover: hover) {
   .btn-primary:hover {
-    background-color: var(--color-text-primary);
-    color: var(--color-bg-primary);
-    border-color: var(--color-text-primary);
+    background-color: var(--color-accent);
+    color: #ffffff;
+    border-color: var(--color-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 102, 255, 0.2);
   }
 }
 

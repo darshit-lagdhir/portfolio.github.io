@@ -18,6 +18,7 @@ interface ArchitectureDiagramProps {
 export default function ArchitectureDiagram({ layout, nodes, connections, highlightedNodes = [] }: ArchitectureDiagramProps) {
   const { isMobile } = useScene();
   const [activeNodeId, setActiveNodeId] = useState<string | null>(null);
+  const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const nodeRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
@@ -88,7 +89,11 @@ export default function ArchitectureDiagram({ layout, nodes, connections, highli
         {connections.map((conn, idx) => {
           const isFromActive = conn.from === activeNodeId;
           const isToActive = conn.to === activeNodeId;
+          const isFromHovered = conn.from === hoveredNodeId;
+          const isToHovered = conn.to === hoveredNodeId;
+          
           const isPathActive = isFromActive || isToActive;
+          const isPathHovered = isFromHovered || isToHovered;
           
           return (
             <ArchConnection
@@ -97,7 +102,7 @@ export default function ArchitectureDiagram({ layout, nodes, connections, highli
               toRect={nodeRects[conn.to]}
               parentRect={parentRect}
               layout={layout}
-              isActive={isPathActive}
+              isActive={isPathActive || isPathHovered}
             />
           );
         })}
@@ -106,8 +111,10 @@ export default function ArchitectureDiagram({ layout, nodes, connections, highli
         {nodes.map((node) => {
           const isHighlighted = highlightedNodes.includes(node.id);
           const isSelected = activeNodeId === node.id;
+          const isHovered = hoveredNodeId === node.id;
           const isAnyHighlighted = highlightedNodes.length > 0;
           const isAnySelected = !!activeNodeId;
+          const isAnyHovered = !!hoveredNodeId;
 
           return (
             <motion.div 
@@ -118,9 +125,15 @@ export default function ArchitectureDiagram({ layout, nodes, connections, highli
             >
               <ArchNode
                 node={node}
-                isActive={isHighlighted || isSelected}
-                isDimmed={(isAnyHighlighted && !isHighlighted) || (isAnySelected && !isSelected && !isHighlighted)}
+                isActive={isHighlighted || isSelected || isHovered}
+                isDimmed={
+                  (isAnyHighlighted && !isHighlighted) || 
+                  (isAnySelected && !isSelected && !isHighlighted) ||
+                  (isAnyHovered && !isHovered && !isHighlighted && !isSelected)
+                }
                 onClick={() => setActiveNodeId(activeNodeId === node.id ? null : node.id)}
+                onMouseEnter={() => setHoveredNodeId(node.id)}
+                onMouseLeave={() => setHoveredNodeId(null)}
               />
             </motion.div>
           );

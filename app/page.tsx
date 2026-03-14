@@ -26,7 +26,7 @@ const TerminalContact = dynamic(() => import("@/components/contact/TerminalConta
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-sys-128 lg:gap-sys-192 pb-sys-128">
+    <div className="flex flex-col pb-sys-128">
       {/* 
          MANIFEST_NODE_00: IDENTITY_PROBE
       */}

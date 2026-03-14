@@ -21,9 +21,10 @@ export default function DiscoveryHint({
 }: DiscoveryHintProps) {
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 10 }}
+      initial={{ opacity: 0, y: 15 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      viewport={{ once: true, margin: "-5%" }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
       className={cn(
         "group flex flex-col gap-3",
         orientation === "right" && "items-end text-right",
@@ -31,18 +32,18 @@ export default function DiscoveryHint({
         className
       )}
     >
-      <Link href={href} className="inline-flex items-center gap-4">
+      <Link href={href} className="inline-flex items-center gap-4 focus:outline-none">
         <div className="flex flex-col">
-          <span className="type-metadata text-[0.4rem] text-accent/40 tracking-[0.3em] font-mono mb-1 uppercase">
+          <span className="type-metadata text-[0.4rem] text-accent/40 tracking-[0.3em] font-mono mb-1 uppercase group-hover:text-accent group-hover:opacity-100 transition-all">
             PATH:RESOLVE
           </span>
-          <span className="type-nav text-[0.6rem] border-b border-border-dim/50 group-hover:border-accent/40 transition-all pb-1 uppercase tracking-widest text-text-secondary/70 group-hover:text-accent/80">
+          <span className="type-nav text-[0.6rem] border-b border-border-dim group-hover:border-accent transition-all pb-1 uppercase tracking-widest text-text-muted group-hover:text-accent">
             {label} &rarr;
           </span>
         </div>
       </Link>
       {description && (
-        <p className="type-body text-[0.65rem] opacity-30 italic max-w-xs leading-relaxed">
+        <p className="type-body text-[0.65rem] text-text-muted opacity-40 italic max-w-xs leading-relaxed group-hover:opacity-60 transition-opacity">
           {description}
         </p>
       )}

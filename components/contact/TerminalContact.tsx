@@ -138,6 +138,17 @@ export default function TerminalContact() {
                   </motion.div>
                 ))}
 
+                {!isProcessing && (
+                  <div className="flex gap-6 text-accent">
+                    <span className="opacity-20 shrink-0">λ</span>
+                    <motion.div 
+                      className="w-2 h-4 bg-accent"
+                      animate={{ opacity: [0, 1, 0] }}
+                      transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+                    />
+                  </div>
+                )}
+
                 {isProcessing && (
                   <motion.div
                     animate={{ opacity: [0.3, 1, 0.3] }}
@@ -163,18 +174,18 @@ export default function TerminalContact() {
                     key={cmd.id}
                     onClick={() => executeCommand(cmd.id, cmd.label)}
                     disabled={isProcessing}
-                    className="module-frame group flex items-center justify-between !p-6 relative transition-all text-left disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-1 focus-visible:ring-accent md:hover:translate-x-1 hover:bg-accent/5"
+                    className="module-frame group flex items-center justify-between !p-6 relative transition-all text-left disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-1 focus-visible:ring-accent md:hover:translate-x-1 hover:bg-accent/5 hover:border-accent/40"
                   >
                     <div className="absolute top-2 right-2 opacity-20 group-hover:opacity-100 transition-opacity">
                        <div className="arch-marker scale-[0.3]" />
                     </div>
                      <div className="flex items-center gap-4">
                       <span className="text-accent opacity-40 group-hover:opacity-100 group-hover:translate-x-1 transition-all">λ</span>
-                      <span className="type-nav text-[0.7rem] font-bold group-hover:text-text-primary transition-colors">
+                      <span className="type-nav text-[0.7rem] font-bold group-hover:text-accent transition-colors">
                         {formatLabel(cmd.label)}
                       </span>
                     </div>
-                    <span className="type-metadata text-[0.4rem] opacity-30 group-hover:opacity-100 transition-opacity">
+                    <span className="type-metadata text-[0.4rem] text-text-muted group-hover:text-accent group-hover:opacity-100 transition-all">
                       {cmd.action}
                     </span>
                   </button>

@@ -32,7 +32,7 @@ export default function SectionContainer({ id, children, className, noPadding = 
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
         "system-container relative",
-        !noPadding && "py-sys-128 md:py-sys-192",
+        !noPadding && "py-sys-48 md:py-sys-64",
         className
       )}
     >

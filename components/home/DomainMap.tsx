@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { engineeringDomains } from "@/data/domains";
 import { cn } from "@/lib/utils";
@@ -12,7 +13,10 @@ interface DomainMapProps {
 
 export default function DomainMap({ activeDomainId, onDomainClick }: DomainMapProps) {
   const { isLowPerf } = useScene();
+  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  
   const activeDomain = activeDomainId ? engineeringDomains.find(d => d.domain_id === activeDomainId) : null;
+  const hoveredDomain = hoveredId ? engineeringDomains.find(d => d.domain_id === hoveredId) : null;
   
   // Fixed positions for a controlled conceptual layout
   const nodePositions: { [key: string]: { x: number; y: number } } = {
@@ -34,7 +38,8 @@ export default function DomainMap({ activeDomainId, onDomainClick }: DomainMapPr
             const end = nodePositions[relId];
             if (!start || !end) return null;
 
-            const isHighlighted = activeDomainId === domain.domain_id || activeDomainId === relId;
+            const isActive = activeDomainId === domain.domain_id || activeDomainId === relId;
+            const isHovered = hoveredId === domain.domain_id || hoveredId === relId;
 
             return (
               <motion.line
@@ -44,10 +49,10 @@ export default function DomainMap({ activeDomainId, onDomainClick }: DomainMapPr
                 x2={end.x}
                 y2={end.y}
                 stroke="currentColor"
-                strokeWidth={isHighlighted ? "0.2" : "0.05"}
+                strokeWidth={isActive ? "0.2" : (isHovered ? "0.15" : "0.05")}
                 className={cn(
-                  "transition-all duration-500",
-                  isHighlighted ? "text-accent" : "text-border-dim opacity-30"
+                  "transition-all duration-300",
+                  isActive ? "text-accent" : (isHovered ? "text-accent/60" : "text-border-dim opacity-30")
                 )}
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
@@ -61,23 +66,29 @@ export default function DomainMap({ activeDomainId, onDomainClick }: DomainMapPr
         {engineeringDomains.map(domain => {
           const pos = nodePositions[domain.domain_id];
           const isActive = activeDomainId === domain.domain_id;
-          const isRelated = activeDomain?.connected_domains.includes(domain.domain_id);
+          const isHovered = hoveredId === domain.domain_id;
+          const isRelatedToActive = activeDomain?.connected_domains.includes(domain.domain_id);
+          const isRelatedToHovered = hoveredDomain?.connected_domains.includes(domain.domain_id);
 
           return (
             <g 
               key={domain.domain_id} 
               className="cursor-pointer"
               onClick={() => onDomainClick(domain.domain_id)}
+              onMouseEnter={() => !useScene().isMobile && setHoveredId(domain.domain_id)}
+              onMouseLeave={() => !useScene().isMobile && setHoveredId(null)}
             >
               <motion.circle
                 cx={pos.x}
                 cy={pos.y}
-                r={isActive ? "2" : "1"}
+                r={isActive ? "2" : (isHovered ? "1.8" : "1")}
                 className={cn(
                   "transition-all duration-300",
-                  isActive ? "fill-accent" : (isRelated ? "fill-accent-dim" : "fill-border-dim")
+                  isActive 
+                    ? "fill-accent" 
+                    : (isHovered || isRelatedToHovered || isRelatedToActive ? "fill-accent-dim" : "fill-border-dim")
                 )}
-                whileHover={{ r: 2.5 }}
+                whileHover={!useScene().isMobile ? { r: 2 } : {}}
               />
               {/* Optional: Glow Effect for Active Node */}
               {isActive && !isLowPerf && (

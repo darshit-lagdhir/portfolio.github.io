@@ -48,9 +48,9 @@ export default function EngineeringDomains() {
               key={domain.domain_id}
               onClick={() => setActiveDomainId(activeDomainId === domain.domain_id ? null : domain.domain_id)}
               className={cn(
-                "module-frame w-full text-left relative group !p-8",
+                "module-frame w-full text-left relative group !p-8 transition-all duration-300",
                 activeDomainId === domain.domain_id 
-                  ? "border-accent bg-accent/5" 
+                  ? "border-accent bg-accent/5 ring-1 ring-accent/20" 
                   : "hover:border-border-bright"
               )}
             >
@@ -74,7 +74,7 @@ export default function EngineeringDomains() {
         </div>
 
         {/* Domain Detail & Map Area */}
-        <div className="module-frame lg:col-span-8 min-h-[500px] relative !p-8 md:!p-12 overflow-hidden flex flex-col justify-center">
+        <div className="module-frame lg:col-span-8 min-h-[600px] relative !p-8 md:!p-16 overflow-hidden flex flex-col justify-center">
           {/* Visual Domain Map Layer */}
           {!isMobile && (
             <DomainMap 
@@ -92,9 +92,9 @@ export default function EngineeringDomains() {
                 exit={{ opacity: 0, x: -20 }}
                 className="space-y-sys-64 relative z-10"
               >
-                <div className="space-y-4">
+                <div className="space-y-6">
                    <div className="type-metadata text-[0.45rem] text-accent">DOMAIN_SPECIFICATION // {activeDomain.domain_id}</div>
-                   <p className="type-body text-lg md:text-xl text-text-primary leading-relaxed max-w-2xl">
+                   <p className="type-body text-xl md:text-2xl text-text-primary leading-tight max-w-2xl font-bold tracking-tighter">
                      {activeDomain.description}
                    </p>
                 </div>
@@ -139,7 +139,7 @@ export default function EngineeringDomains() {
                 <div className="w-16 h-[1px] bg-accent-dim" />
                 <div className="space-y-2">
                   <div className="type-metadata text-[0.45rem] text-text-muted">SYSTEM_IDLE</div>
-                  <h3 className="type-emphasis text-lg text-text-muted">SELECT_DOMAIN_FOR_EXPLORATION</h3>
+                  <h3 className="type-emphasis text-lg text-text-muted uppercase tracking-widest">SELECT_DOMAIN_FOR_EXPLORATION</h3>
                 </div>
                 <div className="w-16 h-[1px] bg-accent-dim" />
                 
@@ -157,7 +157,9 @@ export default function EngineeringDomains() {
              <div className="w-full h-full" style={{ backgroundImage: 'linear-gradient(var(--color-border-dim) 1px, transparent 1px), linear-gradient(90deg, var(--color-border-dim) 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
           </div>
         </div>
-        <div className="mt-sys-64 flex flex-col md:flex-row justify-between items-start md:items-end gap-sys-32">
+      </div>
+      
+      <div className="mt-sys-96 flex flex-col md:flex-row justify-between items-start md:items-end gap-sys-32">
         <DiscoveryHint 
           label={identity.discovery_hints.toSystems.label}
           href="#systems"
@@ -165,7 +167,6 @@ export default function EngineeringDomains() {
           orientation="right"
         />
       </div>
-    </div>
     </div>
   );
 }
