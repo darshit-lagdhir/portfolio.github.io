@@ -18,20 +18,20 @@ export default function SystemModule({ project, index }: SystemModuleProps) {
   return (
     <Link href={getProjectUrl(project.slug)} className="focus:outline-none focus-visible:ring-1 focus-visible:ring-accent block h-full">
       <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
         whileHover={!useScene().isMobile ? { 
           scale: 1.015,
-          y: -4,
-          transition: { duration: 0.2, ease: "easeOut" }
+          y: -8, // Increased offset for better feedback
+          transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] }
         } : {}}
         viewport={{ once: true, margin: "-10%" }}
         transition={{
           duration: isLowPerf ? 0.3 : 1,
-          delay: isLowPerf ? 0 : index * 0.05,
+          delay: isLowPerf ? 0 : index * 0.1,
           ease: [0.16, 1, 0.3, 1]
         }}
-        className="module-frame group relative h-full flex flex-col"
+        className="module-frame group relative h-full flex flex-col hover:bg-bg-secondary/80 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] transition-all duration-300"
         style={{ willChange: "transform, opacity" }}
       >
         {/* Module Header Hook */}

@@ -15,7 +15,21 @@ export default function HeroIdentity() {
         <div className="flex items-center gap-3">
           <span className="w-2 h-2 rounded-full bg-accent" />
           <h2 className="type-emphasis text-xl md:text-2xl tracking-tighter text-text-primary">
-            {identity.name}
+            {identity.name.split('').map((char, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: 5 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.1 + (i * 0.03),
+                  ease: "easeOut"
+                }}
+                className="inline-block"
+              >
+                {char === ' ' ? '\u00A0' : char}
+              </motion.span>
+            ))}
           </h2>
         </div>
         <p className="type-metadata text-[0.65rem] tracking-[0.3em] text-accent uppercase font-bold pl-5">
@@ -26,7 +40,7 @@ export default function HeroIdentity() {
       <motion.h1
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className="type-display mb-sys-48 leading-[0.85] tracking-tighter"
       >
         {identity.hero_identity.hero_title.includes('_') ? (

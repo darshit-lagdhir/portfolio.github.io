@@ -99,7 +99,7 @@ export default function NavigationDock() {
     <motion.nav
       initial={{ x: -100, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
       className="fixed left-sys-32 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-sys-24"
     >
       {!isHomePage && (

@@ -113,25 +113,26 @@ export default function TerminalContact() {
             {/* TERMINAL CONTENT */}
             <div
               ref={scrollRef}
-              className="p-10 h-[400px] overflow-y-auto bg-bg-primary/50"
+              className="p-8 md:p-12 h-[450px] overflow-y-auto bg-bg-primary/40 scrollbar-hide"
             >
-              <div className="space-y-6 font-mono text-[0.75rem] leading-relaxed">
+              <div className="space-y-6 font-mono text-[0.8rem] leading-relaxed">
                 {history.map((line, i) => (
                   <motion.div
                     key={i}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
+                    initial={{ opacity: 0, x: -5 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.2 }}
                     className={cn(
-                      "whitespace-pre-wrap flex gap-6",
+                      "whitespace-pre-wrap flex gap-4 items-start",
                       line.type === 'input' ? "text-accent" : "text-text-secondary"
                     )}
                   >
-                    <span className="opacity-20 shrink-0">
+                    <span className="opacity-30 shrink-0 select-none">
                       {line.type === 'input' ? 'λ' : '»'}
                     </span>
                     <span className={cn(
-                      line.type === 'input' ? "font-bold tracking-tight opacity-90" : "font-medium opacity-60"
+                      "flex-1",
+                      line.type === 'input' ? "font-bold tracking-tight opacity-100" : "opacity-70"
                     )}>
                       {line.content}
                     </span>
@@ -139,12 +140,12 @@ export default function TerminalContact() {
                 ))}
 
                 {!isProcessing && (
-                  <div className="flex gap-6 text-accent">
-                    <span className="opacity-20 shrink-0">λ</span>
+                  <div className="flex gap-4 items-start text-accent">
+                    <span className="opacity-30 shrink-0 select-none">λ</span>
                     <motion.div 
-                      className="w-2 h-4 bg-accent"
+                      className="w-2.5 h-4 bg-accent mt-0.5"
                       animate={{ opacity: [0, 1, 0] }}
-                      transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }}
+                      transition={{ duration: 0.8, repeat: Infinity, ease: (v) => v > 0.5 ? 1 : 0 }}
                     />
                   </div>
                 )}

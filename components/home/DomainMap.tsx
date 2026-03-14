@@ -20,12 +20,12 @@ export default function DomainMap({ activeDomainId, onDomainClick }: DomainMapPr
   
   // Fixed positions for a controlled conceptual layout
   const nodePositions: { [key: string]: { x: number; y: number } } = {
-    systems_engineering: { x: 50, y: 25 },
-    backend_systems: { x: 80, y: 40 },
-    data_systems: { x: 75, y: 70 },
-    programming_languages: { x: 20, y: 40 },
-    linux_security: { x: 25, y: 70 },
-    ai_exploration: { x: 50, y: 80 }
+    systems_engineering: { x: 50, y: 30 },
+    backend_systems: { x: 80, y: 45 },
+    data_systems: { x: 75, y: 75 },
+    programming_languages: { x: 20, y: 45 },
+    linux_security: { x: 25, y: 75 },
+    ai_exploration: { x: 50, y: 85 }
   };
 
   return (
