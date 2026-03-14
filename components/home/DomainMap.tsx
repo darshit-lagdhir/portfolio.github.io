@@ -10,6 +10,8 @@ interface DomainMapProps {
 }
 
 export default function DomainMap({ activeDomainId, onDomainClick }: DomainMapProps) {
+  const activeDomain = activeDomainId ? engineeringDomains.find(d => d.domain_id === activeDomainId) : null;
+  
   // Fixed positions for a controlled conceptual layout
   const nodePositions: { [key: string]: { x: number; y: number } } = {
     systems_engineering: { x: 50, y: 25 },
@@ -57,7 +59,7 @@ export default function DomainMap({ activeDomainId, onDomainClick }: DomainMapPr
         {engineeringDomains.map(domain => {
           const pos = nodePositions[domain.domain_id];
           const isActive = activeDomainId === domain.domain_id;
-          const isRelated = activeDomainId && engineeringDomains.find(d => d.domain_id === activeDomainId)?.connected_domains.includes(domain.domain_id);
+          const isRelated = activeDomain?.connected_domains.includes(domain.domain_id);
 
           return (
             <g 

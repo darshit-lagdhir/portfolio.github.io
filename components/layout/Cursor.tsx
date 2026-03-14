@@ -4,41 +4,26 @@ import { useEffect, useState, useRef } from "react";
 import { motion, useMotionValue, useSpring, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useScene } from "@/context/SceneContext";
+import { useMousePosition } from "@/lib/interaction";
 
 export default function Cursor() {
-  const { isLowPerf, isMobile } = useScene();
+  const { isLowPerf, isMobile: sceneMobile } = useScene();
+  const { x, y, isMobile: interactionMobile, hasMoved } = useMousePosition();
   const [cursorType, setCursorType] = useState<"default" | "hover" | "active">("default");
-  const [isPointer, setIsPointer] = useState(true); // Default to true for better hydration matching on desktop
-  const [hasMoved, setHasMoved] = useState(false);
-  const cursorRef = useRef<HTMLDivElement>(null);
+  const isPointer = !interactionMobile && !sceneMobile;
   
   const shouldReduceMotion = useReducedMotion();
 
-  // Mouse positioning values
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  // Responsive spring physics - simplified if low performance
+  // Mouse positioning values with spring smoothing
   const springConfig = isLowPerf 
     ? { damping: 40, stiffness: 400, mass: 1 } 
     : { damping: 30, stiffness: 2000, mass: 0.01 };
     
-  const cursorX = useSpring(mouseX, springConfig);
-  const cursorY = useSpring(mouseY, springConfig);
+  const cursorX = useSpring(x, springConfig);
+  const cursorY = useSpring(y, springConfig);
 
   useEffect(() => {
-    // Check if device uses a fine pointer (mouse/trackpad)
-    const mediaQuery = window.matchMedia("(pointer: fine)");
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setIsPointer(mediaQuery.matches);
-
-    if (!mediaQuery.matches || isMobile) return;
-
-    const updatePosition = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-      if (!hasMoved) setHasMoved(true);
-    };
+    if (!isPointer) return;
 
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -55,7 +40,6 @@ export default function Cursor() {
     const handleMouseDown = () => setCursorType("active");
     const handleMouseUp = () => setCursorType("hover");
 
-    window.addEventListener("mousemove", updatePosition, { passive: true });
     window.addEventListener("mouseover", handleMouseOver, { passive: true });
     window.addEventListener("mousedown", handleMouseDown, { passive: true });
     window.addEventListener("mouseup", handleMouseUp, { passive: true });
@@ -63,16 +47,20 @@ export default function Cursor() {
     document.body.classList.add("custom-cursor-active");
 
     return () => {
-      window.removeEventListener("mousemove", updatePosition);
       window.removeEventListener("mouseover", handleMouseOver);
       window.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mouseup", handleMouseUp);
       document.body.classList.remove("custom-cursor-active");
     };
-  }, [mouseX, mouseY, isMobile, hasMoved]);
+  }, [isPointer]);
+
+  useEffect(() => {
+    cursorX.set(x);
+    cursorY.set(y);
+  }, [x, y, cursorX, cursorY]);
 
   // Disable on mobile/touch or if pointer is not fine
-  if (!isPointer || isMobile) return null;
+  if (!isPointer || sceneMobile) return null;
 
   const variants = {
     default: {
@@ -97,7 +85,6 @@ export default function Cursor() {
 
   return (
     <motion.div
-      ref={cursorRef}
       className={cn(
         "custom-cursor fixed top-0 left-0 w-6 h-6 rounded-full border pointer-events-none z-[9999] mix-blend-difference transition-opacity duration-500",
         hasMoved ? "opacity-100" : "opacity-0"

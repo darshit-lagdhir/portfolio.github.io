@@ -1,12 +1,12 @@
-"use client";
-
-import { projects } from "@/data/projects";
+import { cn, getTierProjects } from "@/lib/utils";
 import SystemModule from "./SystemModule";
 import SectionDivider from "@/components/shared/SectionDivider";
 import { identity } from "@/data/identity";
 import DiscoveryHint from "@/components/shared/DiscoveryHint";
 
 export default function SystemModules() {
+  const tier1Projects = getTierProjects(1);
+
   return (
     <div className="w-full">
       <SectionDivider 
@@ -25,7 +25,7 @@ export default function SystemModules() {
 
       {/* MODULE GRID LAYER */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-sys-32">
-        {projects.filter(p => p.tier === 1).map((project, index) => (
+        {tier1Projects.map((project, index) => (
           <SystemModule 
             key={project.slug} 
             project={project} 

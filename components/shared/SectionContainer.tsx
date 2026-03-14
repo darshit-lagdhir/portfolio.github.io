@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { cn } from "../../lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
+import { useIntersectionObserver } from "@/lib/interaction";
 
 interface SectionContainerProps {
   id: string;
@@ -13,31 +14,17 @@ interface SectionContainerProps {
 
 export default function SectionContainer({ id, children, className, noPadding = false }: SectionContainerProps) {
   const [hasEntered, setHasEntered] = useState(false);
-  const containerRef = useRef<HTMLElement>(null);
+  const [containerRef, isIntersecting] = useIntersectionObserver({ rootMargin: "400px" });
 
   useEffect(() => {
-    // We use a high-performance IntersectionObserver to defer mounting children
-    // rootMargin '400px' ensures they start loading/mounting before they enter the screen
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setHasEntered(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: "400px" } 
-    );
-
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
+    if (isIntersecting && !hasEntered) {
+      setHasEntered(true);
     }
-
-    return () => observer.disconnect();
-  }, []);
+  }, [isIntersecting, hasEntered]);
 
   return (
     <motion.section
-      ref={containerRef}
+      ref={containerRef as React.RefObject<HTMLElement>}
       id={id}
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}

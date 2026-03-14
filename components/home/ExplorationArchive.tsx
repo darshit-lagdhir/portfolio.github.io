@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { laboratoryExplorations } from "@/data/laboratory";
-import { cn } from "@/lib/utils";
+import { cn, unslugify, getProjectUrl } from "@/lib/utils";
 import Link from "next/link";
 
 export default function ExplorationArchive() {
@@ -29,7 +29,7 @@ export default function ExplorationArchive() {
           >
             <div className="flex justify-between items-start mb-6">
               <span className="type-metadata text-[0.35rem] opacity-30 uppercase font-mono">
-                {item.related_domains[0].replace(/_/g, ' ')}
+                {unslugify(item.related_domains[0])}
               </span>
               <div className="w-2 h-2 rounded-full border border-border-dim group-hover:bg-accent/40 transition-colors" />
             </div>
@@ -53,7 +53,7 @@ export default function ExplorationArchive() {
               <div className="flex flex-wrap gap-2">
                 {item.related_domains.map(domain => (
                   <span key={domain} className="type-metadata text-[0.3rem] opacity-20 border border-border-dim/50 px-2 py-0.5 uppercase">
-                    {domain.replace(/_/g, ' ')}
+                    {unslugify(domain)}
                   </span>
                 ))}
               </div>
@@ -63,7 +63,7 @@ export default function ExplorationArchive() {
                   {item.related_projects.map(project => (
                     <Link 
                       key={project}
-                      href={`/${project}`}
+                      href={getProjectUrl(project)}
                       className="type-metadata text-[0.35rem] text-accent/40 hover:text-accent transition-colors uppercase font-mono"
                     >
                       // {project}

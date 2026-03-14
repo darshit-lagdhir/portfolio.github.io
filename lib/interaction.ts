@@ -1,19 +1,28 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useReducedMotion } from "framer-motion";
 
 /**
- * Hook to track scroll position with high performance
+ * --- SCROLL BEHAVIOR ---
+ * Optimized scroll tracking with requestAnimationFrame.
  */
 export function useScrollPosition() {
   const [scrollPos, setScrollPos] = useState({ x: 0, y: 0 });
+  const lastPos = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     let ticking = false;
 
     const updatePosition = () => {
-      setScrollPos({ x: window.scrollX, y: window.scrollY });
+      const x = window.scrollX;
+      const y = window.scrollY;
+      
+      // Only update state if position changed significantly to reduce re-renders
+      if (Math.abs(y - lastPos.current.y) > 0.5 || Math.abs(x - lastPos.current.x) > 0.5) {
+        setScrollPos({ x, y });
+        lastPos.current = { x, y };
+      }
       ticking = false;
     };
 
@@ -34,43 +43,139 @@ export function useScrollPosition() {
 }
 
 /**
- * Detect if an element is in view with a specific offset
+ * Calculates scroll progress and scrolled state.
  */
-export function useInView(ref: React.RefObject<HTMLElement | null>, offset = "0px") {
-  const [isInView, setIsInView] = useState(false);
+export function useScrollProgress() {
+  const [progress, setProgress] = useState(0);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const { y } = useScrollPosition();
 
   useEffect(() => {
-    if (!ref.current) return;
+    const docElement = document.documentElement;
+    const scrollHeight = docElement.scrollHeight - window.innerHeight;
+    
+    if (scrollHeight > 0) {
+      const p = parseFloat((y / scrollHeight).toFixed(3));
+      setProgress(p);
+    }
+    
+    setIsScrolled(y > 100);
+  }, [y]);
 
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsInView(entry.isIntersecting),
-      { rootMargin: offset }
-    );
-
-    observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [ref, offset]);
-
-  return isInView;
+  return { progress, isScrolled };
 }
 
 /**
- * Interaction State Management for transient UI states
+ * --- VISIBILITY DETECTION ---
+ * Higher performance viewport observation using IntersectionObserver.
  */
-export function useInteractionState<T>(initialValue: T, resetDelay = 1000) {
-  const [state, setState] = useState<T>(initialValue);
+export function useIntersectionObserver(
+  options: IntersectionObserverInit = { threshold: 0.1, rootMargin: "0px" }
+) {
+  const [isIntersecting, setIsIntersecting] = useState(false);
+  const elementRef = useRef<HTMLElement | null>(null);
 
-  const setWithReset = (newValue: T) => {
-    setState(newValue);
-    setTimeout(() => setState(initialValue), resetDelay);
-  };
+  useEffect(() => {
+    const el = elementRef.current;
+    if (!el) return;
 
-  return [state, setWithReset] as const;
+    const observer = new IntersectionObserver(([entry]) => {
+      setIsIntersecting(entry.isIntersecting);
+    }, options);
+
+    observer.observe(el);
+    return () => {
+      observer.disconnect();
+    };
+  }, [options.threshold, options.rootMargin]);
+
+  return [elementRef, isIntersecting] as const;
 }
 
 /**
- * Centralized Motion Orchestrator (Phase 1 & 9)
- * Detects reduced motion preferences and provides consistent timing logic.
+ * --- CURSOR INTERACTION ---
+ * Centralized mouse tracking with mobile detection and performance guards.
+ */
+export function useMousePosition() {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
+  const [hasMoved, setHasMoved] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.matchMedia("(pointer: coarse)").matches || window.innerWidth < 1024);
+    };
+
+    if (typeof window === "undefined") return;
+    checkMobile();
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (isMobile) return;
+      
+      setMousePosition({ x: e.clientX, y: e.clientY });
+      if (!hasMoved) setHasMoved(true);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    window.addEventListener("resize", checkMobile);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("resize", checkMobile);
+    };
+  }, [isMobile, hasMoved]);
+
+  return { ...mousePosition, isMobile, hasMoved };
+}
+
+/**
+ * --- HOVER TRACKING ---
+ * Reusable utility to detect interaction states for specific elements.
+ */
+export function useHoverState() {
+  const [hoverType, setHoverType] = useState<"default" | "hover" | "active">("default");
+
+  const onMouseEnter = useCallback(() => setHoverType("hover"), []);
+  const onMouseLeave = useCallback(() => setHoverType("default"), []);
+  const onMouseDown = useCallback(() => setHoverType("active"), []);
+  const onMouseUp = useCallback(() => setHoverType("hover"), []);
+
+  return { 
+    hoverType, 
+    bind: { onMouseEnter, onMouseLeave, onMouseDown, onMouseUp } 
+  };
+}
+
+/**
+ * --- NAVIGATION STATE ---
+ * Detects the active section based on scroll offset.
+ */
+export function useActiveSection(sectionIds: string[], offsetMargin = "-30% 0px -40% 0px") {
+  const [activeSection, setActiveSection] = useState<string>(sectionIds[0]);
+  
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    }, { rootMargin: offsetMargin, threshold: [0, 0.1] });
+
+    sectionIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [sectionIds, offsetMargin]);
+
+  return activeSection;
+}
+
+/**
+ * --- MOTION ORCHESTRATION ---
+ * Centralizes spring and transition configurations for consistent UI behavior.
  */
 export function useInteractionMotion() {
   const shouldReduceMotion = useReducedMotion();
@@ -99,7 +204,7 @@ export function useInteractionMotion() {
 }
 
 /**
- * Detects focus visibility for high-fidelity accessibility (Phase 8)
+ * Detects focus visibility for accessibility.
  */
 export function useFocusVisible() {
   const [isFocusVisible, setIsFocusVisible] = useState(false);
@@ -120,4 +225,23 @@ export function useFocusVisible() {
   }, []);
 
   return isFocusVisible;
+}
+
+/**
+ * --- PERFORMANCE DETECTION ---
+ */
+export function usePerformanceDetection() {
+  const [isLowPerf, setIsLowPerf] = useState(false);
+
+  useEffect(() => {
+    if (typeof navigator !== 'undefined') {
+      const cores = navigator.hardwareConcurrency || 4;
+      // @ts-expect-error - deviceMemory is not standard
+      const memory = navigator.deviceMemory || 8;
+      const isSlow = cores <= 4 || memory <= 4;
+      setIsLowPerf(isSlow);
+    }
+  }, []);
+
+  return isLowPerf;
 }

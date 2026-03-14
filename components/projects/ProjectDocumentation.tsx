@@ -6,7 +6,7 @@ import Link from "next/link";
 import dynamic from "next/dynamic";
 import { identity } from "@/data/identity";
 import { Project } from "@/types/project";
-import { cn } from "@/lib/utils";
+import { cn, getNextProject, getStatusMetadata, formatLabel, getProjectIndex } from "@/lib/utils";
 import { projects } from "@/data/projects";
 import SectionDivider from "@/components/shared/SectionDivider";
 import DiscoveryHint from "@/components/shared/DiscoveryHint";
@@ -30,8 +30,8 @@ interface ProjectDocumentationProps {
 
 export default function ProjectDocumentation({ project }: ProjectDocumentationProps) {
   const [highlightedNodes, setHighlightedNodes] = useState<string[]>([]);
-  const currentIndex = projects.findIndex(p => p.slug === project.slug);
-  const nextProject = projects[(currentIndex + 1) % projects.length];
+  const nextProject = getNextProject(project.slug);
+  const statusMeta = getStatusMetadata(project.status);
 
   return (
     <div className="min-h-screen pb-sys-128 bg-noise">
@@ -58,14 +58,10 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
              >
                <span className={cn(
                  "w-2 h-2 rounded-full",
-                 project.status === "Completed" ? "bg-green-500/50" : 
-                 project.status === "Active Development" ? "bg-yellow-500/50 pulse" :
-                 project.status === "Hackathon Project" ? "bg-blue-400/50" : "bg-yellow-500/50 pulse"
+                 statusMeta.color
                )} />
                <span className="type-metadata text-[0.5rem] text-accent tracking-widest">
-                 {project.status === "Completed" ? "COMPLETE" : 
-                  project.status === "Active Development" ? "ACTIVE_DEVELOPMENT" :
-                  project.status === "Hackathon Project" ? "HACKATHON_PROJECT" : "IN_DEVELOPMENT"}
+                 {statusMeta.label}
                </span>
              </motion.div>
 
@@ -75,7 +71,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                transition={{ duration: 0.8 }}
                className="type-identity text-5xl md:text-8xl leading-none mb-sys-32"
              >
-               {project.name.toUpperCase()}_
+               {formatLabel(project.name)}_
              </motion.h1>
 
              <motion.p 
@@ -95,7 +91,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
              >
                 {project.techStack.map(tech => (
                   <span key={tech} className="type-metadata text-[0.45rem] opacity-40 border border-border-dim px-2 py-1">
-                    {tech.toUpperCase()}
+                    {formatLabel(tech)}
                   </span>
                 ))}
              </motion.div>
@@ -104,11 +100,11 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
           <div className="col-span-12 lg:col-span-4 mt-sys-48 lg:mt-0 flex flex-col gap-6 lg:items-end">
              <div className="text-left lg:text-right">
                 <div className="type-metadata text-[0.5rem] opacity-30 mb-2">SYSTEM_ARCHITECTURE</div>
-                <div className="type-label text-accent">{project.technicalMeta?.architectureStyle.toUpperCase()}</div>
+                <div className="type-label text-accent">{formatLabel(project.technicalMeta?.architectureStyle || "")}</div>
              </div>
              <div className="text-left lg:text-right">
                 <div className="type-metadata text-[0.5rem] opacity-30 mb-2">CORE_CLASSIFICATION</div>
-                <div className="type-label">{project.technicalMeta?.systemType.toUpperCase()}</div>
+                <div className="type-label">{formatLabel(project.technicalMeta?.systemType || "")}</div>
              </div>
           </div>
         </div>
@@ -147,7 +143,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                     {project.internalComponents?.map((comp, idx) => (
                       <div key={idx} className="p-6 border border-border-dim bg-bg-secondary/50 group hover:border-accent/30 transition-colors">
                         <div className="type-metadata text-[0.5rem] text-accent mb-3">COMP_0{idx + 1}</div>
-                        <h4 className="type-label text-sm mb-2">{comp.name.toUpperCase()}</h4>
+                        <h4 className="type-label text-sm mb-2">{formatLabel(comp.name)}</h4>
                         <p className="type-body text-xs opacity-60 leading-relaxed">{comp.description}</p>
                       </div>
                     ))}
@@ -175,7 +171,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                <div className="space-y-sys-32">
                   {project.techGroups?.map((group, idx) => (
                     <div key={idx} className="space-y-3">
-                       <h5 className="type-metadata text-[0.5rem] opacity-30 tracking-widest">{group.role.toUpperCase()}</h5>
+                       <h5 className="type-metadata text-[0.5rem] opacity-30 tracking-widest">{formatLabel(group.role)}</h5>
                        <div className="flex flex-wrap gap-2">
                          {group.items.map(item => (
                            <span key={item} className="px-2 py-1 bg-bg-secondary border border-border-dim type-metadata text-[0.6rem] hover:border-accent transition-colors">
@@ -193,19 +189,19 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                <div className="bg-bg-secondary/30 p-6 border border-border-dim font-mono text-[0.6rem] space-y-3 text-text-muted">
                   <div className="flex justify-between">
                     <span>SYSTEM_TYPE</span>
-                    <span className="text-accent">{project.technicalMeta?.systemType?.toUpperCase()}</span>
+                    <span className="text-accent">{formatLabel(project.technicalMeta?.systemType || "")}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>ARCHITECTURE</span>
-                    <span className="text-secondary">{project.technicalMeta?.architectureStyle?.toUpperCase()}</span>
+                    <span className="text-secondary">{formatLabel(project.technicalMeta?.architectureStyle || "")}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>STORAGE</span>
-                    <span>{project.technicalMeta?.storageType?.toUpperCase()}</span>
+                    <span>{formatLabel(project.technicalMeta?.storageType || "")}</span>
                   </div>
                   <div className="flex justify-between">
                     <span>FOCUS</span>
-                    <span className="text-accent">{project.engineeringFocus?.toUpperCase()}</span>
+                    <span className="text-accent">{formatLabel(project.engineeringFocus || "")}</span>
                   </div>
                </div>
             </section>
@@ -217,7 +213,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                     {project.authority.recurringPatterns.map(pattern => (
                       <div key={pattern} className="flex items-center gap-3">
                          <div className="w-1.5 h-1.5 bg-accent/40 rotate-45" />
-                         <span className="type-metadata text-[0.6rem] opacity-60 tracking-tight">{pattern.toUpperCase()}</span>
+                         <span className="type-metadata text-[0.6rem] opacity-60 tracking-tight">{formatLabel(pattern)}</span>
                       </div>
                     ))}
                  </div>
@@ -381,7 +377,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                             <div className="absolute left-0 lg:left-1/2 -translate-x-1/2 w-3 h-3 bg-accent rounded-full border-4 border-bg-primary z-10" />
                             <div className={cn("w-full lg:w-1/2", idx % 2 === 0 ? "lg:pl-sys-64" : "lg:pr-sys-64 lg:text-right")}>
                                <div className="type-metadata text-[0.5rem] text-accent mb-2 uppercase tracking-[0.3em] font-bold">{step.date || `STEP_0${idx + 1}`}</div>
-                               <h4 className="type-emphasis text-sm mb-4">{step.milestone.toUpperCase()}</h4>
+                               <h4 className="type-emphasis text-sm mb-4">{formatLabel(step.milestone)}</h4>
                                <p className="type-body text-sm text-text-muted leading-relaxed max-w-sm lg:ml-auto lg:mr-0 inline-block">{step.description}</p>
                             </div>
                             <div className="hidden lg:block lg:w-1/2" />
@@ -399,7 +395,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                  <div className="space-y-sys-40">
                     {project.challenges?.map((challenge, idx) => (
                       <div key={idx} className="max-w-xl">
-                         <h4 className="type-label text-accent mb-4">{challenge.title.toUpperCase()}</h4>
+                         <h4 className="type-label text-accent mb-4">{formatLabel(challenge.title)}</h4>
                          <p className="type-body text-sm opacity-70 leading-relaxed">{challenge.description}</p>
                       </div>
                     ))}
@@ -411,7 +407,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                  <div className="space-y-sys-40">
                     {project.future?.map((item, idx) => (
                       <div key={idx} className="max-w-xl">
-                         <h4 className="type-label text-secondary mb-4">{item.title.toUpperCase()}</h4>
+                         <h4 className="type-label text-secondary mb-4">{formatLabel(item.title)}</h4>
                          <p className="type-body text-sm opacity-70 leading-relaxed">{item.description}</p>
                       </div>
                     ))}
@@ -432,7 +428,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                  className="group relative block p-12 border border-border-dim bg-bg-secondary/10 hover:border-accent/40 transition-all overflow-hidden"
                >
                   <div className="flex justify-between items-center mb-6">
-                     <span className="type-metadata text-[0.4rem] text-accent">0{((currentIndex + 1) % projects.length) + 1} {'//'} SEQUENTIAL_JUMP</span>
+                     <span className="type-metadata text-[0.4rem] text-accent">0{((getProjectIndex(project.slug) + 1) % projects.length) + 1} {'//'} SEQUENTIAL_JUMP</span>
                     <span className="type-metadata text-[0.45rem] opacity-30 group-hover:opacity-100 transition-opacity">EXPLORE_NODE →</span>
                   </div>
                   <h3 className="type-identity text-4xl uppercase tracking-tighter group-hover:text-accent transition-colors">
