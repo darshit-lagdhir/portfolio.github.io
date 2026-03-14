@@ -6,20 +6,20 @@ export const projects: Project[] = [
         name: "MoveX",
         slug: "movex",
         route: "/movex",
-        shortDescription: "A full logistics and courier management system handling parcel operations, multi-role staff workflows, and shipment tracking with strict access control.",
-        longDescription: "MoveX is a logistics management system built to handle franchise-based shipping, staffing, and fleet coordination. It manages the full delivery lifecycle — from customer booking and pricing through pickup scheduling, dispatch, hub transfers, and final delivery confirmation. The system focuses on backend architecture and operational workflows rather than UI complexity.",
+        shortDescription: "An experiment in operational backend architecture exploring role-based workflows, session isolation, and shipment state coordination.",
+        longDescription: "MoveX is a backend architecture exploration designed to solve the coordination challenges of a multi-role logistics environment. Rather than focusing on UI complexity, the system investigates how to reliably manage interactions between Administrators, Franchise Branches, Staff, and Customers. The project serves as a laboratory for testing authentication boundaries, relational database integrity under operational load, and secure session management in a distributed environment.",
         category: "Operational Backend System",
         techStack: ["Node.js", "Express", "PostgreSQL", "Vanilla JS"],
         status: "Completed",
-        learningOutcomes: ["Backend Architecture", "Role-Based Access Control", "Database Schema Design"],
+        learningOutcomes: ["Backend Architecture", "Role-Based Access Control", "Relational Schema Design"],
         techGroups: [
             { role: "Backend Services", items: ["Node.js", "Express"] },
             { role: "Database Layer", items: ["PostgreSQL"] },
-            { role: "Security & Auth", items: ["JWT", "Bcrypt", "Role-Based Access Control"] },
-            { role: "Frontend", items: ["HTML", "CSS", "Vanilla JavaScript"] }
+            { role: "Security & Auth", items: ["JWT", "Bcrypt", "Session Management", "Rate Limiting"] },
+            { role: "Storage", items: ["Supabase Storage", "Cloudflare"] }
         ],
         tier: 1,
-        engineeringFocus: "Backend Architecture & Operational Workflows",
+        engineeringFocus: "Backend Architecture & Operational Workflow Design",
         technicalMeta: {
             systemType: "Operational backend system",
             architectureStyle: "Modular Monolith",
@@ -28,47 +28,47 @@ export const projects: Project[] = [
         authority: {
             complexityScore: 7,
             architectureDepth: "ROLE_ISO_HNDL",
-            researchFocus: "Role-Based Session Isolation in Multi-User Systems",
+            researchFocus: "Session Isolation and Operational State Preservation",
             primaryDomain: "Backend Development",
-            experimentationAreas: ["Role-Based Access Control", "Session Security", "Database Schema Design"],
+            experimentationAreas: ["Role-Based Access Control", "Session Revocation", "Relational Schema Integrity"],
             deepDives: [
                 {
                     type: "DISCOVERY",
-                    title: "Session Security Design",
-                    content: "Login sessions are stored in the database with secure session management. Passwords are hashed using Bcrypt. Request rate limits prevent brute-force login attempts. Role-based access control ensures users can only access dashboards appropriate to their role."
+                    title: "Security & Authentication Design",
+                    content: "MoveX implements a robust security layer involving Bcrypt password hashing, session-based authentication, and request rate limiting. Input validation is enforced at the API boundary, while CORS protection and secure header management defend against common web-based vulnerabilities."
                 },
                 {
                     type: "OPTIMIZATION",
-                    title: "PostgreSQL Schema Architecture",
-                    content: "The database uses PostgreSQL with key tables for organizations, users, sessions, password_resets, and shipments. Each shipment is tracked using a unique tracking ID linked to sender and receiver information. The schema supports both authentication and logistics operations."
+                    title: "PostgreSQL Database Architecture",
+                    content: "The system uses a highly structured PostgreSQL schema with tables for 'users', 'organizations', 'sessions', 'shipments', and 'password_resets'. This relational design ensures data integrity across complex workflows, allowing for strict foreign key constraints and optimized query performance for operational reporting."
                 },
                 {
                     type: "REDESIGN",
-                    title: "Split Deployment Model",
-                    content: "MoveX supports a split deployment architecture where backend services run on platforms like Render, frontend assets are served through Cloudflare, and PostgreSQL databases are hosted through Supabase. This separates application layers for scalability and security."
+                    title: "Session Persistence and Revocation",
+                    content: "One major architectural deep dive was the creation of a session management system where login states are persistent across server restarts but can be immediately revoked by administrators. This ensures unauthorized dashboard access is prevented even if a user's role is modified in real-time."
                 }
             ],
             experimentationNotes: [
                 {
-                    title: "Designing Role-Based Systems",
-                    content: "Learned how to separate authentication concerns from business logic so that each role operates within its own access boundary without shared state leaking between roles."
+                    title: "Authentication under Operational Load",
+                    content: "Observed how authentication systems behave under real-world workflows, specifically the latency introduced by hashing and the importance of caching session verification steps."
                 },
                 {
-                    title: "Database Schema Design for Workflows",
-                    content: "Designing schemas for operational workflows taught me the importance of tracking state transitions explicitly rather than inferring them from timestamp comparisons."
+                    title: "Relational Mapping of Logistics",
+                    content: "Discovered that relational database design is the backbone of logistics systems; clear schema definitions determine the simplicity or complexity of every operational module upstream."
                 },
                 {
-                    title: "Debugging Real-World Application Behavior",
-                    content: "Many bugs only appeared when multiple roles interacted with the same data simultaneously. This taught me the value of database-level constraints over application-level validation."
+                    title: "API Coordination Logic",
+                    content: "Learned that backend APIs must act as a 'choreographer' for operational logic, ensuring that state transitions (e.g., from 'booked' to 'dispatched') remain consistent and reversible where necessary."
                 }
             ],
-            recurringPatterns: ["Modular Route Separation", "Database-Level State Tracking", "Role-Based Middleware Chains"]
+            recurringPatterns: ["Modular Route Separation", "Database-Level State Tracking", "Role-Based Middleware Isolation"]
         },
-        problem: "Courier services involve multiple operational steps: booking parcels, assigning pickup tasks, tracking shipments, updating delivery status, managing staff roles, and maintaining operational reports. Without a centralized system, managing these processes becomes complicated and error-prone. MoveX attempts to organize all of these operations into a single system that handles authentication, shipment tracking, and operational management.",
+        problem: "Managing logistics requires precise coordination between multiple participants: admins managing branches, franchise staff handling parcels, and customers requesting pickups. Without a centralized system, authentication becomes fragmented, workflows become disconnected, and shipment tracking becomes unreliable. MoveX was built as an exploration into solving these coordination challenges through a unified backend architecture.",
         challenges: [
-            { title: "Managing Session Security", description: "Building secure session management that prevents token replay and ensures each role operates within its own access boundary required careful middleware design and database-backed session storage." },
-            { title: "Shipment State Tracking", description: "Tracking a parcel through multiple status transitions (booked, picked up, in transit, delivered) required a clear state model that prevents invalid transitions and handles edge cases like cancelled or returned shipments." },
-            { title: "Multi-Role Data Access", description: "Different roles need different views of the same data. An admin sees all shipments, a franchisee sees only their branch, and a customer sees only their own parcels. Implementing this consistently required careful middleware design." }
+            { title: "Session Security Isolation", description: "Ensuring that users cannot access unauthorized dashboards required implementing strict middleware barriers and a session system that validates role permissions on every request." },
+            { title: "Temporal State Preservation", description: "Tracking a shipment's lifecycle required a state model capable of preserving timestamps and actor IDs at every transition: from booking to final delivery confirmation." },
+            { title: "Defending the API Boundary", description: "Building defense-in-depth through rate limiting and strict validation was necessary to protect the operational core from malicious or malformed input." }
         ],
         layout: "layered",
         domains: ["backend_systems", "data_systems"],
@@ -77,126 +77,123 @@ export const projects: Project[] = [
                 id: "frontend", 
                 label: "Frontend Dashboards", 
                 type: "interface", 
-                description: "Role-specific user interfaces for administrators, franchise staff, and customers.",
-                responsibilities: ["Role-based access", "Shipment operations", "Dashboard rendering"],
+                description: "Modular user interfaces for administrators, franchise branches, staff, and customers.",
+                responsibilities: ["Role-specific rendering", "Operational input", "Activity reporting"],
                 tech: ["Vanilla JS", "HTML", "CSS"]
             },
             { 
                 id: "api", 
-                label: "API Server (Node.js)", 
+                label: "API Server (Node + Express)", 
                 type: "service", 
-                description: "The core backend engine handling business logic and shipment operations.",
-                responsibilities: ["Request routing", "Business logic execution", "Shipment management"],
+                description: "The central business logic engine handling authentication, pricing, and shipment operations.",
+                responsibilities: ["Logic orchestration", "Authorization checks", "Business rule enforcement"],
                 tech: ["Node.js", "Express"]
             },
             { 
-                id: "auth", 
-                label: "Auth & Session Layer", 
+                id: "session", 
+                label: "Session Layer", 
                 type: "logic", 
-                description: "Manages user authentication and role-based session isolation.",
-                responsibilities: ["Login verification", "Session management", "Bcrypt hashing"],
-                tech: ["JWT", "Bcrypt", "Middleware"]
+                description: "Manages persistent login states and role-based access tokens with revocation support.",
+                responsibilities: ["Token management", "Session storage", "Access revocation"],
+                tech: ["JWT", "Database Middleware"]
             },
             { 
                 id: "db", 
                 label: "PostgreSQL Database", 
                 type: "database", 
-                description: "Primary relational storage for users, shipments, and organizational data.",
-                responsibilities: ["Data persistence", "Relational integrity", "Shipment records"],
+                description: "Primary relational storage for users, organizations, shipments, and session records.",
+                responsibilities: ["Relational integrity", "Workflow persistence", "Operational data storage"],
                 tech: ["PostgreSQL"]
             },
             { 
                 id: "storage", 
-                label: "Storage Layer (Supabase)", 
+                label: "Storage Layer", 
                 type: "database", 
-                description: "Cloud storage for delivery confirmation photos and shipment files.",
-                responsibilities: ["Asset storage", "Delivery proof hosting", "Secure file access"],
+                description: "Cloud-based asset storage for delivery confirmation photos and shipment files.",
+                responsibilities: ["Evidence storage", "Asset hosting", "Secure file access"],
                 tech: ["Supabase Storage"]
             }
         ],
         architecture_connections: [
-            { from: "frontend", to: "api", label: "REST_API_REQUESTS" },
-            { from: "api", to: "auth", label: "VERIFY_PERMISSIONS" },
-            { from: "api", to: "db", label: "PERSIST_RECORDS" },
-            { from: "api", to: "storage", label: "UPLOAD_ASSETS" }
+            { from: "frontend", to: "api", label: "REST_INVOCATION" },
+            { from: "api", to: "session", label: "VERIFY_IDENTITY" },
+            { from: "api", to: "db", label: "PERSIST_STATE" },
+            { from: "api", to: "storage", label: "UPLOAD_EVIDENCE" }
         ],
         evolution: [
-            { milestone: "Initial Prototype", description: "Started with a basic Express server and simple file-based data storage to test the core booking workflow.", date: "PHASE_01" },
-            { milestone: "Database Integration", description: "Migrated from file storage to PostgreSQL to support relational data and ensure integrity across concurrent operations.", date: "PHASE_02" },
-            { milestone: "Role System Implementation", description: "Built the role-based access control system with separate middleware chains for Admin, Franchisee, Staff, and Customer roles.", date: "PHASE_03" },
-            { milestone: "Full Workflow Completion", description: "Completed the end-to-end shipment lifecycle from booking through pickup, dispatch, transit, and delivery confirmation.", date: "PHASE_04" }
+            { milestone: "Core API Architecture", description: "Established the Node.js/Express baseline and defined the modular route structure for multi-role support.", date: "PHASE_01" },
+            { milestone: "Relational Schema Design", description: "Implemented the PostgreSQL database layer, focusing on foreign key integrity for shipment tracking.", date: "PHASE_02" },
+            { milestone: "Session Guard Implementation", description: "Developed the security and session layer to manage role-based isolation and secure authentication.", date: "PHASE_03" },
+            { milestone: "Operational Workflow Completion", description: "Finalized the end-to-end shipment lifecycle, from customer booking to delivery proof storage.", date: "PHASE_04" }
         ],
         architectureDecisions: [
             {
-                title: "Modular Route Separation by Role",
-                problem: "Mixing all role logic into shared routes made the codebase difficult to maintain and created security risks.",
-                approach: "Separated routes, controllers, and middleware into role-specific modules so each role has its own isolated code path.",
-                reasoning: "This makes it easy to modify one role without affecting others and creates a natural security boundary.",
-                alternatives: ["Single shared controller with role checks", "Microservice per role"]
+                title: "PostgreSQL Relational Schema",
+                problem: "Logistics data is highly connected; a loss of relational integrity can lead to orphans or double-booked shipments.",
+                approach: "Utilized a strict PostgreSQL schema with enforced foreign keys between organizations, users, and shipments.",
+                reasoning: "A relational database ensures that business rules are validated at the physical layer, not just in application code.",
+                alternatives: ["Document Database", "Key-Value Store"]
             },
             {
-                title: "PostgreSQL over NoSQL",
-                problem: "Shipment tracking requires consistent relational data with strict integrity guarantees.",
-                approach: "Used PostgreSQL with structured tables and foreign key relationships to ensure data consistency.",
-                reasoning: "In logistics, eventually-consistent data can lead to lost shipments or double-assigned staff.",
-                alternatives: ["MongoDB", "SQLite"]
+                title: "Session-Based Authentication",
+                problem: "Stateless tokens are difficult to revoke if a staff member's permissions are suddenly removed.",
+                approach: "Implemented database-backed session management that permits instantaneous revocation of access.",
+                reasoning: "In operational systems, security must be reactive and precise. Session storage allows for immediate control over active logins.",
+                alternatives: ["Pure JWTs", "OAuth2 Proxy"]
             },
             {
-                title: "Server-Side Sessions over Stateless Tokens",
-                problem: "Needed to invalidate sessions immediately when a user's role changes or suspicious activity is detected.",
-                approach: "Stored sessions in the database rather than relying purely on stateless JWT tokens.",
-                reasoning: "Stateless JWTs cannot be revoked until they expire. Database-backed sessions give immediate control.",
-                alternatives: ["Pure JWT with short expiry", "Redis session store"]
+                title: "Role-Isolated Route Middleware",
+                problem: "Spaghetti code in route handlers makes it easy to accidentally leak data from one role to another.",
+                approach: "Created a middleware chain that validates role IDs before any controller logic is executed.",
+                reasoning: "Isolating access at the routing layer prevents developers from leaking organizational data through simple coding errors.",
+                alternatives: ["Inline role checks", "Frontend-only access control"]
             }
         ],
         tradeoffs: [
             {
-                title: "Simplicity over Scalability",
-                description: "Chose a monolithic architecture with modular separation rather than microservices. Simpler to deploy and debug but limits horizontal scaling.",
-                impact: "SIMPLICITY"
-            },
-            {
-                title: "Vanilla JS over Frontend Framework",
-                description: "Used plain HTML/CSS/JavaScript for the frontend rather than React or similar frameworks. Keeps the focus on backend architecture.",
+                title: "Monolith over Microservices",
+                description: "Chose a modular monolith architecture for simplicity and lower deployment overhead. Slower horizontal scale potential but easier to manage as a developer investigation.",
                 impact: "SIMPLICITY"
             }
         ],
         development_story: [
             {
-                id: "motivation",
-                title: "Operational Motivation",
-                description: "The project began with a simple objective: Create a backend system capable of managing parcel operations from booking to delivery, exploring how multi-role workflows function in a real-world environment.",
-                activeNodes: ["api"]
+                id: "booking",
+                title: "Parcel Booking",
+                description: "The workflow begins when a customer or staff member creates a shipment record, calculating cost based on weight and destination metrics.",
+                activeNodes: ["frontend", "api"]
             },
             {
-                id: "complexity",
-                title: "Structural Expansion",
-                description: "As the system grew, I designed intricate authentication systems, role-based dashboards, and custom shipment tracking logic to ensure data integrity across the logistics lifecycle.",
-                activeNodes: ["auth", "api"]
+                id: "pickup",
+                title: "Pickup & Dispatch",
+                description: "The system assigns the shipment to a pickup task, where staff members confirm possession and move the record to the 'In Transit' state.",
+                activeNodes: ["db", "api"]
             },
             {
-                id: "challenges",
-                title: "Technical Friction",
-                description: "Development revealed significant challenges in handling session security between roles and designing database schemas that could accurately track complex temporal state transitions.",
-                activeNodes: ["db"]
+                id: "delivery",
+                title: "Delivery & Tracking",
+                description: "As the parcel moves through hubs, status updates are broadcast. Upon final delivery, a confirmation photo is uploaded as immutable proof.",
+                activeNodes: ["storage", "db"]
             },
             {
-                id: "evolution",
-                title: "System Stabilization",
-                description: "Through deep iteration and debugging, the initial prototype evolved into a modular platform where authentication concerns were isolated from operational logistics logic.",
-                activeNodes: ["frontend", "api", "auth", "db"]
+                id: "audit",
+                title: "Audit & Reporting",
+                description: "Administrators review the session logs and shipment reports to ensure operational health across all franchise branches.",
+                activeNodes: ["frontend", "api", "session", "db"]
             }
         ],
+        storyTitle: "Shipment Lifecycle",
         internalComponents: [
-            { name: "User Authentication Module", description: "Handles user login, password hashing with Bcrypt, and generation of secure session tokens." },
-            { name: "Role-Based Routes", description: "Separated route handlers for Admins, Franchisees, Staff, and Customers to ensure isolation." },
-            { name: "Shipment State Engine", description: "Manages technical transitions of shipment records (booked -> picked up -> delivered)." },
-            { name: "Database Schema Layer", description: "Relational PostgreSQL structure optimized for logistics and multi-role data access." },
-            { name: "Asset Storage Driver", description: "Connects to Supabase to host and serve delivery confirmation photos and shipment files." }
+            { name: "User Management", description: "Handles account creation, secure login sessions, and role-based assignment for all participants." },
+            { name: "Franchise and Staff Operations", description: "Enables administrators to manage branch hierarchies and assign staff members to specific nodes." },
+            { name: "Customer Booking and Pricing", description: "Processes shipment requests and calculates dynamic delivery costs based on regional metrics." },
+            { name: "Pickup and Dispatch Management", description: "Coordinates parcel collection tasks and handles the handoff between hub staff and drivers." },
+            { name: "Shipment Tracking and Delivery", description: "Governs the lifecycle of a parcel, managing real-time status updates and delivery confirmations." },
+            { name: "Reports and Analytics", description: "Aggregates operational data into dashboards for reviewing branch performance and shipment volume." }
         ],
         future: [
-            { title: "Automated Dispatch Routing", description: "Implementing algorithms to suggest optimal delivery routes for drivers based on shipment density." },
-            { title: "Real-Time Tracking Socket", description: "Adding WebSocket support for live location updates for customers and admins." }
+            { title: "Automated Dispatch Logic", description: "Refining the backend to suggest optimal delivery routes based on destination density scores." },
+            { title: "Real-Time Event Stream", description: "Integrating WebSockets for live status propagation across terminal dashboards." }
         ]
     },
     {
@@ -232,165 +229,164 @@ export const projects: Project[] = [
             deepDives: [
                 {
                     type: "DISCOVERY",
-                    title: "Signal Types and Trend Shifters",
-                    content: "The system generates specific signals like 'High Stress' (volume exceeding norms) and 'Trend Shifter' (direction changes in activity). These flags are designed to prompt human investigation rather than trigger automated responses, ensuring the system remains a partner to the operator."
+                    title: "Signal Types & Contextual Flags",
+                    content: "The system identifies specific enrollment signals like 'High Stress' (volume spikes), 'Ghost Zones' (sudden activity drops), 'Volatility Flags' (unstable counts), and 'Trend Shifters' (direction changes). Each signal is designed to prompt human investigation rather than trigger autonomous responses."
                 },
                 {
                     type: "OPTIMIZATION",
-                    title: "Establishing Regional Baselines",
-                    content: "To detect anomalies, the system establishes a baseline pattern for each region based on historical data. By comparing current data against these historical norms, we can identify demographic shifts (like 'Baby Boom' or 'Employment Magnet' zones) without requiring hard-coded thresholds."
+                    title: "Regional Baseline Synthesis",
+                    content: "To detect anomalies without hard-coded thresholds, the system synthesizes historical norms for each region. Comparative analysis against these baselines allows for the identification of demographic shifts—like 'Baby Boom' or 'Employment Magnet' zones—with high statistical precision."
                 },
                 {
                     type: "REDESIGN",
-                    title: "Strict Functional Boundaries",
-                    content: "The design was refined to explicitly prevent automated decision-making. The system does not issue instructions to field teams, assign resources, or rank individuals. This boundary is enforced by a reporting-only architecture where all outputs are channeled through an advisory dashboard."
+                    title: "The Advisory Boundary",
+                    content: "The system architecture enforces a strict 'Read-Only' boundary. It provides spatial visualizations and explanatory metadata but is physically incapable of issuing field instructions or ranking centers, ensuring that officials retain 100% of the operational authority."
                 }
             ],
             experimentationNotes: [
                 {
-                    title: "Aggregated Privacy Boundaries",
-                    content: "Learned that useful insights can be extracted entirely from aggregated pincode counts without ever touching PII or biometrics. Privacy is built into the data model itself by only processing high-level totals."
+                    title: "Communicating Uncertainty",
+                    content: "Iterated on a three-tier confidence system (HIGH/MEDIUM/LOW). Learned that exposing the system's own uncertainty is more valuable than a high-precision guess, as it prevents officials from over-relying on automated signals during edge cases."
                 },
                 {
-                    title: "Communicating Uncertainty",
-                    content: "Implementing confidence levels (HIGH/MEDIUM/LOW) taught me that an AI's most valuable output often isn't the prediction itself, but the degree of certainty attached to it. This prevents officials from over-relying on system signals."
+                    title: "Privacy by Aggregation",
+                    content: "Proven that significant administrative insights can be extracted entirely from aggregated pincode counts. By discarding individual identifiers (PII/Biometrics) at the ingestion point, the system achieves privacy-by-design."
                 },
                 {
                     title: "Human Contextual Advantage",
-                    content: "Discovered that many 'anomalies' were actually local events or network issues. This reinforced the requirement for human review, as local teams possess contextual knowledge an algorithm cannot see."
+                    content: "Discovered that many statistical anomalies were actually local festivals or network outages. This confirmed that no algorithm can fully replace the human official's local contextual knowledge."
                 }
             ],
             recurringPatterns: ["Baseline-vs-Current Analysis", "Advisory Signal Propagation", "Privacy-by-Aggregation"]
         },
-        problem: "Monitoring enrollment patterns manually across millions of records in thousands of centers is extremely difficult. Officials struggle to detect unexpected spikes, sudden drops (Ghost Zones), or gradual trend shifts in specific demographic groups across a national scale. The project attempts to make these patterns visible by analyzing aggregated counts and presenting summarized signals for review.",
+        problem: "Monitoring national enrollment patterns manually across thousands of centers is functionally impossible. Officials struggle to detect regional spikes, 'Ghost Zones', or subtle trend shifts without a central signal layer. The UIDAI Advisory System explores how statistical analysis and spatial visualization can highlight these patterns for human review while maintaining individual privacy.",
         challenges: [
-            { title: "Handling National-Scale Datasets", description: "Processing data across thousands of locations while maintaining clear regional context required efficient data partitioning and baseline comparison logic." },
-            { title: "Defining the 'Advice' Boundary", description: "Ensuring the system UI does not suggest actions but only identifies patterns required a careful redesign of how alerts are worded and displayed." },
-            { title: "Data Volatility", description: "Normalizing data to account for temporary network issues or regional holidays that can cause false-positive 'Ghost Zone' signals." }
+            { title: "National-Scale Normalization", description: "Balancing data across thousands of locations while accounting for regional holidays and network volatility that cause false-positive signals." },
+            { title: "Strict Advisory Architecture", description: "Designing an interface that provides maximum context without suggesting specific actions, preserving the human official's decision-making agency." },
+            { title: "Privacy-Locked Ingestion", description: "Ensuring that the analysis pipeline remains physically separated from sensitive biometric and personal identifiable information (PII)." }
         ],
         layout: "pipeline",
         domains: ["data_systems", "ai_exploration"],
         architecture_nodes: [
             { 
                 id: "data_source", 
-                label: "Enrollment Data Source", 
+                label: "Aggregated Source", 
                 type: "database", 
-                description: "Aggregated Aadhaar enrollment records organized by region and date.",
-                responsibilities: ["Raw count ingestion", "Pincode-level aggregation", "Dataset partitioning"],
-                tech: ["PostgreSQL", "CSV/JSON Datasets"]
+                description: "Regional enrollment records stripped of PII, organized by pincode and temporal stamps.",
+                responsibilities: ["Raw count ingestion", "Pincode aggregation", "Temporal partitioning"],
+                tech: ["PostgreSQL"]
             },
             { 
                 id: "processor", 
-                label: "Data Processing Layer", 
+                label: "Baseline Engine", 
                 type: "logic", 
-                description: "Organizes and cleans enrollment records to establish regional baselines.",
-                responsibilities: ["Data cleaning", "Baseline synthesis", "Temporal normalization"],
+                description: "Synthesizes historical norms for each region to serve as a comparative baseline for anomaly detection.",
+                responsibilities: ["Data normalization", "Historical synthesis", "Outlier cleaning"],
                 tech: ["Python", "Pandas"]
             },
             { 
                 id: "engine", 
-                label: "Pattern Detection Engine", 
+                label: "Signal Generator", 
                 type: "service", 
-                description: "Identifies anomalies by comparing current enrollment counts against historical regional baselines.",
-                responsibilities: ["Anomaly detection", "Statistical significance scoring", "Trend identification"],
-                tech: ["Python", "Scikit-Learn"]
-            },
-            { 
-                id: "signals", 
-                label: "Signal Generation Layer", 
-                type: "logic", 
-                description: "Translates identified patterns into advisory signals like 'High Stress' or 'Ghost Zones'.",
-                responsibilities: ["Signal classification", "Confidence calculation", "Contextual metadata attachment"],
-                tech: ["Python", "NumPy"]
+                description: "Compares current counts against baselines to identify 'High Stress' or 'Ghost Zone' activity.",
+                responsibilities: ["Anomaly detection", "Pattern classification", "Confidence scoring"],
+                tech: ["Scikit-Learn"]
             },
             { 
                 id: "dashboard", 
-                label: "Dashboard Visualization", 
+                label: "Advisory Interface", 
                 type: "interface", 
-                description: "Heatmaps and signal logs for review by human officials.",
-                responsibilities: ["Spatial visualization", "Signal reporting", "Pattern highlighting"],
+                description: "Spatial heatmaps and signal logs that provide signals and context to human operators.",
+                responsibilities: ["Pattern visualization", "Metadata reporting", "Spatial alerts"],
                 tech: ["Vanilla JS", "D3.js"]
             },
             { 
                 id: "human", 
-                label: "Human Decision Layer", 
-                type: "interface", 
-                description: "Represents the official review process where humans interpret advisor signals.",
-                responsibilities: ["Signal interpretation", "Contextual verification", "Final operational decisions"],
+                label: "Human Authority", 
+                type: "logic", 
+                description: "The final decision layer where officials interpret signals using local contextual knowledge.",
+                responsibilities: ["Signal interpretation", "Contextual verification", "Operational decision-making"],
                 tech: ["Human Analysis"]
             }
         ],
         architecture_connections: [
-            { from: "data_source", to: "processor", label: "INGEST_DATA" },
-            { from: "processor", to: "engine", label: "ANALYZE_BASELINES" },
-            { from: "engine", to: "signals", label: "GENERATE_SIGNAL" },
-            { from: "signals", to: "dashboard", label: "DELIVER_ADVISORY" },
-            { from: "dashboard", to: "human", label: "REVIEW_SIGNALS" }
+            { from: "data_source", to: "processor", label: "INGEST_STATS" },
+            { from: "processor", to: "engine", label: "COMPARE_NORMS" },
+            { from: "engine", to: "dashboard", label: "PROPAGATE_SIGNAL" },
+            { from: "dashboard", to: "human", label: "ADVISORY_LOOP" }
         ],
         evolution: [
-            { milestone: "Data Partitioning", description: "Refined the data model to focus strictly on pincode-level demographic counts.", date: "HACKATHON_W1" },
-            { milestone: "Baseline Logic", description: "Implemented the baseline-vs-current comparison engine to identify regional spikes.", date: "HACKATHON_W2" },
-            { milestone: "Advisory Interface", description: "Built the signal dashboard highlighting 'Ghost Zones' and 'Baby Boom' patterns.", date: "HACKATHON_W3" }
+            { milestone: "Data Model Partitioning", description: "Refining the system to focus strictly on regional demographic counts to ensure privacy-by-aggregation.", date: "PHASE_01" },
+            { milestone: "Baseline Synthesis", description: "Developing the engine capable of establishing historical enrollment norms for thousands of locations.", date: "PHASE_02" },
+            { milestone: "Signal Classification", description: "Defining the logic for specific flags like 'Baby Boom' zones and 'High Stress' enrollment spikes.", date: "PHASE_03" },
+            { milestone: "Advisory Dashboard", description: "Building the spatial visualization layer to present signals to officials for manual review.", date: "PHASE_04" }
         ],
         architectureDecisions: [
             {
-                title: "Advisory Only Architecture",
-                problem: "Automated decisions in identity systems can lead to high-impact false positives.",
-                approach: "Designed a 'read-only' pattern detection pipeline with no automated instruction capability.",
-                reasoning: "Ensures all final decisions remain with human officials who have the necessary local context.",
-                alternatives: ["Automated Alerting Systems", "Rule-based Auto-flags"]
+                title: "Advisory vs Decision Systems",
+                problem: "Automated decisions in high-stakes governance systems can lead to massive false-positive impacts.",
+                approach: "Created a reporting-only architecture where all outputs are advisory signals, not instructions.",
+                reasoning: "Ensures the system empowers human officials with context rather than replacing them with opaque rules.",
+                alternatives: ["Automated Alerting", "Hard-coded Response Rules"]
             },
             {
-                title: "Privacy by Aggregation",
-                problem: "Handling individual records within a hackathon environment carries high privacy risks.",
-                approach: "Processed data strictly at the aggregated pincode level, discarding all individual identifiers.",
-                reasoning: "Aggregation provides significant insight while ensuring that zero individual-level data is ever stored or analyzed.",
-                alternatives: ["Data Anonymization", "Homomorphic Encryption"]
+                title: "Privacy-Locked Aggregated Data",
+                problem: "Using individual biometrics or names for analysis creates unacceptable security risks and privacy loss.",
+                approach: "Performed all analysis on aggregated pincode counts, stripping individual IDs at the entry point.",
+                reasoning: "Aggregation provides actionable insights into regional trends while maintaining total anonymity for individuals.",
+                alternatives: ["Data Masking", "Encryption at Rest"]
             }
         ],
         tradeoffs: [
             {
-                title: "Context over Automation",
-                description: "Sacrificed speed of action to ensure every signal undergoes mandatory human review for contextual accuracy.",
+                title: "Human Oversight over Action Speed",
+                description: "Sacrificed the speed of automated alerts to ensure every signal remains a prompt for mandatory human contextual review.",
+                impact: "MAINTAINABILITY"
+            },
+            {
+                title: "Statistical Signal over Raw Data",
+                description: "Focusing on summarized signals and patterns rather than exposing raw data streams, which reduces operator fatigue.",
                 impact: "SIMPLICITY"
             }
         ],
         development_story: [
             {
-                id: "challenge",
-                title: "Hackathon Challenge",
-                description: "The project started with a challenge to analyze large-scale Aadhaar enrollment data covering thousands of centers, where manual monitoring was functionally impossible.",
+                id: "ingestion",
+                title: "Data Ingestion",
+                description: "Enrollment records are collected and organized by location, date, and demographic group, ensuring all PII is discarded immediately.",
                 activeNodes: ["data_source"]
             },
             {
-                id: "insight",
-                title: "Pattern Visualization",
-                description: "I realized that identifying spikes or 'Ghost Zones' required an automated system that could highlight unusual enrollment patterns for further human review.",
-                activeNodes: ["processor", "engine"]
+                id: "analysis",
+                title: "Baseline Analysis",
+                description: "The system analyzes years of historical data to determine 'normal' enrollment activity for every specific region in the dataset.",
+                activeNodes: ["processor"]
             },
             {
-                id: "ethical",
-                title: "Advisory-Only Boundary",
-                description: "Recognizing the gravity of identity data, I intentionally designed the system to be advisory-only, providing signals and context but never making autonomous decisions.",
-                activeNodes: ["dashboard", "signals"]
+                id: "detection",
+                title: "Anomaly Detection",
+                description: "Current enrollment data is compared against historical baselines to identify unusual activity like 'Ghost Zones' or 'Baby Boom' spikes.",
+                activeNodes: ["engine"]
             },
             {
-                id: "learning",
-                title: "Responsible Design",
-                description: "Developing this system reinforced the vital lesson that data tools should empower human officials with context rather than replacing them with opaque algorithms.",
-                activeNodes: ["data_source", "processor", "engine", "dashboard", "human"]
+                id: "visualization",
+                title: "Signal Visualization",
+                description: "Finally, officials review color-coded signals on a spatial dashboard, interpreting automated patterns with their own local knowledge.",
+                activeNodes: ["dashboard", "human"]
             }
         ],
+        storyTitle: "Advisory Pipeline",
         internalComponents: [
-            { name: "Data Aggregator", description: "Ingests raw pincode counts and organizes them into regional temporal datasets for analysis." },
-            { name: "Baseline Synthesis Engine", description: "Generates historical enrollment norms for each region to serve as a reference point." },
-            { name: "Signal Generator", description: "Identifies specific patterns (Spikes, Ghost Zones) and attaches contextual confidence scores." },
-            { name: "Advisory Dashboard", description: "Map-based interface representing signals spatially for quick identification of regional trends." },
-            { name: "Ethics Boundary Guard", description: "Architecture-level constraints that prevent the system from triggering automated actions." }
+            { name: "Enrollment Data Aggregator", description: "Ingests raw regional counts and organizes them into spatial datasets for temporal analysis." },
+            { name: "Regional Baseline Synthesis", description: "Generates historical enrollment norms to serve as moving reference points for anomaly detection." },
+            { name: "Pattern Detection Modules", description: "Identifies specific zones such as 'Baby Booms', 'School Ready', or 'Employment Magnets'." },
+            { name: "Signal Propagation Layer", description: "Translates anomalies into specific, context-rich flags like 'High Stress' or 'Volatility'." },
+            { name: "Official Advisory Dashboard", description: "The interface designed to present signals to humans without triggering automated responses." },
+            { name: "Privacy Ingestion Barrier", description: "The architecture-level guard that prevents PII or biometric data from entering the analysis flow." }
         ],
         future: [
-            { title: "Temporal Forecasting", description: "Expanding the baseline model to predict future seasonal spikes based on historical multi-year trends." },
-            { title: "Multi-Source Integration", description: "Correlating enrollment spikes with external demographic events or administrative policy changes." }
+            { title: "Multi-Source Correlation", description: "Integrating external event data (festivals, policy changes) to automatically explain common signals." },
+            { title: "Temporal Trend Forecasting", description: "Expanding the baseline model to suggest future seasonal spikes based on multi-year cyclic patterns." }
         ]
     },
     {
@@ -398,69 +394,69 @@ export const projects: Project[] = [
         name: "Polyglot FFI Verifier",
         slug: "pfcv",
         route: "/pfcv",
-        shortDescription: "A verification pipeline exploring cross-language safety when connecting high-level languages to native C/C++ libraries through Foreign Function Interfaces.",
-        longDescription: "The Polyglot FFI Contract Verifier (PFCV) is a verification pipeline designed to ensure safety when connecting high-level programming languages to native C/C++ libraries. FFI boundaries can introduce type mismatches, memory safety problems, and ABI compatibility issues. PFCV attempts to solve this by extracting metadata from native source code, converting it into a universal intermediate representation, generating formal safety contracts, and enforcing those contracts at runtime. This project is an ongoing exploration into cross-language verification and runtime safety.",
+        shortDescription: "A systems engineering research prototype exploring cross-language safety at dangerous FFI boundaries between high-level runtimes and native code.",
+        longDescription: "PFCV (Polyglot FFI Contract Verifier) is a verification pipeline designed to investigate the fragility of Foreign Function Interfaces. Modern systems frequently rely on native C/C++ libraries for performance, but the boundary between languages is often unprotected, leading to catastrophic memory failures and undefined behavior. PFCV explores an automated approach to this problem: extracting interface metadata, generating formal safety contracts, and enforcing those rules at runtime to prevent cross-language crashes. It is a research-first prototype aimed at making systems programming more predictable.",
         category: "Verification Pipeline",
         techStack: ["C++", "Rust", "Python", "Clang"],
         status: "Active Development",
         learningOutcomes: ["Language Interoperability", "Compiler Tooling (Clang)", "Contract-Driven Verification"],
         techGroups: [
-            { role: "Core Verification", items: ["C++", "Clang Tooling"] },
+            { role: "Core Verification", items: ["C++", "Clang Tooling", "LLVM"] },
             { role: "Safety Logic", items: ["Rust"] },
             { role: "Analysis Layer", items: ["Python", "Z3 Solver"] },
-            { role: "Runtime", items: ["Clang/LLVM", "PyBind11"] }
+            { role: "Runtime", items: ["ABI Interface", "Memory Shims"] }
         ],
         tier: 1,
-        engineeringFocus: "Cross-Language Verification Pipeline",
+        engineeringFocus: "Cross-Language Safety & Pipeline Verification",
         technicalMeta: {
-            systemType: "Systems engineering research pipeline",
-            architectureStyle: "Multi-Stage Pipeline",
-            storageType: "In-Memory AST State",
+            systemType: "Systems engineering research prototype",
+            architectureStyle: "Multi-Stage Verification Pipeline",
+            storageType: "In-Memory AST State & IR Streams",
         },
         authority: {
-            complexityScore: 8,
-            architectureDepth: "FFI_VERIFY",
-            researchFocus: "Cross-Language Safety Verification",
+            complexityScore: 9,
+            architectureDepth: "FFI_V_BRIDGE",
+            researchFocus: "Memory Safety at Foreign Function Boundaries",
             primaryDomain: "Systems Engineering",
-            experimentationAreas: ["Metadata Extraction", "Intermediate Representation Design", "Contract Synthesis"],
+            experimentationAreas: ["Interface Metadata Extraction", "Universal IR Design", "Contract Synthesis Engine"],
             deepDives: [
                 {
                     type: "DISCOVERY",
-                    title: "Metadata Extraction with Clang",
-                    content: "The pipeline begins by extracting metadata from native C/C++ source code using Clang compiler tooling. This step analyzes header files and function definitions to extract function signatures, parameter types, pointer relationships, and struct definitions. This metadata forms the foundation for all later verification steps."
+                    title: "FFI Boundary Fragility",
+                    content: "Research into FFI failures revealed that most crashes stem from single-point mismatches in type definitions, pointer nullability, or memory ownership. PFCV attempts to convert these 'soft' assumptions into 'hard' formal contracts that the system can verify programmatically."
                 },
                 {
                     type: "OPTIMIZATION",
-                    title: "Universal Intermediate Representation",
-                    content: "After extraction, the system converts language-specific metadata into a normalized intermediate representation. The IR captures scalars, pointers, structures, and memory ownership relationships in a consistent format, allowing the system to reason about functions across multiple programming languages."
+                    title: "AST-Based Metadata Extraction",
+                    content: "Instead of fragile regex parsing, PFCV uses Clang's compiler infrastructure to traverse the Abstract Syntax Tree (AST) of C++ headers. This ensures that every function signature, struct padding detail, and ABI visibility flag is captured with compiler-level accuracy."
                 },
                 {
                     type: "REDESIGN",
-                    title: "Contract Synthesis and Enforcement",
-                    content: "The synthesis engine analyzes the IR to generate safety contracts — rules like 'a pointer parameter must not be null' or 'a buffer size must match a specified length parameter.' Language adapters then enforce these contracts at runtime, intercepting FFI calls to verify rules before native functions execute."
+                    title: "Multi-Language Enforcement Adapters",
+                    content: "The system generates language-specific 'Safe-FFI' adapters. For example, a Python adapter intercepts calls to a native library and verifies that the incoming memory buffers and pointers obey the generated safety contract before allowing the native call to Proceed."
                 }
             ],
             experimentationNotes: [
                 {
-                    title: "Understanding Cross-Language Boundaries",
-                    content: "Working on PFCV taught me how much hidden complexity exists at the boundary between two programming languages. Type systems that seem compatible on the surface often have subtle differences in memory layout, alignment, and ownership semantics."
+                    title: "ABI Compatibility Complexities",
+                    content: "Discovered that ABI (Application Binary Interface) compatibility is significantly more complex than API compatibility. Subtle differences in compiler versions can shift struct alignments, breaking FFI calls in ways that are invisible at the source code level."
                 },
                 {
-                    title: "Working with Compiler Tooling",
-                    content: "Learning to use Clang's AST tooling was one of the most technically demanding parts of this project. Compiler internals are complex, but understanding how source code is represented as an abstract syntax tree is fundamental to building verification tools."
+                    title: "Cross-Language Type Mapping",
+                    content: "Learned that 'mapping' types between languages (e.g., Rust's Option to C's Nullable Pointer) requires a formal intermediate representation to ensure that safety guarantees aren't lost in translation."
                 },
                 {
-                    title: "Designing Modular Pipeline Architecture",
-                    content: "Building PFCV as a series of independent stages — extraction, normalization, synthesis, enforcement — taught me the value of modular architecture. Each stage can be tested and improved independently."
+                    title: "Verification Pipeline Scalability",
+                    content: "Experimented with breaking the analyzer into modular stages (Ingestion → Normalization → Synthesis). This modularity allows for faster experimentation with different contract solvers without rebuilding the entire extraction frontend."
                 }
             ],
-            recurringPatterns: ["Pipeline Stage Isolation", "AST-Based Analysis", "Contract-Driven Verification"]
+            recurringPatterns: ["AST-Driven Synthesis", "Constraint-Based Verification", "Interoperability Shims"]
         },
-        problem: "When a high-level language calls native code through FFI, several assumptions must hold: function parameters must match expected types, pointers must reference valid memory, ownership rules must be respected, and binary interfaces must remain compatible across compilation boundaries. If any of these assumptions fail, the program may crash or behave unpredictably. PFCV attempts to detect these issues before they cause runtime failures.",
+        problem: "Modern applications frequently call native libraries (C/C++) for performance, but Foreign Function Interfaces (FFI) are extremely fragile. A single mistake in pointer handling, memory ownership, or type definition can cause silent corruption or immediate crashes. PFCV explores how these dangerous language boundaries can be automatically analyzed and protected by formal safety contracts.",
         challenges: [
-            { title: "Type System Differences", description: "Different languages represent the same concepts differently. A Python list and a C++ vector may seem similar but have completely different memory layouts, ownership semantics, and access patterns." },
-            { title: "Compiler Tooling Complexity", description: "Working with Clang's AST requires understanding internal compiler representations. The learning curve is steep, but the precision of AST-based analysis is essential for reliable verification." },
-            { title: "Multi-Language Adapter Design", description: "Each target language (Python, Rust, C++) requires its own runtime adapter that integrates with the language's FFI mechanism. Designing adapters that are both thorough and non-intrusive is an ongoing challenge." }
+            { title: "FFI Boundary Type Safety", description: "Ensuring that complex types like pointers and structures maintain their integrity when passed between language runtimes like Python and Rust." },
+            { title: "ABI Layout Accuracy", description: "Correctly determining how a C compiler will layout memory for a structure, including padding and alignment across different platforms." },
+            { title: "Non-Intrusive Enforcement", description: "Generating runtime shims that provide strong safety guarantees without introducing prohibitive performance overhead during cross-language calls." }
         ],
         layout: "pipeline",
         domains: ["programming_languages", "systems_engineering"],
@@ -469,136 +465,129 @@ export const projects: Project[] = [
                 id: "native_source", 
                 label: "Native Source Code", 
                 type: "logic", 
-                description: "C/C++ libraries and header files being analyzed for FFI safety.",
-                responsibilities: ["Exposing native APIs", "Defining complex memory layouts", "Managing manual memory"],
+                description: "The targeted C/C++ libraries containing the foreign functions to be verified.",
+                responsibilities: ["Function definition", "Memory layout specification", "Native API exposure"],
                 tech: ["C++", "C"]
             },
             { 
-                id: "extraction", 
-                label: "Metadata Extraction Layer", 
+                id: "ingestion", 
+                label: "Ingestion Layer (Clang)", 
                 type: "pipeline", 
-                description: "Uses Clang tooling to extract function signatures and types from native headers.",
-                responsibilities: ["AST tree traversal", "Type signature extraction", "Struct alignment analysis"],
+                description: "Uses compiler tooling to extract precisely typed metadata from the native abstract syntax tree.",
+                responsibilities: ["AST traversal", "Header analysis", "ABI metadata collection"],
                 tech: ["Clang Tooling", "LLVM"]
             },
             { 
                 id: "uir", 
                 label: "Intermediate Representation", 
                 type: "logic", 
-                description: "Normalizes extracted metadata into a language-independent data format.",
-                responsibilities: ["Type normalization", "Canonical memory mapping", "Metadata serialization"],
-                tech: ["Rust", "Serde"]
+                description: "A universal, language-neutral format for representing function signatures and safety requirements.",
+                responsibilities: ["Type normalization", "Ownership mapping", "Cross-platform schema"],
+                tech: ["Rust", "JSON"]
             },
             { 
                 id: "synthesis", 
                 label: "Contract Synthesis Engine", 
                 type: "service", 
-                description: "Generates formal safety contracts based on the IR metadata.",
-                responsibilities: ["Constraint solving", "Safety rule generation", "Contract export"],
+                description: "Analyzes IR metadata to generate formal rules for nullability, buffer sizes, and pointer ownership.",
+                responsibilities: ["Rule generation", "Constraint verification", "Contract export"],
                 tech: ["Python", "Z3 Solver"]
             },
             { 
                 id: "adapter", 
                 label: "Runtime Adapter", 
                 type: "logic", 
-                description: "Language-specific shims that enforce safety contracts during FFI execution.",
-                responsibilities: ["Contract enforcement", "Boundary intercept", "Active safety checking"],
-                tech: ["C++", "PyBind11"]
-            },
-            { 
-                id: "runtimes", 
-                label: "Language Runtimes", 
-                type: "interface", 
-                description: "Higher-level environments (Python, Rust) calling into native code.",
-                responsibilities: ["FFI invocation", "Data marshaling", "Memory ownership negotiation"],
-                tech: ["Python", "Rust", "Node.js"]
+                description: "Cross-language shims that intercept FFI calls and enforce the generated safety contracts.",
+                responsibilities: ["Boundary interception", "Contract enforcement", "Safety reporting"],
+                tech: ["C++", "Rust", "Python"]
             }
         ],
         architecture_connections: [
-            { from: "native_source", to: "extraction", label: "AST_PARSING" },
-            { from: "extraction", to: "uir", label: "NORMALIZE_TYPES" },
-            { from: "uir", to: "synthesis", label: "GENERATE_CONTRACTS" },
-            { from: "synthesis", to: "adapter", label: "ENFORCE_RULES" },
-            { from: "runtimes", to: "adapter", label: "NATIVE_CALL" },
-            { from: "adapter", to: "native_source", label: "SAFE_EXECUTION" }
+            { from: "native_source", to: "ingestion", label: "AST_EXTRACTION" },
+            { from: "ingestion", to: "uir", label: "NORMALIZE_METADATA" },
+            { from: "uir", to: "synthesis", label: "SYNTHESIZE_CONTRACT" },
+            { from: "synthesis", to: "adapter", label: "EXPORT_RULES" },
+            { from: "adapter", to: "native_source", label: "ENFORCE_BOUNDARY" }
         ],
         evolution: [
-            { milestone: "Pipeline Design", description: "Designed the multi-stage pipeline architecture and defined the intermediate representation format.", date: "PHASE_01" },
-            { milestone: "Clang Integration", description: "Integrated Clang compiler tooling for AST extraction, enabling precise analysis of C/C++ function signatures.", date: "PHASE_02" },
-            { milestone: "Contract Synthesis", description: "Implemented the contract synthesis engine that generates safety rules from the normalized IR.", date: "PHASE_03" },
-            { milestone: "Runtime Adapters", description: "Currently developing language-specific adapters for Python and Rust to enforce contracts at runtime.", date: "PHASE_04" }
+            { milestone: "Research Initialization", description: "Identifying the core failure vectors in multi-language systems and defining the verification strategy.", date: "PHASE_01" },
+            { milestone: "Clang AST Frontend", description: "Developing the ingestion layer to extract reliable metadata directly from C/C++ compiler internals.", date: "PHASE_02" },
+            { milestone: "IR Design & Synthesis", description: "Designing the universal intermediate representation and the logical engine for contract generation.", date: "PHASE_03" },
+            { milestone: "Adapter Prototype", description: "Building the first runtime adapters to demonstrate cross-language safety enforcement.", date: "PHASE_04" }
         ],
         architectureDecisions: [
             {
-                title: "Pipeline Architecture over Monolithic Analyzer",
-                problem: "A single monolithic analyzer would tightly couple extraction, normalization, and verification logic, making it difficult to test or extend.",
-                approach: "Designed the system as a series of independent pipeline stages where each stage produces output consumed by the next.",
-                reasoning: "Each pipeline stage can be developed, tested, and improved independently. Adding a new language only requires a new extractor and adapter.",
-                alternatives: ["Monolithic analysis engine", "Plugin-based architecture"]
+                title: "AST Parsing vs. Binary Inspection",
+                problem: "Binary libraries lack the high-level type information (ownership, intent) necessary for safety verification.",
+                approach: "Utilized Clang's AST tooling to analyze source headers instead of compiled binaries.",
+                reasoning: "The Abstract Syntax Tree contains the original programmer's intent regarding types and parameters, which is lost after compilation.",
+                alternatives: ["Binary DWARF analysis", "Object file scraping"]
             },
             {
-                title: "Clang Tooling over Manual Parsing",
-                problem: "Parsing C/C++ headers manually would miss edge cases in complex type definitions, macros, and templates.",
-                approach: "Used Clang's AST tooling to get compiler-accurate metadata extraction.",
-                reasoning: "Clang already solves the hard problem of fully parsing C/C++. Using it ensures extraction accuracy and handles edge cases.",
-                alternatives: ["Custom parser", "Regular expression extraction"]
+                title: "Language-Neutral IR",
+                problem: "Generating contracts directly from C++ for Python creates a tight coupling that breaks when adding a third language.",
+                approach: "Created a normalized Intermediate Representation (IR) to act as a bridge between any two languages.",
+                reasoning: "A universal IR allows the synthesis engine to remain agnostic of both the source and target languages.",
+                alternatives: ["Direct source-to-source translation", "Ad-hoc mapping files"]
             },
             {
-                title: "Rust for IR Logic",
-                problem: "Writing verification logic that is itself memory-safe is important for a tool that verifies memory safety.",
-                approach: "Implemented the IR normalization and contract synthesis in Rust.",
-                reasoning: "If the verifier itself has memory bugs, it undermines the credibility of the verification results. Rust's ownership system prevents this.",
-                alternatives: ["C++ with smart pointers", "Python with type checking"]
+                title: "Modular Verification Pipeline",
+                problem: "Systems research requires frequent changes to individual components (solvers, extractors, adapters).",
+                approach: "Adopted a multi-stage pipeline architecture with isolated layers for each transformation.",
+                reasoning: "Modular design ensures that an update to the Clang extractor doesn't require rewriting the contract logic.",
+                alternatives: ["Monolithic analyzer", "Plugin-based system"]
             }
         ],
         tradeoffs: [
             {
-                title: "Thoroughness over Speed",
-                description: "The pipeline performs exhaustive AST analysis rather than optimized bytecode inspection. This is slower but more reliable for catching subtle type mismatches.",
+                title: "Reliability over Compilation Speed",
+                description: "The pipeline performs deep AST analysis which adds overhead to the build process, but ensures boundary safety and prevents runtime crashes.",
                 impact: "PERFORMANCE"
             },
             {
-                title: "Modular Stages over Integrated Processing",
-                description: "Breaking the pipeline into separate stages adds overhead from serialization between stages but makes the system easier to develop and debug.",
-                impact: "MAINTAINABILITY"
+                title: "Prototype over Tooling",
+                description: "Focusing on modular research architecture rather than building a polished commercial CLI. Prioritizing flexibility for experimentation.",
+                impact: "SIMPLICITY"
             }
         ],
         development_story: [
             {
-                id: "curiosity",
-                title: "FFI Boundary Research",
-                description: "Curiosity about the fragile interaction between high-level languages and native C/C++ libraries led to an investigation into common Foreign Function Interface failure modes.",
-                activeNodes: ["native_source"]
+                id: "extraction",
+                title: "Metadata Ingestion",
+                description: "The journey begins by feeding C/C++ source into the ingestion layer, where Clang extracts precise type and pointer metadata from the AST.",
+                activeNodes: ["native_source", "ingestion"]
             },
             {
-                id: "fragility",
-                title: "Identifying Failure Vectors",
-                description: "I identified that runtime crashes often stemmed from incorrect function signatures, pointer misuse, or misaligned memory ownership assumptions across compilation boundaries.",
-                activeNodes: ["extraction"]
+                id: "normalization",
+                title: "IR Normalization",
+                description: "Extracted data is normalized into a language-neutral Intermediate Representation, stripping away C++ specifics for universal safety analysis.",
+                activeNodes: ["ingestion", "uir"]
             },
             {
-                id: "pipeline",
-                title: "Contract Synthesis Idea",
-                description: "This research inspired the creation of a verification pipeline that extracts metadata from native code and generates safety contracts to enforce valid cross-language calls.",
+                id: "synthesis",
+                title: "Contract Synthesis",
+                description: "The synthesis engine analyzes the IR, evaluating nullability, ownership, and ABI rules to generate formal cross-language safety contracts.",
                 activeNodes: ["uir", "synthesis"]
             },
             {
-                id: "evolution",
-                title: "Modular Research Pipeline",
-                description: "The system evolved from a conceptual exploration into a multi-stage modular pipeline, representing a deep dive into systems engineering and runtime safety.",
-                activeNodes: ["native_source", "extraction", "uir", "synthesis", "adapter", "runtimes"]
+                id: "enforcement",
+                title: "Runtime Enforcement",
+                description: "Generated contracts are utilized by runtime adapters to shield the FFI boundary, intercepting calls to verify safety before execution.",
+                activeNodes: ["synthesis", "adapter", "native_source"]
             }
         ],
+        storyTitle: "Verification Pipeline",
         internalComponents: [
-            { name: "Metadata Extractor", description: "Uses Clang compiler tooling to analyze native C/C++ header files and extract function signatures, parameter types, pointer relationships, and struct definitions." },
-            { name: "IR Normalizer", description: "Converts language-specific metadata into a universal intermediate representation that captures scalars, pointers, structures, and memory ownership in a consistent format." },
-            { name: "Contract Synthesizer", description: "Analyzes the normalized IR to generate formal safety contracts — rules that define valid conditions for cross-language function calls." },
-            { name: "Runtime Enforcer", description: "Language-specific adapters that intercept FFI calls and verify contract rules before allowing native functions to execute." },
-            { name: "Safety Reporter", description: "Generates reports documenting verification results, contract violations, and safety status for each analyzed FFI boundary." }
+            { name: "Architecture Layer", description: "Defines the structural constraints and system boundaries for the entire verification process." },
+            { name: "Pipeline Orchestration", description: "Coordinates the flow of data from source extraction through to runtime enforcement." },
+            { name: "Ingestion Layer", description: "Leverages Clang and LLVM to accurately ingest C++ header metadata and function signatures." },
+            { name: "IR Normalization", description: "Standardizes extracted metadata into a canonical format for cross-language reasoning." },
+            { name: "Contract Synthesis", description: "The logical core that generates safety rules for nullability, alignment, and ownership." },
+            { name: "Language Adapters", description: "The final enforcement point where contracts are used to protect cross-language call boundaries." }
         ],
         future: [
-            { title: "Additional Language Adapters", description: "Expanding beyond the current Python, Rust, and C++ targets to support additional languages." },
-            { title: "Automated Bridge Generation", description: "Automatically generating FFI bridge code from verified contracts rather than requiring manual binding definitions." }
+            { title: "Recursive Type Synthesis", description: "Expanding the analyzer to automatically handle deeply nested structures and union types in contracts." },
+            { title: "Dynamic Ownership Tracking", description: "Investigating runtime shims that can track memory ownership across multiple FFI boundaries." }
         ]
     }
 ];

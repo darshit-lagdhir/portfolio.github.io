@@ -9,9 +9,10 @@ import { useScene } from "@/context/SceneContext";
 interface SystemStoryFlowProps {
   steps: StoryStep[];
   onStepChange: (step: StoryStep) => void;
+  title?: string;
 }
 
-export default function SystemStoryFlow({ steps, onStepChange }: SystemStoryFlowProps) {
+export default function SystemStoryFlow({ steps, onStepChange, title = "System_Story" }: SystemStoryFlowProps) {
   const { isMobile } = useScene();
   const [activeStepIndex, setActiveStepIndex] = useState(0);
   
@@ -39,7 +40,7 @@ export default function SystemStoryFlow({ steps, onStepChange }: SystemStoryFlow
       <div className="flex justify-between items-end">
         <div className="space-y-2">
           <div className="type-metadata text-[0.45rem] text-accent">SYSTEM_LIFECYCLE</div>
-          <h2 className="type-identity text-3xl md:text-4xl uppercase tracking-tighter">Development_Journey</h2>
+          <h2 className="type-identity text-3xl md:text-4xl uppercase tracking-tighter">{formatLabel(title)}</h2>
         </div>
         
         <div className="flex items-center gap-4">

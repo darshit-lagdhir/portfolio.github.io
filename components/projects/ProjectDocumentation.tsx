@@ -293,11 +293,10 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                  </aside>
               </div>
            </section>
-
            {/* Section 06: System Evolution Journey (Story Flow) */}
            {project.development_story && (
               <section className="py-sys-128 border-t border-border-dim">
-                 <SectionDivider label="07_DEVELOPMENT_JOURNEY" className="mb-sys-64" />
+                 <SectionDivider label="07_SYSTEM_JOURNEY" className="mb-sys-64" />
                 
                  <div className="space-y-sys-64">
                    <ArchitectureDiagram 
@@ -309,6 +308,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                    
                    <SystemStoryFlow 
                       steps={project.development_story}
+                      title={project.storyTitle || "Development_Journey"}
                       onStepChange={(step) => setHighlightedNodes(step.activeNodes)}
                    />
                  </div>

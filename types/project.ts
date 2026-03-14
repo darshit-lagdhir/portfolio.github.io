@@ -115,6 +115,7 @@ export interface Project {
     architecture_nodes: DiagramNode[];
     architecture_connections: DiagramConnection[];
     development_story: StoryStep[];
+    storyTitle?: string;
     
     // Legacy / Deep Dive Fields (Preserved for component compatibility where needed)
     problem: string;
