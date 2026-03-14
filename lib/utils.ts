@@ -82,16 +82,16 @@ export function getStatusMetadata(status: string) {
   const s = status.toLowerCase();
   
   if (s.includes("complete")) {
-    return { color: "bg-green-500/50", label: "COMPLETE" };
+    return { color: "bg-accent", label: "COMPLETE" };
   }
   if (s.includes("active") || s.includes("development")) {
-    return { color: "bg-yellow-500/50 pulse", label: "ACTIVE_DEVELOPMENT" };
+    return { color: "bg-accent-dim pulse", label: "ACTIVE_DEVELOPMENT" };
   }
   if (s.includes("hackathon")) {
-    return { color: "bg-blue-400/50", label: "HACKATHON_PROJECT" };
+    return { color: "bg-accent-dim", label: "HACKATHON_PROJECT" };
   }
   
-  return { color: "bg-yellow-500/50 pulse", label: "IN_DEVELOPMENT" };
+  return { color: "bg-accent-dim pulse", label: "IN_DEVELOPMENT" };
 }
 
 /**

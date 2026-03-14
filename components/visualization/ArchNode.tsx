@@ -14,11 +14,11 @@ interface ArchNodeProps {
 
 const TYPE_COLORS = {
   service: "text-accent",
-  database: "text-green-500",
-  pipeline: "text-yellow-500",
-  interface: "text-purple-500",
-  logic: "text-blue-500",
-  client: "text-pink-500"
+  database: "text-accent-dim",
+  pipeline: "text-accent",
+  interface: "text-accent-dim",
+  logic: "text-accent",
+  client: "text-accent-dim"
 };
 
 const TYPE_LABELS = {

@@ -11,26 +11,26 @@
   --color-text-muted: #525252;
   --color-accent: #0066ff;
   --color-accent-dim: #003380;
-  --color-border-dim: #1a1a1a;
-  --color-border-bright: #262626;
+  --color-border-dim: rgba(255, 255, 255, 0.05);
+  --color-border-bright: rgba(255, 255, 255, 0.15);
 
   /* 
      PHASE 2 & 4 — TYPOGRAPHY SYSTEM (ROLES & SPACING)
   */
-  --font-identity: var(--font-identity);   /* Fornire: The Identity Anchor */
-  --font-heading: var(--font-heading);     /* Ranade: Structural Pillars */
-  --font-emphasis: var(--font-emphasis);   /* Panchang: Technical Precision */
-  --font-body: var(--font-body);           /* HK Grotesk Wide: Narrative & UI */
+  --font-accent: var(--font-accent);         /* Fornire: Decorative Technical Accents */
+  --font-body: var(--font-body);             /* Ranade: Primary Narrative & Descriptions */
+  --font-display: var(--font-display);       /* Panchang: Bold Displays & Structural Headings */
+  --font-structural: var(--font-structural); /* HK Grotesk Wide: Navigation & Interface Indicators */
 
   /* 
      PHASE 3 — TYPOGRAPHY SCALE (MODULAR progression)
   */
-  --font-size-identity: clamp(3.5rem, 12vw, 15rem);
+  --font-size-display: clamp(3.5rem, 12vw, 15rem);
   --font-size-h1: clamp(2rem, 5vw, 4.5rem);
   --font-size-h2: clamp(1.5rem, 3vw, 2.5rem);
-  --font-size-h3: clamp(1.1rem, 1.8vw, 1.5rem);
-  --font-size-body: 1.125rem;
-  --font-size-label: 0.7rem;
+  --font-size-h3: clamp(1rem, 1.5vw, 1.25rem);
+  --font-size-body: 1rem;
+  --font-size-label: 0.75rem;
   --font-size-micro: 0.6rem;
 
   /* 
@@ -83,7 +83,7 @@ body {
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
   font-family: var(--font-body);
-  line-height: 1.8;
+  line-height: 1.6;
   overflow-x: hidden;
   text-rendering: optimizeLegibility;
   touch-action: pan-y;
@@ -91,10 +91,9 @@ body {
 }
 
 /* Hardware Acceleration Hints for common animated elements */
-.type-identity,
+.type-display,
 .type-h1,
 .type-h2,
-.type-emphasis,
 .navigation-dock,
 .custom-cursor,
 .architecture-node,
@@ -125,19 +124,18 @@ body {
    PHASE 4 & 6 — TYPOGRAPHY COMPONENTS
 */
 
-/* IDENTITY (FORNIRE) */
-.type-identity {
-  font-family: var(--font-identity);
-  font-size: var(--font-size-identity);
+/* DISPLAY (PANCHANG) */
+.type-display {
+  font-family: var(--font-display);
+  font-size: var(--font-size-display);
   line-height: 0.85;
   text-transform: uppercase;
   letter-spacing: -0.04em;
-  font-weight: 400;
+  font-weight: 700;
 }
 
-/* SECTION TITLES (RANADE) */
 .type-h1 {
-  font-family: var(--font-heading);
+  font-family: var(--font-display);
   font-size: var(--font-size-h1);
   line-height: 1.05;
   text-transform: uppercase;
@@ -146,7 +144,7 @@ body {
 }
 
 .type-h2 {
-  font-family: var(--font-heading);
+  font-family: var(--font-display);
   font-size: var(--font-size-h2);
   line-height: 1.1;
   text-transform: uppercase;
@@ -154,52 +152,71 @@ body {
   font-weight: 700;
 }
 
-/* TECHNICAL EMPHASIS (PANCHANG) */
-.type-emphasis {
-  font-family: var(--font-emphasis);
+.type-h3 {
+  font-family: var(--font-display);
   font-size: var(--font-size-h3);
-  line-height: 1.3;
+  line-height: 1.2;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-weight: 800;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}
+
+/* TECHNICAL HIGHLIGHT (PANCHANG) */
+.type-emphasis {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+/* STRUCTURAL (HK GROTESK WIDE) */
+.type-nav {
+  font-family: var(--font-structural);
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
 }
 
 .type-label {
-  font-family: var(--font-emphasis);
+  font-family: var(--font-structural);
   font-size: var(--font-size-label);
   text-transform: uppercase;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.2em;
   font-weight: 700;
   color: var(--color-text-muted);
 }
 
 .type-metadata {
-  font-family: var(--font-emphasis);
+  font-family: var(--font-structural);
   font-size: var(--font-size-micro);
   text-transform: uppercase;
   letter-spacing: 0.35em;
-  font-weight: 800;
+  font-weight: 700;
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-/* BODY ARCHITECTURE (HK GROTESK WIDE) */
+/* NARRATIVE (RANADE) */
 .type-body {
   font-family: var(--font-body);
   font-size: var(--font-size-body);
-  line-height: 1.75;
+  line-height: 1.7;
   font-weight: 500;
   color: var(--color-text-secondary);
 }
 
-.type-nav {
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 700;
-  line-height: 1.2;
+/* ACCENT (FORNIRE) */
+.type-accent {
+  font-family: var(--font-accent);
+  font-size: 0.65rem;
+  line-height: 1;
   text-transform: uppercase;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.1em;
 }
 
 /* 
@@ -345,7 +362,7 @@ h3 {
 }
 
 .divider-label {
-  font-family: var(--font-emphasis);
+  font-family: var(--font-structural);
   font-size: 0.6rem;
   font-weight: 800;
   text-transform: uppercase;
@@ -411,7 +428,7 @@ h3 {
   background-color: transparent;
   border: 1px solid var(--color-border-bright);
   color: var(--color-text-primary);
-  font-family: var(--font-emphasis);
+  font-family: var(--font-structural);
   font-size: 0.7rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;

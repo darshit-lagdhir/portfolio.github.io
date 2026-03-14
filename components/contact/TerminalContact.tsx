@@ -78,9 +78,9 @@ export default function TerminalContact() {
 
       <div className="grid-12">
         <div className="col-span-12 lg:col-span-8">
-          <div className="mb-sys-96 text-left space-y-6">
-            <div className="flex items-center gap-3 mb-2 opacity-30">
-              <div className="w-1 h-1 bg-accent/40 rounded-full" />
+            <div className="mb-sys-96 text-left space-y-6">
+            <div className="flex items-center gap-3 mb-2 opacity-30 text-accent">
+              <div className="w-1 h-1 bg-current rounded-full" />
               <span className="type-metadata text-[0.4rem] tracking-[0.3em] font-mono">CONNECTION_READY</span>
             </div>
             <h2 className="type-h1 uppercase tracking-tighter">Initiate_Discovery_</h2>
@@ -93,27 +93,27 @@ export default function TerminalContact() {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="module-frame relative overflow-hidden !p-0 bg-bg-secondary/5 border-dashed"
+            className="module-frame relative overflow-hidden !p-0 bg-transparent border-dashed"
           >
             {/* TERMINAL HEADER */}
             <div className="bg-bg-secondary border-b border-border-dim px-8 py-6 flex items-center justify-between">
               <div className="flex gap-4 items-center">
-                <div className="w-1.5 h-1.5 bg-accent/30 rounded-full" />
+                <div className="w-1.5 h-1.5 bg-accent-dim rounded-full" />
                 <div className="type-metadata text-[0.4rem] opacity-20 tracking-[0.4em] font-mono uppercase">
                   CON_INTERFACE_v2.1 // {new Date().getFullYear()}
                 </div>
               </div>
               <div className="flex gap-1">
-                <div className="w-1 h-3 bg-accent opacity-5" />
                 <div className="w-1 h-3 bg-accent opacity-10" />
                 <div className="w-1 h-3 bg-accent opacity-20" />
+                <div className="w-1 h-3 bg-accent opacity-30" />
               </div>
             </div>
 
             {/* TERMINAL CONTENT */}
             <div
               ref={scrollRef}
-              className="p-10 h-[400px] overflow-y-auto bg-black/10"
+              className="p-10 h-[400px] overflow-y-auto bg-bg-primary/50"
             >
               <div className="space-y-6 font-mono text-[0.75rem] leading-relaxed">
                 {history.map((line, i) => (
@@ -124,14 +124,14 @@ export default function TerminalContact() {
                     transition={{ duration: 0.3 }}
                     className={cn(
                       "whitespace-pre-wrap flex gap-6",
-                      line.type === 'input' ? "text-accent/60" : "text-text-secondary/80"
+                      line.type === 'input' ? "text-accent" : "text-text-secondary"
                     )}
                   >
                     <span className="opacity-20 shrink-0">
                       {line.type === 'input' ? 'λ' : '»'}
                     </span>
                     <span className={cn(
-                      line.type === 'input' ? "font-bold tracking-tight" : "font-medium opacity-60"
+                      line.type === 'input' ? "font-bold tracking-tight opacity-90" : "font-medium opacity-60"
                     )}>
                       {line.content}
                     </span>
@@ -140,9 +140,9 @@ export default function TerminalContact() {
 
                 {isProcessing && (
                   <motion.div
-                    animate={{ opacity: [0.1, 1, 0.1] }}
+                    animate={{ opacity: [0.3, 1, 0.3] }}
                     transition={{ duration: 1, repeat: Infinity }}
-                    className="text-accent/40 flex gap-6"
+                    className="text-accent/60 flex gap-6"
                    >
                     <span className="opacity-20 shrink-0">λ</span>
                     <span>{formatLabel("HANDSHAKE_INITIATED // RESOLVING_ENDPOINT_")}</span>
@@ -153,7 +153,7 @@ export default function TerminalContact() {
 
             {/* COMMAND SELECTION PANEL */}
             <div className="bg-bg-secondary border-t border-border-dim p-8 md:p-12">
-              <div className="type-metadata text-[0.5rem] mb-8 opacity-30 tracking-[0.4em] flex items-center gap-4">
+              <div className="type-metadata text-[0.5rem] mb-8 opacity-40 tracking-[0.4em] flex items-center gap-4 text-text-secondary font-bold">
                  <div className="w-1 h-3 bg-accent" />
                  SELECT_COMMAND_PAYLOAD
               </div>
@@ -163,18 +163,18 @@ export default function TerminalContact() {
                     key={cmd.id}
                     onClick={() => executeCommand(cmd.id, cmd.label)}
                     disabled={isProcessing}
-                    className="module-frame group flex items-center justify-between !p-6 relative transition-all text-left disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-1 focus-visible:ring-accent/50 md:hover:translate-x-1 hover:bg-accent/5 border-border-dim/50"
+                    className="module-frame group flex items-center justify-between !p-6 relative transition-all text-left disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-1 focus-visible:ring-accent md:hover:translate-x-1 hover:bg-accent/5"
                   >
-                    <div className="absolute top-2 right-2 opacity-10 group-hover:opacity-100 transition-opacity">
+                    <div className="absolute top-2 right-2 opacity-20 group-hover:opacity-100 transition-opacity">
                        <div className="arch-marker scale-[0.3]" />
                     </div>
                      <div className="flex items-center gap-4">
                       <span className="text-accent opacity-40 group-hover:opacity-100 group-hover:translate-x-1 transition-all">λ</span>
-                      <span className="type-nav text-[0.7rem] font-bold group-hover:text-white transition-colors">
+                      <span className="type-nav text-[0.7rem] font-bold group-hover:text-text-primary transition-colors">
                         {formatLabel(cmd.label)}
                       </span>
                     </div>
-                    <span className="type-metadata text-[0.4rem] opacity-20 group-hover:opacity-100 transition-opacity">
+                    <span className="type-metadata text-[0.4rem] opacity-30 group-hover:opacity-100 transition-opacity">
                       {cmd.action}
                     </span>
                   </button>

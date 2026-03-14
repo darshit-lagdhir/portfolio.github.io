@@ -31,7 +31,7 @@ export default function FinalReflection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="type-identity text-3xl md:text-5xl uppercase tracking-tighter opacity-80"
+            className="type-h1 text-3xl md:text-5xl uppercase tracking-tighter opacity-80"
           >
             End_of_Manifest_
           </motion.h2>

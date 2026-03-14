@@ -47,7 +47,7 @@ export default function DomainMap({ activeDomainId, onDomainClick }: DomainMapPr
                 strokeWidth={isHighlighted ? "0.2" : "0.05"}
                 className={cn(
                   "transition-all duration-500",
-                  isHighlighted ? "text-accent opacity-40" : "text-border-dim opacity-20"
+                  isHighlighted ? "text-accent" : "text-border-dim opacity-30"
                 )}
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
@@ -75,7 +75,7 @@ export default function DomainMap({ activeDomainId, onDomainClick }: DomainMapPr
                 r={isActive ? "2" : "1"}
                 className={cn(
                   "transition-all duration-300",
-                  isActive ? "fill-accent" : (isRelated ? "fill-accent/40" : "fill-border-dim")
+                  isActive ? "fill-accent" : (isRelated ? "fill-accent-dim" : "fill-border-dim")
                 )}
                 whileHover={{ r: 2.5 }}
               />
@@ -85,7 +85,7 @@ export default function DomainMap({ activeDomainId, onDomainClick }: DomainMapPr
                   cx={pos.x}
                   cy={pos.y}
                   r="4"
-                  className="fill-accent/10"
+                  className="fill-accent-dim opacity-20"
                   animate={{ scale: [1, 1.5, 1], opacity: [0.2, 0.5, 0.2] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 />

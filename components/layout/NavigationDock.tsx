@@ -75,7 +75,7 @@ export default function NavigationDock() {
                   onClick={() => handleScroll(item.id)}
                   className={cn(
                     "flex-1 flex flex-col items-center gap-1 py-3 transition-all rounded-xl",
-                    activeSection === item.id ? "bg-accent/10 text-accent scale-95" : "text-text-muted"
+                    activeSection === item.id ? "bg-accent/5 text-accent scale-95" : "text-text-muted"
                   )}
                 >
                   <span className="type-metadata text-[0.35rem] opacity-40">{item.code}</span>
@@ -152,7 +152,7 @@ export default function NavigationDock() {
             {activeSection === item.id && (
               <motion.div
                 layoutId="nav-active"
-                className="absolute -left-sys-12 w-[2px] h-sys-12 bg-accent/40"
+                className="absolute -left-sys-12 w-[2px] h-sys-12 bg-accent"
                 initial={{ scaleY: 0 }}
                 animate={{ scaleY: 1 }}
                 exit={{ scaleY: 0 }}
@@ -165,7 +165,7 @@ export default function NavigationDock() {
 
       {/* Scroll Metric Telemetry */}
       {isHomePage && (
-        <div className="absolute -right-sys-8 top-0 bottom-0 w-[1px] bg-border-dim/20">
+        <div className="absolute -right-sys-8 top-0 bottom-0 w-[1px] bg-border-bright">
           <SceneScrollProgress />
         </div>
       )}
@@ -177,7 +177,7 @@ function SceneScrollProgress() {
   const { scrollProgress } = useScene();
   return (
     <motion.div
-      className="w-full bg-accent origin-top shadow-[0_0_8px_rgba(255,255,255,0.2)]"
+      className="w-full bg-accent origin-top"
       animate={{ height: `${scrollProgress * 100}%` }}
       transition={{ type: "spring", stiffness: 100, damping: 30, mass: 0.5 }}
     />

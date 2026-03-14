@@ -16,7 +16,7 @@ export default function ProjectNetwork({ currentSlug }: ProjectNetworkProps) {
       <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-8 mb-sys-64">
         <div>
            <div className="type-metadata text-[0.5rem] text-accent mb-2">SYSTEM_NETWORKING</div>
-           <h2 className="type-identity text-4xl uppercase tracking-tighter">Engineering Exploration_</h2>
+           <h2 className="type-h1 text-4xl uppercase tracking-tighter">Engineering Exploration_</h2>
         </div>
         <p className="type-body text-sm text-text-muted max-w-md">
           Exploring the intersection of logistics, advisory intelligence, and formal memory safety through a network of specialized system nodes.
@@ -38,7 +38,7 @@ export default function ProjectNetwork({ currentSlug }: ProjectNetworkProps) {
               </div>
               
               <h3 className="type-emphasis text-xl mb-4 group-hover:text-accent transition-colors">
-                {project.title.toUpperCase()}
+                {project.name.toUpperCase()}
               </h3>
               
               <p className="type-body text-sm text-text-muted leading-relaxed group-hover:text-text-secondary transition-colors">
@@ -54,8 +54,8 @@ export default function ProjectNetwork({ currentSlug }: ProjectNetworkProps) {
               </div>
 
               {/* Background Label */}
-              <div className="absolute -bottom-4 -right-2 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity">
-                 <span className="type-identity text-6xl uppercase">{project.slug}</span>
+               <div className="absolute -bottom-4 -right-2 opacity-[0.02] group-hover:opacity-[0.05] transition-opacity">
+                 <span className="type-display text-6xl uppercase">{project.slug}</span>
               </div>
             </motion.div>
           </Link>

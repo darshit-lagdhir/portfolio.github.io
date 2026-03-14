@@ -80,7 +80,7 @@ export default function Hero() {
       </div>
       {/* Background Section Identifier */}
       <div className="absolute top-0 right-0 p-sys-32 opacity-[0.03] select-none pointer-events-none">
-        <span className="type-identity text-[10rem] leading-none">00</span>
+        <span className="type-display text-[10rem] leading-none">00</span>
       </div>
     </section>
   );

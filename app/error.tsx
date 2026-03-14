@@ -65,7 +65,7 @@ export default function ErrorBoundary({
         </div>
         
         <div className="absolute -bottom-16 -right-16 opacity-[0.03] select-none pointer-events-none">
-          <span className="type-identity text-[8rem]">{isInvalidSystem ? "404" : "ERR"}</span>
+          <span className="type-display text-[8rem]">{isInvalidSystem ? "404" : "ERR"}</span>
         </div>
       </motion.div>
     </div>

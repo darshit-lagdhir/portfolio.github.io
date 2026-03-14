@@ -30,11 +30,11 @@ export default function EngineeringDomains() {
 
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-sys-24 mb-sys-64">
          <div className="space-y-4">
-           <div className="type-metadata text-[0.45rem] text-accent opacity-50">EXPLORATION_MAP</div>
-           <h2 className="type-identity text-3xl md:text-4xl uppercase tracking-tighter">Learning_Domains</h2>
+           <div className="type-metadata text-[0.45rem] text-accent opacity-60">EXPLORATION_MAP</div>
+           <h2 className="type-h1 text-3xl md:text-4xl uppercase tracking-tighter">Learning_Domains</h2>
          </div>
          <div className="max-w-md">
-            <p className="type-body text-xs opacity-40 italic">
+            <p className="type-body text-xs text-text-muted italic">
               A map of technical areas I am currently exploring, learning, and building projects in. These domains represent active learning paths rather than established expertise.
             </p>
          </div>
@@ -50,22 +50,22 @@ export default function EngineeringDomains() {
               className={cn(
                 "module-frame w-full text-left relative group !p-8",
                 activeDomainId === domain.domain_id 
-                  ? "border-accent/30 bg-accent/5" 
+                  ? "border-accent bg-accent/5" 
                   : "hover:border-border-bright"
               )}
             >
               <div className="flex justify-between items-center mb-3">
-                 <span className="type-metadata text-[0.4rem] opacity-20 tracking-widest">{formatLabel(domain.domain_id.split('_')[0])}</span>
+                 <span className="type-metadata text-[0.4rem] text-text-muted tracking-widest">{formatLabel(domain.domain_id.split('_')[0])}</span>
                  {activeDomainId === domain.domain_id && (
                    <motion.div 
                      layoutId="active-indicator"
-                     className="w-1 h-1 bg-accent/60"
+                     className="w-1 h-1 bg-accent"
                    />
                  )}
               </div>
               <h3 className={cn(
                 "type-emphasis text-xs md:text-sm transition-colors tracking-tight",
-                activeDomainId === domain.domain_id ? "text-accent/80" : "text-text-primary/70"
+                activeDomainId === domain.domain_id ? "text-accent" : "text-text-secondary"
               )}>
                 {formatLabel(domain.name)}
               </h3>
@@ -93,14 +93,14 @@ export default function EngineeringDomains() {
                 className="space-y-sys-64 relative z-10"
               >
                 <div className="space-y-4">
-                   <div className="type-metadata text-[0.45rem] text-accent/60">DOMAIN_SPECIFICATION // {activeDomain.domain_id}</div>
+                   <div className="type-metadata text-[0.45rem] text-accent">DOMAIN_SPECIFICATION // {activeDomain.domain_id}</div>
                    <p className="type-body text-lg md:text-xl text-text-primary leading-relaxed max-w-2xl">
                      {activeDomain.description}
                    </p>
                 </div>
 
                 <div className="space-y-6">
-                   <div className="type-metadata text-[0.45rem] opacity-30 uppercase tracking-widest">Involved_Technologies</div>
+                   <div className="type-metadata text-[0.45rem] text-text-muted uppercase tracking-widest">Involved_Technologies</div>
                    <div className="flex flex-wrap gap-2">
                       {activeDomain.technologies?.map(tech => (
                         <span key={tech} className="px-3 py-1 bg-bg-secondary border border-border-dim type-metadata text-[0.6rem] hover:border-accent transition-colors">
@@ -111,7 +111,7 @@ export default function EngineeringDomains() {
                 </div>
 
                 <div className="space-y-6">
-                   <div className="type-metadata text-[0.45rem] opacity-30 uppercase tracking-widest">Connected_Systems</div>
+                   <div className="type-metadata text-[0.45rem] text-text-muted uppercase tracking-widest">Connected_Systems</div>
                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {relatedProjects.map(project => (
                         <Link 
@@ -123,7 +123,7 @@ export default function EngineeringDomains() {
                               <div className="arch-marker scale-50" />
                            </div>
                             <h4 className="type-emphasis text-sm group-hover:text-accent transition-colors">{project.name}</h4>
-                            <p className="type-body text-[0.7rem] opacity-50 mt-2 line-clamp-2 italic">{project.shortDescription}</p>
+                            <p className="type-body text-[0.7rem] text-text-secondary opacity-50 mt-2 line-clamp-2 italic">{project.shortDescription}</p>
                         </Link>
                       ))}
                    </div>
@@ -136,17 +136,17 @@ export default function EngineeringDomains() {
                 animate={{ opacity: 1 }}
                 className="h-full flex flex-col items-center justify-center text-center space-y-6 py-sys-48 relative z-10"
               >
-                <div className="w-16 h-[1px] bg-accent/30" />
+                <div className="w-16 h-[1px] bg-accent-dim" />
                 <div className="space-y-2">
-                  <div className="type-metadata text-[0.45rem] opacity-30">SYSTEM_IDLE</div>
-                  <h3 className="type-emphasis text-lg opacity-40">SELECT_DOMAIN_FOR_EXPLORATION</h3>
+                  <div className="type-metadata text-[0.45rem] text-text-muted">SYSTEM_IDLE</div>
+                  <h3 className="type-emphasis text-lg text-text-muted">SELECT_DOMAIN_FOR_EXPLORATION</h3>
                 </div>
-                <div className="w-16 h-[1px] bg-accent/30" />
+                <div className="w-16 h-[1px] bg-accent-dim" />
                 
                 {/* Background Visualization Hint */}
                 {!isMobile && (
                   <div className="absolute inset-0 flex items-center justify-center opacity-[0.03] select-none pointer-events-none -z-10">
-                     <span className="type-identity text-[15rem]">DOMAIN_MAP</span>
+                     <span className="type-display text-[15rem]">DOMAIN_MAP</span>
                   </div>
                 )}
               </motion.div>

@@ -99,7 +99,7 @@ export default function SystemComparison() {
                 </Link>
                 {/* Visual Background Accent */}
                 <div className="absolute top-0 right-0 p-4 opacity-[0.03] pointer-events-none">
-                  <span className="type-identity text-5xl">{idx + 1}</span>
+                  <span className="type-display text-5xl">{idx + 1}</span>
                 </div>
               </div>
             ))}
