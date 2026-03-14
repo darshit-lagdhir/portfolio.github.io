@@ -15,12 +15,9 @@ export default function SystemBackground() {
       }}
       transition={{ duration: 2, ease: "easeOut" }}
       className={cn(
-        "system-bg-grid fixed inset-0 pointer-events-none z-[-10] transition-opacity duration-1000"
+        "system-bg-grid fixed inset-0 pointer-events-none z-[-10] transition-opacity duration-1000",
+        (isLowPerf || isMobile) && "bg-attachment-scroll mask-none"
       )}
-      style={{
-        // If low performance, disable the CSS background fixed behavior or heavy masks
-        backgroundAttachment: isLowPerf ? "scroll" : "fixed",
-      }}
       aria-hidden="true"
     />
   );

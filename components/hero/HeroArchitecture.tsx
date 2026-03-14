@@ -21,7 +21,7 @@ export default function HeroArchitecture() {
   if (!isClient) return null;
 
   return (
-    <div className="relative w-full aspect-square max-w-[500px] opacity-20">
+    <div className="relative w-full aspect-square max-w-[500px] mx-auto opacity-20">
       <svg viewBox="0 0 400 400" className="w-full h-full text-accent">
         {/* Connection Lines (Static Background) */}
         <path 

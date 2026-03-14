@@ -75,13 +75,12 @@ export default function EngineeringDomains() {
 
         {/* Domain Detail & Map Area */}
         <div className="module-frame lg:col-span-8 min-h-[600px] relative !p-8 md:!p-16 overflow-hidden flex flex-col justify-center">
-          {/* Visual Domain Map Layer */}
-          {!isMobile && (
-            <DomainMap 
-              activeDomainId={activeDomainId} 
-              onDomainClick={(id) => setActiveDomainId(id)} 
-            />
-          )}
+          {/* Visual DomainMap Layer */}
+          <DomainMap 
+            activeDomainId={activeDomainId} 
+            onDomainClick={(id) => setActiveDomainId(id)} 
+            simplified={isMobile}
+          />
 
           <AnimatePresence mode="wait">
             {activeDomain ? (

@@ -207,6 +207,7 @@ body {
   line-height: 1.7;
   font-weight: 500;
   color: var(--color-text-secondary);
+  max-width: 75ch;
 }
 
 /* ACCENT (FORNIRE) */
@@ -294,9 +295,24 @@ h3 {
 }
 
 /* 
-   VISUAL SIGNATURE LAYER (PROMPT 34)
-   Recurring architectural motifs that define the systems engineering environment.
+   UTILITY & PERFORMANCE OVERRIDES
 */
+.bg-attachment-scroll {
+  background-attachment: scroll !important;
+}
+
+.mask-none {
+  mask-image: none !important;
+  -webkit-mask-image: none !important;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 .arch-marker {
   width: 5px;
   height: 5px;

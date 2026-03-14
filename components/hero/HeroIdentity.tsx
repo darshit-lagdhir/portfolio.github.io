@@ -13,26 +13,32 @@ export default function HeroIdentity() {
         className="flex flex-col gap-1 mb-sys-48"
       >
         <div className="flex items-center gap-3">
-          <span className="w-2 h-2 rounded-full bg-accent" />
-          <h2 className="type-emphasis text-xl md:text-2xl tracking-tighter text-text-primary">
-            {identity.name.split('').map((char, i) => (
-              <motion.span
-                key={i}
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.5,
-                  delay: 0.1 + (i * 0.03),
-                  ease: "easeOut"
-                }}
-                className="inline-block"
-              >
-                {char === ' ' ? '\u00A0' : char}
-              </motion.span>
-            ))}
+          <span className="w-2 h-2 rounded-full bg-accent shrink-0" />
+          <h2 className="type-emphasis text-lg md:text-2xl tracking-tighter text-text-primary">
+            <span className="inline-flex flex-wrap">
+              {identity.name.split(' ').map((word, wIdx) => (
+                <span key={wIdx} className="whitespace-nowrap inline-block mr-[0.3em]">
+                  {word.split('').map((char, i) => (
+                    <motion.span
+                      key={i}
+                      initial={{ opacity: 0, y: 5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: 0.5,
+                        delay: 0.1 + (wIdx * 10 + i) * 0.03, // Adjusted delay for word-aware reveal
+                        ease: "easeOut"
+                      }}
+                      className="inline-block"
+                    >
+                      {char}
+                    </motion.span>
+                  ))}
+                </span>
+              ))}
+            </span>
           </h2>
         </div>
-        <p className="type-metadata text-[0.65rem] tracking-[0.3em] text-accent uppercase font-bold pl-5">
+        <p className="type-metadata text-[0.6rem] md:text-[0.65rem] tracking-[0.3em] text-accent uppercase font-bold pl-5 mt-2">
           {identity.headline}
         </p>
       </motion.div>

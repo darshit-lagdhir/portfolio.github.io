@@ -9,23 +9,24 @@ import { useScene } from "@/context/SceneContext";
 interface DomainMapProps {
   activeDomainId: string | null;
   onDomainClick: (id: string) => void;
+  simplified?: boolean;
 }
 
-export default function DomainMap({ activeDomainId, onDomainClick }: DomainMapProps) {
-  const { isLowPerf } = useScene();
+export default function DomainMap({ activeDomainId, onDomainClick, simplified = false }: DomainMapProps) {
+  const { isLowPerf, isMobile } = useScene();
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   
   const activeDomain = activeDomainId ? engineeringDomains.find(d => d.domain_id === activeDomainId) : null;
   const hoveredDomain = hoveredId ? engineeringDomains.find(d => d.domain_id === hoveredId) : null;
   
-  // Fixed positions for a controlled conceptual layout
+  // Dynamic positions that expand on mobile to avoid overlap
   const nodePositions: { [key: string]: { x: number; y: number } } = {
-    systems_engineering: { x: 50, y: 30 },
-    backend_systems: { x: 80, y: 45 },
-    data_systems: { x: 75, y: 75 },
-    programming_languages: { x: 20, y: 45 },
-    linux_security: { x: 25, y: 75 },
-    ai_exploration: { x: 50, y: 85 }
+    systems_engineering: { x: 50, y: simplified ? 20 : 30 },
+    backend_systems: { x: simplified ? 85 : 80, y: simplified ? 40 : 45 },
+    data_systems: { x: simplified ? 80 : 75, y: simplified ? 80 : 75 },
+    programming_languages: { x: simplified ? 15 : 20, y: simplified ? 40 : 45 },
+    linux_security: { x: simplified ? 20 : 25, y: simplified ? 80 : 75 },
+    ai_exploration: { x: 50, y: simplified ? 90 : 85 }
   };
 
   return (
@@ -41,6 +42,9 @@ export default function DomainMap({ activeDomainId, onDomainClick }: DomainMapPr
             const isActive = activeDomainId === domain.domain_id || activeDomainId === relId;
             const isHovered = hoveredId === domain.domain_id || hoveredId === relId;
 
+            // Simplified mode: hide irrelevant lines to reduce clutter
+            if (simplified && !isActive && !isHovered) return null;
+
             return (
               <motion.line
                 key={`${domain.domain_id}-${relId}`}
@@ -49,7 +53,7 @@ export default function DomainMap({ activeDomainId, onDomainClick }: DomainMapPr
                 x2={end.x}
                 y2={end.y}
                 stroke="currentColor"
-                strokeWidth={isActive ? "0.2" : (isHovered ? "0.15" : "0.05")}
+                strokeWidth={isActive ? (simplified ? "0.4" : "0.2") : (isHovered ? "0.15" : "0.05")}
                 className={cn(
                   "transition-all duration-300",
                   isActive ? "text-accent" : (isHovered ? "text-accent/60" : "text-border-dim opacity-30")
@@ -81,21 +85,21 @@ export default function DomainMap({ activeDomainId, onDomainClick }: DomainMapPr
               <motion.circle
                 cx={pos.x}
                 cy={pos.y}
-                r={isActive ? "2" : (isHovered ? "1.8" : "1")}
+                r={isActive ? (simplified ? "3.5" : "2") : (isHovered ? "1.8" : (simplified ? "1.5" : "1"))}
                 className={cn(
                   "transition-all duration-300",
                   isActive 
                     ? "fill-accent" 
                     : (isHovered || isRelatedToHovered || isRelatedToActive ? "fill-accent-dim" : "fill-border-dim")
                 )}
-                whileHover={!useScene().isMobile ? { r: 2 } : {}}
+                whileHover={!isMobile ? { r: 2 } : {}}
               />
               {/* Optional: Glow Effect for Active Node */}
               {isActive && !isLowPerf && (
                 <motion.circle
                   cx={pos.x}
                   cy={pos.y}
-                  r="4"
+                  r={simplified ? "6" : "4"}
                   className="fill-accent-dim opacity-20"
                   animate={{ scale: [1, 1.5, 1], opacity: [0.2, 0.5, 0.2] }}
                   transition={{ duration: 2, repeat: Infinity }}

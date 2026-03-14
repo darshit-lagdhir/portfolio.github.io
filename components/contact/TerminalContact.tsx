@@ -113,7 +113,7 @@ export default function TerminalContact() {
             {/* TERMINAL CONTENT */}
             <div
               ref={scrollRef}
-              className="p-8 md:p-12 h-[450px] overflow-y-auto bg-bg-primary/40 scrollbar-hide"
+              className="p-8 md:p-12 h-[350px] md:h-[450px] overflow-y-auto bg-bg-primary/40 scrollbar-hide"
             >
               <div className="space-y-6 font-mono text-[0.8rem] leading-relaxed">
                 {history.map((line, i) => (

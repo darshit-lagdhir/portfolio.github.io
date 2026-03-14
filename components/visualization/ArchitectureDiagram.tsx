@@ -95,13 +95,16 @@ export default function ArchitectureDiagram({ layout, nodes, connections, highli
           const isPathActive = isFromActive || isToActive;
           const isPathHovered = isFromHovered || isToHovered;
           
+          // Detect if we are in a single column layout (mobile or narrow viewport)
+          const isStacked = isMobile || (containerRef.current?.offsetWidth || 0) < 600;
+
           return (
             <ArchConnection
               key={`${conn.from}-${conn.to}-${idx}`}
               fromRect={nodeRects[conn.from]}
               toRect={nodeRects[conn.to]}
               parentRect={parentRect}
-              layout={layout}
+              layout={isStacked ? "layered" : layout}
               isActive={isPathActive || isPathHovered}
             />
           );
