@@ -80,7 +80,7 @@ export default function TerminalContact() {
         <div className="col-span-12 lg:col-span-8">
             <div className="mb-sys-96 text-left space-y-6">
             <div className="flex items-center gap-3 mb-2 opacity-30 text-accent">
-              <div className="w-1 h-1 bg-current rounded-full" />
+              <div className="status-dot active" />
               <span className="type-metadata text-[0.4rem] tracking-[0.3em] font-mono">CONNECTION_READY</span>
             </div>
             <h3 className="type-h1 uppercase tracking-tighter">Initiate_Discovery_</h3>
@@ -93,12 +93,12 @@ export default function TerminalContact() {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="module-frame relative overflow-hidden !p-0 bg-transparent border-dashed"
+            className="module-frame relative overflow-hidden !p-0 bg-transparent border-dashed hover:shadow-none hover:transform-none"
           >
             {/* TERMINAL HEADER */}
             <div className="bg-bg-secondary border-b border-border-dim px-8 py-6 flex items-center justify-between">
               <div className="flex gap-4 items-center">
-                <div className="w-1.5 h-1.5 bg-accent-dim rounded-full" />
+                <div className="status-dot opacity-40" />
                 <div className="type-metadata text-[0.4rem] opacity-20 tracking-[0.4em] font-mono uppercase">
                   CON_INTERFACE_v2.1 // {new Date().getFullYear()}
                 </div>
@@ -176,7 +176,7 @@ export default function TerminalContact() {
                     onClick={() => executeCommand(cmd.id, cmd.label)}
                     disabled={isProcessing}
                     aria-label={`Execute command: ${cmd.label}`}
-                    className="module-frame group flex items-center justify-between !p-4 relative transition-all text-left disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-1 focus-visible:ring-accent md:hover:translate-x-1 hover:bg-accent/5 hover:border-accent/40 min-w-0 overflow-hidden"
+                    className="module-frame group flex items-center justify-between !p-4 relative text-left disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-1 focus-visible:ring-accent md:hover:translate-x-1 hover:bg-accent/5 hover:border-accent/40 min-w-0 overflow-hidden"
                   >
                     <div className="absolute top-2 right-2 opacity-20 group-hover:opacity-100 transition-opacity">
                        <div className="arch-marker scale-[0.3]" />

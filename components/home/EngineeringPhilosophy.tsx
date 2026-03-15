@@ -22,10 +22,10 @@ export default function EngineeringPhilosophy() {
              transition={{ duration: 0.8 }}
              className="max-w-5xl"
            >
-              <h3 className="type-h1 text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-sys-48 uppercase leading-[1.1] tracking-tighter break-words hyphens-auto">
+              <h3 className="type-h1 mb-sys-48 break-words hyphens-auto text-text-primary">
                 Architecture is a <span className="text-accent underline decoration-accent/20 decoration-1 underline-offset-[12px]">Diagnostic Discipline</span>, not just a constructive one.
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-sys-48">
                 <div className="space-y-6 max-w-prose mx-auto lg:mx-0">
                   <p className="type-body text-xl md:text-2xl text-text-primary/70 leading-relaxed">
                     {identity.about.about_learning_context.split('. ')[0]}.
@@ -34,12 +34,12 @@ export default function EngineeringPhilosophy() {
                     I treat debugging not as a frustrating task, but as a primary learning tool. Many of my architectural insights—from memory behavior to session security—come from investigating why a system behaved in an unexpected way.
                   </p>
                 </div>
-                <div className="space-y-6 border-l border-border-dim pl-12 hidden md:block">
+                <div className="space-y-sys-24 border-l border-border-dim pl-sys-48 hidden md:block">
                   <p className="type-metadata text-[0.45rem] text-accent/40 mb-4 opacity-100 flex items-center gap-2">
                     <span className="w-1 h-1 bg-accent/40" />
                     APPLIED_PROJECT_INSIGHTS
                   </p>
-                  <div className="space-y-4">
+                  <div className="space-y-sys-16">
                     <div className="group/insight">
                       <span className="type-metadata text-[0.35rem] text-text-muted block mb-1">MOVEX</span>
                       <p className="type-body text-[0.65rem] opacity-40 group-hover/insight:opacity-80 transition-opacity">Debugging session boundaries taught me the hidden complexity of role isolation.</p>
@@ -58,7 +58,7 @@ export default function EngineeringPhilosophy() {
            </motion.div>
         </div>
 
-        <div className="col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+        <div className="col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-sys-48">
            {identity.learning_workflow.map((principle, index) => (
              <motion.div
                key={principle.title}
@@ -97,7 +97,7 @@ export default function EngineeringPhilosophy() {
         </div>
       </div>
 
-      <div className="mt-sys-128 flex flex-col items-center text-center pb-sys-96 lg:pb-0">
+      <div className="mt-sys-128 flex flex-col items-center text-center pb-sys-128 lg:pb-0">
         <DiscoveryHint 
           label={identity.discovery_hints.toReflection.label} 
           href="#reflections"

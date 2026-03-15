@@ -28,7 +28,7 @@ export default function SectionDivider({ label, description, className }: Sectio
           whileInView={{ opacity: 0.4, y: 0 }}
           viewport={{ once: true, margin: "-5%" }}
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-          className="type-body text-[0.65rem] mt-4 max-w-xl font-medium italic"
+          className="type-body text-xs mt-4 max-w-xl font-medium italic"
         >
           {description}
         </motion.p>

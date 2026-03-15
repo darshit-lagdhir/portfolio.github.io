@@ -22,7 +22,6 @@ export default function SystemModule({ project, index }: SystemModuleProps) {
         whileInView={{ opacity: 1, y: 0 }}
         whileHover={!useScene().isMobile ? { 
           scale: 1.015,
-          y: -8, // Increased offset for better feedback
           transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] }
         } : {}}
         viewport={{ once: true, margin: "-10%" }}
@@ -31,11 +30,11 @@ export default function SystemModule({ project, index }: SystemModuleProps) {
           delay: isLowPerf ? 0 : index * 0.1,
           ease: [0.16, 1, 0.3, 1]
         }}
-        className="module-frame group relative flex-1 flex flex-col min-h-[420px] h-full hover:bg-bg-secondary/80 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] transition-[border-color,background-color,box-shadow,transform] duration-300"
+        className="module-frame group relative flex-1 flex flex-col min-h-[420px] h-full hover:bg-bg-secondary/80"
         style={{ willChange: "transform, opacity" }}
       >
         {/* Module Header Hook */}
-        <div className="absolute top-0 right-0 p-6 opacity-30 group-hover:opacity-100 transition-opacity text-accent">
+        <div className="absolute top-0 right-0 p-sys-24 opacity-30 group-hover:opacity-100 transition-opacity text-accent">
           <span className="type-metadata text-[0.4rem] tracking-[0.4em] font-mono">
             REF_0{index + 1}
           </span>
@@ -72,7 +71,7 @@ export default function SystemModule({ project, index }: SystemModuleProps) {
 
         <div className="mb-sys-32">
           <div className="type-metadata text-[0.35rem] text-accent/60 mb-3 tracking-[0.3em] font-mono whitespace-nowrap overflow-hidden text-ellipsis">NODE_{index + 1} {'//'} {formatLabel(project.authority?.primaryDomain || "CORE")}</div>
-          <h3 className="type-h2 leading-tight text-lg sm:text-xl md:text-2xl tracking-tighter text-text-primary group-hover:text-accent transition-colors break-words [text-wrap:balance]">
+          <h3 className="type-h2 text-text-primary group-hover:text-accent transition-colors break-words [text-wrap:balance]">
             {project.name.toLowerCase()}
           </h3>
         </div>
@@ -83,9 +82,9 @@ export default function SystemModule({ project, index }: SystemModuleProps) {
 
         {/* Technical Depth Metadata Area */}
         {project.authority && (
-          <div className="mb-sys-64 space-y-4 pt-8 border-t border-border-dim">
+          <div className="mb-sys-64 space-y-sys-16 pt-8 border-t border-border-dim">
              <div>
-                <div className="type-metadata text-[0.35rem] text-text-muted mb-3 uppercase tracking-widest font-mono">Inquiry_Vector</div>
+                <div className="type-metadata text-[0.35rem] text-text-muted mb-sys-12 uppercase tracking-widest font-mono">Inquiry_Vector</div>
                 <div className="type-body text-[0.6rem] text-text-secondary/60 italic font-medium">&quot;{project.authority.researchFocus}&quot;</div>
              </div>
           </div>

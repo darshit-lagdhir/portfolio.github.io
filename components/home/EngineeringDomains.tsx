@@ -54,20 +54,20 @@ export default function EngineeringDomains() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-sys-48 items-start">
         {/* Domain Selection Sidebar */}
-        <div className="lg:col-span-4 space-y-6">
+        <div className="lg:col-span-4 space-y-sys-24">
           {engineeringDomains.map((domain) => (
             <button
               key={domain.domain_id}
               onClick={() => handleDomainClick(domain.domain_id)}
               aria-label={`Explore ${domain.name} domain`}
               className={cn(
-                "module-frame w-full text-left relative group transition-[border-color,background-color,box-shadow] duration-300",
+                "module-frame w-full text-left relative group",
                 activeDomainId === domain.domain_id 
-                  ? "border-accent bg-accent/5 ring-1 ring-accent/20" 
+                  ? "border-accent bg-accent/5 shadow-[var(--shadow-sys-accent)]" 
                   : "hover:border-border-bright"
               )}
             >
-              <div className="flex justify-between items-center mb-3">
+               <div className="flex justify-between items-center mb-sys-12">
                  <span className="type-metadata text-[0.4rem] text-text-muted tracking-widest">{formatLabel(domain.domain_id.split('_')[0])}</span>
                  {activeDomainId === domain.domain_id && (
                    <motion.div 
@@ -105,14 +105,14 @@ export default function EngineeringDomains() {
                 transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 className="space-y-sys-64 relative z-10"
               >
-                <div className="space-y-6">
+                <div className="space-y-sys-24">
                    <div className="type-metadata text-[0.45rem] text-accent">DOMAIN_SPECIFICATION // {activeDomain.domain_id}</div>
                    <p className="type-body text-xl md:text-2xl text-text-primary leading-tight max-w-2xl font-bold tracking-tighter">
                      {activeDomain.description}
                    </p>
                 </div>
 
-                <div className="space-y-6">
+                <div className="space-y-sys-24">
                    <div className="type-metadata text-[0.45rem] text-text-muted uppercase tracking-widest">Involved_Technologies</div>
                    <div className="flex flex-wrap gap-2">
                       {activeDomain.technologies?.map(tech => (
@@ -123,9 +123,9 @@ export default function EngineeringDomains() {
                    </div>
                 </div>
 
-                <div className="space-y-6">
+                <div className="space-y-sys-24">
                    <div className="type-metadata text-[0.45rem] text-text-muted uppercase tracking-widest">Connected_Systems</div>
-                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
+                   <div className="grid grid-cols-1 md:grid-cols-2 gap-sys-16 items-stretch">
                       {relatedProjects.map(project => (
                         <Link 
                           key={project.slug}

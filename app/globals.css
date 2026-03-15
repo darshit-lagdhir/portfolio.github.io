@@ -25,10 +25,10 @@
   /* 
      PHASE 3 — TYPOGRAPHY SCALE (MODULAR progression)
   */
-  --font-size-display: clamp(2rem, 10vw, 12rem); /* Reduced further for mobile stability */
-  --font-size-h1: clamp(1.1rem, 6vw, 3.5rem);
-  --font-size-h2: clamp(1.1rem, 4vw, 2.25rem);
-  --font-size-h3: clamp(1rem, 3vw, 1.25rem);
+  --font-size-display: clamp(2.5rem, 12vw, 12rem); 
+  --font-size-h1: clamp(1.5rem, 8vw, 3.75rem); /* Normalized to 24px - 60px */
+  --font-size-h2: clamp(1.25rem, 6vw, 2.5rem);  /* Normalized to 20px - 40px */
+  --font-size-h3: clamp(1rem, 4vw, 1.5rem);    /* Normalized to 16px - 24px */
   --font-size-body: 1rem;
   --font-size-label: 0.85rem;
   --font-size-micro: 0.75rem;
@@ -62,6 +62,13 @@
   --transition-snappy: 150ms cubic-bezier(0.2, 0, 0, 1);
   --transition-smooth: 400ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-cinematic: 800ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* 
+     PHASE 117 — VISUAL SYSTEM TOKENS
+  */
+  --shadow-sys-subtle: 0 4px 20px rgba(0, 0, 0, 0.5);
+  --shadow-sys-accent: 0 0 15px rgba(0, 102, 255, 0.15);
+  --shadow-sys-heavy: 0 20px 40px rgba(0, 0, 0, 0.6);
 }
 
 /* 
@@ -134,7 +141,7 @@ body {
 .type-display {
   font-family: var(--font-display);
   font-size: var(--font-size-display);
-  line-height: 0.85;
+  line-height: 0.95;
   text-transform: uppercase;
   letter-spacing: -0.04em;
   font-weight: 700;
@@ -143,9 +150,9 @@ body {
 .type-h1 {
   font-family: var(--font-display);
   font-size: var(--font-size-h1);
-  line-height: 1.1;
+  line-height: 1.05;
   text-transform: uppercase;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   font-weight: 700;
 }
 
@@ -154,7 +161,7 @@ body {
   font-size: var(--font-size-h2);
   line-height: 1.1;
   text-transform: uppercase;
-  letter-spacing: 0em;
+  letter-spacing: -0.01em;
   font-weight: 700;
 }
 
@@ -381,8 +388,9 @@ h3 {
   background-color: var(--color-bg-secondary);
   padding: var(--spacing-sys-16);
   border-radius: 1px;
-  transition: border-color var(--transition-smooth);
-  will-change: transform, border-color, background-color;
+  box-shadow: var(--shadow-sys-subtle);
+  transition: all var(--transition-smooth);
+  will-change: transform, border-color, background-color, box-shadow;
 }
 
 @media (min-width: 768px) {
@@ -393,6 +401,8 @@ h3 {
 
 .module-frame:hover {
   border-color: var(--color-border-bright);
+  box-shadow: var(--shadow-sys-heavy);
+  transform: translateY(-2px);
 }
 
 .section-divider {
@@ -522,14 +532,16 @@ h3 {
 .eng-bracket::after { content: ']'; margin-left: 0.4em; opacity: 0.3; }
 
 .status-dot {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background-color: var(--color-accent);
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .status-dot.active {
-  box-shadow: 0 0 12px var(--color-accent);
+  box-shadow: 0 0 10px var(--color-accent);
   animation: pulse 2s infinite;
 }
 

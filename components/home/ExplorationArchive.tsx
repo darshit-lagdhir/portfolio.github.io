@@ -25,7 +25,7 @@ export default function ExplorationArchive() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: index * 0.1 }}
-            className="module-frame group hover:border-accent/30 transition-all flex flex-col h-full min-h-[460px] !p-8"
+            className="module-frame group flex flex-col h-full min-h-[460px] !p-8 hover:border-accent/30"
           >
             <div className="flex justify-between items-start mb-6">
               <span className="type-metadata text-[0.35rem] opacity-30 uppercase font-mono">
@@ -34,7 +34,7 @@ export default function ExplorationArchive() {
               <div className="w-2 h-2 rounded-full border border-border-dim group-hover:bg-accent/40 transition-colors" />
             </div>
 
-            <h3 className="type-emphasis text-lg mb-4 uppercase tracking-tight group-hover:text-accent transition-colors">
+            <h3 className="type-h3 mb-4 group-hover:text-accent transition-colors">
               {item.title}
             </h3>
 

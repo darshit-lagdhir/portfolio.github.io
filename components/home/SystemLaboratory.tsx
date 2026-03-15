@@ -30,11 +30,11 @@ export default function SystemLaboratory() {
 
       <div className="grid-12 mb-sys-64">
         <div className="col-span-12 lg:col-span-8">
-           <div className="flex items-center gap-3 mb-6 opacity-30">
+           <div className="flex items-center gap-3 mb-sys-24 opacity-30">
               <div className="w-1 h-1 bg-accent/40 rounded-full" />
               <span className="type-metadata text-[0.4rem] tracking-[0.3em] font-mono">ACTIVE_EXPLORATION_BOARD</span>
            </div>
-           <h2 className="type-h1 text-4xl md:text-5xl lg:text-6xl uppercase tracking-tighter mb-6 break-words hyphens-auto leading-[1.05]">Systems_Laboratory_</h2>
+           <h2 className="type-h1 break-words hyphens-auto text-text-primary">Systems_Laboratory_</h2>
            <p className="type-body text-sm text-text-secondary max-w-2xl opacity-50">
              Current investigations into system behavior and low-level architectural mechanics. 
              These active research tracks represent the front-line of my technical learning process.
@@ -45,7 +45,7 @@ export default function SystemLaboratory() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-sys-48">
         {/* EXPLORATION SELECTION SIDEBAR */}
         <div className="lg:col-span-4 space-y-4">
-          <div className="type-metadata text-[0.45rem] opacity-30 mb-6 tracking-widest uppercase">SELECT_TRACK</div>
+          <div className="type-metadata text-[0.45rem] opacity-30 mb-sys-24 tracking-widest uppercase">SELECT_TRACK</div>
           {ongoingExplorations.map((item) => (
             <button
               key={item.investigation_id}
@@ -53,11 +53,11 @@ export default function SystemLaboratory() {
               className={cn(
                 "module-frame w-full text-left transition-[border-color,background-color,opacity] relative group !p-6",
                 activeId === item.investigation_id 
-                  ? "border-accent/40 bg-accent/5" 
+                  ? "border-accent/40 bg-accent/5 shadow-[var(--shadow-sys-accent)]" 
                   : "hover:border-border-bright opacity-60 hover:opacity-100"
               )}
             >
-              <div className="flex justify-between items-start mb-3">
+              <div className="flex justify-between items-start mb-sys-12">
                  <span className="type-metadata text-[0.35rem] opacity-40 uppercase tracking-widest">{item.investigation_id.split('-').join('_')}</span>
                  <div className={cn(
                    "arch-marker scale-[0.4] transition-all",
@@ -87,7 +87,7 @@ export default function SystemLaboratory() {
         <div className="lg:col-span-8 min-h-[500px] flex flex-col">
            <div className="module-frame flex-grow relative overflow-hidden bg-bg-secondary/20 !p-0 flex flex-col">
               {/* VIEWPORT HEADER */}
-              <div className="p-6 border-b border-border-dim bg-bg-secondary flex justify-between items-center z-20">
+              <div className="p-sys-24 border-b border-border-dim bg-bg-secondary flex justify-between items-center z-20">
                  <div className="flex items-center gap-4">
                     <span className="type-metadata text-[0.45rem] opacity-40">RESEARCH_LOG</span>
                     <div className="w-[1px] h-3 bg-border-dim/50" />
@@ -112,15 +112,15 @@ export default function SystemLaboratory() {
                       transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                       className="max-w-xl will-change-[transform,opacity]"
                     >
-                       <div className="type-metadata text-[0.35rem] text-accent/60 mb-8 border-l border-accent/20 pl-4 py-1">
+                       <div className="type-metadata text-[0.35rem] text-accent/60 mb-sys-32 border-l border-accent/20 pl-4 py-1">
                          INVESTIGATION_STATE // {activeExploration?.status.toUpperCase()}
                        </div>
                        
-                       <h3 className="type-h2 text-3xl mb-8 uppercase tracking-tighter">
+                       <h3 className="type-h2 text-3xl mb-sys-32 uppercase tracking-tighter">
                          {activeExploration?.title}
                        </h3>
                        
-                       <div className="space-y-12">
+                       <div className="space-y-sys-48">
                          <div>
                             <h4 className="type-metadata text-[0.45rem] opacity-30 mb-4 tracking-widest uppercase font-mono">Research_Context</h4>
                             <p className="type-body text-base opacity-60 leading-relaxed">

@@ -42,7 +42,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
         <div className="system-container mb-sys-64">
           <Link 
             href="/#systems" 
-            className="group inline-flex items-center gap-2 type-nav text-[0.6rem] text-text-muted hover:text-accent transition-colors"
+            className="group inline-flex items-center gap-2 type-nav text-text-muted hover:text-accent transition-colors"
           >
             <span className="group-hover:-translate-x-1 transition-transform">←</span>
             RETURN_TO_MANIFEST
@@ -60,7 +60,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                  "w-1.5 h-1.5 rounded-full shrink-0",
                  statusMeta.color
                )} />
-               <span className="type-metadata text-[0.5rem] text-accent tracking-widest">
+               <span className="type-metadata text-accent tracking-widest">
                  {statusMeta.label}
                </span>
              </motion.div>
@@ -69,7 +69,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                initial={{ opacity: 0, y: 30 }}
                animate={{ opacity: 1, y: 0 }}
                transition={{ duration: 0.8 }}
-               className="type-h1 leading-tight mb-sys-32 break-words hyphens-auto"
+               className="type-h1 mb-sys-32 break-words hyphens-auto"
              >
                {formatLabel(project.name)}_
              </motion.h1>
@@ -149,13 +149,13 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                     <div className="type-metadata text-accent mb-6">CORE_SYSTEM_MODULES</div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-sys-24">
                        {project.internalComponents?.map((comp, idx) => (
-                         <div key={idx} className="p-6 border border-border-dim bg-bg-secondary group hover:border-accent transition-colors">
-                           <div className="type-metadata text-accent mb-3">MODULE_0{idx + 1}</div>
-                           <h4 className="type-label text-sm text-text-primary mb-2">{formatLabel(comp.name)}</h4>
-                           <div className="type-metadata text-[0.4rem] opacity-30 mb-2 font-mono">CORE_RESPONSIBILITY:</div>
-                           <p className="type-body text-xs text-text-muted leading-relaxed">{comp.description}</p>
-                         </div>
-                       ))}
+                          <div key={idx} className="p-sys-24 border border-border-dim bg-bg-secondary group hover:border-accent transition-colors">
+                            <div className="type-metadata text-accent mb-sys-12">MODULE_0{idx + 1}</div>
+                            <h4 className="type-label text-sm text-text-primary mb-2">{formatLabel(comp.name)}</h4>
+                            <div className="type-metadata text-[0.4rem] opacity-30 mb-2 font-mono">CORE_RESPONSIBILITY:</div>
+                            <p className="type-body text-xs text-text-muted leading-relaxed">{comp.description}</p>
+                          </div>
+                        ))}
                     </div>
                   </div>
 
@@ -178,62 +178,62 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
           <aside className="col-span-12 lg:col-span-4 lg:col-start-9 space-y-sys-96">
             <section>
                <SectionDivider label="03_TECH_STACK" className="mb-sys-32" />
-               <div className="space-y-sys-32">
-                  {project.techGroups?.map((group, idx) => (
-                    <div key={idx} className="space-y-3">
-                       <h5 className="type-metadata text-[0.5rem] opacity-30 tracking-widest">{formatLabel(group.role)}</h5>
-                       <div className="flex flex-wrap gap-2">
-                         {group.items.map(item => (
-                           <span key={item} className="px-2 py-1 bg-bg-secondary border border-border-dim type-metadata text-[0.6rem] hover:border-accent transition-colors">
-                             {item}
-                           </span>
-                         ))}
-                       </div>
-                    </div>
-                  ))}
-               </div>
+                <div className="space-y-sys-32">
+                   {project.techGroups?.map((group, idx) => (
+                     <div key={idx} className="space-y-sys-12">
+                        <h5 className="type-metadata text-[0.5rem] opacity-30 tracking-widest">{formatLabel(group.role)}</h5>
+                        <div className="flex flex-wrap gap-2">
+                          {group.items.map(item => (
+                            <span key={item} className="px-2 py-1 bg-bg-secondary border border-border-dim type-metadata text-[0.6rem] hover:border-accent transition-colors">
+                              {item}
+                            </span>
+                          ))}
+                        </div>
+                     </div>
+                   ))}
+                </div>
             </section>
 
             <section>
                <SectionDivider label="04_SYSTEM_OVERVIEW" className="mb-sys-32" />
-               <div className="bg-bg-secondary/30 p-6 border border-border-dim font-mono text-[0.6rem] space-y-3 text-text-muted">
-                  <div className="flex justify-between">
-                    <span>SYSTEM_TYPE</span>
-                    <span className="text-accent">{formatLabel(project.technicalMeta?.systemType || "")}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>ARCHITECTURE</span>
-                    <span className="text-secondary">{formatLabel(project.technicalMeta?.architectureStyle || "")}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>STORAGE</span>
-                    <span>{formatLabel(project.technicalMeta?.storageType || "")}</span>
-                  </div>
+                <div className="bg-bg-secondary/30 p-sys-24 border border-border-dim font-mono text-[0.6rem] space-y-sys-12 text-text-muted">
                    <div className="flex justify-between">
-                     <span>FOCUS</span>
-                     <span className="text-accent">{formatLabel(project.engineeringFocus || "")}</span>
+                     <span>SYSTEM_TYPE</span>
+                     <span className="text-accent">{formatLabel(project.technicalMeta?.systemType || "")}</span>
                    </div>
-                   {project.technicalMeta?.scale && (
-                     <div className="flex justify-between pt-2 border-t border-border-dim/20">
-                       <span>SCALE</span>
-                       <span className="text-text-primary">{formatLabel(project.technicalMeta.scale)}</span>
-                     </div>
-                   )}
-               </div>
+                   <div className="flex justify-between">
+                     <span>ARCHITECTURE</span>
+                     <span className="text-secondary">{formatLabel(project.technicalMeta?.architectureStyle || "")}</span>
+                   </div>
+                   <div className="flex justify-between">
+                     <span>STORAGE</span>
+                     <span>{formatLabel(project.technicalMeta?.storageType || "")}</span>
+                   </div>
+                    <div className="flex justify-between">
+                      <span>FOCUS</span>
+                      <span className="text-accent">{formatLabel(project.engineeringFocus || "")}</span>
+                    </div>
+                    {project.technicalMeta?.scale && (
+                      <div className="flex justify-between pt-2 border-t border-border-dim/20">
+                        <span>SCALE</span>
+                        <span className="text-text-primary">{formatLabel(project.technicalMeta.scale)}</span>
+                      </div>
+                    )}
+                </div>
             </section>
 
-            {project.authority?.recurringPatterns && (
-              <section>
-                 <SectionDivider label="05_RECURRING_PATTERNS" className="mb-sys-32" />
-                 <div className="space-y-4">
-                    {project.authority.recurringPatterns.map(pattern => (
-                      <div key={pattern} className="flex items-center gap-3">
-                         <div className="w-1.5 h-1.5 bg-accent/40 rotate-45" />
-                         <span className="type-metadata text-[0.6rem] opacity-60 tracking-tight">{formatLabel(pattern)}</span>
-                      </div>
-                    ))}
-                 </div>
-              </section>
+             {project.authority?.recurringPatterns && (
+               <section>
+                  <SectionDivider label="05_RECURRING_PATTERNS" className="mb-sys-32" />
+                  <div className="space-y-sys-16">
+                     {project.authority.recurringPatterns.map(pattern => (
+                       <div key={pattern} className="flex items-center gap-sys-12">
+                          <div className="w-1.5 h-1.5 bg-accent/40 rotate-45" />
+                          <span className="type-metadata text-[0.6rem] opacity-60 tracking-tight">{formatLabel(pattern)}</span>
+                       </div>
+                     ))}
+                  </div>
+               </section>
             )}
 
             <section className="pt-sys-48 border-t border-border-dim/20">
@@ -470,7 +470,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                     </p>
                     <Link 
                       href="/#systems" 
-                      className="type-nav text-[0.55rem] text-accent border border-accent/40 px-8 py-3 hover:bg-accent/5 transition-all inline-block uppercase"
+                      className="btn-primary"
                     >
                       Return to core manifest
                     </Link>
