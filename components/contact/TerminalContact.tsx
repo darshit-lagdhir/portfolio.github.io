@@ -70,7 +70,7 @@ export default function TerminalContact() {
   };
 
   return (
-    <div className="w-full relative">
+    <div className="w-full relative pb-sys-128 md:pb-0">
       <SectionDivider 
         label="09_CONTACT" 
         description={identity.section_transitions.toContact}

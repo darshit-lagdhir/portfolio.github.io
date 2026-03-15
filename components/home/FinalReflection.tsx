@@ -13,7 +13,7 @@ export default function FinalReflection() {
         description={identity.section_transitions.toReflection}
       />
       
-      <div className="py-sys-96 lg:py-sys-128 mb-sys-64">
+      <div className="py-sys-96 lg:py-sys-128 mb-sys-64 pb-sys-96 lg:pb-0">
         <div className="max-w-4xl mx-auto text-center space-y-12">
           {/* Visual Anchor - Minimal Interaction */}
           <motion.div
@@ -31,7 +31,7 @@ export default function FinalReflection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="type-h1 text-3xl md:text-5xl uppercase tracking-tighter opacity-80"
+            className="type-h1 text-3xl md:text-5xl lg:text-6xl uppercase tracking-tighter opacity-80 break-words hyphens-auto"
           >
             End_of_Manifest_
           </motion.h2>
@@ -44,7 +44,7 @@ export default function FinalReflection() {
             transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="space-y-10"
           >
-            <p className="type-body text-base md:text-lg text-text-secondary opacity-60 leading-relaxed font-light px-6 max-w-3xl mx-auto">
+            <p className="type-body text-base md:text-lg text-text-secondary opacity-60 leading-relaxed font-light px-6 max-w-2xl mx-auto">
               {identity.final_reflection}
             </p>
             

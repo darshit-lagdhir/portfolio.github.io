@@ -22,11 +22,11 @@ export default function EngineeringPhilosophy() {
              transition={{ duration: 0.8 }}
              className="max-w-5xl"
            >
-              <h3 className="type-h1 text-4xl md:text-5xl mb-sys-48 uppercase leading-[1.05] tracking-tighter break-words hyphens-auto">
+              <h3 className="type-h1 text-3xl sm:text-4xl md:text-5xl lg:text-6xl mb-sys-48 uppercase leading-[1.1] tracking-tighter break-words hyphens-auto">
                 Architecture is a <span className="text-accent underline decoration-accent/20 decoration-1 underline-offset-[12px]">Diagnostic Discipline</span>, not just a constructive one.
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <div className="space-y-6">
+                <div className="space-y-6 max-w-prose mx-auto lg:mx-0">
                   <p className="type-body text-xl md:text-2xl text-text-primary/70 leading-relaxed">
                     {identity.about.about_learning_context.split('. ')[0]}.
                   </p>
@@ -82,10 +82,9 @@ export default function EngineeringPhilosophy() {
                    <h3 className="type-emphasis text-sm mb-8 tracking-tight group-hover:text-accent/80 transition-colors">
                      {principle.title}
                    </h3>
-                   
-                   <p className="type-body text-xs opacity-40 leading-relaxed group-hover:opacity-60 transition-opacity max-w-[90%] font-medium">
-                     {principle.description}
-                   </p>
+                                      <p className="type-body text-xs text-text-secondary/80 leading-relaxed group-hover:text-text-primary transition-colors max-w-[90%] font-medium">
+                      {principle.description}
+                    </p>
                 </div>
 
                 {/* Bottom interactive hint */}
@@ -98,7 +97,7 @@ export default function EngineeringPhilosophy() {
         </div>
       </div>
 
-      <div className="mt-sys-128 flex flex-col items-center text-center">
+      <div className="mt-sys-128 flex flex-col items-center text-center pb-sys-96 lg:pb-0">
         <DiscoveryHint 
           label={identity.discovery_hints.toReflection.label} 
           href="#reflections"
