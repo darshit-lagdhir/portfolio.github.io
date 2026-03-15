@@ -16,7 +16,7 @@ export default function SystemModule({ project, index }: SystemModuleProps) {
   const statusMeta = getStatusMetadata(project.status);
 
   return (
-    <Link href={getProjectUrl(project.slug)} className="focus:outline-none focus-visible:ring-1 focus-visible:ring-accent block h-full">
+    <Link href={getProjectUrl(project.slug)} className="focus:outline-none focus-visible:ring-1 focus-visible:ring-accent flex flex-col h-full">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -31,7 +31,7 @@ export default function SystemModule({ project, index }: SystemModuleProps) {
           delay: isLowPerf ? 0 : index * 0.1,
           ease: [0.16, 1, 0.3, 1]
         }}
-        className="module-frame group relative h-full flex flex-col hover:bg-bg-secondary/80 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] transition-all duration-300"
+        className="module-frame group relative flex-1 flex flex-col min-h-[420px] h-full hover:bg-bg-secondary/80 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] transition-all duration-300"
         style={{ willChange: "transform, opacity" }}
       >
         {/* Module Header Hook */}
@@ -42,10 +42,10 @@ export default function SystemModule({ project, index }: SystemModuleProps) {
         </div>
 
         {/* Status & Credibility Indicators */}
-        <div className="flex items-center justify-between mb-sys-48">
-          <div className="flex items-center gap-3">
-            <span className={cn("w-1 h-1 rounded-full", statusMeta.color)} />
-            <span className="type-metadata text-[0.35rem] text-text-muted tracking-wider font-mono">
+        <div className="flex items-center justify-between mb-sys-32">
+          <div className="flex items-center gap-3 max-w-[65%]">
+            <span className={cn("w-1 h-1 rounded-full shrink-0", statusMeta.color)} />
+            <span className="type-metadata text-[0.325rem] text-text-muted tracking-wider font-mono leading-tight uppercase">
               {statusMeta.label}
             </span>
           </div>
@@ -71,8 +71,10 @@ export default function SystemModule({ project, index }: SystemModuleProps) {
         </div>
 
         <div className="mb-sys-32">
-          <div className="type-metadata text-[0.35rem] text-accent/60 mb-3 tracking-[0.3em] font-mono">NODE_{index + 1} {'//'} {formatLabel(project.authority?.primaryDomain || "CORE")}</div>
-          <h3 className="type-h2 leading-tight text-xl md:text-2xl tracking-tighter text-text-primary group-hover:text-accent transition-colors">{project.name.toLowerCase()}</h3>
+          <div className="type-metadata text-[0.35rem] text-accent/60 mb-3 tracking-[0.3em] font-mono whitespace-nowrap overflow-hidden text-ellipsis">NODE_{index + 1} {'//'} {formatLabel(project.authority?.primaryDomain || "CORE")}</div>
+          <h3 className="type-h2 leading-tight text-lg sm:text-xl md:text-2xl tracking-tighter text-text-primary group-hover:text-accent transition-colors break-words [text-wrap:balance]">
+            {project.name.toLowerCase()}
+          </h3>
         </div>
 
         <p className="type-body text-xs mb-sys-64 text-text-secondary opacity-60 leading-relaxed font-medium">

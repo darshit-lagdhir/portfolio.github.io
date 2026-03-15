@@ -26,8 +26,8 @@
      PHASE 3 — TYPOGRAPHY SCALE (MODULAR progression)
   */
   --font-size-display: clamp(2rem, 10vw, 12rem); /* Reduced further for mobile stability */
-  --font-size-h1: clamp(1.25rem, 6vw, 4rem);
-  --font-size-h2: clamp(1.15rem, 4vw, 2.5rem);
+  --font-size-h1: clamp(1.25rem, 6vw, 3.5rem);
+  --font-size-h2: clamp(1.1rem, 4vw, 2.25rem);
   --font-size-h3: clamp(1rem, 3vw, 1.25rem);
   --font-size-body: 1rem;
   --font-size-label: 0.85rem;
@@ -274,9 +274,17 @@ h3 {
 
 @media (min-width: 1024px) {
   .system-container {
-    padding-left: var(--spacing-sys-128); /* Dedicated lane for NavigationDock starting earlier */
-    padding-right: var(--spacing-sys-128); /* Balanced padding for desktop */
-    max-width: calc(var(--grid-max-width) + var(--spacing-sys-192));
+    padding-left: var(--spacing-sys-128); 
+    padding-right: var(--spacing-sys-48); 
+    max-width: calc(var(--grid-max-width) + var(--spacing-sys-128));
+  }
+}
+
+@media (min-width: 1280px) {
+  .system-container {
+    padding-left: 280px; /* Enhanced clearance for NavigationDock labels */
+    padding-right: var(--spacing-sys-64);
+    max-width: calc(var(--grid-max-width) + 320px);
   }
 }
 
