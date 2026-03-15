@@ -74,15 +74,15 @@ export default function SystemComparison() {
       />
 
       <div className="mb-sys-64">
-        <h2 className="type-h1 uppercase tracking-tighter mb-4">Architectural_Themes_</h2>
+        <h2 className="type-h1 uppercase tracking-tighter mb-4 break-words hyphens-auto">Architectural_Themes_</h2>
         <p className="type-body text-text-secondary max-w-2xl opacity-70">
           A comparative analysis of built systems, identifying the recurring engineering patterns and divergent architectural goals across different domains.
         </p>
       </div>
 
       {/* DESKTOP COMPARISON GRID */}
-      <div className="hidden lg:block overflow-x-auto">
-        <div className="min-w-[1000px] border-t border-r border-border-dim">
+      <div className="hidden lg:block overflow-x-auto pb-8 mask-fade-right">
+        <div className="min-w-[1100px] border-t border-r border-border-dim">
           {/* Header Row: Systems */}
           <div className="grid grid-cols-12">
             <div className="col-span-3 p-8 border-l border-b border-border-dim bg-bg-secondary/20 flex items-center">
@@ -143,18 +143,18 @@ export default function SystemComparison() {
                 const isArray = Array.isArray(value);
 
                 return (
-                  <div key={`${project.slug}-${attr.id}`} className="col-span-3 p-8 border-l border-b border-border-dim flex items-center">
+                  <div key={`${project.slug}-${attr.id}`} className="col-span-3 p-8 border-l border-b border-border-dim flex items-center min-w-0">
                     {isArray ? (
-                      <div className="flex flex-wrap gap-1.5 grayscale opacity-40 group-hover:opacity-80 transition-all">
+                      <div className="flex flex-wrap gap-1.5 grayscale opacity-40 group-hover:opacity-80 transition-all overflow-hidden">
                         {(value as string[]).map(item => (
-                          <span key={item} className="type-metadata text-[0.35rem] px-2 py-0.5 border border-border-dim uppercase truncate">
+                          <span key={item} className="type-metadata text-[0.35rem] px-2 py-0.5 border border-border-dim uppercase break-words hyphens-auto max-w-full">
                             {formatLabel(item)}
                           </span>
                         ))}
                       </div>
                     ) : (
                       <span className={cn(
-                        "type-emphasis text-[0.65rem] leading-snug tracking-tight uppercase transition-all",
+                        "type-emphasis text-[0.6rem] leading-snug tracking-tight uppercase transition-all break-words hyphens-auto",
                         activeAttr === attr.id ? "text-text-primary/70" : "text-text-secondary opacity-30"
                       )}>
                         {value}
@@ -182,12 +182,12 @@ export default function SystemComparison() {
               </Link>
             </div>
             
-            <div className="p-6 space-y-6 bg-noise">
+            <div className="p-6 space-y-8 bg-noise">
               {COMPARISON_ATTRIBUTES.map((attr) => {
                 const value = attr.getValue(project);
                 const isArray = Array.isArray(value);
                 return (
-                  <div key={attr.id} className="space-y-2">
+                  <div key={attr.id} className="space-y-3">
                     <div className="type-metadata text-[0.45rem] opacity-30 uppercase tracking-[0.2em]">{attr.label}</div>
                     <div className="type-emphasis text-[0.7rem] text-text-secondary leading-tight uppercase">
                       {isArray ? (value as string[]).map(v => formatLabel(v)).join(" // ") : formatLabel(String(value))}

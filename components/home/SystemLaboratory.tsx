@@ -34,7 +34,7 @@ export default function SystemLaboratory() {
               <div className="w-1 h-1 bg-accent/40 rounded-full" />
               <span className="type-metadata text-[0.4rem] tracking-[0.3em] font-mono">ACTIVE_EXPLORATION_BOARD</span>
            </div>
-           <h2 className="type-h1 uppercase tracking-tighter mb-6">Systems_Laboratory_</h2>
+           <h2 className="type-h1 uppercase tracking-tighter mb-6 break-words hyphens-auto">Systems_Laboratory_</h2>
            <p className="type-body text-sm text-text-secondary max-w-2xl opacity-50">
              Current investigations into system behavior and low-level architectural mechanics. 
              These active research tracks represent the front-line of my technical learning process.

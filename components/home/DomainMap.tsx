@@ -56,7 +56,7 @@ export default function DomainMap({ activeDomainId, onDomainClick, simplified = 
                 strokeWidth={isActive ? (simplified ? "0.4" : "0.2") : (isHovered ? "0.15" : "0.05")}
                 className={cn(
                   "transition-all duration-300",
-                  isActive ? "text-accent" : (isHovered ? "text-accent/60" : "text-border-dim opacity-30")
+                   isActive ? "text-accent" : (isHovered ? "text-accent/60" : "text-border-dim opacity-50")
                 )}
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
