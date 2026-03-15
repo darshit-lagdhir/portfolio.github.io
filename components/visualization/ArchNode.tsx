@@ -51,7 +51,7 @@ function ArchNode({ node, isActive, isDimmed, onClick, onMouseEnter, onMouseLeav
       }}
       whileHover={!isMobile ? { scale: isDimmed ? 1 : 1.02 } : {}}
       className={cn(
-        "relative p-4 border transition-all duration-300 cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-accent",
+        "relative p-4 border transition-all duration-300 cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-accent min-w-0 w-full",
         isActive 
           ? "border-accent bg-accent/10 ring-1 ring-accent/30 z-20" 
           : "border-border-dim bg-bg-secondary/80 hover:border-border-bright",
@@ -61,14 +61,14 @@ function ArchNode({ node, isActive, isDimmed, onClick, onMouseEnter, onMouseLeav
     >
       <div className="flex flex-col gap-2">
         <div className="flex justify-between items-start">
-          <span className={cn("type-metadata text-[0.4rem] uppercase font-bold", TYPE_COLORS[node.type])}>
+          <span className={cn("type-metadata text-[0.35rem] leading-tight uppercase font-bold break-words", TYPE_COLORS[node.type])}>
             {TYPE_LABELS[node.type]}
           </span>
           {isActive && (
             <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
           )}
         </div>
-        <h4 className="type-label text-xs tracking-tight group-hover:text-accent transition-colors">
+        <h4 className="type-label text-xs tracking-tight group-hover:text-accent transition-colors break-words">
           {node.label}
         </h4>
       </div>

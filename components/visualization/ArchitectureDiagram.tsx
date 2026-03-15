@@ -74,14 +74,14 @@ export default function ArchitectureDiagram({ layout, nodes, connections, highli
       <div 
         ref={containerRef}
         className={cn(
-          "relative grid gap-x-12 transition-opacity duration-500",
+          "relative grid gap-x-6 lg:gap-x-12 transition-opacity duration-500",
           isMobile 
             ? "grid-cols-1 gap-y-12" 
             : cn(
                 "gap-y-16 lg:gap-y-24",
                 layout === "pipeline" 
-                  ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-4" 
-                  : "grid-cols-1 md:grid-cols-3"
+                  ? "grid-cols-1 sm:grid-cols-2 xl:grid-cols-4" 
+                  : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
               )
         )}
       >

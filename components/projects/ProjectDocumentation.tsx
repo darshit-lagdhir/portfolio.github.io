@@ -38,7 +38,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
       {/* 
          PHASE 2: PROJECT IDENTITY HEADER 
       */}
-      <header className="relative py-sys-64 border-b border-border-dim overflow-hidden">
+      <header className="relative pt-sys-64 pb-sys-128 border-b border-border-dim min-h-[400px] lg:min-h-0 flex flex-col justify-center lg:block">
         <div className="system-container mb-sys-64">
           <Link 
             href="/#systems" 
@@ -49,7 +49,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
           </Link>
         </div>
 
-        <div className="system-container grid-12 items-end">
+        <div className="system-container grid-12 items-start lg:items-end gap-y-sys-48">
           <div className="col-span-12 lg:col-span-8">
              <motion.div 
                initial={{ opacity: 0, x: -20 }}
@@ -57,7 +57,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                className="flex items-center gap-3 mb-sys-24"
              >
                <span className={cn(
-                 "w-2 h-2 rounded-full",
+                 "w-1.5 h-1.5 rounded-full shrink-0",
                  statusMeta.color
                )} />
                <span className="type-metadata text-[0.5rem] text-accent tracking-widest">
@@ -69,14 +69,14 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                initial={{ opacity: 0, y: 30 }}
                animate={{ opacity: 1, y: 0 }}
                transition={{ duration: 0.8 }}
-               className="type-h1 leading-none mb-sys-32"
+               className="type-h1 leading-none mb-sys-32 break-words hyphens-auto"
              >
                {formatLabel(project.name)}_
              </motion.h1>             <motion.p 
                initial={{ opacity: 0 }}
                animate={{ opacity: 1 }}
                transition={{ delay: 0.2 }}
-               className="type-body text-lg md:text-xl text-text-secondary max-w-2xl leading-relaxed mb-sys-64 font-medium"
+               className="type-body text-balance text-base md:text-xl text-text-secondary max-w-2xl leading-relaxed mb-sys-64 font-medium"
              >
                {project.shortDescription}
              </motion.p>
@@ -95,25 +95,25 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
              </motion.div>
           </div>
 
-          <div className="col-span-12 lg:col-span-4 mt-sys-48 lg:mt-0 flex flex-col gap-6 lg:items-end">
+          <div className="col-span-12 lg:col-span-4 lg:col-start-9 mt-sys-64 lg:mt-0 flex flex-col gap-6 items-start lg:items-end justify-start lg:justify-end z-10">
              <div className="text-left lg:text-right">
-                <div className="type-metadata text-text-muted mb-2">SYSTEM_ARCHITECTURE</div>
-                <div className="type-label text-accent">{formatLabel(project.technicalMeta?.architectureStyle || "")}</div>
+                <div className="type-metadata text-[0.45rem] text-text-muted mb-2 opacity-40">SYSTEM_ARCHITECTURE</div>
+                <div className="type-label text-accent text-xs">{formatLabel(project.technicalMeta?.architectureStyle || "")}</div>
              </div>
               <div className="text-left lg:text-right">
-                 <div className="type-metadata text-text-muted mb-2">CORE_CLASSIFICATION</div>
-                 <div className="type-label text-text-primary">{formatLabel(project.technicalMeta?.systemType || "")}</div>
+                 <div className="type-metadata text-[0.45rem] text-text-muted mb-2 opacity-40">CORE_CLASSIFICATION</div>
+                 <div className="type-label text-text-primary text-xs">{formatLabel(project.technicalMeta?.systemType || "")}</div>
               </div>
               {project.technicalMeta?.scale && (
                 <div className="text-left lg:text-right">
-                   <div className="type-metadata text-text-muted mb-2">SYSTEM_SCALE</div>
-                   <div className="type-label text-accent-dim">{formatLabel(project.technicalMeta.scale)}</div>
+                   <div className="type-metadata text-[0.45rem] text-text-muted mb-2 opacity-40">SYSTEM_SCALE</div>
+                   <div className="type-label text-accent-dim text-xs">{formatLabel(project.technicalMeta.scale)}</div>
                 </div>
               )}
           </div>
         </div>
 
-        <div className="absolute top-0 right-0 p-sys-32 opacity-[0.02] select-none pointer-events-none hidden lg:block">
+        <div className="absolute inset-0 p-sys-32 opacity-[0.02] select-none pointer-events-none hidden lg:block -z-10">
            <span className="type-display text-[15rem] text-text-muted leading-none uppercase">{project.slug}</span>
         </div>
       </header>
@@ -158,7 +158,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                     </div>
                   </div>
 
-                 <div className="mt-sys-96">
+                 <div className="mt-sys-96 overflow-hidden">
                    <div className="flex items-center gap-4 mb-sys-32 opacity-30">
                       <div className="h-[1px] flex-grow bg-border-dim" />
                       <span className="type-metadata text-[0.5rem] text-text-muted tracking-widest">SYSTEM_BLUEPRINT_REFERENCE</span>
@@ -262,15 +262,15 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                         className="module-frame group relative"
                       >
                          <div className="type-metadata text-[0.4rem] text-accent/30 mb-8 tracking-[0.3em] font-mono">DECISION_LOG_0{idx + 1}</div>
-                         <h3 className="type-emphasis text-sm mb-10 uppercase tracking-tight opacity-70 group-hover:opacity-100 transition-opacity">{decision.title}</h3>
+                         <h3 className="type-emphasis text-sm mb-10 uppercase tracking-tight opacity-70 group-hover:opacity-100 transition-opacity break-words hyphens-auto">{decision.title}</h3>
                          <div className="space-y-8">
                             <div>
                                <div className="type-metadata text-[0.35rem] opacity-20 mb-3 tracking-widest font-mono">CORE_PROBLEM</div>
-                               <p className="type-body text-xs md:text-sm text-text-secondary opacity-60 font-medium leading-relaxed">{decision.problem}</p>
+                                <p className="type-body text-xs md:text-sm text-text-secondary opacity-60 font-medium leading-relaxed break-words">{decision.problem}</p>
                             </div>
                             <div>
                                <div className="type-metadata text-[0.35rem] opacity-20 mb-3 tracking-widest font-mono">TECHNICAL_PATH</div>
-                               <p className="type-body text-xs md:text-sm text-text-primary opacity-80 font-medium leading-relaxed">{decision.approach}</p>
+                                <p className="type-body text-xs md:text-sm text-text-primary opacity-80 font-medium leading-relaxed break-words">{decision.approach}</p>
                             </div>
                             <div className="pt-6 border-t border-border-dim/20">
                                 <p className="type-body text-[0.65rem] italic opacity-40 font-medium leading-relaxed">&quot;{decision.reasoning}&quot;</p>

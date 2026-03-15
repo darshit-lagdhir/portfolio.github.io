@@ -40,7 +40,7 @@ export default function SystemStoryFlow({ steps, onStepChange, title = "System_S
       <div className="flex justify-between items-end">
         <div className="space-y-2">
           <div className="type-metadata text-[0.45rem] text-accent">SYSTEM_LIFECYCLE</div>
-          <h2 className="type-h1 text-3xl md:text-4xl uppercase tracking-tighter">{formatLabel(title)}</h2>
+          <h2 className="type-h1 text-3xl md:text-4xl uppercase tracking-tighter break-words hyphens-auto">{formatLabel(title)}</h2>
         </div>
         
         <div className="flex items-center gap-4">
