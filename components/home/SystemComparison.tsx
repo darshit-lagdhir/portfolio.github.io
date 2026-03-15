@@ -84,7 +84,7 @@ export default function SystemComparison() {
       <div className="hidden lg:block overflow-x-auto pb-8 mask-fade-right">
         <div className="min-w-[1100px] border-t border-r border-border-dim">
           {/* Header Row: Systems */}
-          <div className="grid grid-cols-12">
+          <div className="grid-12">
             <div className="col-span-3 p-8 border-l border-b border-border-dim bg-bg-secondary/20 flex items-center">
               <div className="type-metadata text-[0.45rem] opacity-30 tracking-[0.2em]">TECHNICAL_DIMENSIONS</div>
             </div>
@@ -117,7 +117,7 @@ export default function SystemComparison() {
               key={attr.id}
               onClick={() => setActiveAttr(activeAttr === attr.id ? null : attr.id)}
               className={cn(
-                "grid grid-cols-12 cursor-pointer transition-colors duration-300 group",
+                "grid-12 cursor-pointer transition-colors duration-300 group",
                 activeAttr === attr.id ? "bg-accent/5" : "hover:bg-bg-secondary/40"
               )}
             >

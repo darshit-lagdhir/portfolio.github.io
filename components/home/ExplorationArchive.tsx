@@ -17,7 +17,7 @@ export default function ExplorationArchive() {
         <span className="type-metadata text-[0.45rem] tracking-[0.4em] font-mono uppercase break-words hyphens-auto max-w-[250px] leading-tight">Completed_Investigation_Archive</span>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-sys-32">
+      <div className="grid-12 gap-y-sys-32">
         {completedExplorations.map((item, index) => (
           <motion.div
             key={item.investigation_id}
@@ -25,7 +25,7 @@ export default function ExplorationArchive() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: index * 0.1 }}
-            className="module-frame group flex flex-col h-full min-h-[460px] !p-8 hover:border-accent/30"
+            className="module-frame group flex flex-col h-full min-h-[460px] !p-8 hover:border-accent/30 col-span-12 md:col-span-6 lg:col-span-4"
           >
             <div className="flex justify-between items-start mb-6">
               <span className="type-metadata text-[0.35rem] opacity-30 uppercase font-mono">

@@ -45,7 +45,7 @@ export default function Capabilities() {
       </div>
 
       {/* PHASE 3 & 6 — CAPABILITY MODULE GRID */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+      <div className="grid-12 gap-y-sys-48 auto-rows-fr">
         {capabilityClusters.map((cluster, index) => (
           <motion.div
             key={cluster.id}
@@ -54,7 +54,7 @@ export default function Capabilities() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: index * 0.1, duration: 0.8 }}
-            className="module-frame group relative bg-bg-secondary/10 p-10 hover:border-accent/20 transition-[border-color,background-color,box-shadow,ring] duration-300 flex flex-col h-full focus:outline-none focus-visible:ring-1 focus-visible:ring-accent/30"
+            className="module-frame group relative bg-bg-secondary/10 p-10 hover:border-accent/20 transition-[border-color,background-color,box-shadow,ring] duration-300 flex flex-col h-full focus:outline-none focus-visible:ring-1 focus-visible:ring-accent/30 col-span-12 md:col-span-6 lg:col-span-4"
           >
             <div className="type-metadata mb-8 text-accent/40 flex items-center gap-3">
               <span className="w-1 h-1 bg-accent/30 rounded-full" />

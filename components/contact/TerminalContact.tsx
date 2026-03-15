@@ -77,13 +77,13 @@ export default function TerminalContact() {
       />
 
       <div className="grid-12">
-        <div className="col-span-12 lg:col-span-8">
+        <div className="col-span-full lg:col-span-8">
             <div className="mb-sys-96 text-left space-y-6">
             <div className="flex items-center gap-3 mb-2 opacity-30 text-accent">
               <div className="status-dot active" />
               <span className="type-metadata text-[0.4rem] tracking-[0.3em] font-mono">CONNECTION_READY</span>
             </div>
-            <h3 className="type-h1 uppercase tracking-tighter">Initiate_Discovery_</h3>
+            <h3 className="type-h1 uppercase tracking-tighter text-wrap-balance hyphens-auto">Initiate_Discovery_</h3>
             <p className="type-body text-base text-text-secondary max-w-xl opacity-50 leading-relaxed font-medium">
               You have reached the end of the architectural manifest. Use the command panel below to interact with the system and initiate contact.
             </p>
@@ -169,14 +169,14 @@ export default function TerminalContact() {
                  <div className="w-1 h-3 bg-accent" />
                  SELECT_COMMAND_PAYLOAD
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+              <div className="grid-12 gap-y-4">
                 {SELECTABLE_COMMANDS.map((cmd) => (
                   <button
                     key={cmd.id}
                     onClick={() => executeCommand(cmd.id, cmd.label)}
                     disabled={isProcessing}
                     aria-label={`Execute command: ${cmd.label}`}
-                    className="module-frame group flex items-center justify-between !p-4 relative text-left disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-1 focus-visible:ring-accent md:hover:translate-x-1 hover:bg-accent/5 hover:border-accent/40 min-w-0 overflow-hidden"
+                    className="module-frame group flex items-center justify-between !p-4 relative text-left disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-1 focus-visible:ring-accent md:hover:translate-x-1 hover:bg-accent/5 hover:border-accent/40 min-w-0 overflow-hidden col-span-12 md:col-span-6"
                   >
                     <div className="absolute top-2 right-2 opacity-20 group-hover:opacity-100 transition-opacity">
                        <div className="arch-marker scale-[0.3]" />

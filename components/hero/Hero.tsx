@@ -22,7 +22,7 @@ export default function Hero() {
         className="grid-12 items-center"
       >
         {/* IDENTITY LAYER */}
-        <div className="col-span-12 lg:col-span-7 z-10">
+        <div className="col-span-full lg:col-span-7 z-10">
           <HeroIdentity />
 
           <motion.div
@@ -45,7 +45,7 @@ export default function Hero() {
         </div>
 
         {/* VISUALIZATION LAYER */}
-        <div className="col-span-12 lg:col-span-5 flex justify-center lg:justify-end mt-sys-64 lg:mt-0 opacity-40">
+        <div className="col-span-full lg:col-span-5 flex justify-center lg:justify-end mt-sys-64 lg:mt-0 opacity-40">
           <motion.div
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}

@@ -40,21 +40,21 @@ export default function EngineeringDomains() {
         description={identity.section_transitions.toDomains}
       />
 
-       <div className="flex flex-col md:flex-row md:items-end justify-between gap-sys-32 mb-sys-64">
-        <div className="space-y-4">
-          <div className="type-metadata text-accent opacity-60">EXPLORATION_MAP</div>
-          <h3 className="type-h1 break-words hyphens-auto">Research_Nodes</h3>
+      <div className="grid-12 gap-y-sys-48 items-end mb-sys-64">
+        <div className="col-span-full lg:col-span-7">
+          <div className="type-metadata text-accent opacity-60 mb-4">EXPLORATION_MAP</div>
+          <h3 className="type-h1 break-words hyphens-auto mb-0">Research_Nodes</h3>
         </div>
-         <div className="max-w-md">
-            <p className="type-body text-xs text-text-muted italic">
-              A map of technical areas I am currently exploring, learning, and building projects in. These domains represent active learning paths rather than established expertise.
-            </p>
-         </div>
+        <div className="col-span-full lg:col-span-4 lg:col-start-9">
+          <p className="type-body text-xs text-text-muted italic">
+            A map of technical areas I am currently exploring, learning, and building projects in. These domains represent active learning paths rather than established expertise.
+          </p>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-sys-48 items-start">
+      <div className="grid-12 items-start mt-sys-64">
         {/* Domain Selection Sidebar */}
-        <div className="lg:col-span-4 space-y-sys-24">
+        <div className="col-span-full lg:col-span-4 space-y-sys-24">
           {engineeringDomains.map((domain) => (
             <button
               key={domain.domain_id}
@@ -87,7 +87,7 @@ export default function EngineeringDomains() {
         </div>
 
         {/* Domain Detail & Map Area */}
-        <div className="module-frame lg:col-span-8 min-h-[500px] relative !p-6 md:!p-16 overflow-hidden flex flex-col justify-center">
+        <div className="module-frame col-span-full lg:col-span-8 min-h-[500px] relative !p-6 md:!p-16 overflow-hidden flex flex-col justify-center">
           {/* Visual DomainMap Layer */}
           <DomainMap 
             activeDomainId={activeDomainId} 

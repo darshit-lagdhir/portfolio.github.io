@@ -30,9 +30,9 @@ export default function About() {
       />
 
       <div className="grid-12 items-start">
-        <div className="col-span-12 lg:col-span-7 mb-sys-64 lg:mb-0">
+        <div className="col-span-full lg:col-span-7 mb-sys-64 lg:mb-0">
           <div className="mb-sys-96">
-            <h3 className="type-h1 mb-sys-32 break-words text-text-primary">SYSTEM_INVESTIGATOR_</h3>
+            <h3 className="type-h1 mb-sys-32 break-words text-wrap-balance text-text-primary">SYSTEM_INVESTIGATOR_</h3>
             <p className="type-body text-lg text-text-secondary prose-readable leading-relaxed">
               An ongoing exploration into internal system mechanics, high-performance architecture, and technical resilience. My focus lies at the intersection of systems engineering and specialized verification pipelines.
             </p>
@@ -53,7 +53,7 @@ export default function About() {
                   <span className="w-1 h-1 bg-accent rounded-full opacity-50" />
                   ACTIVE_EXPLORATION_DOMAINS
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-sys-32">
+              <div className="grid-12 gap-y-sys-32">
                   {identity.exploration_focus.map((domain, idx) => (
                       <motion.div 
                         key={domain.title}
@@ -61,7 +61,7 @@ export default function About() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: idx * 0.1, duration: 0.5 }}
-                        className="module-frame opacity-80 hover:opacity-100 transition-opacity !p-6"
+                        className="module-frame opacity-80 hover:opacity-100 transition-opacity !p-6 col-span-full lg:col-span-6"
                       >
                           <h4 className="type-emphasis text-sm mb-3 text-text-primary tracking-tight">{domain.title}</h4>
                           <p className="type-body text-xs text-text-secondary opacity-60 leading-relaxed font-medium">{domain.description}</p>
@@ -76,9 +76,9 @@ export default function About() {
                   <span className="w-1 h-1 bg-accent rounded-full opacity-50" />
                   SYSTEM_TOOLS_&_CAPABILITIES
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-sys-48">
+              <div className="grid-12 gap-y-sys-48">
                   {identity.capabilities.slice(0, 4).map((cap, idx) => (
-                    <div key={idx} className="space-y-4">
+                    <div key={idx} className="space-y-4 col-span-full lg:col-span-6">
                       <h4 className="type-metadata opacity-30 uppercase">{formatLabel(cap.category.replace(/ /g, "_"))}</h4>
                       <p className="type-body text-sm font-medium text-text-secondary leading-relaxed max-w-xs">{cap.items.join(" • ")}</p>
                     </div>
@@ -88,7 +88,7 @@ export default function About() {
           </div>
         </div>
 
-        <div className="col-span-12 lg:col-span-5 lg:col-start-8 space-y-sys-64">
+        <div className="col-span-full lg:col-span-5 lg:col-start-8 space-y-sys-64">
           <div className="module-frame space-y-sys-64 relative overflow-hidden">
              {/* Architectural Background Trace */}
              <div className="absolute top-0 left-0 w-[1px] h-full bg-border-dim opacity-20" />

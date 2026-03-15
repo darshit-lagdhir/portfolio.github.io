@@ -14,7 +14,7 @@ export default function HeroIdentity() {
       >
         <div className="flex items-center gap-3">
           <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-accent shrink-0" />
-          <h2 className="type-emphasis text-lg md:text-2xl tracking-tighter text-text-primary">
+          <h2 className="type-emphasis text-lg md:text-2xl tracking-tighter text-text-primary text-wrap-balance">
             <span className="flex flex-wrap gap-x-4">
               {identity.name.split(' ').map((word, wIdx) => (
                 <span key={wIdx} className="inline-block whitespace-nowrap">
@@ -38,7 +38,7 @@ export default function HeroIdentity() {
             </span>
           </h2>
         </div>
-        <p className="type-metadata text-[0.45rem] md:text-[0.65rem] tracking-[0.2em] md:tracking-[0.3em] text-accent uppercase font-bold pl-5 mt-4 max-w-[70vw] leading-relaxed">
+        <p className="type-metadata text-[0.45rem] md:text-[0.65rem] tracking-[0.2em] md:tracking-[0.3em] text-accent uppercase font-bold pl-5 mt-4 max-w-[70vw] leading-relaxed hyphens-auto">
           {identity.headline}
         </p>
       </motion.div>

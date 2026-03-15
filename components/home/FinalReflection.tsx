@@ -31,7 +31,7 @@ export default function FinalReflection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="type-h1 opacity-80 break-words hyphens-auto"
+            className="type-h1 opacity-80 break-words text-wrap-balance hyphens-auto"
           >
             End_of_Manifest_
           </motion.h2>
@@ -44,7 +44,7 @@ export default function FinalReflection() {
             transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="space-y-sys-40"
           >
-            <p className="type-body text-base md:text-lg text-text-secondary opacity-60 leading-relaxed font-medium px-6 max-w-2xl mx-auto">
+            <p className="type-body text-base md:text-lg text-text-secondary opacity-60 leading-relaxed font-medium px-6 max-w-2xl mx-auto prose-readable text-wrap-balance">
               {identity.final_reflection}
             </p>
             

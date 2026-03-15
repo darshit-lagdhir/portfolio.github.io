@@ -97,7 +97,7 @@ body {
   font-family: var(--font-body);
   line-height: 1.6;
   overflow-x: hidden; /* CRITICAL: Prevent horizontal layout bleed */
-  width: 100vw;
+  width: 100%;
   text-rendering: optimizeLegibility;
   touch-action: pan-y;
   -webkit-tap-highlight-color: transparent;
@@ -252,6 +252,19 @@ p:last-child {
   margin-bottom: 0;
 }
 
+.text-wrap-balance {
+  text-wrap: balance;
+}
+
+.prose-readable {
+  max-width: 65ch;
+  line-height: 1.7;
+}
+
+.hyphens-auto {
+  hyphens: auto;
+}
+
 h1 {
   margin-bottom: var(--spacing-sys-48);
 }
@@ -270,30 +283,23 @@ h3 {
   max-width: var(--grid-max-width);
   margin-left: auto;
   margin-right: auto;
-  padding-left: var(--spacing-sys-16);
-  padding-right: var(--spacing-sys-16);
+  padding-left: var(--spacing-sys-24);
+  padding-right: var(--spacing-sys-24);
 }
 
 @media (min-width: 768px) {
   .system-container {
-    padding-left: var(--spacing-sys-32);
-    padding-right: var(--spacing-sys-32);
+    padding-left: var(--spacing-sys-48);
+    padding-right: var(--spacing-sys-48);
   }
 }
 
 @media (min-width: 1024px) {
   .system-container {
-    padding-left: var(--spacing-sys-128); 
-    padding-right: var(--spacing-sys-48); 
-    max-width: calc(var(--grid-max-width) + var(--spacing-sys-128));
-  }
-}
-
-@media (min-width: 1280px) {
-  .system-container {
-    padding-left: 280px; /* Enhanced clearance for NavigationDock labels */
-    padding-right: var(--spacing-sys-64);
-    max-width: calc(var(--grid-max-width) + 320px);
+    /* Gradual transition to clear NavigationDock labels without abrupt jumps */
+    padding-left: clamp(var(--spacing-sys-128), calc(75vw - 640px), 320px);
+    padding-right: var(--spacing-sys-64); 
+    max-width: calc(var(--grid-max-width) + 384px);
   }
 }
 
@@ -303,17 +309,17 @@ h3 {
   column-gap: var(--grid-gutter);
 }
 
-@media (max-width: 1280px) {
+@media (max-width: 1023px) {
   .grid-12 { 
     grid-template-columns: repeat(6, 1fr); 
     column-gap: var(--spacing-sys-24);
   }
 }
 
-@media (max-width: 768px) {
-  .grid-12 {
-    grid-template-columns: 1fr;
-    row-gap: var(--spacing-sys-48);
+@media (max-width: 767px) {
+  .grid-12 { 
+    grid-template-columns: repeat(1, 1fr); 
+    column-gap: 0;
   }
 }
 

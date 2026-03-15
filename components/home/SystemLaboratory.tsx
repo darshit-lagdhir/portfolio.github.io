@@ -29,7 +29,7 @@ export default function SystemLaboratory() {
       />
 
       <div className="grid-12 mb-sys-64">
-        <div className="col-span-12 lg:col-span-8">
+        <div className="col-span-full lg:col-span-8">
            <div className="flex items-center gap-3 mb-sys-24 opacity-30">
               <div className="w-1 h-1 bg-accent/40 rounded-full" />
               <span className="type-metadata text-[0.4rem] tracking-[0.3em] font-mono">ACTIVE_EXPLORATION_BOARD</span>
@@ -42,9 +42,9 @@ export default function SystemLaboratory() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-sys-48">
-        {/* EXPLORATION SELECTION SIDEBAR */}
-        <div className="lg:col-span-4 space-y-4">
+      <div className="grid-12 gap-sys-48">
+        {/* Left Sidebar: Investigation Log */}
+        <div className="col-span-full lg:col-span-4 space-y-sys-24">
           <div className="type-metadata text-[0.45rem] opacity-30 mb-sys-24 tracking-widest uppercase">SELECT_TRACK</div>
           {ongoingExplorations.map((item) => (
             <button
@@ -84,7 +84,7 @@ export default function SystemLaboratory() {
         </div>
 
         {/* EXPLORATION VIEWPORT */}
-        <div className="lg:col-span-8 min-h-[500px] flex flex-col">
+        <div className="col-span-full lg:col-span-8 min-h-[500px] flex flex-col">
            <div className="module-frame flex-grow relative overflow-hidden bg-bg-secondary/20 !p-0 flex flex-col">
               {/* VIEWPORT HEADER */}
               <div className="p-sys-24 border-b border-border-dim bg-bg-secondary flex justify-between items-center z-20">

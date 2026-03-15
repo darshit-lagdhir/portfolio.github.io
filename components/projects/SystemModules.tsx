@@ -24,13 +24,14 @@ export default function SystemModules() {
       </div>
 
       {/* MODULE GRID LAYER - Enforced row stretching */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-sys-32 items-stretch auto-rows-fr">
+      <div className="grid-12 gap-y-sys-48 auto-rows-fr">
         {tier1Projects.map((project, index) => (
-          <SystemModule 
-            key={project.slug} 
-            project={project} 
-            index={index} 
-          />
+          <div key={project.slug} className="col-span-12 md:col-span-6 lg:col-span-4">
+            <SystemModule 
+              project={project} 
+              index={index} 
+            />
+          </div>
         ))}
       </div>
 

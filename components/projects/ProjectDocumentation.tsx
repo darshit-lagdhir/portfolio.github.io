@@ -50,7 +50,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
         </div>
 
         <div className="system-container grid-12 items-start lg:items-end gap-y-sys-48">
-          <div className="col-span-12 lg:col-span-8">
+          <div className="col-span-full lg:col-span-8">
              <motion.div 
                initial={{ opacity: 0, x: -20 }}
                animate={{ opacity: 1, x: 0 }}
@@ -66,12 +66,12 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
              </motion.div>
 
              <motion.h1 
-               initial={{ opacity: 0, y: 30 }}
-               animate={{ opacity: 1, y: 0 }}
-               transition={{ duration: 0.8 }}
-               className="type-h1 mb-sys-32 break-words hyphens-auto"
-             >
-               {formatLabel(project.name)}_
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="type-h1 mb-sys-32 break-words hyphens-auto text-wrap-balance"
+              >
+                {formatLabel(project.name)}_
              </motion.h1>
              <motion.p 
                initial={{ opacity: 0 }}
@@ -96,7 +96,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
              </motion.div>
           </div>
 
-          <div className="col-span-12 lg:col-span-4 lg:col-start-9 mt-sys-64 lg:mt-0 flex flex-col gap-6 items-start lg:items-end justify-start lg:justify-end z-10">
+          <div className="col-span-full lg:col-span-4 lg:col-start-9 mt-sys-64 lg:mt-0 flex flex-col gap-6 items-start lg:items-end justify-start lg:justify-end z-10">
              <div className="text-left lg:text-right">
                 <div className="type-metadata text-[0.45rem] text-text-muted mb-2 opacity-40">SYSTEM_ARCHITECTURE</div>
                 <div className="type-label text-accent text-xs">{formatLabel(project.technicalMeta?.architectureStyle || "")}</div>
@@ -122,11 +122,11 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
       <main className="system-container pt-sys-96">
         <div className="grid-12 gap-sys-96">
           {/* Section 01 & 02: Detailed Narrative & Architecture */}
-          <div className="col-span-12 lg:col-span-7 space-y-sys-96">
+          <div className="col-span-full lg:col-span-7 space-y-sys-96">
             <section>
                 <SectionDivider label="01_SYSTEM_OVERVIEW" className="mb-sys-48" />
                 <div className="space-y-sys-48">
-                  <p className="type-body text-base md:text-lg leading-relaxed text-text-primary font-medium">
+                  <p className="type-body text-base md:text-lg leading-relaxed text-text-primary font-medium prose-readable">
                     {project.longDescription}
                   </p>
                   <div className="module-frame !p-6 md:!p-10 border-dashed opacity-60">
@@ -147,9 +147,9 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                   
                   <div className="pt-sys-48">
                     <div className="type-metadata text-accent mb-6">CORE_SYSTEM_MODULES</div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-sys-24">
+                    <div className="grid-12 gap-y-sys-24">
                        {project.internalComponents?.map((comp, idx) => (
-                          <div key={idx} className="p-sys-24 border border-border-dim bg-bg-secondary group hover:border-accent transition-colors">
+                          <div key={idx} className="p-sys-24 border border-border-dim bg-bg-secondary group hover:border-accent transition-colors col-span-12 md:col-span-6">
                             <div className="type-metadata text-accent mb-sys-12">MODULE_0{idx + 1}</div>
                             <h4 className="type-label text-sm text-text-primary mb-2">{formatLabel(comp.name)}</h4>
                             <div className="type-metadata text-[0.4rem] opacity-30 mb-2 font-mono">CORE_RESPONSIBILITY:</div>
@@ -175,7 +175,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
             </section>
           </div>
 
-          <aside className="col-span-12 lg:col-span-4 lg:col-start-9 space-y-sys-96">
+          <aside className="col-span-full lg:col-span-4 lg:col-start-9 space-y-sys-96">
             <section>
                <SectionDivider label="03_TECH_STACK" className="mb-sys-32" />
                 <div className="space-y-sys-32">
@@ -253,7 +253,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
               <SectionDivider label="06_ENGINEERING_DECISIONS" className="mb-sys-64" />
               
               <div className="grid-12 gap-sys-64">
-                 <div className="col-span-12 lg:col-span-7 space-y-sys-64">
+                 <div className="col-span-full lg:col-span-7 space-y-sys-64">
                     {project.architectureDecisions?.map((decision, idx) => (
                       <motion.div 
                         key={idx}
@@ -289,7 +289,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                     ))}
                  </div>
 
-                 <aside className="col-span-12 lg:col-span-4 lg:col-start-9">
+                 <aside className="col-span-full lg:col-span-4 lg:col-start-9">
                     <div className="sticky top-sys-64 space-y-sys-64">
                        <div>
                           <div className="type-metadata text-[0.5rem] text-secondary mb-6 tracking-widest">SYSTEM_TRADE_OFFS</div>
@@ -335,11 +335,11 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
            {project.authority?.deepDives && (
               <section>
                  <SectionDivider label="08_TECHNICAL_DEEP_DIVES" className="mb-sys-64" />
-                 <div className="grid grid-cols-1 md:grid-cols-2 gap-sys-48">
+                  <div className="grid-12 gap-y-sys-48">
                     {project.authority.deepDives.map((dive, idx) => (
                       <div 
                         key={idx} 
-                        className="module-frame group"
+                        className="module-frame group col-span-12 md:col-span-6"
                       >
                          <div className="type-metadata text-[0.4rem] text-accent/40 mb-8 flex items-center gap-3 font-mono tracking-[0.2em] uppercase">
                             <span className="w-1 h-1 bg-accent/30 rounded-full" />
@@ -361,12 +361,12 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                  <SectionDivider label="09_TECHNICAL_LESSONS_LEARNED" className="mb-sys-64" />
                  <div className="bg-bg-secondary/40 border border-border-dim p-12">
                     <div className="grid-12 gap-sys-64">
-                       <div className="col-span-12 lg:col-span-4">
+                       <div className="col-span-full lg:col-span-4">
                           <div className="type-metadata text-[0.5rem] opacity-30 mb-4 uppercase tracking-widest">Iterative_Learning</div>
                           <h3 className="type-emphasis text-lg mb-6">Signals of curiosity and system evolution through failure.</h3>
                           <div className="w-12 h-0.5 bg-accent/30" />
                        </div>
-                       <div className="col-span-12 lg:col-span-8 space-y-12">
+                       <div className="col-span-full lg:col-span-8 space-y-12">
                           {project.authority.experimentationNotes.map((note, idx) => (
                             <div key={idx} className="space-y-4">
                                <div className="type-label text-accent opacity-60">NOTE_LOG_0{idx + 1}: {note.title}</div>
@@ -437,7 +437,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
 
       <footer className="system-container mt-sys-128">
          <div className="pt-sys-96 border-t border-border-dim grid-12">
-            <div className="col-span-12 lg:col-span-6">
+            <div className="col-span-full lg:col-span-6">
                <div className="type-metadata text-[0.45rem] text-text-muted mb-8 uppercase tracking-widest">NEXT_NODE_IN_MANIFEST</div>
                <Link 
                  href={`/${nextProject.slug}`}
@@ -447,7 +447,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                      <span className="type-metadata text-[0.4rem] text-accent">0{((getProjectIndex(project.slug) + 1) % projects.length) + 1} {'//'} SEQUENTIAL_JUMP</span>
                     <span className="type-metadata text-[0.45rem] text-text-muted group-hover:text-text-primary transition-colors">EXPLORE_NODE →</span>
                   </div>
-                  <h3 className="type-display text-4xl uppercase tracking-tighter group-hover:text-accent transition-colors">
+                  <h3 className="type-display text-4xl uppercase tracking-tighter group-hover:text-accent transition-colors text-wrap-balance">
                     {nextProject.name}_
                   </h3>
                   <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity select-none pointer-events-none text-text-muted">
@@ -456,7 +456,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                </Link>
             </div>
 
-            <div className="col-span-12 lg:col-span-4 lg:col-start-9 flex flex-col justify-end mt-sys-64 lg:mt-0 items-start lg:items-end">
+            <div className="col-span-full lg:col-span-4 lg:col-start-9 flex flex-col justify-end mt-sys-64 lg:mt-0 items-start lg:items-end">
                <div className="space-y-12 text-left lg:text-right w-full">
                   <DiscoveryHint 
                     label={identity.discovery_hints.toProjectComparisonMatrix.label} 
