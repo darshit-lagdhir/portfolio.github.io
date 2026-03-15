@@ -1,3 +1,5 @@
+"use client";
+import { motion } from "framer-motion";
 import { getTierProjects } from "@/lib/utils";
 import SystemModule from "./SystemModule";
 import SectionDivider from "@/components/shared/SectionDivider";
@@ -24,16 +26,36 @@ export default function SystemModules() {
       </div>
 
       {/* MODULE GRID LAYER - Enforced row stretching */}
-      <div className="grid-12 gap-y-sys-48 auto-rows-fr">
+      <motion.div 
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.1 }}
+        variants={{
+          hidden: {},
+          visible: {
+            transition: {
+              staggerChildren: 0.1
+            }
+          }
+        }}
+        className="grid-12 gap-y-sys-48 auto-rows-fr"
+      >
         {tier1Projects.map((project, index) => (
-          <div key={project.slug} className="col-span-full md:col-span-6 lg:col-span-4">
+          <motion.div 
+            key={project.slug} 
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
+            }}
+            className="col-span-full md:col-span-6 lg:col-span-4"
+          >
             <SystemModule 
               project={project} 
               index={index} 
             />
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       <div className="mt-sys-64 flex justify-end">
         <DiscoveryHint 

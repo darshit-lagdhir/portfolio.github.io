@@ -16,7 +16,7 @@ export default function EngineeringPhilosophy() {
       <div className="grid-12 items-start gap-y-sys-64 md:gap-y-0">
         <div className="col-span-full mb-sys-96 text-center lg:text-left">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
@@ -64,12 +64,12 @@ export default function EngineeringPhilosophy() {
                key={principle.title}
                initial={{ opacity: 0 }}
                whileInView={{ opacity: 1 }}
-               viewport={{ once: true }}
+               viewport={{ once: true, amount: 0.2 }}
                transition={{ delay: index * 0.1, duration: 0.8 }}
-                className="module-frame group relative overflow-hidden h-full flex flex-col transition-[border-color,background-color,box-shadow] duration-300 col-span-full md:col-span-6 lg:col-span-3"
+                className="module-frame group relative overflow-hidden h-full flex flex-col transition-[border-color,background-color,box-shadow] duration-200 col-span-full md:col-span-6 lg:col-span-3"
              >
                 {/* Visual Signature Marker */}
-                <div className="absolute top-sys-24 right-sys-24 opacity-0 scale-90 group-hover:opacity-60 group-hover:scale-100 transition-all duration-300 ease-out">
+                <div className="absolute top-sys-24 right-sys-24 opacity-0 scale-90 group-hover:opacity-60 group-hover:scale-100 transition-all duration-200 ease-out">
                    <div className="arch-marker scale-75" />
                 </div>
 
@@ -97,7 +97,7 @@ export default function EngineeringPhilosophy() {
         </div>
       </div>
 
-      <div className="mt-sys-128 flex flex-col items-center text-center pb-sys-128 lg:pb-0">
+      <div className="mt-sys-128 flex flex-col items-center text-center pb-sys-160 lg:pb-0">
         <DiscoveryHint 
           label={identity.discovery_hints.toReflection.label} 
           href="#reflections"

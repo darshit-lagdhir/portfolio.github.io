@@ -43,7 +43,15 @@ export default function EngineeringDomains() {
       <div className="grid-12 gap-y-sys-48 items-end mb-sys-64">
         <div className="col-span-full lg:col-span-7">
           <div className="type-metadata text-accent opacity-60 mb-sys-16">EXPLORATION_MAP</div>
-          <h3 className="type-h1 break-words hyphens-auto mb-0">Research_Nodes</h3>
+          <motion.h3 
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="type-h1 break-words hyphens-auto mb-0"
+          >
+            Research_Nodes
+          </motion.h3>
         </div>
         <div className="col-span-full lg:col-span-4 lg:col-start-9">
           <p className="type-body text-xs text-text-muted italic">
@@ -102,7 +110,7 @@ export default function EngineeringDomains() {
                 initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -10 }}
-                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
                 className="space-y-sys-64 relative z-10"
               >
                 <div className="space-y-sys-24">
@@ -132,7 +140,7 @@ export default function EngineeringDomains() {
                           href={getProjectUrl(project.slug)}
                           className="module-frame group !p-sys-24 relative transition-all h-full"
                         >
-                           <div className="absolute top-sys-8 right-sys-8 opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 ease-out">
+                           <div className="absolute top-sys-8 right-sys-8 opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 transition-all duration-200 ease-out">
                               <div className="arch-marker scale-50" />
                            </div>
                             <h4 className="type-emphasis text-sm group-hover:text-accent transition-colors">{project.name}</h4>
@@ -179,7 +187,7 @@ export default function EngineeringDomains() {
         </div>
       </div>
       
-      <div className="mt-sys-64 pb-sys-128 lg:pb-0 flex flex-col md:flex-row justify-between items-start md:items-end gap-sys-32">
+      <div className="mt-sys-64 pb-sys-160 lg:pb-0 flex flex-col md:flex-row justify-between items-start md:items-end gap-sys-32">
         <DiscoveryHint 
           label={identity.discovery_hints.toSystems.label}
           href="#systems"

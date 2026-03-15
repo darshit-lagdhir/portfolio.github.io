@@ -32,15 +32,18 @@ export default function DiscoveryHint({
         className
       )}
     >
-      <Link href={href} className="inline-flex items-center gap-sys-16 focus:outline-none">
-        <div className="flex flex-col">
-          <span className="type-metadata text-[0.4rem] text-accent/40 tracking-[0.3em] font-mono mb-sys-4 uppercase group-hover:text-accent group-hover:opacity-100 transition-all">
+      <Link href={href} className="inline-flex items-center gap-sys-16 focus:outline-none active:opacity-70 transition-opacity">
+        <motion.div 
+          whileTap={{ scale: 0.96 }}
+          className="flex flex-col"
+        >
+          <span className="type-metadata text-[0.4rem] text-accent/40 tracking-[0.3em] font-mono mb-sys-4 uppercase group-hover:text-accent group-hover:opacity-100 transition-all duration-200">
             PATH:RESOLVE
           </span>
-          <span className="type-nav text-[0.6rem] border-b border-border-dim group-hover:border-accent transition-all pb-1 uppercase tracking-widest text-text-muted group-hover:text-accent">
+          <span className="type-nav text-[0.6rem] border-b border-border-dim group-hover:border-accent transition-all duration-200 pb-1 uppercase tracking-widest text-text-muted group-hover:text-accent">
             {label} &rarr;
           </span>
-        </div>
+        </motion.div>
       </Link>
       {description && (
         <p className="type-body text-[0.65rem] text-text-muted opacity-40 italic max-w-xs leading-relaxed group-hover:opacity-60 transition-opacity">

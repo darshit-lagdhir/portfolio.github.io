@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { identity } from "@/data/identity";
+import { cn } from "@/lib/utils";
 
 export default function HeroIdentity() {
   return (
@@ -43,26 +44,45 @@ export default function HeroIdentity() {
       </motion.div>
 
       <motion.h1
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
         className="type-display mb-sys-48 leading-[0.95] tracking-tighter w-full"
         style={{ fontSize: "clamp(1.5rem, 11vw, 7.5rem)" }}
       >
-        {identity.hero_identity.hero_title.includes('_') ? (
-          <div className="flex flex-col gap-2">
-            <span className="block w-fit">{identity.hero_identity.hero_title.split('_')[0]}</span>
-            <span className="text-text-muted block w-fit">{identity.hero_identity.hero_title.split('_')[1]}_</span>
-          </div>
-        ) : (
-          identity.hero_identity.hero_title + "_"
-        )}
+        <span className="flex flex-col gap-2">
+          {identity.hero_identity.hero_title.split('_').map((line, lIdx) => (
+            <span key={lIdx} className={cn("block w-fit overflow-hidden", lIdx === 1 && "text-text-muted")}>
+              {line.split('').map((char, cIdx) => (
+                <motion.span
+                  key={cIdx}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.8,
+                    delay: 0.6 + (lIdx * 10 + cIdx) * 0.04,
+                    ease: [0.16, 1, 0.3, 1]
+                  }}
+                  className="inline-block"
+                >
+                  {char}
+                </motion.span>
+              ))}
+              {lIdx === 1 && (
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.5 }}
+                >
+                  _
+                </motion.span>
+              )}
+            </span>
+          ))}
+        </span>
       </motion.h1>
 
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
+        initial={{ opacity: 0, y: 5 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.8, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
         className="max-w-[500px] relative mt-sys-16"
       >
         <div className="absolute -left-8 top-0 bottom-0 w-[1px] bg-border-dim hidden md:block" />

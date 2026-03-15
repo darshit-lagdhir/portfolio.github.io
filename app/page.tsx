@@ -26,7 +26,7 @@ const TerminalContact = dynamic(() => import("@/components/contact/TerminalConta
 
 export default function Home() {
   return (
-    <div className="flex flex-col pb-sys-128">
+    <div className="flex flex-col pb-sys-160 lg:pb-sys-128">
       {/* 
          MANIFEST_NODE_00: IDENTITY_PROBE
       */}
@@ -97,7 +97,7 @@ export default function Home() {
         <TerminalContact />
       </SectionContainer>
 
-      <footer className="system-container py-sys-96 md:py-sys-128 border-t border-border-dim/20 pb-sys-128 md:pb-sys-128">
+      <footer className="system-container py-sys-96 md:py-sys-128 border-t border-border-dim/20 pb-sys-160 md:pb-sys-128">
         <div className="flex flex-col md:flex-row justify-between items-center gap-12 text-center md:text-left mb-sys-64 md:mb-0">
            <div className="space-y-2 opacity-30">
               <span className="type-metadata text-[0.6rem] font-mono tracking-[0.4em]">© 2026 DARSHIT_LAGDHIR_SYSTEMS</span>

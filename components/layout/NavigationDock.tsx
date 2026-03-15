@@ -70,13 +70,14 @@ export default function NavigationDock() {
           >
             <div className="bg-bg-secondary/90 backdrop-blur-xl border border-border-bright/20 rounded-sm p-2 shadow-2xl flex items-center justify-between">
               {NAV_ITEMS.filter(item => ["hero", "systems", "domains", "contact"].includes(item.id)).map((item) => (
-                <button
+                <motion.button
                   key={item.id}
                   onClick={() => handleScroll(item.id)}
+                  whileTap={{ scale: 0.9 }}
                   aria-label={`Navigate to ${item.label} section`}
                   className={cn(
                     "flex-1 flex flex-col items-center gap-1 py-3 transition-all rounded-xl",
-                    activeSection === item.id ? "bg-accent/5 text-accent scale-95" : "text-text-muted"
+                    activeSection === item.id ? "bg-accent/5 text-accent" : "text-text-muted"
                   )}
                 >
                   <span className="type-metadata text-[0.35rem] opacity-40">{item.code}</span>
@@ -87,7 +88,7 @@ export default function NavigationDock() {
                       className="w-1 h-1 bg-accent rounded-full mt-1" 
                     />
                   )}
-                </button>
+                </motion.button>
               ))}
             </div>
           </motion.nav>
@@ -114,9 +115,10 @@ export default function NavigationDock() {
       )}
 
       {isHomePage && NAV_ITEMS.map((item) => (
-        <button
+        <motion.button
           key={item.id}
           onClick={() => handleScroll(item.id)}
+          whileTap={{ scale: 0.95 }}
           aria-label={`Navigate to ${item.label} section`}
           className="group flex items-center gap-sys-16 text-left relative focus:outline-none focus-visible:ring-1 focus-visible:ring-accent/50 p-1"
         >
@@ -131,7 +133,7 @@ export default function NavigationDock() {
             </span>
           
           <div className={cn(
-            "arch-marker scale-[0.3] transition-all duration-200",
+            "arch-marker scale-[0.3] transition-all duration-200 ease-out",
             activeSection === item.id ? "opacity-100 scale-50" : "opacity-0 group-hover:opacity-60 group-hover:scale-[0.4]"
           )} />
 
@@ -139,7 +141,7 @@ export default function NavigationDock() {
           <div className="overflow-hidden min-w-[100px]">
             <motion.span
               className={cn(
-                "type-nav text-[0.7rem] block transition-all duration-300 ease-out whitespace-nowrap",
+                "type-nav text-[0.7rem] block transition-all duration-200 ease-out whitespace-nowrap",
                 activeSection === item.id
                   ? "text-text-primary translate-x-0"
                   : "text-text-muted -translate-x-full group-hover:translate-x-0 group-hover:text-accent group-focus-visible:translate-x-0"
@@ -162,7 +164,7 @@ export default function NavigationDock() {
               />
             )}
           </AnimatePresence>
-        </button>
+        </motion.button>
       ))}
 
       {/* Scroll Metric Telemetry */}

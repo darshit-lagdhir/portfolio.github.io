@@ -22,7 +22,7 @@ export default function SystemLaboratory() {
   const activeExploration = ongoingExplorations.find(l => l.investigation_id === activeId);
 
   return (
-    <div className="w-full relative pb-sys-128 lg:pb-0 overflow-x-hidden">
+    <div className="w-full relative pb-sys-160 lg:pb-0 overflow-x-hidden">
       <SectionDivider 
         label="06_LAB" 
         description={identity.section_transitions.toArchive}
@@ -34,7 +34,15 @@ export default function SystemLaboratory() {
               <div className="absolute -left-6 w-1 h-1 bg-accent/40 rounded-full" />
               <span className="type-metadata text-[0.4rem] tracking-[0.3em] font-mono">ACTIVE_EXPLORATION_BOARD</span>
            </div>
-           <h2 className="type-h1 break-words hyphens-auto text-text-primary">Systems_Laboratory_</h2>
+           <motion.h2 
+             initial={{ opacity: 0, y: 15 }}
+             whileInView={{ opacity: 1, y: 0 }}
+             viewport={{ once: true, amount: 0.4 }}
+             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+             className="type-h1 break-words hyphens-auto text-text-primary"
+           >
+             Systems_Laboratory_
+           </motion.h2>
            <p className="type-body text-sm text-text-secondary max-w-2xl opacity-50">
              Current investigations into system behavior and low-level architectural mechanics. 
              These active research tracks represent the front-line of my technical learning process.
@@ -47,9 +55,10 @@ export default function SystemLaboratory() {
         <div className="col-span-full lg:col-span-4 space-y-sys-24">
           <div className="type-metadata text-[0.45rem] opacity-30 mb-sys-24 tracking-widest uppercase">SELECT_TRACK</div>
           {ongoingExplorations.map((item) => (
-            <button
+            <motion.button
               key={item.investigation_id}
               onClick={() => setActiveId(item.investigation_id)}
+              whileTap={{ scale: 0.97 }}
               className={cn(
                 "module-frame w-full text-left transition-[border-color,background-color,opacity] relative group !p-sys-24",
                 activeId === item.investigation_id 
@@ -60,7 +69,7 @@ export default function SystemLaboratory() {
               <div className="flex justify-between items-start mb-sys-12">
                  <span className="type-metadata text-[0.35rem] opacity-40 uppercase tracking-widest">{item.investigation_id.split('-').join('_')}</span>
                  <div className={cn(
-                   "arch-marker scale-[0.4] transition-all duration-300",
+                   "arch-marker scale-[0.4] transition-all duration-200",
                    activeId === item.investigation_id ? "opacity-100 scale-100" : "opacity-20 scale-90 group-hover:opacity-100 group-hover:scale-100"
                  )} />
               </div>
@@ -78,7 +87,7 @@ export default function SystemLaboratory() {
                   className="absolute right-0 top-0 w-1 h-full bg-accent"
                 />
               )}
-            </button>
+            </motion.button>
           ))}
           <div className="h-24 lg:hidden" /> {/* MOBILE_NAV_CLEARANCE */}
         </div>
@@ -109,7 +118,7 @@ export default function SystemLaboratory() {
                       initial={{ opacity: 0, y: 5 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -5 }}
-                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
                       className="max-w-xl will-change-[transform,opacity]"
                     >
                        <div className="type-metadata text-[0.35rem] text-accent/60 mb-sys-32 border-l border-accent/20 pl-sys-16 py-1">

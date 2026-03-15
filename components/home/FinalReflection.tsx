@@ -13,7 +13,7 @@ export default function FinalReflection() {
         description={identity.section_transitions.toReflection}
       />
       
-      <div className="py-sys-96 lg:py-sys-128 mb-sys-64 pb-sys-128 lg:pb-0">
+      <div className="py-sys-64 lg:py-sys-96 mb-sys-48 pb-sys-160 lg:pb-0">
         <div className="max-w-4xl mx-auto text-center space-y-sys-48">
           {/* Visual Anchor - Minimal Interaction */}
           <motion.div
@@ -38,7 +38,7 @@ export default function FinalReflection() {
 
           {/* Final Reflection Statement */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 1.2, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}

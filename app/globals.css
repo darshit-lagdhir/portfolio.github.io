@@ -26,7 +26,7 @@
      PHASE 3 — TYPOGRAPHY SCALE (MODULAR progression)
   */
   --font-size-display: clamp(2.5rem, 12vw, 12rem); 
-  --font-size-h1: clamp(1.5rem, 8vw, 3.75rem); /* Normalized to 24px - 60px */
+  --font-size-h1: clamp(1.25rem, 8vw, 3.75rem); /* Normalized to 20px - 60px */
   --font-size-h2: clamp(1.25rem, 6vw, 2.5rem);  /* Normalized to 20px - 40px */
   --font-size-h3: clamp(1rem, 4vw, 1.5rem);    /* Normalized to 16px - 24px */
   --font-size-body: 1rem;

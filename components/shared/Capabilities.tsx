@@ -37,7 +37,7 @@ export default function Capabilities() {
 
       <div className="grid-12 mb-sys-64">
         <div className="col-span-full lg:col-span-8">
-          <h2 className="type-h1 text-4xl md:text-5xl lg:text-6xl break-words hyphens-auto leading-[1.05]">KNOWLEDGE_MAPPING_</h2>
+          <h2 className="type-h1 break-words hyphens-auto">Knowledge_Mapping_</h2>
           <p className="type-body text-lg max-w-2xl text-text-secondary">
             Modular categorization of technical domains and ongoing intellectual explorations. These areas represent investigative paths rather than static mastery.
           </p>

@@ -13,7 +13,7 @@ export default function Hero() {
 
   // Subtle scroll transitions for the hero section, disabled for reduced motion
   const opacity = useTransform(scrollY, [0, 400], [1, 0]);
-  const y = useTransform(scrollY, [0, 400], [0, prefersReducedMotion ? 0 : -50]);
+  const y = useTransform(scrollY, [0, 400], [0, prefersReducedMotion ? 0 : -30]);
 
   return (
     <section className="min-h-[85vh] flex flex-col justify-center relative pt-sys-96 pb-sys-48 md:py-sys-96 overflow-hidden">

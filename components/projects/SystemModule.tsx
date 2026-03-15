@@ -18,23 +18,16 @@ export default function SystemModule({ project, index }: SystemModuleProps) {
   return (
     <Link href={getProjectUrl(project.slug)} className="focus:outline-none focus-visible:ring-1 focus-visible:ring-accent flex flex-col h-full">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        whileTap={{ scale: 0.985 }}
         whileHover={!useScene().isMobile ? { 
           scale: 1.015,
-          transition: { duration: 0.3, ease: [0.16, 1, 0.3, 1] }
+          transition: { duration: 0.2, ease: "easeOut" }
         } : {}}
-        viewport={{ once: true, margin: "-10%" }}
-        transition={{
-          duration: isLowPerf ? 0.3 : 1,
-          delay: isLowPerf ? 0 : index * 0.1,
-          ease: [0.16, 1, 0.3, 1]
-        }}
         className="module-frame group relative flex-1 flex flex-col min-h-[420px] h-full hover:bg-bg-secondary/80"
         style={{ willChange: "transform, opacity" }}
       >
         {/* Module Header Hook */}
-        <div className="absolute top-0 right-0 p-sys-24 opacity-30 group-hover:opacity-100 transition-opacity duration-300 text-accent">
+        <div className="absolute top-0 right-0 p-sys-24 opacity-30 group-hover:opacity-100 transition-opacity duration-200 text-accent">
           <span className="type-metadata text-[0.4rem] tracking-[0.4em] font-mono">
             REF_0{index + 1}
           </span>
@@ -51,7 +44,7 @@ export default function SystemModule({ project, index }: SystemModuleProps) {
           
           {project.authority && (
             <div className="flex items-center gap-sys-16">
-              <div className="flex gap-sys-4 opacity-40 group-hover:opacity-100 transition-opacity duration-300">
+              <div className="flex gap-sys-4 opacity-40 group-hover:opacity-100 transition-opacity duration-200">
                 {[...Array(5)].map((_, i) => (
                   <div 
                     key={i} 
@@ -101,7 +94,7 @@ export default function SystemModule({ project, index }: SystemModuleProps) {
 
           <div className="flex items-center justify-between pt-sys-24 border-t border-border-dim">
             <span className="type-nav text-[0.45rem] tracking-[0.4em] text-text-muted group-hover:text-text-primary transition-colors">DIAGNOSTIC_SPEC</span>
-            <span className="text-xs text-text-muted group-hover:text-accent transition-all duration-300 font-mono tracking-widest uppercase">READ_NODE &rarr;</span>
+            <span className="text-xs text-text-muted group-hover:text-accent transition-all duration-200 font-mono tracking-widest uppercase">READ_NODE &rarr;</span>
           </div>
         </div>
       </motion.div>

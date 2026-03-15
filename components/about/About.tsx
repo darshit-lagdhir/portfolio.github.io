@@ -23,7 +23,7 @@ const NARRATIVE_BLOCKS = [
 
 export default function About() {
   return (
-    <div className="w-full relative pb-sys-128 lg:pb-0 overflow-x-hidden">
+    <div className="w-full relative pb-sys-160 lg:pb-0 overflow-x-hidden">
       <SectionDivider 
         label="01_ABOUT" 
         description={identity.section_transitions.toAbout}
@@ -59,9 +59,9 @@ export default function About() {
                         key={domain.title}
                         initial={{ opacity: 0, y: 10 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: true, amount: 0.2 }}
                         transition={{ delay: idx * 0.1, duration: 0.5 }}
-                        className="module-frame opacity-80 hover:opacity-100 transition-opacity !p-sys-24 col-span-full lg:col-span-6"
+                        className="module-frame opacity-80 hover:opacity-100 transition-opacity duration-200 !p-sys-24 col-span-full lg:col-span-6"
                       >
                           <h4 className="type-emphasis text-sm mb-sys-12 text-text-primary tracking-tight">{domain.title}</h4>
                           <p className="type-body text-xs text-text-secondary opacity-60 leading-relaxed font-medium">{domain.description}</p>
@@ -98,7 +98,7 @@ export default function About() {
                 key={block.id}
                 initial={{ opacity: 0, x: -10 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-10%" }}
+                viewport={{ once: true, amount: 0.3 }}
                 transition={{ delay: idx * 0.1, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 className="group"
               >

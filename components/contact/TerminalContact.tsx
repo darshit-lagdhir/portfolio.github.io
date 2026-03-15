@@ -14,6 +14,32 @@ const SELECTABLE_COMMANDS = [
   { id: "contact", label: "contact", action: "GET_CHANNELS" },
 ];
 
+function TypewriterText({ text, onComplete, delay = 0 }: { text: string; onComplete?: () => void; delay?: number }) {
+  const [displayedText, setDisplayedText] = useState("");
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (index < text.length) {
+      const timer = setTimeout(() => {
+        setDisplayedText((prev) => prev + text[index]);
+        setIndex((prev) => prev + 1);
+      }, delay + Math.random() * 30); // Jittered typing speed
+      return () => clearTimeout(timer);
+    } else if (onComplete) {
+      onComplete();
+    }
+  }, [index, text, delay, onComplete]);
+
+  return (
+    <span className="relative inline">
+      {displayedText}
+      {index < text.length && (
+        <span className="inline-block w-2 h-4 bg-accent ml-1 align-middle animate-pulse" />
+      )}
+    </span>
+  );
+}
+
 export default function TerminalContact() {
   const [history, setHistory] = useState<{ type: 'input' | 'output'; content: string }[]>([
     { type: 'output', content: "SYSTEM_INITIALIZED: IDENTITY_VERIFIED" },
@@ -37,7 +63,7 @@ export default function TerminalContact() {
     setIsProcessing(true);
 
     setHistory(prev => [...prev, { type: 'input', content: label }]);
-    await new Promise(resolve => setTimeout(resolve, 400));
+    await new Promise(resolve => setTimeout(resolve, 400)); // Calibrated handshake delay
 
     let response = "";
     switch (cmdId) {
@@ -70,7 +96,7 @@ export default function TerminalContact() {
   };
 
   return (
-    <div className="w-full relative pb-sys-128 md:pb-0">
+    <div className="w-full relative pb-sys-160 md:pb-0">
       <SectionDivider 
         label="09_CONTACT" 
         description={identity.section_transitions.toContact}
@@ -92,7 +118,7 @@ export default function TerminalContact() {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.4 }}
             className="module-frame relative overflow-hidden !p-0 bg-transparent border-dashed hover:shadow-none hover:transform-none"
           >
             {/* TERMINAL HEADER */}
@@ -117,13 +143,10 @@ export default function TerminalContact() {
             >
               <div className="space-y-sys-24 font-mono text-[0.8rem] leading-relaxed">
                 {history.map((line, i) => (
-                  <motion.div
+                  <div
                     key={i}
-                    initial={{ opacity: 0, x: -5 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.2 }}
                     className={cn(
-                      "whitespace-pre-wrap break-all flex gap-sys-12 md:gap-sys-16 items-start",
+                      "whitespace-pre-wrap break-words flex gap-sys-12 md:gap-sys-16 items-start",
                       line.type === 'input' ? "text-accent" : "text-text-secondary"
                     )}
                   >
@@ -131,12 +154,16 @@ export default function TerminalContact() {
                       {line.type === 'input' ? 'λ' : '»'}
                     </span>
                     <span className={cn(
-                      "flex-1 font-mono tracking-normal",
-                      line.type === 'input' ? "font-bold opacity-100" : "opacity-70"
+                      "flex-1 font-mono tracking-normal leading-relaxed min-w-0",
+                      line.type === 'input' ? "font-bold opacity-100" : "opacity-80"
                     )}>
-                      {line.content}
+                      {i === history.length - 1 && line.type === 'output' ? (
+                        <TypewriterText text={line.content} />
+                      ) : (
+                        <span className="inline whitespace-pre-wrap break-words">{line.content}</span>
+                      )}
                     </span>
-                  </motion.div>
+                  </div>
                 ))}
 
                 {!isProcessing && (
@@ -171,9 +198,10 @@ export default function TerminalContact() {
               </div>
               <div className="grid-12 gap-y-sys-16">
                 {SELECTABLE_COMMANDS.map((cmd) => (
-                  <button
+                  <motion.button
                     key={cmd.id}
                     onClick={() => executeCommand(cmd.id, cmd.label)}
+                    whileTap={{ scale: 0.98 }}
                     disabled={isProcessing}
                     aria-label={`Execute command: ${cmd.label}`}
                     className="module-frame group flex items-center justify-between !p-sys-16 relative text-left disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-1 focus-visible:ring-accent transform md:hover:translate-x-1 hover:bg-accent/5 hover:border-accent/40 min-w-0 overflow-hidden col-span-full md:col-span-6 transition-all duration-300 ease-in-out"
@@ -190,7 +218,7 @@ export default function TerminalContact() {
                     <span className="type-metadata text-[0.35rem] text-text-muted group-hover:text-accent group-hover:opacity-100 transition-all truncate pl-4">
                       {cmd.action}
                     </span>
-                  </button>
+                  </motion.button>
                 ))}
               </div>
             </div>

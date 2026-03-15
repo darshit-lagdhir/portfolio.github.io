@@ -55,7 +55,7 @@ export default function DomainMap({ activeDomainId, onDomainClick, simplified = 
                 stroke="currentColor"
                 strokeWidth={isActive ? (simplified ? "0.4" : "0.2") : (isHovered ? "0.15" : "0.05")}
                 className={cn(
-                  "transition-all duration-300",
+                  "transition-all duration-200",
                    isActive ? "text-accent" : (isHovered ? "text-accent/60" : "text-border-dim opacity-50")
                 )}
                 initial={{ pathLength: 0 }}
@@ -87,7 +87,7 @@ export default function DomainMap({ activeDomainId, onDomainClick, simplified = 
                 cy={pos.y}
                 r={isActive ? (simplified ? "3.5" : "2") : (isHovered ? "1.8" : (simplified ? "1.5" : "1"))}
                 className={cn(
-                  "transition-all duration-300",
+                  "transition-all duration-200",
                   isActive 
                     ? "fill-accent" 
                     : (isHovered || isRelatedToHovered || isRelatedToActive ? "fill-accent-dim" : "fill-border-dim")
