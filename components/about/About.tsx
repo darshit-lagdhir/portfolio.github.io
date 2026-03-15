@@ -49,8 +49,8 @@ export default function About() {
 
             {/* EXPLORATION DOMAINS */}
             <div className="pt-sys-48 border-t border-border-dim/20">
-              <div className="type-label text-accent mb-8 tracking-widest flex items-center gap-2">
-                  <span className="w-1 h-1 bg-accent rounded-full opacity-50" />
+              <div className="type-label text-accent mb-8 tracking-widest flex items-center relative">
+                  <span className="absolute -left-6 w-1 h-1 bg-accent rounded-full opacity-50" />
                   ACTIVE_EXPLORATION_DOMAINS
               </div>
               <div className="grid-12 gap-y-sys-32">
@@ -72,8 +72,8 @@ export default function About() {
 
             {/* TECHNOLOGY STACK */}
             <div className="pt-sys-48 border-t border-border-dim/20">
-              <div className="type-label text-accent mb-8 tracking-widest flex items-center gap-2">
-                  <span className="w-1 h-1 bg-accent rounded-full opacity-50" />
+              <div className="type-label text-accent mb-8 tracking-widest flex items-center relative">
+                  <span className="absolute -left-6 w-1 h-1 bg-accent rounded-full opacity-50" />
                   SYSTEM_TOOLS_&_CAPABILITIES
               </div>
               <div className="grid-12 gap-y-sys-48">

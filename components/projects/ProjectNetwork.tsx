@@ -25,7 +25,7 @@ export default function ProjectNetwork({ currentSlug }: ProjectNetworkProps) {
 
       <div className="grid-12 gap-y-sys-32">
         {otherProjects.map((project, idx) => (
-          <Link key={project.slug} href={`/${project.slug}`} className="col-span-12 md:col-span-6">
+          <Link key={project.slug} href={`/${project.slug}`} className="col-span-full md:col-span-6">
             <motion.div
               whileHover={{ y: -5 }}
               className="group p-8 border border-border-dim bg-bg-secondary/20 hover:border-accent/30 transition-all relative overflow-hidden"

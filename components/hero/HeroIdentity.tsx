@@ -10,10 +10,9 @@ export default function HeroIdentity() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="flex flex-col gap-1 mb-sys-48 mt-sys-32 md:mt-0"
       >
-        <div className="flex items-center gap-3">
-          <span className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-accent shrink-0" />
+        <div className="flex items-center relative gap-3 mb-sys-48 mt-sys-32 md:mt-0">
+          <span className="absolute -left-6 w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-accent shrink-0" />
           <h2 className="type-emphasis text-lg md:text-2xl tracking-tighter text-text-primary text-wrap-balance">
             <span className="flex flex-wrap gap-x-4">
               {identity.name.split(' ').map((word, wIdx) => (
@@ -38,7 +37,7 @@ export default function HeroIdentity() {
             </span>
           </h2>
         </div>
-        <p className="type-metadata text-[0.45rem] md:text-[0.65rem] tracking-[0.2em] md:tracking-[0.3em] text-accent uppercase font-bold pl-5 mt-4 max-w-[70vw] leading-relaxed hyphens-auto">
+        <p className="type-metadata text-[0.45rem] md:text-[0.65rem] tracking-[0.2em] md:tracking-[0.3em] text-accent uppercase font-bold mt-4 max-w-[70vw] leading-relaxed hyphens-auto">
           {identity.headline}
         </p>
       </motion.div>

@@ -14,7 +14,7 @@ export default function EngineeringPhilosophy() {
       />
 
       <div className="grid-12 items-start gap-y-sys-64 md:gap-y-0">
-        <div className="col-span-12 lg:col-span-12 mb-sys-96 text-center lg:text-left">
+        <div className="col-span-full mb-sys-96 text-center lg:text-left">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -26,7 +26,7 @@ export default function EngineeringPhilosophy() {
                 Architecture is a <span className="text-accent underline decoration-accent/20 decoration-1 underline-offset-[12px]">Diagnostic Discipline</span>, not just a constructive one.
               </h3>
               <div className="grid-12 gap-y-sys-48">
-                <div className="col-span-12 md:col-span-6 lg:col-span-8 space-y-6">
+                <div className="col-span-full md:col-span-6 lg:col-span-8 space-y-6">
                   <p className="type-body text-xl md:text-2xl text-text-primary/70 leading-relaxed text-wrap-balance">
                     {identity.about.about_learning_context.split('. ')[0]}.
                   </p>
@@ -34,9 +34,9 @@ export default function EngineeringPhilosophy() {
                     I treat debugging not as a frustrating task, but as a primary learning tool. Many of my architectural insights—from memory behavior to session security—come from investigating why a system behaved in an unexpected way.
                   </p>
                 </div>
-                <div className="col-span-12 md:col-span-6 lg:col-span-4 space-y-sys-24 border-l border-border-dim pl-sys-48 hidden md:block">
-                  <p className="type-metadata text-[0.45rem] text-accent/40 mb-4 opacity-100 flex items-center gap-2">
-                    <span className="w-1 h-1 bg-accent/40" />
+                <div className="col-span-full md:col-span-6 lg:col-span-4 space-y-sys-24 border-l border-border-dim pl-sys-48 hidden md:block">
+                  <p className="type-metadata text-[0.45rem] text-accent/40 mb-4 opacity-100 relative flex items-center">
+                    <span className="absolute -left-6 w-1 h-1 bg-accent/40" />
                     APPLIED_PROJECT_INSIGHTS
                   </p>
                   <div className="space-y-sys-16">
@@ -58,7 +58,7 @@ export default function EngineeringPhilosophy() {
            </motion.div>
         </div>
 
-        <div className="col-span-12 grid-12 gap-y-sys-48 items-stretch mt-sys-96">
+        <div className="col-span-full grid-12 gap-y-sys-48 items-stretch mt-sys-96">
            {identity.learning_workflow.map((principle, index) => (
              <motion.div
                key={principle.title}
@@ -66,7 +66,7 @@ export default function EngineeringPhilosophy() {
                whileInView={{ opacity: 1 }}
                viewport={{ once: true }}
                transition={{ delay: index * 0.1, duration: 0.8 }}
-                className="module-frame group relative overflow-hidden h-full flex flex-col transition-[border-color,background-color,box-shadow] duration-300 col-span-12 md:col-span-6 lg:col-span-3"
+                className="module-frame group relative overflow-hidden h-full flex flex-col transition-[border-color,background-color,box-shadow] duration-300 col-span-full md:col-span-6 lg:col-span-3"
              >
                 {/* Visual Signature Marker */}
                 <div className="absolute top-6 right-6 opacity-20 group-hover:opacity-60 transition-opacity">
@@ -74,8 +74,8 @@ export default function EngineeringPhilosophy() {
                 </div>
 
                 <div className="flex flex-col h-full">
-                   <div className="type-metadata text-[0.45rem] text-accent/40 mb-10 flex items-center gap-2">
-                      <span className="w-1 h-1 bg-accent/40" />
+                   <div className="type-metadata text-[0.45rem] text-accent/40 mb-10 relative flex items-center">
+                      <span className="absolute -left-6 w-1 h-1 bg-accent/40" />
                       PRINC_0{index + 1}
                    </div>
                    

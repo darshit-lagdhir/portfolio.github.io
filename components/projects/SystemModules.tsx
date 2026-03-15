@@ -15,7 +15,7 @@ export default function SystemModules() {
       />
 
       <div className="grid-12 mb-sys-64">
-        <div className="col-span-12 lg:col-span-10">
+        <div className="col-span-full lg:col-span-10">
           <h3 className="type-h1 break-words hyphens-auto">SYSTEM_PORTFOLIO_</h3>
           <p className="type-body text-lg max-w-2xl text-text-secondary">
             Modular architectures and high-assurance systems built to investigate performance constraints, formal security contracts, and state preservation.
@@ -26,7 +26,7 @@ export default function SystemModules() {
       {/* MODULE GRID LAYER - Enforced row stretching */}
       <div className="grid-12 gap-y-sys-48 auto-rows-fr">
         {tier1Projects.map((project, index) => (
-          <div key={project.slug} className="col-span-12 md:col-span-6 lg:col-span-4">
+          <div key={project.slug} className="col-span-full md:col-span-6 lg:col-span-4">
             <SystemModule 
               project={project} 
               index={index} 

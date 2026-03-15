@@ -149,7 +149,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                     <div className="type-metadata text-accent mb-6">CORE_SYSTEM_MODULES</div>
                     <div className="grid-12 gap-y-sys-24">
                        {project.internalComponents?.map((comp, idx) => (
-                          <div key={idx} className="p-sys-24 border border-border-dim bg-bg-secondary group hover:border-accent transition-colors col-span-12 md:col-span-6">
+                          <div key={idx} className="p-sys-24 border border-border-dim bg-bg-secondary group hover:border-accent transition-colors col-span-full md:col-span-6">
                             <div className="type-metadata text-accent mb-sys-12">MODULE_0{idx + 1}</div>
                             <h4 className="type-label text-sm text-text-primary mb-2">{formatLabel(comp.name)}</h4>
                             <div className="type-metadata text-[0.4rem] opacity-30 mb-2 font-mono">CORE_RESPONSIBILITY:</div>
@@ -339,10 +339,10 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                     {project.authority.deepDives.map((dive, idx) => (
                       <div 
                         key={idx} 
-                        className="module-frame group col-span-12 md:col-span-6"
+                        className="module-frame group col-span-full md:col-span-6"
                       >
-                         <div className="type-metadata text-[0.4rem] text-accent/40 mb-8 flex items-center gap-3 font-mono tracking-[0.2em] uppercase">
-                            <span className="w-1 h-1 bg-accent/30 rounded-full" />
+                         <div className="type-metadata text-[0.4rem] text-accent/40 mb-8 relative flex items-center font-mono tracking-[0.2em] uppercase">
+                            <span className="absolute -left-6 w-1 h-1 bg-accent/30 rounded-full" />
                             DEEP_DIVE_0{idx + 1}
                          </div>
                          <h3 className="type-emphasis text-sm mb-6 tracking-tight opacity-70 group-hover:opacity-100 transition-opacity">{dive.title}</h3>
@@ -406,7 +406,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
 
            {/* Section 11 & 12: Challenges & Future */}
            <div className="grid-12 pt-sys-96 border-t border-border-dim">
-              <section className="col-span-12 lg:col-span-6 space-y-sys-48">
+              <section className="col-span-full lg:col-span-6 space-y-sys-48">
                  <SectionDivider label="11_ENGINEERING_CHALLENGES" />
                  <div className="space-y-sys-40">
                     {project.challenges?.map((challenge, idx) => (
@@ -418,7 +418,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                  </div>
               </section>
 
-              <section className="col-span-12 lg:col-span-6 space-y-sys-48 mt-sys-96 lg:mt-0 lg:col-start-8">
+              <section className="col-span-full lg:col-span-6 space-y-sys-48 mt-sys-96 lg:mt-0 lg:col-start-8">
                  <SectionDivider label="12_SYSTEM_EVOLUTION_BEYOND" />
                  <div className="space-y-sys-40">
                     {project.future?.map((item, idx) => (

@@ -30,8 +30,8 @@ export default function SystemLaboratory() {
 
       <div className="grid-12 mb-sys-64">
         <div className="col-span-full lg:col-span-8">
-           <div className="flex items-center gap-3 mb-sys-24 opacity-30">
-              <div className="w-1 h-1 bg-accent/40 rounded-full" />
+           <div className="relative mb-sys-24 opacity-30 flex items-center">
+              <div className="absolute -left-6 w-1 h-1 bg-accent/40 rounded-full" />
               <span className="type-metadata text-[0.4rem] tracking-[0.3em] font-mono">ACTIVE_EXPLORATION_BOARD</span>
            </div>
            <h2 className="type-h1 break-words hyphens-auto text-text-primary">Systems_Laboratory_</h2>

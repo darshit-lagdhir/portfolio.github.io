@@ -36,7 +36,7 @@ export default function Capabilities() {
       />
 
       <div className="grid-12 mb-sys-64">
-        <div className="col-span-12 lg:col-span-8">
+        <div className="col-span-full lg:col-span-8">
           <h2 className="type-h1 text-4xl md:text-5xl lg:text-6xl break-words hyphens-auto leading-[1.05]">KNOWLEDGE_MAPPING_</h2>
           <p className="type-body text-lg max-w-2xl text-text-secondary">
             Modular categorization of technical domains and ongoing intellectual explorations. These areas represent investigative paths rather than static mastery.
@@ -54,10 +54,10 @@ export default function Capabilities() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: index * 0.1, duration: 0.8 }}
-            className="module-frame group relative bg-bg-secondary/10 p-10 hover:border-accent/20 transition-[border-color,background-color,box-shadow,ring] duration-300 flex flex-col h-full focus:outline-none focus-visible:ring-1 focus-visible:ring-accent/30 col-span-12 md:col-span-6 lg:col-span-4"
+            className="module-frame group relative bg-bg-secondary/10 p-10 hover:border-accent/20 transition-[border-color,background-color,box-shadow,ring] duration-300 flex flex-col h-full focus:outline-none focus-visible:ring-1 focus-visible:ring-accent/30 col-span-full md:col-span-6 lg:col-span-4"
           >
-            <div className="type-metadata mb-8 text-accent/40 flex items-center gap-3">
-              <span className="w-1 h-1 bg-accent/30 rounded-full" />
+            <div className="type-metadata mb-8 text-accent/40 flex items-center relative">
+              <span className="absolute -left-6 w-1 h-1 bg-accent/30 rounded-full" />
               DOMAIN_0{index + 1}
             </div>
 

@@ -79,8 +79,8 @@ export default function TerminalContact() {
       <div className="grid-12">
         <div className="col-span-full lg:col-span-8">
             <div className="mb-sys-96 text-left space-y-6">
-            <div className="flex items-center gap-3 mb-2 opacity-30 text-accent">
-              <div className="status-dot active" />
+            <div className="relative mb-2 opacity-30 text-accent flex items-center">
+              <div className="absolute -left-6 status-dot active" />
               <span className="type-metadata text-[0.4rem] tracking-[0.3em] font-mono">CONNECTION_READY</span>
             </div>
             <h3 className="type-h1 uppercase tracking-tighter text-wrap-balance hyphens-auto">Initiate_Discovery_</h3>
@@ -176,7 +176,7 @@ export default function TerminalContact() {
                     onClick={() => executeCommand(cmd.id, cmd.label)}
                     disabled={isProcessing}
                     aria-label={`Execute command: ${cmd.label}`}
-                    className="module-frame group flex items-center justify-between !p-4 relative text-left disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-1 focus-visible:ring-accent md:hover:translate-x-1 hover:bg-accent/5 hover:border-accent/40 min-w-0 overflow-hidden col-span-12 md:col-span-6"
+                    className="module-frame group flex items-center justify-between !p-4 relative text-left disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-1 focus-visible:ring-accent md:hover:translate-x-1 hover:bg-accent/5 hover:border-accent/40 min-w-0 overflow-hidden col-span-full md:col-span-6"
                   >
                     <div className="absolute top-2 right-2 opacity-20 group-hover:opacity-100 transition-opacity">
                        <div className="arch-marker scale-[0.3]" />

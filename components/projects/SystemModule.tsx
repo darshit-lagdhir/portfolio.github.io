@@ -42,8 +42,8 @@ export default function SystemModule({ project, index }: SystemModuleProps) {
 
         {/* Status & Credibility Indicators */}
         <div className="flex items-center justify-between mb-sys-32">
-          <div className="flex items-center gap-3 max-w-[65%]">
-            <span className={cn("w-1 h-1 rounded-full shrink-0", statusMeta.color)} />
+          <div className="relative flex items-center max-w-[65%]">
+            <span className={cn("absolute -left-6 w-1 h-1 rounded-full shrink-0", statusMeta.color)} />
             <span className="type-metadata text-[0.325rem] text-text-muted tracking-wider font-mono leading-tight uppercase">
               {statusMeta.label}
             </span>

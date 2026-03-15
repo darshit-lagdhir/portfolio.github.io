@@ -12,8 +12,8 @@ export default function ExplorationArchive() {
 
   return (
     <div className="w-full">
-      <div className="flex items-center gap-3 mb-12 opacity-30">
-        <div className="w-1.5 h-1.5 border border-accent rotate-45" />
+      <div className="relative mb-12 opacity-30 flex items-center">
+        <div className="absolute -left-6 w-1.5 h-1.5 border border-accent rotate-45" />
         <span className="type-metadata text-[0.45rem] tracking-[0.4em] font-mono uppercase break-words hyphens-auto max-w-[250px] leading-tight">Completed_Investigation_Archive</span>
       </div>
 
@@ -25,7 +25,7 @@ export default function ExplorationArchive() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: index * 0.1 }}
-            className="module-frame group flex flex-col h-full min-h-[460px] !p-8 hover:border-accent/30 col-span-12 md:col-span-6 lg:col-span-4"
+            className="module-frame group flex flex-col h-full min-h-[460px] !p-8 hover:border-accent/30 col-span-full md:col-span-6 lg:col-span-4"
           >
             <div className="flex justify-between items-start mb-6">
               <span className="type-metadata text-[0.35rem] opacity-30 uppercase font-mono">
