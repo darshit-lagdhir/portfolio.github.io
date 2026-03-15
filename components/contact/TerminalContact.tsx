@@ -164,7 +164,7 @@ export default function TerminalContact() {
             </div>
 
             {/* COMMAND SELECTION PANEL */}
-            <div className="bg-bg-secondary border-t border-border-dim p-8 md:p-12">
+            <div className="bg-bg-secondary border-t border-border-dim p-4 md:p-12">
               <div className="type-metadata text-[0.5rem] mb-8 opacity-40 tracking-[0.4em] flex items-center gap-4 text-text-secondary font-bold">
                  <div className="w-1 h-3 bg-accent" />
                  SELECT_COMMAND_PAYLOAD
@@ -176,7 +176,7 @@ export default function TerminalContact() {
                     onClick={() => executeCommand(cmd.id, cmd.label)}
                     disabled={isProcessing}
                     aria-label={`Execute command: ${cmd.label}`}
-                    className="module-frame group flex items-center justify-between !p-5 relative transition-all text-left disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-1 focus-visible:ring-accent md:hover:translate-x-1 hover:bg-accent/5 hover:border-accent/40 min-w-0 overflow-hidden"
+                    className="module-frame group flex items-center justify-between !p-4 relative transition-all text-left disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-1 focus-visible:ring-accent md:hover:translate-x-1 hover:bg-accent/5 hover:border-accent/40 min-w-0 overflow-hidden"
                   >
                     <div className="absolute top-2 right-2 opacity-20 group-hover:opacity-100 transition-opacity">
                        <div className="arch-marker scale-[0.3]" />

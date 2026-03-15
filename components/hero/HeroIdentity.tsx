@@ -47,7 +47,7 @@ export default function HeroIdentity() {
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="type-display mb-sys-48 leading-[0.85] tracking-tighter w-full"
+        className="type-display mb-sys-48 leading-[0.95] tracking-tighter w-full"
         style={{ fontSize: "clamp(1.5rem, 11vw, 7.5rem)" }}
       >
         {identity.hero_identity.hero_title.includes('_') ? (

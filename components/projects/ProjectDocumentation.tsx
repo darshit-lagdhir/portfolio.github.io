@@ -69,10 +69,11 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                initial={{ opacity: 0, y: 30 }}
                animate={{ opacity: 1, y: 0 }}
                transition={{ duration: 0.8 }}
-               className="type-h1 leading-none mb-sys-32 break-words hyphens-auto"
+               className="type-h1 leading-tight mb-sys-32 break-words hyphens-auto"
              >
                {formatLabel(project.name)}_
-             </motion.h1>             <motion.p 
+             </motion.h1>
+             <motion.p 
                initial={{ opacity: 0 }}
                animate={{ opacity: 1 }}
                transition={{ delay: 0.2 }}
@@ -128,7 +129,7 @@ export default function ProjectDocumentation({ project }: ProjectDocumentationPr
                   <p className="type-body text-base md:text-lg leading-relaxed text-text-primary font-medium">
                     {project.longDescription}
                   </p>
-                  <div className="module-frame !p-10 border-dashed opacity-60">
+                  <div className="module-frame !p-6 md:!p-10 border-dashed opacity-60">
                      <div className="type-metadata text-[0.4rem] text-accent-dim mb-6 tracking-[0.3em] font-mono uppercase">PROBLEM_DEFINITION</div>
                      <p className="type-body text-text-secondary italic text-base md:text-lg font-medium leading-relaxed">
                         &quot;{project.problem}&quot;

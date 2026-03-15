@@ -87,7 +87,7 @@ export default function EngineeringDomains() {
         </div>
 
         {/* Domain Detail & Map Area */}
-        <div className="module-frame lg:col-span-8 min-h-[600px] relative !p-8 md:!p-16 overflow-hidden flex flex-col justify-center">
+        <div className="module-frame lg:col-span-8 min-h-[500px] relative !p-6 md:!p-16 overflow-hidden flex flex-col justify-center">
           {/* Visual DomainMap Layer */}
           <DomainMap 
             activeDomainId={activeDomainId} 
@@ -179,7 +179,7 @@ export default function EngineeringDomains() {
         </div>
       </div>
       
-      <div className="mt-sys-96 pb-sys-192 lg:pb-0 flex flex-col md:flex-row justify-between items-start md:items-end gap-sys-32">
+      <div className="mt-sys-64 pb-sys-128 lg:pb-0 flex flex-col md:flex-row justify-between items-start md:items-end gap-sys-32">
         <DiscoveryHint 
           label={identity.discovery_hints.toSystems.label}
           href="#systems"

@@ -23,7 +23,7 @@ const NARRATIVE_BLOCKS = [
 
 export default function About() {
   return (
-    <div className="w-full relative pb-sys-256 lg:pb-0 overflow-x-hidden">
+    <div className="w-full relative pb-sys-128 lg:pb-0 overflow-x-hidden">
       <SectionDivider 
         label="01_ABOUT" 
         description={identity.section_transitions.toAbout}

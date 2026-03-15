@@ -22,7 +22,7 @@ export default function SystemLaboratory() {
   const activeExploration = ongoingExplorations.find(l => l.investigation_id === activeId);
 
   return (
-    <div className="w-full relative">
+    <div className="w-full relative pb-sys-128 lg:pb-0 overflow-x-hidden">
       <SectionDivider 
         label="06_LAB" 
         description={identity.section_transitions.toArchive}
@@ -102,7 +102,7 @@ export default function SystemLaboratory() {
               </div>
 
               {/* CONTENT AREA */}
-              <div className="flex-grow relative overflow-hidden flex flex-col p-12 md:p-16">
+              <div className="flex-grow relative overflow-hidden flex flex-col p-6 md:p-16">
                  <AnimatePresence mode="wait">
                     <motion.div
                       key={activeId}
@@ -172,7 +172,7 @@ export default function SystemLaboratory() {
               </div>
 
               {/* VIEWPORT FOOTER */}
-              <div className="p-8 border-t border-border-dim bg-bg-primary/20 bg-grid-dim bg-[size:10px_10px]">
+              <div className="p-6 border-t border-border-dim bg-bg-primary/20 bg-grid-dim bg-[size:10px_10px]">
                  <div className="flex justify-between items-center opacity-20">
                     <div className="type-metadata text-[0.35rem]">TELEMETRY: ACTIVE</div>
                     <div className="type-metadata text-[0.35rem]">ID: {activeExploration?.investigation_id.toUpperCase()}</div>

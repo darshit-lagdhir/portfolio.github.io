@@ -143,7 +143,7 @@ body {
 .type-h1 {
   font-family: var(--font-display);
   font-size: var(--font-size-h1);
-  line-height: 1.05;
+  line-height: 1.1;
   text-transform: uppercase;
   letter-spacing: -0.01em;
   font-weight: 700;
@@ -215,6 +215,8 @@ body {
   font-weight: 500;
   color: var(--color-text-secondary);
   max-width: 75ch;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 /* ACCENT (FORNIRE) */
@@ -261,8 +263,8 @@ h3 {
   max-width: var(--grid-max-width);
   margin-left: auto;
   margin-right: auto;
-  padding-left: var(--spacing-sys-24);
-  padding-right: var(--spacing-sys-24);
+  padding-left: var(--spacing-sys-16);
+  padding-right: var(--spacing-sys-16);
 }
 
 @media (min-width: 768px) {
@@ -377,7 +379,7 @@ h3 {
 .module-frame {
   border: 1px solid var(--color-border-dim);
   background-color: var(--color-bg-secondary);
-  padding: var(--spacing-sys-24);
+  padding: var(--spacing-sys-16);
   border-radius: 1px;
   transition: border-color var(--transition-smooth);
   will-change: transform, border-color, background-color;

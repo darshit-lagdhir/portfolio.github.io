@@ -200,7 +200,7 @@ export default function SystemComparison() {
         ))}
       </div>
 
-      <div className="mt-sys-64 module-frame !p-8 flex flex-col md:flex-row items-center justify-between gap-6 opacity-40">
+      <div className="mt-sys-64 module-frame !p-5 md:!p-8 flex flex-col md:flex-row items-center justify-between gap-6 opacity-40">
         <div className="type-metadata text-[0.45rem] tracking-[0.3em]">CROSS_SYSTEM_THEMES</div>
         <div className="flex flex-wrap justify-center gap-8">
           <div className="flex items-center gap-2">
