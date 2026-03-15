@@ -113,7 +113,7 @@ export default function TerminalContact() {
             {/* TERMINAL CONTENT */}
             <div
               ref={scrollRef}
-              className="p-8 md:p-12 h-[350px] md:h-[450px] overflow-y-auto bg-bg-primary/40 scrollbar-hide"
+              className="p-4 md:p-12 h-[350px] md:h-[450px] overflow-y-auto bg-bg-primary/40 scrollbar-hide scroll-smooth"
             >
               <div className="space-y-6 font-mono text-[0.8rem] leading-relaxed">
                 {history.map((line, i) => (
@@ -123,16 +123,16 @@ export default function TerminalContact() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.2 }}
                     className={cn(
-                      "whitespace-pre-wrap flex gap-4 items-start",
+                      "whitespace-pre-wrap break-all flex gap-3 md:gap-4 items-start",
                       line.type === 'input' ? "text-accent" : "text-text-secondary"
                     )}
                   >
-                    <span className="opacity-30 shrink-0 select-none">
+                    <span className="opacity-30 shrink-0 select-none font-mono">
                       {line.type === 'input' ? 'λ' : '»'}
                     </span>
                     <span className={cn(
-                      "flex-1",
-                      line.type === 'input' ? "font-bold tracking-tight opacity-100" : "opacity-70"
+                      "flex-1 font-mono tracking-normal",
+                      line.type === 'input' ? "font-bold opacity-100" : "opacity-70"
                     )}>
                       {line.content}
                     </span>
@@ -140,10 +140,10 @@ export default function TerminalContact() {
                 ))}
 
                 {!isProcessing && (
-                  <div className="flex gap-4 items-start text-accent">
-                    <span className="opacity-30 shrink-0 select-none">λ</span>
+                  <div className="flex gap-3 md:gap-4 items-start text-accent">
+                    <span className="opacity-30 shrink-0 select-none font-mono">λ</span>
                     <motion.div 
-                      className="w-2.5 h-4 bg-accent mt-0.5"
+                      className="w-[8px] h-[15px] bg-accent mt-[1px]"
                       animate={{ opacity: [0, 1, 0] }}
                       transition={{ duration: 0.8, repeat: Infinity, ease: (v) => v > 0.5 ? 1 : 0 }}
                     />
@@ -176,18 +176,18 @@ export default function TerminalContact() {
                     onClick={() => executeCommand(cmd.id, cmd.label)}
                     disabled={isProcessing}
                     aria-label={`Execute command: ${cmd.label}`}
-                    className="module-frame group flex items-center justify-between !p-6 relative transition-all text-left disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-1 focus-visible:ring-accent md:hover:translate-x-1 hover:bg-accent/5 hover:border-accent/40"
+                    className="module-frame group flex items-center justify-between !p-5 relative transition-all text-left disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-1 focus-visible:ring-accent md:hover:translate-x-1 hover:bg-accent/5 hover:border-accent/40 min-w-0 overflow-hidden"
                   >
                     <div className="absolute top-2 right-2 opacity-20 group-hover:opacity-100 transition-opacity">
                        <div className="arch-marker scale-[0.3]" />
                     </div>
-                     <div className="flex items-center gap-4">
-                      <span className="text-accent opacity-40 group-hover:opacity-100 group-hover:translate-x-1 transition-all">λ</span>
+                     <div className="flex items-center gap-3 shrink-0">
+                      <span className="text-accent opacity-40 group-hover:opacity-100 group-hover:translate-x-1 transition-all font-mono">λ</span>
                       <span className="type-nav text-[0.7rem] font-bold group-hover:text-accent transition-colors">
                         {formatLabel(cmd.label)}
                       </span>
                     </div>
-                    <span className="type-metadata text-[0.4rem] text-text-muted group-hover:text-accent group-hover:opacity-100 transition-all">
+                    <span className="type-metadata text-[0.35rem] text-text-muted group-hover:text-accent group-hover:opacity-100 transition-all truncate pl-4">
                       {cmd.action}
                     </span>
                   </button>

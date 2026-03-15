@@ -61,7 +61,7 @@ export default function EngineeringDomains() {
               onClick={() => handleDomainClick(domain.domain_id)}
               aria-label={`Explore ${domain.name} domain`}
               className={cn(
-                "module-frame w-full text-left relative group transition-all duration-300",
+                "module-frame w-full text-left relative group transition-[border-color,background-color,box-shadow] duration-300",
                 activeDomainId === domain.domain_id 
                   ? "border-accent bg-accent/5 ring-1 ring-accent/20" 
                   : "hover:border-border-bright"
@@ -99,9 +99,10 @@ export default function EngineeringDomains() {
             {activeDomain ? (
               <motion.div
                 key={activeDomain.domain_id}
-                initial={{ opacity: 0, x: 20 }}
+                initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
+                exit={{ opacity: 0, x: -10 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 className="space-y-sys-64 relative z-10"
               >
                 <div className="space-y-6">

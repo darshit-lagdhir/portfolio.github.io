@@ -31,7 +31,7 @@ export default function SystemModule({ project, index }: SystemModuleProps) {
           delay: isLowPerf ? 0 : index * 0.1,
           ease: [0.16, 1, 0.3, 1]
         }}
-        className="module-frame group relative flex-1 flex flex-col min-h-[420px] h-full hover:bg-bg-secondary/80 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] transition-all duration-300"
+        className="module-frame group relative flex-1 flex flex-col min-h-[420px] h-full hover:bg-bg-secondary/80 hover:shadow-[0_20px_40px_rgba(0,0,0,0.4)] transition-[border-color,background-color,box-shadow,transform] duration-300"
         style={{ willChange: "transform, opacity" }}
       >
         {/* Module Header Hook */}

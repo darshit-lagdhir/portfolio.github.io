@@ -117,7 +117,7 @@ export default function SystemComparison() {
               key={attr.id}
               onClick={() => setActiveAttr(activeAttr === attr.id ? null : attr.id)}
               className={cn(
-                "grid grid-cols-12 cursor-pointer transition-all duration-300 group",
+                "grid grid-cols-12 cursor-pointer transition-colors duration-300 group",
                 activeAttr === attr.id ? "bg-accent/5" : "hover:bg-bg-secondary/40"
               )}
             >

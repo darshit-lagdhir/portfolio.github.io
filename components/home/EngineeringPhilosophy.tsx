@@ -65,8 +65,8 @@ export default function EngineeringPhilosophy() {
                initial={{ opacity: 0 }}
                whileInView={{ opacity: 1 }}
                viewport={{ once: true }}
-               transition={{ delay: index * 0.1, duration: 1 }}
-               className="module-frame group relative overflow-hidden h-full flex flex-col hover:shadow-lg transition-all"
+               transition={{ delay: index * 0.1, duration: 0.8 }}
+               className="module-frame group relative overflow-hidden h-full flex flex-col hover:shadow-lg transition-[border-color,background-color,box-shadow] duration-300"
              >
                 {/* Visual Signature Marker */}
                 <div className="absolute top-6 right-6 opacity-20 group-hover:opacity-60 transition-opacity">

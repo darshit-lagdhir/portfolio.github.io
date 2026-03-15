@@ -53,8 +53,8 @@ export default function Capabilities() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ delay: index * 0.1, duration: 1 }}
-            className="module-frame group relative bg-bg-secondary/10 p-10 hover:border-accent/20 transition-all duration-[400ms] flex flex-col h-full focus:outline-none focus-visible:ring-1 focus-visible:ring-accent/30"
+            transition={{ delay: index * 0.1, duration: 0.8 }}
+            className="module-frame group relative bg-bg-secondary/10 p-10 hover:border-accent/20 transition-[border-color,background-color,box-shadow,ring] duration-300 flex flex-col h-full focus:outline-none focus-visible:ring-1 focus-visible:ring-accent/30"
           >
             <div className="type-metadata mb-8 text-accent/40 flex items-center gap-3">
               <span className="w-1 h-1 bg-accent/30 rounded-full" />

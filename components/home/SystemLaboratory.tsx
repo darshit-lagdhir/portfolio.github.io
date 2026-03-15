@@ -51,7 +51,7 @@ export default function SystemLaboratory() {
               key={item.investigation_id}
               onClick={() => setActiveId(item.investigation_id)}
               className={cn(
-                "module-frame w-full text-left transition-all relative group !p-6",
+                "module-frame w-full text-left transition-[border-color,background-color,opacity] relative group !p-6",
                 activeId === item.investigation_id 
                   ? "border-accent/40 bg-accent/5" 
                   : "hover:border-border-bright opacity-60 hover:opacity-100"
@@ -106,11 +106,11 @@ export default function SystemLaboratory() {
                  <AnimatePresence mode="wait">
                     <motion.div
                       key={activeId}
-                      initial={{ opacity: 0, y: 10 }}
+                      initial={{ opacity: 0, y: 5 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.3 }}
-                      className="max-w-xl"
+                      exit={{ opacity: 0, y: -5 }}
+                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                      className="max-w-xl will-change-[transform,opacity]"
                     >
                        <div className="type-metadata text-[0.35rem] text-accent/60 mb-8 border-l border-accent/20 pl-4 py-1">
                          INVESTIGATION_STATE // {activeExploration?.status.toUpperCase()}
