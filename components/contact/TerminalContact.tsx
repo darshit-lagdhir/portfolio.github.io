@@ -206,8 +206,11 @@ export default function TerminalContact() {
                     aria-label={`Execute command: ${cmd.label}`}
                     className="module-frame group flex items-center justify-between !p-sys-16 relative text-left disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus-visible:ring-1 focus-visible:ring-accent transform md:hover:translate-x-1 hover:bg-accent/5 hover:border-accent/40 min-w-0 overflow-hidden col-span-full md:col-span-6 transition-all duration-300 ease-in-out"
                   >
-                    <div className="absolute top-sys-8 right-sys-8 opacity-20 group-hover:opacity-100 transition-opacity">
-                       <div className="arch-marker scale-[0.3]" />
+                    <div className="absolute top-sys-8 right-sys-8">
+                       <div className={cn(
+                         "arch-marker scale-[0.4] transition-all duration-300",
+                         "opacity-20 scale-75 group-hover:opacity-100 group-hover:scale-100"
+                       )} />
                     </div>
                      <div className="flex items-center gap-sys-12 shrink-0">
                       <span className="text-accent opacity-40 group-hover:opacity-100 group-hover:translate-x-1 transition-all font-mono">λ</span>

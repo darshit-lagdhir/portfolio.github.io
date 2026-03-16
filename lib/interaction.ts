@@ -150,22 +150,36 @@ export function useHoverState() {
  * --- NAVIGATION STATE ---
  * Detects the active section based on scroll offset.
  */
-export function useActiveSection(sectionIds: string[], offsetMargin = "-30% 0px -40% 0px") {
+export function useActiveSection(sectionIds: string[], offsetMargin = "-25% 0px -40% 0px") {
   const [activeSection, setActiveSection] = useState<string>(sectionIds[0]);
+  const isScrollingRef = useRef(false);
   
   useEffect(() => {
+    // Increase threshold granularity for high-resolution tracking
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    }, { rootMargin: offsetMargin, threshold: [0, 0.1] });
+      // Find the entry with the largest intersection ratio if multiple intersect
+      const intersecting = entries.filter(e => e.isIntersecting);
+      if (intersecting.length > 0) {
+        // Sort by how much of the section is visible
+        const mostVisible = intersecting.reduce((prev, current) => 
+          (prev.intersectionRatio > current.intersectionRatio) ? prev : current
+        );
+        setActiveSection(mostVisible.target.id);
+      }
+    }, { 
+      rootMargin: offsetMargin, 
+      threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5] 
+    });
 
-    // Force first section if at the very top of the page
     const handleScroll = () => {
-      if (window.scrollY < 50) {
+      // Immediate reset for very top of page
+      if (window.scrollY < 100) {
         setActiveSection(sectionIds[0]);
+      }
+      
+      // Bottom of page safety: force last section if at the very bottom
+      if ((window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 50) {
+        setActiveSection(sectionIds[sectionIds.length - 1]);
       }
     };
 

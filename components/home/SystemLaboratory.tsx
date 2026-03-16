@@ -69,8 +69,10 @@ export default function SystemLaboratory() {
               <div className="flex justify-between items-start mb-sys-12">
                  <span className="type-metadata text-[0.35rem] opacity-40 uppercase tracking-widest">{item.investigation_id.split('-').join('_')}</span>
                  <div className={cn(
-                   "arch-marker scale-[0.4] transition-all duration-200",
-                   activeId === item.investigation_id ? "opacity-100 scale-100" : "opacity-20 scale-90 group-hover:opacity-100 group-hover:scale-100"
+                   "arch-marker scale-[0.4] transition-all duration-300",
+                   activeId === item.investigation_id 
+                     ? "opacity-100 scale-100" 
+                     : "opacity-20 scale-75 group-hover:opacity-100 group-hover:scale-100"
                  )} />
               </div>
               <h3 className={cn(

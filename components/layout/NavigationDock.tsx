@@ -138,13 +138,13 @@ export default function NavigationDock() {
           )} />
 
           {/* Label Engine */}
-          <div className="overflow-hidden min-w-[100px]">
+          <div className="overflow-visible">
             <motion.span
               className={cn(
-                "type-nav text-[0.7rem] block transition-all duration-200 ease-out whitespace-nowrap",
+                "type-nav text-[0.7rem] block transition-all duration-300 ease-out whitespace-nowrap",
                 activeSection === item.id
-                  ? "text-text-primary translate-x-0"
-                  : "text-text-muted -translate-x-full group-hover:translate-x-0 group-hover:text-accent group-focus-visible:translate-x-0"
+                  ? "text-text-primary opacity-100 translate-x-0"
+                  : "text-text-muted opacity-0 -translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-accent group-focus-visible:opacity-100 group-focus-visible:translate-x-0"
               )}
             >
               {item.label}
